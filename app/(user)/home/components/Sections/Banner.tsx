@@ -1,8 +1,6 @@
 import Image from "next/image";
-import { FaArrowRight } from "react-icons/fa";
 import bannerimg from "../../public/images/banner2.png";
-import { GoArrowUpRight } from "react-icons/go";
-import { MdOutlineArrowForward, MdOutlineArrowOutward } from "react-icons/md";
+import {MdOutlineArrowOutward } from "react-icons/md";
 
 export default function BannerSection() {
   return (
@@ -74,7 +72,6 @@ export default function BannerSection() {
   </span>
 </span>
 </button>
-
           </div>
         </div>
       </div>
