@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
- import Door1 from "../../../../../public/assets/images/landing/Door1 8.02.03 PM.png"
-import Door3 from "../../../../../public/assets/images/landing/Door3 8.02.03 PM.png"
-import Door4 from "../../../../../public/assets/images/landing/Door4 8.02.03 PM.png"
-import Door from "../../../../../public/assets/images/landing/Door.png"
-import Settings from "../../../../../public/assets/images/landing/Settings.png"
-import Tick from "../../../../../public/assets/images/landing/Tick.png"
+ import Door1 from "../../../../public/assets/images/landing/Door1 8.02.03 PM.png"
+import Door3 from "../../../../public/assets/images/landing/Door3 8.02.03 PM.png"
+import Door4 from "../../../../public/assets/images/landing/Door4 8.02.03 PM.png"
+import Door from "../../../../public/assets/images/landing/Door.png"
+import Settings from "../../../../public/assets/images/landing/Settings.png"
+import Tick from "../../../../public/assets/images/landing/Tick.png"
 const DoorCategories = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [windowWidth, setWindowWidth] = useState(1024);

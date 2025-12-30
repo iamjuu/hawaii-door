@@ -1,7 +1,7 @@
 import { MdOutlineArrowOutward } from "react-icons/md"
 import Image from "next/image"
-import Measureimg from "../../../../../public/assets/images/landing/measure.png"
-import Vector7 from "../../../../../public/assets/images/landing/vector7.png"
+import Measureimg from "../../../../public/assets/images/landing/measure.png"
+import Vector7 from "../../../../public/assets/images/landing/vector7.png"
 const Measure = () => {
   return (
     <>

@@ -1,5 +1,5 @@
 import Image from "next/image"
-import Comaimg from "../../../../../public/assets/images/landing/coma.png"
+import Comaimg from "../../../../public/assets/images/landing/coma.png"
 
 const Testimonial = () => {
   const testimonials = [

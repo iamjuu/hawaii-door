@@ -1,5 +1,5 @@
 import Image from "next/image";
-import bannerimg from "../../../../../public/assets/images/landing/banner2.png";
+import bannerimg from "../../../../public/assets/images/landing/banner2.png";
 import {MdOutlineArrowOutward } from "react-icons/md";
 
 export default function BannerSection() {

@@ -1,12 +1,12 @@
 
 import Image from "next/image"
-import Woodcoreimag from "../../../../../public/assets/images/landing/woodcore.png"
-import Hollowcoreimg from "../../../../../public/assets/images/landing/hollowcore.png"
-import Fiberglassimg from "../../../../../public/assets/images/landing/fiberglass.png"
-import Particlecoreimg from "../../../../../public/assets/images/landing/particlecore.png"
-import Sclcimg from "../../../../../public/assets/images/landing/sclc.png"
-import Vector5 from "../../../../../public/assets/images/landing/vector5.png"
-import Vector6 from "../../../../../public/assets/images/landing/vector6.png"
+import Woodcoreimag from "../../../../public/assets/images/landing/woodcore.png"
+import Hollowcoreimg from "../../../../public/assets/images/landing/hollowcore.png"
+import Fiberglassimg from "../../../../public/assets/images/landing/fiberglass.png"
+import Particlecoreimg from "../../../../public/assets/images/landing/particlecore.png"
+import Sclcimg from "../../../../public/assets/images/landing/sclc.png"
+import Vector5 from "../../../../public/assets/images/landing/vector5.png"
+import Vector6 from "../../../../public/assets/images/landing/vector6.png"
 
 const galleryItems = [
   {

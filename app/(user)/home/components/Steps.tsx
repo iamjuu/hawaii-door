@@ -1,11 +1,11 @@
 import Image from "next/image";
-import Buildit from "../../../../../public/assets/images/landing/build.png";
-import Review from "../../../../../public/assets/images/landing/review.png";
-import Submit from "../../../../../public/assets/images/landing/submit.png";
-import Yourdoor from "../../../../../public/assets/images/landing/yourdoor.png";
-import Greenarrow from "../../../../../public/assets/images/landing/greenarrow.png";
-import Downarrow from "../../../../../public/assets/images/landing/downarrow.png"
-import Truck from "../../../../../public/assets/images/landing/truck.png"
+import Buildit from "../../../../public/assets/images/landing/build.png";
+import Review from "../../../../public/assets/images/landing/review.png";
+import Submit from "../../../../public/assets/images/landing/submit.png";
+import Yourdoor from "../../../../public/assets/images/landing/yourdoor.png";
+import Greenarrow from "../../../../public/assets/images/landing/greenarrow.png";
+import Downarrow from "../../../../public/assets/images/landing/downarrow.png"
+import Truck from "../../../../public/assets/images/landing/truck.png"
 import { MdOutlineArrowOutward } from "react-icons/md";
 const stepBox =
   "flex flex-col items-center text-center px-2 pt-0 md:pt-10 md:pb-10 w-full max-w-[260px] mx-auto";

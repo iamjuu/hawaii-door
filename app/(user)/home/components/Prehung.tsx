@@ -1,6 +1,6 @@
 import { MdOutlineArrowOutward } from "react-icons/md"
 import Image from "next/image"
-import Doors from "../../../../../public/assets/images/landing/door22.png"
+import Doors from "../../../../public/assets/images/landing/door22.png"
 
 const Prehung = () => {
   return (

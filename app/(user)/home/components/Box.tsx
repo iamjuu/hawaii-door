@@ -1,6 +1,6 @@
 import Image from "next/image";
-import treeImage from "../../../../../public/assets/images/landing/tree.png"
-import usaImage from "../../../../../public/assets/images/landing/usa.png"
+import treeImage from "../../../../public/assets/images/landing/tree.png"
+import usaImage from "../../../../public/assets/images/landing/usa.png"
 
 const Box = () => {
   return (
