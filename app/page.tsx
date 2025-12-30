@@ -6,7 +6,7 @@ import HomePage from "./(user)/home/page"
 import { WhatsAppIconSvg } from "@/public/assets";
 
 export default function Home() {
-  const whatsappNumber = "6596381988";
+  const whatsappNumber = "8075699058";
   const whatsappText = encodeURIComponent("Hi");
   const [isBouncing, setIsBouncing] = useState(false);
 
