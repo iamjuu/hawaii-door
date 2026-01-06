@@ -18,6 +18,9 @@ import Step3DoorSize from "./components/steps/Step3DoorSize";
 import Step4 from "./components/steps/step4"
 import Step5 from "./components/steps/step5"
 import Step6 from "./components/steps/step6"
+import Step7 from "./components/steps/step7"
+import Step8 from "./components/steps/step8"
+import Step9 from "./components/steps/step9"
 const BuildDoor = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [quoteData, setQuoteData] = useState({
@@ -80,7 +83,31 @@ const BuildDoor = () => {
       },
       percentage: 35,
     },
-    // Add more steps here
+    
+    {
+      component: Step7,
+      infoBanner: {
+        icon: vector56,
+        text: "Choose the right airflow and privacy",
+      },
+      percentage: 42,
+    },
+    {
+      component: Step8,
+      infoBanner: {
+        icon: vector56,
+        text: "Secure your door with the right lock",
+      },
+      percentage: 49,
+    },
+    {
+      component: Step9,
+      infoBanner: {
+        icon: vector56,
+        text: "Complete your door installation setup",
+      },
+      percentage: 56,
+    },
   ];
 
   const CurrentStepComponent = steps[currentStep].component;

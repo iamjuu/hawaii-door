@@ -7,17 +7,82 @@ import lha from "../../../../../public/assets/images/dummy/Lha.png";
 import rha from "../../../../../public/assets/images/dummy/rha.png";
 import rhra from "../../../../../public/assets/images/dummy/rhra.png";
 
-const Step6 = () => {
-  const [selectedRadius, setSelectedRadius] = useState<string | null>(null);
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+interface StepProps {
+  quoteData: any;
+  setQuoteData: (data: any) => void;
+}
+
+const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
+  const [selectedHandling, setSelectedHandling] = useState<string | null>(
+    quoteData.doorHandling || null
+  );
+  const [selectedRadius, setSelectedRadius] = useState<string | null>(
+    quoteData.hingeRadius || null
+  );
+  const [selectedType, setSelectedType] = useState<string | null>(
+    quoteData.hingeType || null
+  );
+
+  const handleHandlingSelect = (handling: string) => {
+    setSelectedHandling(handling);
+    setQuoteData({
+      ...quoteData,
+      doorHandling: handling,
+    });
+  };
+
+  const handleRadiusSelect = (radius: string) => {
+    setSelectedRadius(radius);
+    setQuoteData({
+      ...quoteData,
+      hingeRadius: radius,
+    });
+  };
+
+  const handleTypeSelect = (type: string) => {
+    setSelectedType(type);
+    setQuoteData({
+      ...quoteData,
+      hingeType: type,
+    });
+  };
 
   return (
-    <div>
+    <div className="mt-[50px] mb-[50px]">
       <h2 className="text-3xl font-bold mb-8">Door Handling & Hinges</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* 1: LHRA */}
-        <div className="border-2 border-gray-200 rounded-lg p-4 bg-white">
+        <div
+          onClick={() => handleHandlingSelect("LHRA")}
+          className={`
+            relative border-2 rounded-lg p-4 cursor-pointer transition-all
+            hover:border-orange-500 hover:shadow-lg
+            ${
+              selectedHandling === "LHRA"
+                ? "border-orange-500 shadow-lg bg-orange-50"
+                : "border-gray-200 bg-white"
+            }
+          `}
+        >
+          {/* Selected Badge */}
+          {selectedHandling === "LHRA" && (
+            <div className="absolute top-3 right-3 z-10">
+              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+            </div>
+          )}
           <div className="relative w-full aspect-[4/3] mb-4">
             <Image
               src={lhra}
@@ -26,12 +91,41 @@ const Step6 = () => {
               className="object-contain"
             />
           </div>
-          <p className="text-base font-semibold text-gray-900 mb-1">LHRA</p>
-          <p className="text-sm text-gray-500">Left Hand Reverse Active</p>
+          <p className="text-base font-semibold text-gray-900 mb-1 text-center">LHRA</p>
+          <p className="text-sm text-gray-500 text-center">Left Hand Reverse Active</p>
         </div>
 
-        {/* 2: LHA (you can edit the labels as needed) */}
-        <div className="border-2 border-gray-200 rounded-lg p-4 bg-white">
+        {/* 2: LHA */}
+        <div
+          onClick={() => handleHandlingSelect("LHA")}
+          className={`
+            relative border-2 rounded-lg p-4 cursor-pointer transition-all
+            hover:border-orange-500 hover:shadow-lg
+            ${
+              selectedHandling === "LHA"
+                ? "border-orange-500 shadow-lg bg-orange-50"
+                : "border-gray-200 bg-white"
+            }
+          `}
+        >
+          {/* Selected Badge */}
+          {selectedHandling === "LHA" && (
+            <div className="absolute top-3 right-3 z-10">
+              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+            </div>
+          )}
           <div className="relative w-full aspect-[4/3] mb-4">
             <Image
               src={lha}
@@ -40,12 +134,41 @@ const Step6 = () => {
               className="object-contain"
             />
           </div>
-          <p className="text-base font-semibold text-gray-900 mb-1">LHA</p>
-          <p className="text-sm text-gray-500">Left Hand Active</p>
+          <p className="text-base font-semibold text-gray-900 mb-1 text-center">LHA</p>
+          <p className="text-sm text-gray-500 text-center">Left Hand Active</p>
         </div>
 
         {/* 3: RHA */}
-        <div className="border-2 border-gray-200 rounded-lg p-4 bg-white">
+        <div
+          onClick={() => handleHandlingSelect("RHA")}
+          className={`
+            relative border-2 rounded-lg p-4 cursor-pointer transition-all
+            hover:border-orange-500 hover:shadow-lg
+            ${
+              selectedHandling === "RHA"
+                ? "border-orange-500 shadow-lg bg-orange-50"
+                : "border-gray-200 bg-white"
+            }
+          `}
+        >
+          {/* Selected Badge */}
+          {selectedHandling === "RHA" && (
+            <div className="absolute top-3 right-3 z-10">
+              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+            </div>
+          )}
           <div className="relative w-full aspect-[4/3] mb-4">
             <Image
               src={rha}
@@ -54,12 +177,41 @@ const Step6 = () => {
               className="object-contain"
             />
           </div>
-          <p className="text-base font-semibold text-gray-900 mb-1">RHA</p>
-          <p className="text-sm text-gray-500">Right Hand Active</p>
+          <p className="text-base font-semibold text-gray-900 mb-1 text-center">RHA</p>
+          <p className="text-sm text-gray-500 text-center">Right Hand Active</p>
         </div>
 
         {/* 4: RHRA */}
-        <div className="border-2 border-gray-200 rounded-lg p-4 bg-white">
+        <div
+          onClick={() => handleHandlingSelect("RHRA")}
+          className={`
+            relative border-2 rounded-lg p-4 cursor-pointer transition-all
+            hover:border-orange-500 hover:shadow-lg
+            ${
+              selectedHandling === "RHRA"
+                ? "border-orange-500 shadow-lg bg-orange-50"
+                : "border-gray-200 bg-white"
+            }
+          `}
+        >
+          {/* Selected Badge */}
+          {selectedHandling === "RHRA" && (
+            <div className="absolute top-3 right-3 z-10">
+              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+            </div>
+          )}
           <div className="relative w-full aspect-[4/3] mb-4">
             <Image
               src={rhra}
@@ -68,8 +220,8 @@ const Step6 = () => {
               className="object-contain"
             />
           </div>
-          <p className="text-base font-semibold text-gray-900 mb-1">RHRA</p>
-          <p className="text-sm text-gray-500">Right Hand Reverse Active</p>
+          <p className="text-base font-semibold text-gray-900 mb-1 text-center">RHRA</p>
+          <p className="text-sm text-gray-500 text-center">Right Hand Reverse Active</p>
         </div>
       </div>
 
@@ -79,7 +231,7 @@ const Step6 = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <button
             type="button"
-            onClick={() => setSelectedRadius("1/4")}
+            onClick={() => handleRadiusSelect("1/4")}
             className={`border-2 rounded-lg px-4 py-3 text-sm font-medium bg-white transition-colors ${
               selectedRadius === "1/4"
                 ? "border-orange-500 text-orange-600"
@@ -90,7 +242,7 @@ const Step6 = () => {
           </button>
           <button
             type="button"
-            onClick={() => setSelectedRadius("5/8")}
+            onClick={() => handleRadiusSelect("5/8")}
             className={`border-2 rounded-lg px-4 py-3 text-sm font-medium bg-white transition-colors ${
               selectedRadius === "5/8"
                 ? "border-orange-500 text-orange-600"
@@ -101,7 +253,7 @@ const Step6 = () => {
           </button>
           <button
             type="button"
-            onClick={() => setSelectedRadius("square")}
+            onClick={() => handleRadiusSelect("square")}
             className={`border-2 rounded-lg px-4 py-3 text-sm font-medium bg-white transition-colors ${
               selectedRadius === "square"
                 ? "border-orange-500 text-orange-600"
@@ -119,7 +271,7 @@ const Step6 = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <button
             type="button"
-            onClick={() => setSelectedType("residential")}
+            onClick={() => handleTypeSelect("residential")}
             className={`border-2 rounded-lg px-4 py-3 text-sm font-medium bg-white transition-colors ${
               selectedType === "residential"
                 ? "border-orange-500 text-orange-600"
@@ -130,7 +282,7 @@ const Step6 = () => {
           </button>
           <button
             type="button"
-            onClick={() => setSelectedType("commercial")}
+            onClick={() => handleTypeSelect("commercial")}
             className={`border-2 rounded-lg px-4 py-3 text-sm font-medium bg-white transition-colors ${
               selectedType === "commercial"
                 ? "border-orange-500 text-orange-600"
