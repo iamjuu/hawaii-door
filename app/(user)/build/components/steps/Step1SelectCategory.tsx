@@ -24,7 +24,7 @@ interface StepProps {
   
     return (
       <div className="mt-[50px] mb-[50px]">
-        <h2 className="text-3xl font-bold mb-8">Select Door Category</h2>
+        <h2 className="text-[32px] font-[500] mb-8 text-black">Select Door Category</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {doorCategories.map((category) => (
@@ -32,7 +32,7 @@ interface StepProps {
               key={category.name}
               onClick={() => setQuoteData({ ...quoteData, doorType: category.name })}
               className={`
-                relative border-2 rounded-lg p-3 cursor-pointer transition-all
+                relative border-2 rounded-lg p-3 cursor-pointer transition-all flex flex-col
                 hover:border-orange-500 hover:shadow-lg
                 ${
                   quoteData.doorType === category.name
@@ -46,7 +46,7 @@ interface StepProps {
                 <div className="absolute top-3 right-3 z-10">
                   <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
                     <svg
-                      className="w-5 h-5 text-white"
+                      className="w-5 h-5 text-black"
                       fill="none"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -60,7 +60,10 @@ interface StepProps {
                 </div>
               )}
 
-              <div className="aspect-square bg-gray-100 rounded mb-4 relative">
+              <div 
+                className="aspect-square rounded mb-4 relative"
+                style={{ background: 'linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%)' }}
+              >
                 <Image
                   src={category.image}
                   alt={category.name}
@@ -69,8 +72,11 @@ interface StepProps {
                 />
               </div>
 
-              <h3 className="font-medium text-center">{category.name}</h3>
-              <p className="text-sm text-gray-500 text-center mt-2 flex justify-evenly">{category.size} <GoChevronRight className="text-gray-400 text-base" /> </p>
+<div className="mt-auto">
+
+              <h3 className="font-medium  text-[12px]  text-black">{category.name}</h3>
+              <p className="text-sm w-full text-[12px] text-black text-center mt-2 flex justify-between">{category.size} <GoChevronRight className="text-black text-base" /> </p>
+</div>
             </div>
           ))}
         </div>

@@ -14,7 +14,7 @@ const Step4 = ({}: StepProps) => {
 
   return (
     <div className="mt-[50px] mb-[50px]">
-      <h2 className="text-3xl font-bold mb-8">Has the wall been built yet?</h2>
+      <h2 className="text-[32px] font-[500] text-black mb-8">Has the wall been built yet?</h2>
 
       <div>
        
