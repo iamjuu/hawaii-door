@@ -69,6 +69,14 @@ const BuildDoor = () => {
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
+      // When leaving Step 3 (index 2), ensure a default thickness is saved
+      if (currentStep === 2) {
+        setQuoteData((prev) => ({
+          ...prev,
+          thickness: prev.thickness || '1 3/8"',
+        }));
+      }
+
       setCurrentStep(currentStep + 1);
     }
   };
@@ -124,6 +132,7 @@ const BuildDoor = () => {
             {/* Quote Summary Sidebar */}
             <QuoteSummary
               quoteData={quoteData}
+              currentStep={currentStep}
               onRestart={handleRestart}
             />
           </div>

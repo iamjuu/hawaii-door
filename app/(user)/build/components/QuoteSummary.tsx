@@ -11,10 +11,11 @@ interface QuoteData {
   
   interface QuoteSummaryProps {
     quoteData: QuoteData;
+    currentStep: number;
     onRestart: () => void;
   }
   
-  const QuoteSummary = ({ quoteData, onRestart }: QuoteSummaryProps) => {
+  const QuoteSummary = ({ quoteData, currentStep, onRestart }: QuoteSummaryProps) => {
     return (
       <div className="lg:w-80 border border-gray-100 shadow-2xl rounded-lg  h-min ">
         
@@ -39,8 +40,29 @@ interface QuoteData {
               <p className="font-medium">{quoteData.category}</p>
             </div>
           )}
-  
-          {/* Add more fields as needed */}
+
+          {currentStep >= 3 && quoteData.width && quoteData.height && (
+            <div>
+              <p className="text-sm text-gray-600">Door Size</p>
+              <p className="font-medium">
+                {quoteData.width}" x {quoteData.height}"
+              </p>
+            </div>
+          )}
+
+          {currentStep >= 3 && quoteData.thickness && (
+            <div>
+              <p className="text-sm text-gray-600">Thickness</p>
+              <p className="font-medium">{quoteData.thickness}</p>
+            </div>
+          )}
+
+          {currentStep >= 3 && (
+            <div>
+              <p className="text-sm text-gray-600">Quantity</p>
+              <p className="font-medium">{quoteData.quantity}</p>
+            </div>
+          )}
         </div>
   
         <button
