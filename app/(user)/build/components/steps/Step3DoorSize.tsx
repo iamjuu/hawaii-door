@@ -2,6 +2,7 @@
 "use client";
 
 import { ChangeEvent } from "react";
+import { ChevronDown } from "lucide-react";
 
 interface StepProps {
   quoteData: any;
@@ -72,13 +73,13 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
 
   return (
     <div className="mt-[50px] mb-[50px]">
-      <h2 className="text-3xl font-bold mb-8">Door Size & Specification</h2>
+      <h2 className="text-[32px] font-[500] text-black mb-8">Door Size & Specification</h2>
 
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Left Side - Measurement Guide */}
         <div className="lg:w-1/3">
           <div className="bg-white border-2 border-gray-200 rounded-lg p-6">
-            <h3 className="text-lg font-semibold mb-4">Measurement Guide</h3>
+            <h3 className="text-lg font-semibold mb-4 text-black">Measurement Guide</h3>
             <div className="relative bg-gray-50 rounded-lg p-8 flex items-center justify-center">
               {/* Door Diagram */}
               <div className="relative">
@@ -94,7 +95,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
                       <path d="M10 3l-7 7h4v7h6v-7h4l-7-7z" />
                     </svg>
                   </div>
-                  <div className="absolute top-1/2 -translate-y-1/2 text-orange-500 font-bold text-sm whitespace-nowrap -left-16">
+                  <div className="absolute top-1/2 -translate-y-1/2 text-black font-bold text-sm whitespace-nowrap -left-16">
                     HEIGHT
                   </div>
                 </div>
@@ -118,7 +119,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
                       <path d="M10 3l-7 7h4v7h6v-7h4l-7-7z" />
                     </svg>
                   </div>
-                  <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 text-orange-500 font-bold text-sm whitespace-nowrap">
+                  <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 text-black font-bold text-sm whitespace-nowrap">
                     WIDTH
                   </div>
                 </div>
@@ -128,76 +129,100 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
         </div>
 
         {/* Right Side - Form Fields */}
-        <div className="lg:w-2/3 space-y-6">
+        <div className="lg:w-2/3  bg-red-400space-y-6">
+        <div className="flex w-full    flex-col gap-15 justify-between">
+          <div className=" flex flex-col">
+            <div className="flex gap-4">
           {/* Width */}
-          <div>
-            <label className="block text-lg font-semibold mb-2">Width</label>
-            <select
-              value={quoteData.width || ""}
-              onChange={(e) => handleWidthChange(e.target.value)}
-              className="w-full border-2 border-gray-300 rounded-lg px-4 py-2 text-lg text-gray-700 focus:border-orange-500 focus:outline-none bg-white"
-            >
-              <option value="" disabled>Select Width</option>
-              {widthOptions.map(option => (
-                <option key={option.value} value={option.value}>{option.label}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Height */}
-          <div>
-            <label className="block text-lg font-semibold mb-2">Height</label>
-            <select
-              value={quoteData.height || ""}
-              onChange={(e) => handleHeightChange(e.target.value)}
-              className="w-full border-2 border-gray-300 rounded-lg px-4 py-2 text-lg text-gray-700 focus:border-orange-500 focus:outline-none bg-white"
-            >
-              <option value="" disabled>Select Height</option>
-              {heightOptions.map(option => (
-                <option key={option.value} value={option.value}>{option.label}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Thickness */}
-          <div>
-            <label className="block text-lg font-semibold mb-3">Thickness</label>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                onClick={() => handleThicknessChange('1 3/8"')}
-                className={`px-6 py-4 rounded-lg border-2 font-medium transition-all text-left ${
-                  (quoteData.thickness || '1 3/8"') === '1 3/8"' ? "border-orange-500 bg-orange-50 text-orange-600" : "border-gray-300 hover:border-orange-300"
-                }`}
+          <div className="w-full">
+            <label className="block text-lg font-semibold mb-2 text-black">Width</label>
+            <div className="relative">
+              <select
+                value={quoteData.width || ""}
+                onChange={(e) => handleWidthChange(e.target.value)}
+                className="w-full rounded-lg px-4 py-2 pr-10 text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
               >
-                <div className="text-xl">1 ⅜"</div>
-                
-              </button>
-              <button
-                onClick={() => handleThicknessChange('1 3/4"')}
-                className={`px-6 py-4 rounded-lg border-2 font-medium transition-all text-left ${
-                  quoteData.thickness === '1 3/4"' ? "border-orange-500 bg-orange-50 text-orange-600" : "border-gray-300 hover:border-orange-300"
-                }`}
-              >
-                <div className="text-xl">1 ¾"</div>
-                
-              </button>
+                <option value="" disabled>Select Width</option>
+                {widthOptions.map(option => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
             </div>
           </div>
 
+          {/* Height */}
+          <div className="w-full">
+            <label className="block text-lg font-semibold mb-2 text-black">Height</label>
+            <div className="relative">
+              <select
+                value={quoteData.height || ""}
+                onChange={(e) => handleHeightChange(e.target.value)}
+                className="w-full rounded-lg px-4 py-2 pr-10 text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
+              >
+                <option value="" disabled>Select Height</option>
+                {heightOptions.map(option => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+            </div>
+          </div>
+          </div>
+          </div>
+          <div>
+          {/* Thickness */}
+          <div className=" flex   gap-3 flex-col">
+            <label className="block text-lg font-semibold mb-3 text-black">Thickness</label>
+            <div className="flex w-full gap-4">
+              <button
+                onClick={() => handleThicknessChange('1 3/8"')}
+                className={`w-full px-4 py-3 rounded-lg border-2 font-medium transition-all flex items-center justify-between ${
+                  (quoteData.thickness || '1 3/8"') === '1 3/8"' ? "border-orange-500 bg-orange-50 text-black" : "border-gray-300 hover:border-orange-300 text-black bg-white"
+                }`}
+              >
+                <span className="text-base">1 ⅜"</span>
+                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                  (quoteData.thickness || '1 3/8"') === '1 3/8"' ? "border-orange-500" : "border-gray-300"
+                }`}>
+                  {(quoteData.thickness || '1 3/8"') === '1 3/8"' && (
+                    <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+                  )}
+                </div>
+              </button>
+              <button
+                onClick={() => handleThicknessChange('1 3/4"')}
+                className={`w-full px-4 py-3 rounded-lg border-2 font-medium transition-all flex items-center justify-between ${
+                  quoteData.thickness === '1 3/4"' ? "border-orange-500 bg-orange-50 text-black" : "border-gray-300 hover:border-orange-300 text-black bg-white"
+                }`}
+              >
+                <span className="text-base">1 ¾"</span>
+                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                  quoteData.thickness === '1 3/4"' ? "border-orange-500" : "border-gray-300"
+                }`}>
+                  {quoteData.thickness === '1 3/4"' && (
+                    <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+                  )}
+                </div>
+              </button>
+            </div>
+          </div>
+          </div>
+          </div>
           {/* Quantity */}
           <div>
-            <label className="block text-lg font-semibold mb-3">Quantity</label>
+            <label className="block text-lg font-semibold mb-3 text-black">Quantity</label>
             <div className="flex items-center gap-4">
-              <button onClick={decrementQuantity} className="w-12 h-12 rounded-lg border-2 border-gray-300 hover:border-orange-500 flex items-center justify-center text-2xl font-bold">−</button>
+              <button onClick={decrementQuantity} className="w-12 h-12 rounded-lg border-2 border-gray-300 hover:border-orange-500 flex items-center justify-center text-2xl font-bold text-black">−</button>
               <input
                 type="number"
                 min="1"
                 value={quoteData.quantity || 1}
                 onChange={handleQuantityChange}
-                className="w-24 h-12 text-center text-xl font-semibold border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none"
+                className="w-24 h-12 text-center text-xl font-semibold border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none text-black"
               />
-              <button onClick={incrementQuantity} className="w-12 h-12 rounded-lg border-2 border-gray-300 hover:border-orange-500 flex items-center justify-center text-2xl font-bold">+</button>
-              <span className="text-gray-600">doors</span>
+              <button onClick={incrementQuantity} className="w-12 h-12 rounded-lg border-2 border-gray-300 hover:border-orange-500 flex items-center justify-center text-2xl font-bold text-black">+</button>
+              <span className="text-black">doors</span>
             </div>
           </div>
         </div>

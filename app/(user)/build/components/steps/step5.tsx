@@ -38,7 +38,7 @@ const Step5 = ({ quoteData, setQuoteData }: StepProps) => {
 
   return (
     <div className="mt-[50px] mb-[50px]">
-      <h2 className="text-3xl font-bold mb-8">What is the Wall Thickness</h2>
+      <h2 className="text-[32px] font-[500] text-black mb-8">What is the Wall Thickness</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Option 1 */}

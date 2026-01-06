@@ -32,7 +32,7 @@ const Step2SingleOrDouble = ({ quoteData, setQuoteData }: StepProps) => {
 
   return (
     <div className="mt-[50px] mb-[50px]">
-      <h2 className="text-3xl font-bold mb-8">Single or Double Door</h2>
+      <h2 className="text-[32px] font-[500] mb-8 text-black">Single or Double Door</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         {doorOptions.map((option) => (
@@ -81,7 +81,7 @@ const Step2SingleOrDouble = ({ quoteData, setQuoteData }: StepProps) => {
             </div>
 
             {/* Door Name */}
-            <h3 className="text-2xl font-semibold text-center text-gray-800">
+            <h3 className="text-[18px] font-[300] text-center text-black">
               {option.name}
             </h3>
           </div>

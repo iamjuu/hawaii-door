@@ -60,7 +60,7 @@ const Step7 = ({ quoteData, setQuoteData }: StepProps) => {
 
   return (
     <div className="mt-[50px] mb-[50px]">
-      <h2 className="text-3xl font-bold mb-8">Does this door need a Louver?</h2>
+      <h2 className="text-[32px] font-[500] text-black mb-8">Does this door need a Louver?</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-6xl mx-auto">
         {louverOptions.map((option) => (
