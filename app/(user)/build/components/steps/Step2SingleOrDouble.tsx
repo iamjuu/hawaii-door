@@ -31,7 +31,7 @@ const Step2SingleOrDouble = ({ quoteData, setQuoteData }: StepProps) => {
   
 
   return (
-    <div>
+    <div className="mt-[50px] mb-[50px]">
       <h2 className="text-3xl font-bold mb-8">Single or Double Door</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">

@@ -23,7 +23,7 @@ interface StepProps {
     ];
   
     return (
-      <div>
+      <div className="mt-[50px] mb-[50px]">
         <h2 className="text-3xl font-bold mb-8">Select Door Category</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -31,16 +31,43 @@ interface StepProps {
             <div
               key={category.name}
               onClick={() => setQuoteData({ ...quoteData, doorType: category.name })}
-              className="border rounded-lg p-3 cursor-pointer hover:border-orange-500 hover:shadow-lg transition-all"
+              className={`
+                relative border-2 rounded-lg p-3 cursor-pointer transition-all
+                hover:border-orange-500 hover:shadow-lg
+                ${
+                  quoteData.doorType === category.name
+                    ? "border-orange-500 shadow-lg bg-orange-50"
+                    : "border-gray-200 bg-white"
+                }
+              `}
             >
-            <div className="aspect-square bg-gray-100 rounded mb-4 relative">
-  <Image
-    src={category.image}
-    alt={category.name}
-    fill
-    className="object-contain rounded"
-  />
-</div>
+              {/* Selected Badge */}
+              {quoteData.doorType === category.name && (
+                <div className="absolute top-3 right-3 z-10">
+                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                    <svg
+                      className="w-5 h-5 text-white"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </div>
+                </div>
+              )}
+
+              <div className="aspect-square bg-gray-100 rounded mb-4 relative">
+                <Image
+                  src={category.image}
+                  alt={category.name}
+                  fill
+                  className="object-contain rounded"
+                />
+              </div>
 
               <h3 className="font-medium text-center">{category.name}</h3>
               <p className="text-sm text-gray-500 text-center mt-2 flex justify-evenly">{category.size} <GoChevronRight className="text-gray-400 text-base" /> </p>
