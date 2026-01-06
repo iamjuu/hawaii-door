@@ -99,7 +99,7 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
 
   return (
     <div className="mt-[50px] mb-[50px]">
-      <h2 className="text-3xl font-bold mb-8">Lock Information</h2>
+      <h2 className="text-[32px] font-[500] text-black mb-8">Lock Information</h2>
 
       {/* Lock Type Options */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
