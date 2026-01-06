@@ -71,7 +71,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
   };
 
   return (
-    <div>
+    <div className="mt-[50px] mb-[50px]">
       <h2 className="text-3xl font-bold mb-8">Door Size & Specification</h2>
 
       <div className="flex flex-col lg:flex-row gap-8">

@@ -14,7 +14,7 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage }: StepNavigation
         {showBack && (
           <button
             onClick={onBack}
-            className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 transition-colors"
+            className="flex items-center gap-2 px-2 py-2 text-gray-700 hover:text-gray-900 transition-colors"
           >
             <span>←</span>
             <span>GO BACK</span>
