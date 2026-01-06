@@ -3,7 +3,7 @@ import nolouver from "../../../../../public/assets/images/dummy/nolouver.png";
 import louver12 from "../../../../../public/assets/images/dummy/louver12.png";
 import louver2412 from "../../../../../public/assets/images/dummy/louver2412.png";
 import louver2418 from "../../../../../public/assets/images/dummy/louver2418.png";
-import toptobottom from "../../../../../public/assets/images/dummy/toptobottom.png";
+import toptobottom from "../../../../../public/assets/images/dummy/topb.png";
 import full from "../../../../../public/assets/images/dummy/fulllouver.png";
 
 interface StepProps {
