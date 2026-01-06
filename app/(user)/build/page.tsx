@@ -16,6 +16,7 @@ import Step1SelectCategory from "./components/steps/Step1SelectCategory";
 import Step2SingleOrDouble from "./components/steps/Step2SingleOrDouble";
 import Step3DoorSize from "./components/steps/Step3DoorSize";
 import Step4 from "./components/steps/step4"
+import Step5 from "./components/steps/step5"
 const BuildDoor = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [quoteData, setQuoteData] = useState({
@@ -60,7 +61,15 @@ const BuildDoor = () => {
         icon: vector56,
         text: "Built to fit: fully custom door sizes",
       },
-      percentage: 14,
+      percentage: 21,
+    },
+    {
+      component: Step5,
+      infoBanner: {
+        icon: vector56,
+        text: "Built to fit: fully custom door sizes",
+      },
+      percentage: 28,
     },
     // Add more steps here
   ];
