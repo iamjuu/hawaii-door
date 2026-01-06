@@ -11,6 +11,12 @@ import QuoteSummary from "./components/QuoteSummary";
 import usaimg from "../../../public/assets/images/landing/usa.png"
 import vector56 from "../../../public/assets/images/dummy/vector56.png"
 import vector57 from "../../../public/assets/images/dummy/vector57.png"
+import vector99 from "../../../public/assets/images/dummy/vector99.png"
+import vector98 from "../../../public/assets/images/dummy/vector98.png"
+import vector44 from "../../../public/assets/images/dummy/vector44.png"
+import vector88 from "../../../public/assets/images/dummy/vector88.png"
+import lock from "../../../public/assets/images/dummy/lockk.png"
+import vector33 from "../../../public/assets/images/dummy/vector33.png"
 // Import all step components
 import Step1SelectCategory from "./components/steps/Step1SelectCategory";
 import Step2SingleOrDouble from "./components/steps/Step2SingleOrDouble";
@@ -62,24 +68,24 @@ const BuildDoor = () => {
     {
       component: Step4,
       infoBanner: {
-        icon: vector56,
-        text: "Built to fit: fully custom door sizes",
+        icon: vector99,
+        text: "Confirm wall status to lock accurate sizing",
       },
       percentage: 21,
     },
     {
       component: Step5,
       infoBanner: {
-        icon: vector56,
-        text: "Built to fit: fully custom door sizes",
+        icon: vector98,
+        text: "Select wall thickness to ensure a precise fit and clean installation.",
       },
       percentage: 28,
     },
     {
       component: Step6,
       infoBanner: {
-        icon: vector56,
-        text: "Built to fit: fully custom door sizes",
+        icon: vector44,
+        text: "Perfect swing: choose your handing and hinges",
       },
       percentage: 35,
     },
@@ -87,24 +93,24 @@ const BuildDoor = () => {
     {
       component: Step7,
       infoBanner: {
-        icon: vector56,
-        text: "Choose the right airflow and privacy",
+        icon: vector88,
+        text: "Choose louver option to control airflow",
       },
       percentage: 42,
     },
     {
       component: Step8,
       infoBanner: {
-        icon: vector56,
-        text: "Secure your door with the right lock",
+        icon: lock,
+        text: "Lock-ready doors for your preferred hardware",
       },
       percentage: 49,
     },
     {
       component: Step9,
       infoBanner: {
-        icon: vector56,
-        text: "Complete your door installation setup",
+        icon: vector33,
+        text: "Custom jambs for a ready-to-install package",
       },
       percentage: 56,
     },
