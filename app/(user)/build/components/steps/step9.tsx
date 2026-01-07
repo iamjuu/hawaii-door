@@ -310,7 +310,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            Flat-Saddle
+            Flat / Saddle
           </button>
         </div>
       </div>
