@@ -27,6 +27,7 @@ import Step6 from "./components/steps/step6"
 import Step7 from "./components/steps/step7"
 import Step8 from "./components/steps/step8"
 import Step9 from "./components/steps/step9"
+import Step10 from "./components/steps/step10"
 const BuildDoor = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [quoteData, setQuoteData] = useState({
@@ -113,6 +114,14 @@ const BuildDoor = () => {
         text: "Custom jambs for a ready-to-install package",
       },
       percentage: 56,
+    },
+    {
+      component: Step10,
+      infoBanner: {
+        icon: vector56,
+        text: "Choose how your door will be hung",
+      },
+      percentage: 63,
     },
   ];
 

@@ -83,7 +83,7 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
               </div>
             </div>
           )}
-          <div className="relative w-full aspect-[4/3] mb-4">
+          <div className="relative w-full max-w-[320px] mx-auto aspect-[4/3] mb-4">
             <Image
               src={lhra}
               alt="LHRA"
@@ -126,7 +126,7 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
               </div>
             </div>
           )}
-          <div className="relative w-full aspect-[4/3] mb-4">
+          <div className="relative w-full max-w-[320px] mx-auto aspect-[4/3] mb-4">
             <Image
               src={lha}
               alt="LHA"
@@ -169,7 +169,7 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
               </div>
             </div>
           )}
-          <div className="relative w-full aspect-[4/3] mb-4">
+          <div className="relative w-full max-w-[320px] mx-auto aspect-[4/3] mb-4">
             <Image
               src={rha}
               alt="RHA"
@@ -212,7 +212,7 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
               </div>
             </div>
           )}
-          <div className="relative w-full aspect-[4/3] mb-4">
+          <div className="relative w-full max-w-[320px] mx-auto aspect-[4/3] mb-4">
             <Image
               src={rhra}
               alt="RHRA"
