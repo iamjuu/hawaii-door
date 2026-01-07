@@ -28,6 +28,7 @@ import Step7 from "./components/steps/step7"
 import Step8 from "./components/steps/step8"
 import Step9 from "./components/steps/step9"
 import Step10 from "./components/steps/step10"
+import Step11 from "./components/steps/step11"
 const BuildDoor = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [quoteData, setQuoteData] = useState({
@@ -122,6 +123,14 @@ const BuildDoor = () => {
         text: "Choose how your door will be hung",
       },
       percentage: 63,
+    },
+    {
+      component: Step11,
+      infoBanner: {
+        icon: vector56,
+        text: "Choose how your door will be hung",
+      },
+      percentage: 70,
     },
   ];
 
