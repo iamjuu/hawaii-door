@@ -34,8 +34,8 @@ interface StepProps {
               key={category.name}
               onClick={() => setQuoteData({ ...quoteData, doorType: category.name })}
               className={`
-                relative border-2 rounded-lg pb-3 cursor-pointer transition-all flex flex-col
-                hover:border-orange-500 hover:shadow-lg
+                relative rounded-t-[9.32px] rounded-b-[12.42px] pb-3 cursor-pointer transition-all flex flex-col
+                shadow-md hover:border-orange-500 hover:shadow-lg
                 ${
                   quoteData.doorType === category.name
                     ? "border-orange-500 shadow-lg bg-orange-50"
@@ -63,13 +63,13 @@ interface StepProps {
               )}
 
               <div 
-                className="aspect-[4/4.3] rounded mb-4 relative bg-gradient-to-b from-[#F3F4F6] to-[#E5E7EB]"
+                className="aspect-[4/4.3] rounded-t-[9.32px] mb-4 relative bg-gradient-to-b from-[#F3F4F6] to-[#E5E7EB]"
               >
                 <Image
                   src={category.image}
                   alt={category.name}
                   fill
-                  className={`object-contain rounded ${
+                  className={`object-contain rounded-t-[9.32px] ${
                     category.name === "Wood Core Door" || category.name === "Other (Special Order)"
                       ? "scale-75"
                       : ""
