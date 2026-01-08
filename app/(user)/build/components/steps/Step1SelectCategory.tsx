@@ -4,7 +4,7 @@ import FiberDoorImage from "../../../../../public/assets/images/landing/door41.p
 import HollowCoreDoorImage from "../../../../../public/assets/images/landing/door5050.png"
 import ParticleCoreDoorImage from "../../../../../public/assets/images/dummy/door5151.png"
 import SCLCDoorImage from "../../../../../public/assets/images/landing/door33.png"
-import OtherDoorImage from "../../../../../public/assets/images/dummy/door531.png"
+import OtherDoorImage from "../../../../../public/assets/images/dummy/door5311.png"
 import WoodCoreDoorImage from "../../../../../public/assets/images/dummy/door54.png"
 import vector123 from "../../../../../public/assets/images/dummy/vector123.png"
 interface StepProps {
@@ -63,7 +63,7 @@ interface StepProps {
               )}
 
               <div 
-                className="aspect-square rounded mb-4 relative bg-gradient-to-b from-[#F3F4F6] to-[#E5E7EB]"
+                className="aspect-square rounded mb-4 relative bg-gradient-to-b from-[#F3F4F6] to-[#E5E7EB] "
               >
                 <Image
                   src={category.image}
