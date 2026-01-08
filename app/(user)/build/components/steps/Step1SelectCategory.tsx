@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { GoChevronRight } from "react-icons/go";
-import FiberDoorImage from "../../../../../public/assets/images/landing/Door4 8.02.03 PM.png"
-import HollowCoreDoorImage from "../../../../../public/assets/images/dummy/door50.png"
-import ParticleCoreDoorImage from "../../../../../public/assets/images/dummy/door51.png"
-import SCLCDoorImage from "../../../../../public/assets/images/landing/Door3 8.02.03 PM.png"
+import FiberDoorImage from "../../../../../public/assets/images/landing/door41.png"
+import HollowCoreDoorImage from "../../../../../public/assets/images/landing/door5050.png"
+import ParticleCoreDoorImage from "../../../../../public/assets/images/dummy/door5151.png"
+import SCLCDoorImage from "../../../../../public/assets/images/landing/door33.png"
 import OtherDoorImage from "../../../../../public/assets/images/dummy/door531.png"
 import WoodCoreDoorImage from "../../../../../public/assets/images/dummy/door54.png"
 import vector123 from "../../../../../public/assets/images/dummy/vector123.png"
