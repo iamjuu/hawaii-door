@@ -27,7 +27,7 @@ const Step12 = ({ quoteData, setQuoteData }: StepProps) => {
     <div className="mt-[50px] mb-[50px]">
       <h2 className="text-[32px] font-medium text-black mb-8">Add On&apos;s</h2>
 
-      <div className="grid grid-cols-2 gap-6 max-w-[600px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[600px]">
         {/* None */}
         <div
           onClick={() => handleAddOnSelect("none")}
