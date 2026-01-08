@@ -38,7 +38,7 @@ interface StepProps {
                 shadow-md hover:border-orange-500 hover:shadow-lg
                 ${
                   quoteData.doorType === category.name
-                    ? "border-orange-500 shadow-lg bg-orange-50"
+                    ? "border-gray-200 bg-white"
                     : "border-gray-200 bg-white"
                 }
               `}
@@ -77,11 +77,11 @@ interface StepProps {
                 />
               </div>
 
-<div className="mt-auto px-3 min-h-[50px] flex flex-col justify-between">
+<div className="mt-auto px-4 pb-1 min-h-[45px] flex flex-col justify-between">
 <h3 className="font-medium text-[12px] text-black leading-4">
   {category.name}
 </h3>
-              <p className="text-sm w-full text-[12px] text-black text-center mt-2 flex items-center justify-between">
+              <p className="text-sm w-full text-[12px] text-black text-center  flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <Image src={vector123} alt="size icon" width={10} height={10} />
                   {category.size}
