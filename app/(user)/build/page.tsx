@@ -191,9 +191,15 @@ const BuildDoor = () => {
 
   const CurrentStepComponent = steps[currentStep].component;
 
-  const handleNext = () => {
+  const handleNext = (doorType?: string) => {
+    // If doorType is provided (and it's actually a string, not an event), update the quoteData first
+    if (doorType !== undefined && typeof doorType === 'string') {
+      setQuoteData((prev) => ({ ...prev, doorType }));
+    }
+    
     // Prevent moving to next step if on step 1 and no door is selected
-    if (currentStep === 0 && !quoteData.doorType) {
+    const currentDoorType = (doorType !== undefined && typeof doorType === 'string') ? doorType : quoteData.doorType;
+    if (currentStep === 0 && !currentDoorType) {
       return;
     }
     
@@ -253,7 +259,7 @@ const BuildDoor = () => {
               <StepContainer>                
                 <StepNavigation
                   onBack={handleBack}
-                  onNext={handleNext}
+                  onNext={() => handleNext()}
                   showBack={true}
                   percentage={steps[currentStep].percentage}
                   isFirstStep={currentStep === 0}
@@ -263,7 +269,7 @@ const BuildDoor = () => {
                 <CurrentStepComponent
                   quoteData={quoteData}
                   setQuoteData={setQuoteData}
-                  onNext={currentStep === 0 ? handleNext : undefined}
+                  onNext={currentStep === 0 ? (doorType?: string) => handleNext(doorType) : undefined}
                 />
               </StepContainer>
             </div>

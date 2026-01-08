@@ -17,7 +17,7 @@ interface QuoteData {
   
   const QuoteSummary = ({ quoteData, currentStep, onRestart }: QuoteSummaryProps) => {
     return (
-      <div className="lg:w-80 border border-gray-100 shadow-2xl rounded-b-[15px]  h-min md:mt-[22px] ">
+      <div className="lg:w-80 border border-gray-100 shadow-2xl rounded-b-[15px]  h-min md:mt-[28px] ">
         
         <h3 className="text-[16px] font-[400] mb-4 px-4 py-5 rounded-b-[15.33px] bg-gradient-to-r from-[#FFF7ED] to-[#FFEDD4] text-black">
   Your Quote Request
