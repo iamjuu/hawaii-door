@@ -1,7 +1,7 @@
 // components/user/build-door/steps/Step2SingleOrDouble.tsx (with Next.js Image)
 import Image from "next/image";
-import SingleDoorimg from "../../../../../public/assets/images/dummy/single.png"
-import Doubledoorimg from "../../../../../public/assets/images/dummy/double.png"
+import SingleDoorimg from "../../../../../public/assets/images/dummy/single1.png"
+import Doubledoorimg from "../../../../../public/assets/images/dummy/double1.png"
 interface StepProps {
   quoteData: any;
   setQuoteData: (data: any) => void;
