@@ -46,10 +46,10 @@ const Step2SingleOrDouble = ({ quoteData, setQuoteData, onNext }: StepProps) => 
             key={option.id}
             onClick={() => handleSelection(option.name)}
             className={`
-              relative border-2 p-3 cursor-pointer transition-all
+              relative border p-3 cursor-pointer transition-all
               w-full h-auto min-h-[140px] md:min-h-[180px]
               hover:border-orange-500 hover:shadow-lg
-              border-gray-200 bg-white
+             bg-white
             `}
             style={{
               borderColor: '#A3A3A3'
