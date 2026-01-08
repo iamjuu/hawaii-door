@@ -4,7 +4,7 @@ import FiberDoorImage from "../../../../../public/assets/images/landing/door41.p
 import HollowCoreDoorImage from "../../../../../public/assets/images/landing/door5050.png"
 import ParticleCoreDoorImage from "../../../../../public/assets/images/dummy/door5151.png"
 import SCLCDoorImage from "../../../../../public/assets/images/landing/door33.png"
-import OtherDoorImage from "../../../../../public/assets/images/dummy/door5311.png"
+import OtherDoorImage from "../../../../../public/assets/images/dummy/door531.png"
 import WoodCoreDoorImage from "../../../../../public/assets/images/dummy/door54.png"
 import vector123 from "../../../../../public/assets/images/dummy/vector123.png"
 interface StepProps {
@@ -63,17 +63,21 @@ interface StepProps {
               )}
 
               <div 
-                className="aspect-square rounded mb-4 relative bg-gradient-to-b from-[#F3F4F6] to-[#E5E7EB] "
+                className="aspect-[4/4.3] rounded mb-4 relative bg-gradient-to-b from-[#F3F4F6] to-[#E5E7EB]"
               >
                 <Image
                   src={category.image}
                   alt={category.name}
                   fill
-                  className="object-contain rounded"
+                  className={`object-contain rounded ${
+                    category.name === "Wood Core Door" || category.name === "Other (Special Order)"
+                      ? "scale-75"
+                      : ""
+                  }`}
                 />
               </div>
 
-<div className="mt-auto px-3">
+<div className="mt-auto px-3 min-h-[50px] flex flex-col justify-between">
 <h3 className="font-medium text-[12px] text-black leading-4">
   {category.name}
 </h3>
