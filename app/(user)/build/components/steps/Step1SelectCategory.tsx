@@ -6,6 +6,7 @@ import ParticleCoreDoorImage from "../../../../../public/assets/images/dummy/doo
 import SCLCDoorImage from "../../../../../public/assets/images/landing/Door3 8.02.03 PM.png"
 import OtherDoorImage from "../../../../../public/assets/images/dummy/door531.png"
 import WoodCoreDoorImage from "../../../../../public/assets/images/dummy/door54.png"
+import vector123 from "../../../../../public/assets/images/dummy/vector123.png"
 interface StepProps {
     quoteData: any;
     setQuoteData: (data: any) => void;
@@ -75,7 +76,13 @@ interface StepProps {
 <div className="mt-auto">
 
               <h3 className="font-medium  text-[12px]  text-black">{category.name}</h3>
-              <p className="text-sm w-full text-[12px] text-black text-center mt-2 flex justify-between">{category.size} <GoChevronRight className="text-black text-base" /> </p>
+              <p className="text-sm w-full text-[12px] text-black text-center mt-2 flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <Image src={vector123} alt="size icon" width={10} height={10} />
+                  {category.size}
+                </span>
+                <GoChevronRight className="text-black text-base" />
+              </p>
 </div>
             </div>
           ))}
