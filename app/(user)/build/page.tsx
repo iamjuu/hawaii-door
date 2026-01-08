@@ -207,7 +207,7 @@ const BuildDoor = () => {
 
       <div className="min-h-screen bg-white">
         <div className="px-15 mx-auto  py-8 border border-amber-800">
-          <div className="flex flex-col lg:flex-row gap-8">
+          <div className="flex flex-col lg:flex-row gap-0">
             {/* Main Content Area */}
             <div className="flex-1">
               <StepContainer>                
