@@ -139,7 +139,7 @@ const BuildDoor = () => {
         icon: vector56,
         text: "Choose how your door will be hung",
       },
-      percentage: 70,
+      percentage: 77,
     },
   ];
 
