@@ -17,8 +17,9 @@ interface StepProps {
       { name: "Fibre Glass Door", image: FiberDoorImage, size: "8'0\"" },
       { name: "Hollow Core Door", image: HollowCoreDoorImage, size: "8'0\"" },
       { name: "Particle Core Door", image: ParticleCoreDoorImage, size: "8'0\"" },
-      { name: "Solid Core Laminated Construction (SCLC)", image:SCLCDoorImage, size: "8'0\"" },
       { name: "Wood Core Door", image:WoodCoreDoorImage, size: "8'0\"" },
+      { name: "Solid Core Laminated Construction (SCLC)", image:SCLCDoorImage, size: "8'0\"" },
+     
       { name: "Other (Special Order)", image: OtherDoorImage, size: "8'0\"" },
       
     ];
@@ -33,7 +34,7 @@ interface StepProps {
               key={category.name}
               onClick={() => setQuoteData({ ...quoteData, doorType: category.name })}
               className={`
-                relative border-2 rounded-lg p-3 cursor-pointer transition-all flex flex-col
+                relative border-2 rounded-lg pb-3 cursor-pointer transition-all flex flex-col
                 hover:border-orange-500 hover:shadow-lg
                 ${
                   quoteData.doorType === category.name
@@ -62,8 +63,7 @@ interface StepProps {
               )}
 
               <div 
-                className="aspect-square rounded mb-4 relative"
-                style={{ backgroundColor: '#ffffff' }}
+                className="aspect-square rounded mb-4 relative bg-gradient-to-b from-[#F3F4F6] to-[#E5E7EB]"
               >
                 <Image
                   src={category.image}
@@ -73,7 +73,7 @@ interface StepProps {
                 />
               </div>
 
-<div className="mt-auto">
+<div className="mt-auto px-3">
 <h3 className="font-medium text-[12px] text-black leading-4">
   {category.name}
 </h3>
