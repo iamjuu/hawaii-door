@@ -10,7 +10,7 @@ import vector123 from "../../../../../public/assets/images/dummy/vector123.png"
 interface StepProps {
     quoteData: any;
     setQuoteData: (data: any) => void;
-    onNext?: () => void;
+    onNext?: (doorType?: string) => void;
   }
   
   const Step1SelectCategory = ({ quoteData, setQuoteData, onNext }: StepProps) => {
@@ -37,7 +37,7 @@ interface StepProps {
                 setQuoteData({ ...quoteData, doorType: category.name });
                 if (onNext) {
                   setTimeout(() => {
-                    onNext();
+                    onNext(category.name);
                   }, 300);
                 }
               }}
