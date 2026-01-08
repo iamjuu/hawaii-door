@@ -10,9 +10,10 @@ import vector123 from "../../../../../public/assets/images/dummy/vector123.png"
 interface StepProps {
     quoteData: any;
     setQuoteData: (data: any) => void;
+    onNext?: () => void;
   }
   
-  const Step1SelectCategory = ({ quoteData, setQuoteData }: StepProps) => {
+  const Step1SelectCategory = ({ quoteData, setQuoteData, onNext }: StepProps) => {
     const doorCategories = [
       { name: "Fibre Glass Door", image: FiberDoorImage, size: "8'0\"" },
       { name: "Hollow Core Door", image: HollowCoreDoorImage, size: "8'0\"" },
@@ -25,14 +26,21 @@ interface StepProps {
     ];
   
     return (
-      <div className="mt-[50px] mb-[50px]  md:pr-20">
-        <h2 className="text-[32px] font-medium font-roboto mb-8 text-black">Select Door Category</h2>
+      <div className="mt-[50px] md:mb-[70px] mb-[50px]  md:pr-20">
+        <h2 className="text-[20px] md:text-[32px] font-medium font-roboto mb-8 text-black">Select Door Category</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {doorCategories.map((category) => (
             <div
               key={category.name}
-              onClick={() => setQuoteData({ ...quoteData, doorType: category.name })}
+              onClick={() => {
+                setQuoteData({ ...quoteData, doorType: category.name });
+                if (onNext) {
+                  setTimeout(() => {
+                    onNext();
+                  }, 300);
+                }
+              }}
               className={`
                 relative rounded-t-[9.32px] rounded-b-[12.42px] pb-3 cursor-pointer transition-all flex flex-col
                 shadow-md hover:border-orange-500 hover:shadow-lg
@@ -63,7 +71,7 @@ interface StepProps {
               )}
 
               <div 
-                className="aspect-[4/4.3] rounded-t-[9.32px] mb-4 relative bg-gradient-to-b from-[#F3F4F6] to-[#E5E7EB]"
+                className="aspect-[4/2.5] md:aspect-[4/4.3] rounded-t-[9.32px] mb-4 relative bg-gradient-to-b from-[#F3F4F6] to-[#E5E7EB]"
               >
                 <Image
                   src={category.image}

@@ -51,6 +51,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: usaimg,
         text: "Manufactured in the US, precision-machined in Hawaii",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 0,
     },
@@ -59,6 +61,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector57,
         text: "Choose the right opening for a clean, balanced entry",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 7,
     },
@@ -67,6 +71,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector56,
         text: "Built to fit: fully custom door sizes",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 14,
     },
@@ -75,6 +81,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector99,
         text: "Confirm wall status to lock accurate sizing",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 21,
     },
@@ -83,6 +91,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector98,
         text: "Select wall thickness to ensure a precise fit and clean installation.",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 28,
     },
@@ -91,6 +101,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector44,
         text: "Perfect swing: choose your handing and hinges",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 35,
     },
@@ -100,6 +112,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector88,
         text: "Choose louver option to control airflow",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 42,
     },
@@ -108,6 +122,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: lock,
         text: "Lock-ready doors for your preferred hardware",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 49,
     },
@@ -116,6 +132,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector33,
         text: "Custom jambs for a ready-to-install package",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 56,
     },
@@ -124,6 +142,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector56,
         text: "Choose how your door will be hung",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 63,
     },
@@ -132,6 +152,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector56,
         text: "Choose how your door will be hung",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 70,
     },
@@ -140,6 +162,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector56,
         text: "Choose how your door will be hung",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 77,
     },
@@ -148,6 +172,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector56,
         text: "Choose how your door will be hung",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 84,
     },
@@ -156,6 +182,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector56,
         text: "Choose how your door will be hung",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
       },
       percentage: 91,
     },
@@ -164,6 +192,11 @@ const BuildDoor = () => {
   const CurrentStepComponent = steps[currentStep].component;
 
   const handleNext = () => {
+    // Prevent moving to next step if on step 1 and no door is selected
+    if (currentStep === 0 && !quoteData.doorType) {
+      return;
+    }
+    
     if (currentStep < steps.length - 1) {
       // When leaving Step 3 (index 2), ensure a default thickness is saved
       if (currentStep === 2) {
@@ -178,6 +211,11 @@ const BuildDoor = () => {
   };
 
   const handleBack = () => {
+    // Prevent going back from step 1
+    if (currentStep === 0) {
+      return;
+    }
+    
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
@@ -203,10 +241,12 @@ const BuildDoor = () => {
       <InfoBanner
         icon={steps[currentStep].infoBanner.icon}
         text={steps[currentStep].infoBanner.text}
+        width={steps[currentStep].infoBanner.width}
+        height={steps[currentStep].infoBanner.height}
       />
 
       <div className="min-h-screen bg-white">
-        <div className="px-15 mx-auto  py-8 border border-amber-800">
+        <div className="pl-6 pr-4 md:px-15 mx-auto  py-8 ">
           <div className="flex flex-col lg:flex-row gap-0">
             {/* Main Content Area */}
             <div className="flex-1">
@@ -214,13 +254,16 @@ const BuildDoor = () => {
                 <StepNavigation
                   onBack={handleBack}
                   onNext={handleNext}
-                  showBack={currentStep > 0}
+                  showBack={true}
                   percentage={steps[currentStep].percentage}
+                  isFirstStep={currentStep === 0}
+                  isNextDisabled={currentStep === 0 && !quoteData.doorType}
                 />
 
                 <CurrentStepComponent
                   quoteData={quoteData}
                   setQuoteData={setQuoteData}
+                  onNext={currentStep === 0 ? handleNext : undefined}
                 />
               </StepContainer>
             </div>
