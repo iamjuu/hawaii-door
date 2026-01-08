@@ -24,7 +24,7 @@ interface StepProps {
     ];
   
     return (
-      <div className="mt-[50px] mb-[50px]">
+      <div className="mt-[50px] mb-[50px]  md:pr-20">
         <h2 className="text-[32px] font-medium font-roboto mb-8 text-black">Select Door Category</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -74,8 +74,9 @@ interface StepProps {
               </div>
 
 <div className="mt-auto">
-
-              <h3 className="font-medium  text-[12px]  text-black">{category.name}</h3>
+<h3 className="font-medium text-[12px] text-black leading-4">
+  {category.name}
+</h3>
               <p className="text-sm w-full text-[12px] text-black text-center mt-2 flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <Image src={vector123} alt="size icon" width={10} height={10} />
