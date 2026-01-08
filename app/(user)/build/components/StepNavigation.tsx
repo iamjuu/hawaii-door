@@ -1,4 +1,6 @@
 // components/user/build-door/StepNavigation.tsx
+import { GoChevronRight, GoChevronLeft } from "react-icons/go";
+
 interface StepNavigationProps {
   onBack: () => void;
   onNext: () => void;
@@ -14,35 +16,41 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage }: StepNavigation
         {showBack && (
           <button
             onClick={onBack}
-            className="flex items-center gap-2 px-2 py-2 text-gray-700 hover:text-gray-900 transition-colors"
+            className="flex items-center gap-[10px] px-4 h-[41px] w-[149.97px] bg-white border-2 border-[#EAEAEA] rounded-[10px] text-black hover:text-gray-900 transition-colors shadow-md font-roboto"
           >
-            <span>←</span>
-            <span>GO BACK</span>
+            <GoChevronLeft className="text-black text-base" />
+            <span className="text-[18px] font-roboto text-black">GO BACK</span>
           </button>
         )}
       </div>
 
       {/* Center: Progress */}
-      <div className="flex items-center gap-3">
-        <div className="w-32 md:w-48 bg-gray-200 rounded-full h-2.5">
+      <div className="flex items-center flex-1 justify-center">
+        <div 
+          className="h-[35px] w-full max-w-[645px] rounded-[12px] relative overflow-hidden flex items-center justify-center"
+          style={{ backgroundColor: '#F6F6F6' }}
+        >
           <div
-            className="bg-green-400 h-2.5 rounded-full transition-all duration-300"
-            style={{ width: `${percentage}%` }}
+            className="h-full rounded-[12px] transition-all duration-300 absolute left-0 top-0"
+            style={{ 
+              width: `${percentage}%`,
+              background: `linear-gradient(to right, #B6D78A 0%, #CFEDA7 50%, #B6D78A 100%)`
+            }}
           />
+          <span className="relative z-10 text-gray-600 text-sm font-medium">
+            {percentage}%
+          </span>
         </div>
-        <span className="text-gray-600 text-sm font-medium min-w-[3rem]">
-          {percentage}%
-        </span>
       </div>
 
       {/* Right: Next Button */}
       <div className="w-32 flex justify-end">
         <button
           onClick={onNext}
-          className="flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors"
+          className="flex items-center gap-[10px] px-4 h-[41px] bg-[#FF6E4A] text-white rounded-l-[10px] hover:opacity-90 transition-opacity font-roboto"
         >
-          <span>NEXT</span>
-          <span>→</span>
+          <span className="text-[18px] font-roboto">NEXT</span>
+          <GoChevronRight className="text-white text-base" />
         </button>
       </div>
     </div>
