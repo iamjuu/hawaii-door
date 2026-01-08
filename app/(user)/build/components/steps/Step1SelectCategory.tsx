@@ -4,7 +4,7 @@ import FiberDoorImage from "../../../../../public/assets/images/landing/Door4 8.
 import HollowCoreDoorImage from "../../../../../public/assets/images/dummy/door50.png"
 import ParticleCoreDoorImage from "../../../../../public/assets/images/dummy/door51.png"
 import SCLCDoorImage from "../../../../../public/assets/images/landing/Door3 8.02.03 PM.png"
-import OtherDoorImage from "../../../../../public/assets/images/dummy/door53.png"
+import OtherDoorImage from "../../../../../public/assets/images/dummy/door531.png"
 import WoodCoreDoorImage from "../../../../../public/assets/images/dummy/door54.png"
 interface StepProps {
     quoteData: any;
@@ -24,7 +24,7 @@ interface StepProps {
   
     return (
       <div className="mt-[50px] mb-[50px]">
-        <h2 className="text-[32px] font-[500] mb-8 text-black">Select Door Category</h2>
+        <h2 className="text-[32px] font-medium font-roboto mb-8 text-black">Select Door Category</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {doorCategories.map((category) => (
@@ -62,7 +62,7 @@ interface StepProps {
 
               <div 
                 className="aspect-square rounded mb-4 relative"
-                style={{ background: 'linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%)' }}
+                style={{ backgroundColor: '#ffffff' }}
               >
                 <Image
                   src={category.image}
