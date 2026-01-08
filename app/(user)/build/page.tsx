@@ -191,15 +191,26 @@ const BuildDoor = () => {
 
   const CurrentStepComponent = steps[currentStep].component;
 
-  const handleNext = (doorType?: string) => {
+  const handleNext = (doorType?: string, doorConfig?: string) => {
     // If doorType is provided (and it's actually a string, not an event), update the quoteData first
     if (doorType !== undefined && typeof doorType === 'string') {
       setQuoteData((prev) => ({ ...prev, doorType }));
     }
     
+    // If doorConfig is provided (and it's actually a string, not an event), update the quoteData first
+    if (doorConfig !== undefined && typeof doorConfig === 'string') {
+      setQuoteData((prev) => ({ ...prev, doorConfig, category: doorConfig }));
+    }
+    
     // Prevent moving to next step if on step 1 and no door is selected
     const currentDoorType = (doorType !== undefined && typeof doorType === 'string') ? doorType : quoteData.doorType;
     if (currentStep === 0 && !currentDoorType) {
+      return;
+    }
+    
+    // Prevent moving to next step if on step 2 and no door config is selected
+    const currentDoorConfig = (doorConfig !== undefined && typeof doorConfig === 'string') ? doorConfig : quoteData.doorConfig;
+    if (currentStep === 1 && !currentDoorConfig) {
       return;
     }
     
@@ -263,13 +274,13 @@ const BuildDoor = () => {
                   showBack={true}
                   percentage={steps[currentStep].percentage}
                   isFirstStep={currentStep === 0}
-                  isNextDisabled={currentStep === 0 && !quoteData.doorType}
+                  isNextDisabled={(currentStep === 0 && !quoteData.doorType) || (currentStep === 1 && !quoteData.doorConfig)}
                 />
 
                 <CurrentStepComponent
                   quoteData={quoteData}
                   setQuoteData={setQuoteData}
-                  onNext={currentStep === 0 ? (doorType?: string) => handleNext(doorType) : undefined}
+                  onNext={currentStep === 0 ? (doorType?: string) => handleNext(doorType) : currentStep === 1 ? (doorConfig?: string) => handleNext(undefined, doorConfig) : undefined}
                 />
               </StepContainer>
             </div>
