@@ -9,9 +9,10 @@ import full from "../../../../../public/assets/images/dummy/fulllouver.png";
 interface StepProps {
   quoteData: any;
   setQuoteData: (data: any) => void;
+  onNext?: () => void;
 }
 
-const Step7 = ({ quoteData, setQuoteData }: StepProps) => {
+const Step7 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   const louverOptions = [
     {
       id: "no_louver",
@@ -52,32 +53,40 @@ const Step7 = ({ quoteData, setQuoteData }: StepProps) => {
   ];
 
   const handleSelection = (louver: string) => {
+    // Save selected louver value to state
     setQuoteData({
       ...quoteData,
       louver,
     });
+
+    // Auto-advance to next step after selecting an option (like Step 5)
+    if (onNext) {
+      setTimeout(() => {
+        onNext();
+      }, 300);
+    }
   };
 
   return (
     <div className="mt-[50px] mb-[50px]">
-      <h2 className="text-[32px] font-[500] text-black mb-8">Does this door need a Louver?</h2>
+      <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Does this door need a Louver?</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-[900px]">
         {louverOptions.map((option) => (
           <div
             key={option.id}
             onClick={() => handleSelection(option.name)}
-            className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all
-              hover:border-orange-500 hover:shadow-2xl hover:scale-105
+            className={`relative border   pb-3 cursor-pointer transition-all
+               hover:shadow-2xl hover:scale-105
               ${
                 quoteData.louver === option.name
-                  ? "border-orange-500 shadow-2xl bg-orange-50"
-                  : "border-gray-200 bg-white"
+                  ? " shadow-2xl border border-[#A3A3A3] bg-white"
+                  : "border border-[#A3A3A3] bg-white"
               }`}
           >
             {/* Selected Badge (same style as Step 2) */}
             {quoteData.louver === option.name && (
-              <div className="absolute top-3 right-3 z-10">
+              <div className="absolute top-2 right-2 z-10">
                 <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
                   <svg
                     className="w-5 h-5 text-white"
@@ -95,12 +104,12 @@ const Step7 = ({ quoteData, setQuoteData }: StepProps) => {
             )}
 
             {/* Image */}
-            <div className="relative w-full aspect-[4/3] bg-gray-50 rounded-lg mb-4 overflow-hidden mx-auto">
+            <div className="relative w-full max-h-[180px] aspect-[4/3] bg-gray-50 rounded-lg mb-2 overflow-hidden mx-auto">
               <Image
                 src={option.image}
                 alt={option.label}
                 fill
-                className="object-contain p-4"
+                className="object-contain pt-2"
               />
             </div>
 
