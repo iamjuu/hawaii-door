@@ -6,7 +6,9 @@ import lhra from "../../../../../public/assets/images/dummy/Lhra.png";
 import lha from "../../../../../public/assets/images/dummy/Lha.png";
 import rha from "../../../../../public/assets/images/dummy/rha.png";
 import rhra from "../../../../../public/assets/images/dummy/rhra.png";
-
+import rounded1 from "../../../../../public/assets/images/dummy/roundcorner1.png";
+import rounded2 from "../../../../../public/assets/images/dummy/roundcorner2.png";
+import square from "../../../../../public/assets/images/dummy/square.png";
 interface StepProps {
   quoteData: any;
   setQuoteData: (data: any) => void;
@@ -229,39 +231,84 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
       {/* Hinge Radius */}
       <div className="mt-10">
         <p className="text-lg font-semibold text-gray-900 mb-3">Hinge Radius</p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="flex w-full max-w-[900px] gap-[15px]">
           <button
             type="button"
             onClick={() => handleRadiusSelect("1/4")}
-            className={`border-2 rounded-lg px-4 py-3 text-sm font-medium bg-white transition-colors ${
-              selectedRadius === "1/4"
-                ? "border-orange-500 text-orange-600"
-                : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
+            className={`w-full px-4 py-1 md:px-5 md:py-1.5 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
+              selectedRadius === "1/4" ? "border-orange-500 text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
             }`}
           >
-            1/4&quot; Round Corner
+            <div className="flex items-center gap-3">
+              <div className="relative w-10 h-10 bg-[#F3F4F6] rounded">
+                <Image
+                  src={rounded1}
+                  alt="1/4 Round Corner"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <span className="text-[14px] text-black">1/4&quot; Round Corner</span>
+            </div>
+            <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 flex items-center justify-center ${
+              selectedRadius === "1/4" ? "border-orange-500" : "border-gray-300"
+            }`}>
+              {selectedRadius === "1/4" && (
+                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-orange-500"></div>
+              )}
+            </div>
           </button>
           <button
             type="button"
             onClick={() => handleRadiusSelect("5/8")}
-            className={`border-2 rounded-lg px-4 py-3 text-sm font-medium bg-white transition-colors ${
-              selectedRadius === "5/8"
-                ? "border-orange-500 text-orange-600"
-                : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
+            className={`w-full px-4 py-1 md:px-5 md:py-1.5 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
+              selectedRadius === "5/8" ? "border-orange-500 text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
             }`}
           >
-            5/8&quot; Round Corner
+            <div className="flex items-center gap-3">
+              <div className="relative w-10 h-10 bg-[#F3F4F6] rounded">
+                <Image
+                  src={rounded2}
+                  alt="5/8 Round Corner"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <span className="text-[14px] text-black">5/8&quot; Round Corner</span>
+            </div>
+            <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 flex items-center justify-center ${
+              selectedRadius === "5/8" ? "border-orange-500" : "border-gray-300"
+            }`}>
+              {selectedRadius === "5/8" && (
+                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-orange-500"></div>
+              )}
+            </div>
           </button>
           <button
             type="button"
             onClick={() => handleRadiusSelect("square")}
-            className={`border-2 rounded-lg px-4 py-3 text-sm font-medium bg-white transition-colors ${
-              selectedRadius === "square"
-                ? "border-orange-500 text-orange-600"
-                : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
+            className={`w-full px-4 py-1 md:px-5 md:py-1.5 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
+              selectedRadius === "square" ? "border-orange-500 text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
             }`}
           >
-            Square
+            <div className="flex items-center gap-3">
+              <div className="relative w-10 h-10 bg-[#F3F4F6] rounded">
+                <Image
+                  src={square}
+                  alt="Square"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <span className="text-[14px] text-black">Square</span>
+            </div>
+            <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 flex items-center justify-center ${
+              selectedRadius === "square" ? "border-orange-500" : "border-gray-300"
+            }`}>
+              {selectedRadius === "square" && (
+                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-orange-500"></div>
+              )}
+            </div>
           </button>
         </div>
       </div>
