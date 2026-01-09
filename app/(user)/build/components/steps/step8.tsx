@@ -175,7 +175,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               selectedLockType === "door_knob" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedLockType === "door_knob" && (
-                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-orange-500"></div>
+                <div className="w-3 h-3 rounded-full bg-orange-500"></div>
               )}
             </div>
             
@@ -205,7 +205,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
               Lock Bore Diameter
             </p>
-            <div className="flex flex-col md:grid md:grid-cols-3 gap-2 max-w-[300px]">
+            <div className="flex flex-col md:grid md:grid-cols-3 gap-2 max-w-full md:max-w-[300px]">
               <button
                 type="button"
                 onClick={() => handleBoreDiameterSelect("1")}
@@ -335,7 +335,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
               Backset (lock)
             </p>
-            <div className="flex flex-col md:grid md:grid-cols-3 gap-3 max-w-[300px]">
+            <div className="flex flex-col md:grid md:grid-cols-3 gap-3 max-w-full md:max-w-[300px]">
               <button
                 type="button"
                 onClick={() => handleBacksetSelect("2_3/8")}
@@ -399,7 +399,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             <button
               type="button"
               onClick={() => handleLatchBoreDiameterSelect("default")}
-              className={`max-w-[140px] w-full border-2 rounded-lg px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+              className={`w-full md:max-w-[140px] border-2 rounded-lg px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
                 selectedLatchBoreDiameter === "default"
                   ? "border-orange-500 text-black"
                   : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
@@ -494,7 +494,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
               Drive-In Diameter
             </p>
-            <div className="flex flex-col md:grid md:grid-cols-3 gap-3 max-w-[300px]">
+            <div className="flex flex-col md:grid md:grid-cols-3 gap-3 max-w-full md:max-w-[300px]">
               <button
                 type="button"
                 onClick={() => handleDriveInDiameterSelect('7/8"' )}
