@@ -43,6 +43,8 @@ const BuildDoor = () => {
     thickness: "",
     quantity: 1,
     wallBuilt: "",
+    wallThickness: "",
+    customDiameter: "",
   });
 
   // Define all steps with their info banners
@@ -92,8 +94,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector98,
         text: "Select wall thickness to ensure a precise fit and clean installation.",
-        width: { mobile: 24, desktop: 28 },
-        height: { mobile: 24, desktop: 28 },
+        width: { mobile: 24, desktop: 24 },
+        height: { mobile: 24, desktop: 24 },
       },
       percentage: 28,
     },
@@ -224,6 +226,11 @@ const BuildDoor = () => {
     if (currentStep === 3 && !quoteData.wallBuilt) {
       return;
     }
+
+    // Prevent moving to next step if on step 5 (index 4) and neither preset option nor custom diameter is selected
+    if (currentStep === 4 && !quoteData.wallThickness && !quoteData.customDiameter) {
+      return;
+    }
     
     if (currentStep < steps.length - 1) {
       // When leaving Step 3 (index 2), ensure a default thickness is saved
@@ -260,6 +267,8 @@ const BuildDoor = () => {
       thickness: "",
       quantity: 1,
       wallBuilt: "",
+      wallThickness: "",
+      customDiameter: "",
     });
   };
 
@@ -290,7 +299,8 @@ const BuildDoor = () => {
                     (currentStep === 0 && !quoteData.doorType) ||
                     (currentStep === 1 && !quoteData.doorConfig) ||
                     (currentStep === 2 && (!quoteData.width || !quoteData.height)) ||
-                    (currentStep === 3 && !quoteData.wallBuilt)
+                    (currentStep === 3 && !quoteData.wallBuilt) ||
+                    (currentStep === 4 && !quoteData.wallThickness && !quoteData.customDiameter)
                   }
                 />
 
@@ -303,6 +313,8 @@ const BuildDoor = () => {
                       : currentStep === 1
                       ? (doorConfig?: string) => handleNext(undefined, doorConfig)
                       : currentStep === 3
+                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
+                      : currentStep === 4
                       ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
                       : undefined
                   }
