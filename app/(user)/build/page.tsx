@@ -53,6 +53,14 @@ const BuildDoor = () => {
     hingeLocation3: "",
     backset: "",
     louver: "",
+    lockType: "",
+    lockBoreDiameter: "",
+    lockBackset: "",
+    lockCenterline: "",
+    latchBoreDiameter: "",
+    faceplateDimension: "",
+    faceplateRadius: "",
+    driveInDiameter: "",
   });
 
   // Define all steps with their info banners
@@ -249,6 +257,20 @@ const BuildDoor = () => {
     if (currentStep === 6 && !quoteData.louver) {
       return;
     }
+
+    // Prevent moving to next step if on step 8 (index 7) and required fields are not selected
+    if (currentStep === 7 && (
+      !quoteData.lockType ||
+      !quoteData.lockBoreDiameter ||
+      !quoteData.lockBackset ||
+      !quoteData.lockCenterline ||
+      !quoteData.faceplateDimension ||
+      !quoteData.faceplateRadius ||
+      !quoteData.driveInDiameter ||
+      !quoteData.latchBoreDiameter
+    )) {
+      return;
+    }
     
     if (currentStep < steps.length - 1) {
       // When leaving Step 3 (index 2), ensure a default thickness is saved
@@ -295,6 +317,14 @@ const BuildDoor = () => {
       hingeLocation3: "",
       backset: "",
       louver: "",
+      lockType: "",
+      lockBoreDiameter: "",
+      lockBackset: "",
+      lockCenterline: "",
+      latchBoreDiameter: "",
+      faceplateDimension: "",
+      faceplateRadius: "",
+      driveInDiameter: "",
     });
   };
 
@@ -328,7 +358,17 @@ const BuildDoor = () => {
                     (currentStep === 3 && !quoteData.wallBuilt) ||
                     (currentStep === 4 && !quoteData.wallThickness && !quoteData.customDiameter) ||
                     (currentStep === 5 && (!quoteData.doorHandling || !quoteData.hingeRadius || !quoteData.hingeType)) ||
-                    (currentStep === 6 && !quoteData.louver)
+                    (currentStep === 6 && !quoteData.louver) ||
+                    (currentStep === 7 && (
+                      !quoteData.lockType ||
+                      !quoteData.lockBoreDiameter ||
+                      !quoteData.lockBackset ||
+                      !quoteData.lockCenterline ||
+                      !quoteData.faceplateDimension ||
+                      !quoteData.faceplateRadius ||
+                      !quoteData.driveInDiameter ||
+                      !quoteData.latchBoreDiameter
+                    ))
                   }
                 />
 
@@ -347,6 +387,8 @@ const BuildDoor = () => {
                       : currentStep === 5
                       ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
                       : currentStep === 6
+                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
+                      : currentStep === 7
                       ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
                       : undefined
                   }
