@@ -42,6 +42,7 @@ const BuildDoor = () => {
     height: "",
     thickness: "",
     quantity: 1,
+    wallBuilt: "",
   });
 
   // Define all steps with their info banners
@@ -81,8 +82,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector99,
         text: "Confirm wall status to lock accurate sizing",
-        width: { mobile: 24, desktop: 28 },
-        height: { mobile: 24, desktop: 28 },
+        width: { mobile: 24, desktop: 26 },
+        height: { mobile: 24, desktop: 26 },
       },
       percentage: 21,
     },
@@ -218,6 +219,11 @@ const BuildDoor = () => {
     if (currentStep === 2 && (!quoteData.width || !quoteData.height)) {
       return;
     }
+
+    // Prevent moving to next step if on step 4 (index 3) and wallBuilt is not selected
+    if (currentStep === 3 && !quoteData.wallBuilt) {
+      return;
+    }
     
     if (currentStep < steps.length - 1) {
       // When leaving Step 3 (index 2), ensure a default thickness is saved
@@ -253,6 +259,7 @@ const BuildDoor = () => {
       height: "",
       thickness: "",
       quantity: 1,
+      wallBuilt: "",
     });
   };
 
@@ -279,13 +286,26 @@ const BuildDoor = () => {
                   showBack={true}
                   percentage={steps[currentStep].percentage}
                   isFirstStep={currentStep === 0}
-                  isNextDisabled={(currentStep === 0 && !quoteData.doorType) || (currentStep === 1 && !quoteData.doorConfig) || (currentStep === 2 && (!quoteData.width || !quoteData.height))}
+                  isNextDisabled={
+                    (currentStep === 0 && !quoteData.doorType) ||
+                    (currentStep === 1 && !quoteData.doorConfig) ||
+                    (currentStep === 2 && (!quoteData.width || !quoteData.height)) ||
+                    (currentStep === 3 && !quoteData.wallBuilt)
+                  }
                 />
 
                 <CurrentStepComponent
                   quoteData={quoteData}
                   setQuoteData={setQuoteData}
-                  onNext={currentStep === 0 ? (doorType?: string) => handleNext(doorType) : currentStep === 1 ? (doorConfig?: string) => handleNext(undefined, doorConfig) : undefined}
+                  onNext={
+                    currentStep === 0
+                      ? (doorType?: string) => handleNext(doorType)
+                      : currentStep === 1
+                      ? (doorConfig?: string) => handleNext(undefined, doorConfig)
+                      : currentStep === 3
+                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
+                      : undefined
+                  }
                 />
               </StepContainer>
             </div>
