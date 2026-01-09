@@ -234,13 +234,13 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
             <button
               type="button"
               onClick={() => handleBoreDiameterSelect("other")}
-              className={`w-full relative border-2 rounded-lg px-5 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
+              className={`w-full relative border-2 rounded-lg px-5 py-2 font-roboto text-sm font-medium bg-white transition-colors flex items-center justify-between ${
                 selectedBoreDiameter === "other"
                   ? "border-orange-500 text-black"
                   : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
               }`}
             >
-              <span className="text-left">Other</span>
+              <span className="text-left font-roboto">Other</span>
               <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                 selectedBoreDiameter === "other" ? "border-orange-500" : "border-gray-300"
               }`}>
@@ -317,7 +317,7 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
       </div>
 
       {/* Lock Centerline and LatchBore Diameter */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 md:mt-[60px]">
         {/* Left: Lock Centerline */}
         <div className="flex flex-col">
           <p className="text-[18px] md:text-[26px] font-[400] text-black font-roboto">Lock Centerline</p>
@@ -367,7 +367,7 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
       </div>
 
       {/* Faceplate Dimension and Radius */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 md:mt-[60px]">
         {/* Left: Faceplate Dimension */}
         <div>
           <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
@@ -379,7 +379,7 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
               onClick={() =>
                 handleFaceplateDimensionSelect('1" x 2 1/4" x 5/32"')
               }
-              className={`w-full relative border-2 rounded-lg px-5 py-4 text-[11px] font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+              className={`w-full relative border-2 rounded-lg px-5 py-2.5 text-[11px] font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
                 selectedFaceplateDimension === '1" x 2 1/4" x 5/32"'
                   ? "border-orange-500 text-black"
                   : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
@@ -423,7 +423,7 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
                   : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
               }`}
             >
-              <span className="text-left font-roboto text-base">Other</span>
+              <span className="text-left font-roboto text-[15px]">Other</span>
               <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                 selectedFaceplateDimension === "other" ? "border-orange-500" : "border-gray-300"
               }`}>
@@ -479,7 +479,7 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className="relative w-6 h-6 md:w-8 md:h-8 flex-shrink-0">
+                <div className="relative w-6 h-6  flex-shrink-0">
                   <Image
                     src={square}
                     alt="Square"
