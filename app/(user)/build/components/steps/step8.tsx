@@ -191,7 +191,7 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left: Lock Bore Diameter */}
         <div>
-          <p className="text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
+          <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
             Lock Bore Diameter
           </p>
           <div className="flex flex-col md:grid md:grid-cols-3 gap-2 max-w-[400px]">
@@ -254,7 +254,7 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
 
         {/* Right: Backset (lock) */}
         <div>
-          <p className="text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
+          <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
             Backset (lock)
           </p>
           <div className="flex flex-col md:grid md:grid-cols-3 gap-3">
@@ -320,7 +320,7 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
         {/* Left: Lock Centerline */}
         <div className="flex flex-col">
-          <p className="text-[26px] font-[400] text-black font-roboto">Lock Centerline</p>
+          <p className="text-[18px] md:text-[26px] font-[400] text-black font-roboto">Lock Centerline</p>
           <div className="flex items-center gap-2 mb-3 md:mb-7">
             <div className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center ">
               <svg
@@ -344,7 +344,7 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
 
         {/* Right: LatchBore Diameter */}
         <div>
-          <p className="text-[26px] font-[400] text-black mb-3 md:mb-13 font-roboto">LatchBore Diameter</p>
+          <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-13 font-roboto">LatchBore Diameter</p>
           <button
             type="button"
             onClick={() => handleLatchBoreDiameterSelect("default")}
@@ -370,7 +370,7 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
         {/* Left: Faceplate Dimension */}
         <div>
-          <p className="text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
+          <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
             Faceplate Dimension
           </p>
           <div className="flex flex-col md:grid md:grid-cols-3 gap-3">
@@ -437,7 +437,7 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
 
         {/* Right: Faceplate Radius */}
         <div className="max-w-[390px]">
-          <p className="text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
+          <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
             Faceplate Radius
           </p>
           <div className="flex flex-col md:grid md:grid-cols-2 gap-3">
@@ -503,7 +503,7 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
 
       {/* Drive-In Diameter */}
       <div className="mt-[42px] md:max-w-[400px]">
-        <p className="text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
+        <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
           Drive-In Diameter
         </p>
         <div className="flex flex-col md:grid md:grid-cols-3 gap-3">
