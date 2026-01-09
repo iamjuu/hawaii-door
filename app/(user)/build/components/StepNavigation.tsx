@@ -40,7 +40,8 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
         <div className="w-32">
           {showBack && (
             <button
-              onClick={onBack}
+              onClick={isBackDisabled ? undefined : onBack}
+              disabled={isBackDisabled}
               className={`
                 flex items-center justify-center gap-[5px] px-4 h-[37px] w-[143.97px] bg-white border-2 border-[#EAEAEA] rounded-[10px] text-black hover:text-gray-900 transition-colors shadow-md font-roboto
                 ${isBackDisabled 
@@ -77,12 +78,13 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
         {/* Right: Next Button */}
         <div className="w-32 flex justify-end">
           <button
-            onClick={onNext}
+            onClick={isNextDisabled ? undefined : onNext}
+            disabled={isNextDisabled}
             className={`
-              flex items-center justify-center gap-[5px] w-[110px] px-4 h-[37px] bg-[#FF6E4A] text-white rounded-l-[10px] hover:opacity-90 transition-opacity font-roboto
+              flex items-center justify-center gap-[5px] w-[110px] px-4 h-[37px] bg-[#FF6E4A] text-white rounded-l-[10px] transition-opacity font-roboto
               ${isNextDisabled 
                 ? 'hover:cursor-not-allowed cursor-not-allowed' 
-                : 'hover:cursor-pointer cursor-pointer'
+                : 'hover:opacity-90 hover:cursor-pointer cursor-pointer'
               }
             `}
           >
@@ -97,7 +99,8 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
         {/* Left: Go Back Button */}
         {showBack && (
           <button
-            onClick={onBack}
+            onClick={isBackDisabled ? undefined : onBack}
+            disabled={isBackDisabled}
             className={`
               flex items-center justify-center gap-[3px] px-2 h-[32px] w-[100px] bg-white border-2 border-[#EAEAEA] rounded-[8px] text-black hover:text-gray-900 transition-colors shadow-md font-roboto
               ${isBackDisabled 
@@ -113,12 +116,13 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
 
         {/* Right: Next Button */}
         <button
-          onClick={onNext}
+          onClick={isNextDisabled ? undefined : onNext}
+          disabled={isNextDisabled}
           className={`
-            flex items-center justify-center gap-[3px] w-[90px] px-2 h-[32px] bg-[#FF6E4A] text-white rounded-[8px] hover:opacity-90 transition-opacity font-roboto
+            flex items-center justify-center gap-[3px] w-[90px] px-2 h-[32px] bg-[#FF6E4A] text-white rounded-[8px] transition-opacity font-roboto
             ${isNextDisabled 
               ? 'hover:cursor-not-allowed cursor-not-allowed' 
-              : 'hover:cursor-pointer cursor-pointer'
+              : 'hover:opacity-90 hover:cursor-pointer cursor-pointer'
             }
           `}
         >

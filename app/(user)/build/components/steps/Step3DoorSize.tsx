@@ -1,7 +1,7 @@
 
 "use client";
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 
 interface StepProps {
@@ -27,6 +27,24 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
     { label: '84" (7\'0")', value: "84" },
     { label: '96" (8\'0")', value: "96" },
   ];
+
+  // Set default thickness and quantity on mount if not already set
+  useEffect(() => {
+    const updates: any = {};
+    if (!quoteData.thickness) {
+      updates.thickness = '1 3/8"';
+    }
+    if (!quoteData.quantity) {
+      updates.quantity = 1;
+    }
+    if (Object.keys(updates).length > 0) {
+      setQuoteData({
+        ...quoteData,
+        ...updates,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run on mount
 
   const handleWidthChange = (value: string) => {
     setQuoteData({
@@ -124,7 +142,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
                     <select
                       value={quoteData.width || ""}
                       onChange={(e) => handleWidthChange(e.target.value)}
-                      className="w-full rounded-lg px-4 py-1.5 md:py-2 pr-10 text-base md:text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
+                      className="w-full rounded-lg px-4 py-1.5 md:py-2 pr-10 text-sm md:text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
                     >
                       <option value="" disabled>Select Width</option>
                       {widthOptions.map(option => (
@@ -142,7 +160,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
                     <select
                       value={quoteData.height || ""}
                       onChange={(e) => handleHeightChange(e.target.value)}
-                      className="w-full rounded-lg px-4 py-1.5 md:py-2 pr-10 text-base md:text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
+                      className="w-full rounded-lg px-4 py-1.5 md:py-2 pr-10 text-sm md:text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
                     >
                       <option value="" disabled>Select Height</option>
                       {heightOptions.map(option => (
@@ -196,17 +214,17 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
               {/* Quantity */}
               <div>
                 <label className="block text-[16px] md:text-[20px] font-roboto mb-3 text-black">Quantity</label>
-                <div className="flex items-center gap-4">
-                  <button onClick={decrementQuantity} className="w-12 h-12 rounded-lg border-2 border-gray-300 hover:border-orange-500 flex items-center justify-center text-2xl font-bold text-black">−</button>
+                <div className="flex items-center gap-3 md:gap-4">
+                  <button onClick={decrementQuantity} className="w-10 h-10 md:w-12 md:h-12 rounded-lg border-2 border-gray-300 hover:border-orange-500 flex items-center justify-center text-xl md:text-2xl font-bold text-black">−</button>
                   <input
                     type="number"
                     min="1"
                     value={quoteData.quantity || 1}
                     onChange={handleQuantityChange}
-                    className="w-24 h-12 text-center text-[16px] md:text-[20px] font-roboto font-semibold border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none text-black"
+                    className="w-20 md:w-24 h-10 md:h-12 text-center text-sm md:text-[20px] font-roboto font-semibold border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none text-black"
                   />
-                  <button onClick={incrementQuantity} className="w-12 h-12 rounded-lg border-2 border-gray-300 hover:border-orange-500 flex items-center justify-center text-2xl font-bold text-black">+</button>
-                  <span className="text-black font-roboto text-base">doors</span>
+                  <button onClick={incrementQuantity} className="w-10 h-10 md:w-12 md:h-12 rounded-lg border-2 border-gray-300 hover:border-orange-500 flex items-center justify-center text-xl md:text-2xl font-bold text-black">+</button>
+                  <span className="text-black font-roboto text-sm md:text-base">doors</span>
                 </div>
               </div>
             </div>

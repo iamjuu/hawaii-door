@@ -214,6 +214,11 @@ const BuildDoor = () => {
       return;
     }
     
+    // Prevent moving to next step if on step 3 (index 2) and width or height is not selected
+    if (currentStep === 2 && (!quoteData.width || !quoteData.height)) {
+      return;
+    }
+    
     if (currentStep < steps.length - 1) {
       // When leaving Step 3 (index 2), ensure a default thickness is saved
       if (currentStep === 2) {
@@ -274,7 +279,7 @@ const BuildDoor = () => {
                   showBack={true}
                   percentage={steps[currentStep].percentage}
                   isFirstStep={currentStep === 0}
-                  isNextDisabled={(currentStep === 0 && !quoteData.doorType) || (currentStep === 1 && !quoteData.doorConfig)}
+                  isNextDisabled={(currentStep === 0 && !quoteData.doorType) || (currentStep === 1 && !quoteData.doorConfig) || (currentStep === 2 && (!quoteData.width || !quoteData.height))}
                 />
 
                 <CurrentStepComponent
