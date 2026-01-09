@@ -48,19 +48,19 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
   };
 
   return (
-    <div className="mt-[50px] mb-[50px]">
-      <h2 className="text-[32px] font-[500] text-black mb-8">Door Handling & Hinges</h2>
+    <div className="mt-[50px] mb-[50px] max-w-[900px]">
+      <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Door Handling & Hinges</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="max-w-[900px] w-full grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* 1: LHRA */}
         <div
           onClick={() => handleHandlingSelect("LHRA")}
           className={`
             relative border-2 rounded-lg p-4 cursor-pointer transition-all
-            hover:border-orange-500 hover:shadow-lg
+             hover:shadow-lg
             ${
               selectedHandling === "LHRA"
-                ? "border-orange-500 shadow-lg bg-orange-50"
+                ? "shadow-lg border-gray-200 bg-white"
                 : "border-gray-200 bg-white"
             }
           `}
@@ -91,8 +91,9 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
               className="object-contain"
             />
           </div>
-          <p className="text-base font-semibold text-gray-900 mb-1 text-center">LHRA</p>
-          <p className="text-sm text-gray-500 text-center">Left Hand Reverse Active</p>
+          <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">LHRA</p>
+          <p className="text-[11.96px] text-[#000000] font-light text-center">Left Hand Reverse Active</p>
+
         </div>
 
         {/* 2: LHA */}
@@ -100,10 +101,10 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
           onClick={() => handleHandlingSelect("LHA")}
           className={`
             relative border-2 rounded-lg p-4 cursor-pointer transition-all
-            hover:border-orange-500 hover:shadow-lg
+             hover:shadow-lg
             ${
               selectedHandling === "LHA"
-                ? "border-orange-500 shadow-lg bg-orange-50"
+                ? "shadow-lg border-gray-200 bg-white"
                 : "border-gray-200 bg-white"
             }
           `}
@@ -134,8 +135,8 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
               className="object-contain"
             />
           </div>
-          <p className="text-base font-semibold text-gray-900 mb-1 text-center">LHA</p>
-          <p className="text-sm text-gray-500 text-center">Left Hand Active</p>
+          <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">LHA</p>
+          <p className="text-[11.96px] text-[#000000] font-light text-center">Left Hand Active</p>
         </div>
 
         {/* 3: RHA */}
@@ -143,10 +144,10 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
           onClick={() => handleHandlingSelect("RHA")}
           className={`
             relative border-2 rounded-lg p-4 cursor-pointer transition-all
-            hover:border-orange-500 hover:shadow-lg
+             hover:shadow-lg
             ${
               selectedHandling === "RHA"
-                ? "border-orange-500 shadow-lg bg-orange-50"
+                ? "shadow-lg border-gray-200 bg-white"
                 : "border-gray-200 bg-white"
             }
           `}
@@ -177,8 +178,8 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
               className="object-contain"
             />
           </div>
-          <p className="text-base font-semibold text-gray-900 mb-1 text-center">RHA</p>
-          <p className="text-sm text-gray-500 text-center">Right Hand Active</p>
+          <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">RHA</p>
+          <p className="text-[11.96px] text-[#000000] font-light text-center">Right Hand Active</p>
         </div>
 
         {/* 4: RHRA */}
@@ -186,10 +187,10 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
           onClick={() => handleHandlingSelect("RHRA")}
           className={`
             relative border-2 rounded-lg p-4 cursor-pointer transition-all
-            hover:border-orange-500 hover:shadow-lg
+            hover:shadow-lg
             ${
               selectedHandling === "RHRA"
-                ? "border-orange-500 shadow-lg bg-orange-50"
+                ? "shadow-lg border-gray-200 bg-white"
                 : "border-gray-200 bg-white"
             }
           `}
@@ -220,8 +221,8 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
               className="object-contain"
             />
           </div>
-          <p className="text-base font-semibold text-gray-900 mb-1 text-center">RHRA</p>
-          <p className="text-sm text-gray-500 text-center">Right Hand Reverse Active</p>
+          <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">RHRA</p>
+          <p className="text-[11.96px] text-[#000000] font-light text-center">Right Hand Reverse Active</p>
         </div>
       </div>
 
@@ -296,7 +297,7 @@ const Step6 = ({ quoteData, setQuoteData }: StepProps) => {
 
       {/* Hinge Location (from top) */}
       <div className="mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="max-w-[900px] w-full grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Left: Hinge Location */}
           <div>
             <p className="text-lg font-semibold text-gray-900 mb-1">
