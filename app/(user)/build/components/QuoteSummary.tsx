@@ -23,7 +23,7 @@ interface QuoteData {
   Your Quote Request
 </h3>
 
-        <div className="p-6">
+        <div className="pt-2 pb-6 pl-6 pr-6 md:p-6">
         <div className="space-y-3 ">
 
             <div className="border-b border-gray-200 mb-[10px] md:mb-[20px]">
@@ -41,7 +41,8 @@ interface QuoteData {
             </div>
           )}
 
-          {currentStep >= 3 && quoteData.width && quoteData.height && (
+          {/* Show door size from Step 3 (index 2) onward when width & height are set */}
+          {currentStep >= 2 && quoteData.width && quoteData.height && (
             <div className="border-b border-gray-200 mb-[10px] md:mb-[20px]">
               <p className="text-[12px] md:text-[14px]  font-[400] text-[#4A5565]">Door Size</p>
               <p className="text-[12px] font-roboto md:text-[14px] text-black">
@@ -50,14 +51,16 @@ interface QuoteData {
             </div>
           )}
 
-          {currentStep >= 3 && quoteData.thickness && (
+          {/* Show thickness from Step 3 (index 2) onward when thickness is set */}
+          {currentStep >= 2 && quoteData.thickness && (
            <div className="border-b border-gray-200 mb-[10px] md:mb-[20px]">
               <p className="text-[12px] md:text-[14px]  font-[400] text-[#4A5565]">Thickness</p>
               <p className="text-[12px] font-roboto md:text-[14px] text-black">{quoteData.thickness}</p>
             </div>
           )}
 
-          {currentStep >= 3 && (
+          {/* Show quantity from Step 3 (index 2) onward */}
+          {currentStep >= 2 && (
            <div className="border-b border-gray-200 mb-[10px] md:mb-[20px]">
               <p className="text-[12px] md:text-[14px]  font-[400] text-[#4A5565]">Quantity</p>
               <p className="text-[12px] font-roboto md:text-[14px] text-black">{quoteData.quantity}</p>
