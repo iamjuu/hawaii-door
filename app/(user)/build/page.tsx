@@ -71,8 +71,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector56,
         text: "Built to fit: fully custom door sizes",
-        width: { mobile: 24, desktop: 28 },
-        height: { mobile: 24, desktop: 28 },
+        width: { mobile: 24, desktop: 25 },
+        height: { mobile: 24, desktop: 25 },
       },
       percentage: 14,
     },
