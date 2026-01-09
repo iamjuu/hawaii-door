@@ -52,6 +52,7 @@ const BuildDoor = () => {
     hingeLocation2: "",
     hingeLocation3: "",
     backset: "",
+    louver: "",
   });
 
   // Define all steps with their info banners
@@ -243,6 +244,11 @@ const BuildDoor = () => {
     if (currentStep === 5 && (!quoteData.doorHandling || !quoteData.hingeRadius || !quoteData.hingeType)) {
       return;
     }
+
+    // Prevent moving to next step if on step 7 (index 6) and louver is not selected
+    if (currentStep === 6 && !quoteData.louver) {
+      return;
+    }
     
     if (currentStep < steps.length - 1) {
       // When leaving Step 3 (index 2), ensure a default thickness is saved
@@ -288,6 +294,7 @@ const BuildDoor = () => {
       hingeLocation2: "",
       hingeLocation3: "",
       backset: "",
+      louver: "",
     });
   };
 
@@ -320,7 +327,8 @@ const BuildDoor = () => {
                     (currentStep === 2 && (!quoteData.width || !quoteData.height)) ||
                     (currentStep === 3 && !quoteData.wallBuilt) ||
                     (currentStep === 4 && !quoteData.wallThickness && !quoteData.customDiameter) ||
-                    (currentStep === 5 && (!quoteData.doorHandling || !quoteData.hingeRadius || !quoteData.hingeType))
+                    (currentStep === 5 && (!quoteData.doorHandling || !quoteData.hingeRadius || !quoteData.hingeType)) ||
+                    (currentStep === 6 && !quoteData.louver)
                   }
                 />
 
@@ -337,6 +345,8 @@ const BuildDoor = () => {
                       : currentStep === 4
                       ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
                       : currentStep === 5
+                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
+                      : currentStep === 6
                       ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
                       : undefined
                   }

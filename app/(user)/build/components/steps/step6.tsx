@@ -277,12 +277,17 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
 
       {/* Hinge Radius */}
       <div className="mt-10">
-        <p className="text-[16px] md:text-[20px] font-medium text-black mb-3 font-montserrat">Hinge Radius</p>
+        <div className="flex items-center gap-2 mb-3">
+          <p className="text-[16px] md:text-[20px] font-medium text-black font-montserrat">Hinge Radius</p>
+          <div className="w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center">
+            <span className="text-white text-xs font-bold">?</span>
+          </div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 w-full max-w-[900px] gap-[15px]">
           <button
             type="button"
             onClick={() => handleRadiusSelect("1/4")}
-            className={`w-full font-roboto px-3 py-1 md:py-1.5 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
+            className={`w-full font-roboto px-3 py-2 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
               selectedRadius === "1/4" ? "border-orange-500 text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
             }`}
           >
@@ -308,7 +313,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           <button
             type="button"
             onClick={() => handleRadiusSelect("5/8")}
-            className={`w-full font-roboto px-3 py-1 md:py-1.5 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
+            className={`w-full font-roboto px-3 py-2 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
               selectedRadius === "5/8" ? "border-orange-500 text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
             }`}
           >
@@ -334,7 +339,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           <button
             type="button"
             onClick={() => handleRadiusSelect("square")}
-            className={`w-full font-roboto px-3 py-1 md:py-1.5 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
+            className={`w-full font-roboto px-3 py-2 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
               selectedRadius === "square" ? "border-orange-500 text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
             }`}
           >
@@ -367,7 +372,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           <button
             type="button"
             onClick={() => handleTypeSelect("residential")}
-            className={`w-full font-roboto px-3 py-1 md:py-1.5 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
+            className={`w-full font-roboto px-3 py-2 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
               selectedType === "residential" ? "border-orange-500 text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
             }`}
           >
@@ -393,7 +398,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           <button
             type="button"
             onClick={() => handleTypeSelect("commercial")}
-            className={`w-full font-roboto px-3 py-1 md:py-1.5 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
+            className={`w-full font-roboto px-3 py-2 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
               selectedType === "commercial" ? "border-orange-500 text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
             }`}
           >
@@ -455,7 +460,12 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
 
           {/* Right: Backset */}
           <div>
-            <p className="text-[16px] md:text-[20px] font-medium font-montserrat text-black mb-3">Backset</p>
+            <div className="flex items-center gap-2 mb-3">
+              <p className="text-[16px] md:text-[20px] font-medium font-montserrat text-black">Backset</p>
+              <div className="w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center">
+                <span className="text-white text-xs font-bold">?</span>
+              </div>
+            </div>
             <input
               type="text"
               value={backset}
