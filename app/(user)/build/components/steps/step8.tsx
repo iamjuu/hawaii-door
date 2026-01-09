@@ -114,8 +114,8 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
           onClick={() => handleLockTypeSelect("deadbolt")}
           className={`relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg ${
             selectedLockType === "deadbolt"
-              ? "border-orange-500 bg-orange-50 shadow-lg"
-              : "border-gray-200 bg-white hover:border-orange-500"
+              ? "border-gray-200 bg-white shadow-lg"
+              : "border-gray-200 bg-white"
           }`}
         >
           {/* Circle indicator top right */}
@@ -152,8 +152,8 @@ const Step8 = ({ quoteData, setQuoteData }: StepProps) => {
           onClick={() => handleLockTypeSelect("door_knob")}
           className={`relative border-2 rounded-lg p-6 text-left transition-all hover:shadow-lg ${
             selectedLockType === "door_knob"
-              ? "border-orange-500 bg-orange-50 shadow-lg"
-              : "border-gray-200 bg-white hover:border-orange-500"
+              ? "border-gray-200 bg-whiteshadow-lg"
+              : "border-gray-200 bg-white"
           }`}
         >
           {/* Circle indicator top right */}
