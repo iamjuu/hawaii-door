@@ -78,48 +78,32 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Left Side - Measurement Guide */}
         <div className="lg:w-1/3">
-          <div className="bg-white border-2 border-gray-200 rounded-lg p-6">
+          <div className="bg-white border-2 border-gray-200 rounded-lg p-4 pb-6 md:p-6">
             <h3 className="text-[14px] text-[#0A0A0A] font-medium mb-4 ">Measurement Guide</h3>
-            <div className="relative bg-gray-50 rounded-lg p-8 flex items-center justify-center">
+            <div className="relative bg-gray-50 rounded-lg p-4 md:p-8 flex items-center justify-center min-h-[200px] md:min-h-auto">
               {/* Door Diagram */}
               <div className="relative">
                 {/* Height Arrow */}
-                <div className="absolute -left-8 top-0 bottom-0 flex flex-col items-center justify-between">
-                  <div className="w-1 bg-orange-500 flex-1" />
-                  <div className="absolute top-1/2 -translate-y-1/2 -left-2">
-                    <svg
-                      className="w-4 h-4 text-orange-500 -rotate-90"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M10 3l-7 7h4v7h6v-7h4l-7-7z" />
-                    </svg>
-                  </div>
-                  <div className="absolute top-1/2 -translate-y-1/2 text-[#F97316] text-[15px] whitespace-nowrap -left-14">
+                <div className="absolute -left-4 md:-left-8 top-0 bottom-0 flex flex-col items-center justify-between">
+                  <div className="w-[2px] md:w-1 bg-orange-500 flex-1" />
+                 
+                  <div className="absolute top-1/2 -translate-y-1/2 -left-8 md:-left-12 -rotate-90 origin-center text-[#F97316] text-[12px] md:text-[15px] whitespace-nowrap font-roboto">
                     HEIGHT
                   </div>
                 </div>
 
                 {/* Door Rectangle */}
-                <div className="w-40 h-72 bg-gray-200 border-4 border-gray-700 rounded-md relative">
+                <div className="w-32 h-64 md:w-40 md:h-72 bg-gray-200 border-4 border-gray-700 rounded-md relative">
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 w-3 h-3 bg-gray-700 rounded-full" />
                   <div className="absolute inset-4 border-2 border-gray-400 rounded" />
                   <div className="absolute inset-8 border border-gray-400 rounded" />
                 </div>
 
                 {/* Width Arrow */}
-                <div className="absolute -bottom-8 left-0 right-0 flex items-center justify-between">
-                  <div className="h-1 bg-orange-500 flex-1" />
-                  <div className="absolute left-1/2 -translate-x-1/2 -bottom-2">
-                    <svg
-                      className="w-4 h-4 text-orange-500"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M10 3l-7 7h4v7h6v-7h4l-7-7z" />
-                    </svg>
-                  </div>
-                  <div className="absolute left-1/2 -translate-x-1/2 -bottom-6 text-[#F97316] text-[15px] font-roboto whitespace-nowrap">
+                <div className="absolute -bottom-4 md:-bottom-8 left-0 right-0 flex items-center justify-between">
+                  <div className="h-[2px] md:h-1 bg-orange-500 flex-1" />
+                
+                  <div className="absolute left-1/2 -translate-x-1/2 -bottom-5 md:-bottom-6 text-[#F97316] text-[12px] md:text-[15px] font-roboto whitespace-nowrap">
                     WIDTH
                   </div>
                 </div>
@@ -131,41 +115,41 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
         {/* Right Side - Form Fields */}
         <div className="lg:w-2/3">
           <div className="flex w-full flex-col">
-            <div className="flex flex-col">
+            <div className="flex flex-col md:mb-[15px]">
               <div className="flex gap-4">
                 {/* Width */}
                 <div className="w-full max-w-[280px]">
-                  <label className="block text-[20px] font-roboto mb-2 text-black">Width</label>
+                  <label className="block text-[16px] md:text-[20px] font-roboto mb-2 text-black">Width</label>
                   <div className="relative">
                     <select
                       value={quoteData.width || ""}
                       onChange={(e) => handleWidthChange(e.target.value)}
-                      className="w-full rounded-lg px-4 py-2 pr-10 text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
+                      className="w-full rounded-lg px-4 py-1.5 md:py-2 pr-10 text-base md:text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
                     >
                       <option value="" disabled>Select Width</option>
                       {widthOptions.map(option => (
                         <option key={option.value} value={option.value}>{option.label}</option>
                       ))}
                     </select>
-                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-500 pointer-events-none" />
                   </div>
                 </div>
 
                 {/* Height */}
                 <div className="w-full max-w-[280px]">
-                  <label className="block text-[20px] font-roboto mb-2 text-black">Height</label>
+                  <label className="block text-[16px] md:text-[20px] font-roboto mb-2 text-black">Height</label>
                   <div className="relative">
                     <select
                       value={quoteData.height || ""}
                       onChange={(e) => handleHeightChange(e.target.value)}
-                      className="w-full rounded-lg px-4 py-2 pr-10 text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
+                      className="w-full rounded-lg px-4 py-1.5 md:py-2 pr-10 text-base md:text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
                     >
                       <option value="" disabled>Select Height</option>
                       {heightOptions.map(option => (
                         <option key={option.value} value={option.value}>{option.label}</option>
                       ))}
                     </select>
-                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-500 pointer-events-none" />
                   </div>
                 </div>
               </div>
@@ -173,36 +157,36 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
             
             <div className="flex flex-col space-y-6 mt-6">
               {/* Thickness */}
-              <div className="flex gap-3 flex-col">
-                <label className="block text-[20px] font-roboto mb-1 text-black">Thickness</label>
-                <div className="flex w-full gap-4">
+              <div className="flex gap-3 flex-col md:mb-[30px]">
+                <label className="block text-[16px] md:text-[20px] font-roboto mb-1 text-black">Thickness</label>
+                <div className="flex w-full max-w-[320px] md:max-w-[400px] gap-3 md:gap-4">
                   <button
                     onClick={() => handleThicknessChange('1 3/8"')}
-                    className={`w-full px-4 py-3 rounded-lg border-2 font-medium transition-all flex items-center justify-between ${
-                      (quoteData.thickness || '1 3/8"') === '1 3/8"' ? "border-orange-500 bg-orange-50 text-black" : "border-gray-300 hover:border-orange-300 text-black bg-white"
+                    className={`w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border-2 font-medium transition-all flex items-center justify-between ${
+                      (quoteData.thickness || '1 3/8"') === '1 3/8"' ? "border-orange-500 text-black" : "border-gray-300 hover:border-orange-300 text-black bg-white"
                     }`}
                   >
-                    <span className="text-base">1 ⅜"</span>
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                    <span className="text-sm md:text-base">1 ⅜"</span>
+                    <div className={`w-4 h-4 md:w-5 md:h-5 rounded-full border-2 flex items-center justify-center ${
                       (quoteData.thickness || '1 3/8"') === '1 3/8"' ? "border-orange-500" : "border-gray-300"
                     }`}>
                       {(quoteData.thickness || '1 3/8"') === '1 3/8"' && (
-                        <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-orange-500"></div>
                       )}
                     </div>
                   </button>
                   <button
                     onClick={() => handleThicknessChange('1 3/4"')}
-                    className={`w-full px-4 py-3 rounded-lg border-2 font-medium transition-all flex items-center justify-between ${
-                      quoteData.thickness === '1 3/4"' ? "border-orange-500 bg-orange-50 text-black" : "border-gray-300 hover:border-orange-300 text-black bg-white"
+                    className={`w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border-2 font-medium transition-all flex items-center justify-between ${
+                      quoteData.thickness === '1 3/4"' ? "border-orange-500 text-black" : "border-gray-300 hover:border-orange-300 text-black bg-white"
                     }`}
                   >
-                    <span className="text-base">1 ¾"</span>
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                    <span className="text-sm md:text-base">1 ¾"</span>
+                    <div className={`w-4 h-4 md:w-5 md:h-5 rounded-full border-2 flex items-center justify-center ${
                       quoteData.thickness === '1 3/4"' ? "border-orange-500" : "border-gray-300"
                     }`}>
                       {quoteData.thickness === '1 3/4"' && (
-                        <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-orange-500"></div>
                       )}
                     </div>
                   </button>
@@ -211,7 +195,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
               
               {/* Quantity */}
               <div>
-                <label className="block text-[20px] font-roboto mb-3 text-black">Quantity</label>
+                <label className="block text-[16px] md:text-[20px] font-roboto mb-3 text-black">Quantity</label>
                 <div className="flex items-center gap-4">
                   <button onClick={decrementQuantity} className="w-12 h-12 rounded-lg border-2 border-gray-300 hover:border-orange-500 flex items-center justify-center text-2xl font-bold text-black">−</button>
                   <input
@@ -219,10 +203,10 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
                     min="1"
                     value={quoteData.quantity || 1}
                     onChange={handleQuantityChange}
-                    className="w-24 h-12 text-center text-xl font-semibold border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none text-black"
+                    className="w-24 h-12 text-center text-[16px] md:text-[20px] font-roboto font-semibold border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none text-black"
                   />
                   <button onClick={incrementQuantity} className="w-12 h-12 rounded-lg border-2 border-gray-300 hover:border-orange-500 flex items-center justify-center text-2xl font-bold text-black">+</button>
-                  <span className="text-black">doors</span>
+                  <span className="text-black font-roboto text-base">doors</span>
                 </div>
               </div>
             </div>
