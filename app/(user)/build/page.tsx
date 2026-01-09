@@ -45,6 +45,13 @@ const BuildDoor = () => {
     wallBuilt: "",
     wallThickness: "",
     customDiameter: "",
+    doorHandling: "",
+    hingeRadius: "",
+    hingeType: "",
+    hingeLocation1: "",
+    hingeLocation2: "",
+    hingeLocation3: "",
+    backset: "",
   });
 
   // Define all steps with their info banners
@@ -231,6 +238,11 @@ const BuildDoor = () => {
     if (currentStep === 4 && !quoteData.wallThickness && !quoteData.customDiameter) {
       return;
     }
+
+    // Prevent moving to next step if on step 6 (index 5) and doorHandling, hingeRadius, or hingeType is not selected
+    if (currentStep === 5 && (!quoteData.doorHandling || !quoteData.hingeRadius || !quoteData.hingeType)) {
+      return;
+    }
     
     if (currentStep < steps.length - 1) {
       // When leaving Step 3 (index 2), ensure a default thickness is saved
@@ -269,6 +281,13 @@ const BuildDoor = () => {
       wallBuilt: "",
       wallThickness: "",
       customDiameter: "",
+      doorHandling: "",
+      hingeRadius: "",
+      hingeType: "",
+      hingeLocation1: "",
+      hingeLocation2: "",
+      hingeLocation3: "",
+      backset: "",
     });
   };
 
@@ -300,7 +319,8 @@ const BuildDoor = () => {
                     (currentStep === 1 && !quoteData.doorConfig) ||
                     (currentStep === 2 && (!quoteData.width || !quoteData.height)) ||
                     (currentStep === 3 && !quoteData.wallBuilt) ||
-                    (currentStep === 4 && !quoteData.wallThickness && !quoteData.customDiameter)
+                    (currentStep === 4 && !quoteData.wallThickness && !quoteData.customDiameter) ||
+                    (currentStep === 5 && (!quoteData.doorHandling || !quoteData.hingeRadius || !quoteData.hingeType))
                   }
                 />
 
@@ -315,6 +335,8 @@ const BuildDoor = () => {
                       : currentStep === 3
                       ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
                       : currentStep === 4
+                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
+                      : currentStep === 5
                       ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
                       : undefined
                   }
