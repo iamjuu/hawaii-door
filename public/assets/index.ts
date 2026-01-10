@@ -45,6 +45,14 @@ export {default as InteriorDoorHeroImage3} from './product/interior door hero im
 export {default as LyndenProduct} from './product/lyndenproduct.svg'
 export {default as ProductMain} from './product/productmain.svg'
 
+export {default as intiordooricon} from './product/Interior Door 2.png'
+export {default as extiordoor} from './product/exterior door 3.png'
 
+
+// product icons 
+export {default as ProductFooterflag} from './product/icon/United States of America.svg'
+export {default as ProductFootericoncheck} from './product/icon/true.svg'
+export {default as ProductFootericonstar} from './product/icon/star.svg'
+export {default as ProductFootericondoor} from './product/icon/door.svg'
 
 export {default as WhatsAppIconSvg} from './icon/whatsapp-svgrepo-com (1).svg'
