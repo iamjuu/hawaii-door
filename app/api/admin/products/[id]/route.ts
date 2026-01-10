@@ -12,23 +12,9 @@ export async function PATCH(req: NextRequest, context: RouteContext) {
     
     const { id } = await context.params;
     const body = await req.json();
-    const { name, description, price, imageUrl, videoUrl } = body;
+    const { name, price, type, category, imageUrl } = body;
 
     // Validation
-    if (name !== undefined && !name) {
-      return NextResponse.json(
-        { success: false, message: "Name cannot be empty" },
-        { status: 400 }
-      );
-    }
-
-    if (description !== undefined && !description) {
-      return NextResponse.json(
-        { success: false, message: "Description cannot be empty" },
-        { status: 400 }
-      );
-    }
-
     if (imageUrl !== undefined && (!Array.isArray(imageUrl) || imageUrl.length === 0)) {
       return NextResponse.json(
         { success: false, message: "At least one image is required" },
@@ -36,9 +22,40 @@ export async function PATCH(req: NextRequest, context: RouteContext) {
       );
     }
 
-    const updateData: any = {};
-    if (name !== undefined) updateData.name = String(name).trim();
-    if (description !== undefined) updateData.description = String(description).trim();
+    // Validate type if provided
+    if (type !== undefined && !["normal", "glass"].includes(type)) {
+      return NextResponse.json(
+        { success: false, message: "Invalid product type" },
+        { status: 400 }
+      );
+    }
+
+    // Validate category based on type if both provided
+    if (type && category) {
+      const normalCategories = ["single", "double", "barn", "dutch"];
+      const glassCategories = ["with-glass", "without-glass"];
+      
+      if (type === "normal" && !normalCategories.includes(category)) {
+        return NextResponse.json(
+          { success: false, message: "Invalid category for normal door" },
+          { status: 400 }
+        );
+      }
+      
+      if (type === "glass" && !glassCategories.includes(category)) {
+        return NextResponse.json(
+          { success: false, message: "Invalid category for glass door" },
+          { status: 400 }
+        );
+      }
+    }
+
+    const updateData: Record<string, unknown> = {};
+    
+    if (name !== undefined && name && String(name).trim()) {
+      updateData.name = String(name).trim();
+    }
+    
     if (price !== undefined) {
       const priceInCents = Math.round(Number(price) * 100);
       if (isNaN(priceInCents) || priceInCents <= 0) {
@@ -49,17 +66,10 @@ export async function PATCH(req: NextRequest, context: RouteContext) {
       }
       updateData.price = priceInCents;
     }
+    
+    if (type !== undefined) updateData.type = type;
+    if (category !== undefined) updateData.category = category;
     if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
-    if (videoUrl !== undefined) {
-      // Handle videoUrl - can be string or array
-      if (Array.isArray(videoUrl)) {
-        updateData.videoUrl = videoUrl.filter(v => v && String(v).trim()).map(v => String(v).trim());
-      } else if (videoUrl) {
-        updateData.videoUrl = [String(videoUrl).trim()];
-      } else {
-        updateData.videoUrl = [];
-      }
-    }
 
     const updated = await Product.findByIdAndUpdate(id, updateData, { new: true });
     
@@ -71,10 +81,11 @@ export async function PATCH(req: NextRequest, context: RouteContext) {
     }
 
     return NextResponse.json({ success: true, data: updated });
-  } catch (e: any) {
-    const status = e?.message === "FORBIDDEN" || e?.message === "UNAUTHORIZED" ? 403 : 500;
+  } catch (e: unknown) {
+    const error = e as { message?: string };
+    const status = error?.message === "FORBIDDEN" || error?.message === "UNAUTHORIZED" ? 403 : 500;
     return NextResponse.json(
-      { success: false, message: e?.message || "Server error" },
+      { success: false, message: error?.message || "Server error" },
       { status }
     );
   }
@@ -96,10 +107,11 @@ export async function DELETE(req: NextRequest, context: RouteContext) {
     }
 
     return NextResponse.json({ success: true });
-  } catch (e: any) {
-    const status = e?.message === "FORBIDDEN" || e?.message === "UNAUTHORIZED" ? 403 : 500;
+  } catch (e: unknown) {
+    const error = e as { message?: string };
+    const status = error?.message === "FORBIDDEN" || error?.message === "UNAUTHORIZED" ? 403 : 500;
     return NextResponse.json(
-      { success: false, message: e?.message || "Server error" },
+      { success: false, message: error?.message || "Server error" },
       { status }
     );
   }

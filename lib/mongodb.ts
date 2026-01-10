@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // const MONGODB_URI = process.env.MONGODB_URI  as string;
-const MONGODB_URI = "mongodb://localhost:27017/crystel";
+const MONGODB_URI = "mongodb://localhost:27017/hawai-door";
 
 if (!MONGODB_URI) {
   throw new Error("MONGODB_URI is not set in environment variables");
