@@ -9,12 +9,38 @@ export async function POST(req: NextRequest) {
     await connectDB();
     
     const body = await req.json();
-    const { name, description, price, imageUrl, videoUrl } = body;
+    const { name, price, type, category, imageUrl } = body;
 
     // Validation
-    if (!name || !description || !price) {
+    if (!price || !type || !category) {
       return NextResponse.json(
-        { success: false, message: "Name, description, and price are required" },
+        { success: false, message: "Price, type, and category are required" },
+        { status: 400 }
+      );
+    }
+
+    // Validate type
+    if (!["normal", "glass"].includes(type)) {
+      return NextResponse.json(
+        { success: false, message: "Invalid product type" },
+        { status: 400 }
+      );
+    }
+
+    // Validate category based on type
+    const normalCategories = ["single", "double", "barn", "dutch"];
+    const glassCategories = ["with-glass", "without-glass"];
+    
+    if (type === "normal" && !normalCategories.includes(category)) {
+      return NextResponse.json(
+        { success: false, message: "Invalid category for normal door" },
+        { status: 400 }
+      );
+    }
+    
+    if (type === "glass" && !glassCategories.includes(category)) {
+      return NextResponse.json(
+        { success: false, message: "Invalid category for glass door" },
         { status: 400 }
       );
     }
@@ -35,32 +61,28 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Handle videoUrl - can be string or array
-    let processedVideoUrl: string | string[] = [];
-    if (videoUrl) {
-      if (Array.isArray(videoUrl)) {
-        processedVideoUrl = videoUrl.filter(v => v && String(v).trim()).map(v => String(v).trim());
-      } else {
-        processedVideoUrl = [String(videoUrl).trim()];
-      }
+    const productData: Record<string, unknown> = {
+      price: priceInCents,
+      type: type,
+      category: category,
+      imageUrl: imageUrl,
+    };
+    
+    if (name && String(name).trim()) {
+      productData.name = String(name).trim();
     }
 
-    const product = await Product.create({
-      name: String(name).trim(),
-      description: String(description).trim(),
-      price: priceInCents,
-      imageUrl: imageUrl,
-      videoUrl: processedVideoUrl.length > 0 ? processedVideoUrl : [],
-    });
+    const product = await Product.create(productData);
 
     return NextResponse.json(
       { success: true, data: product },
       { status: 201 }
     );
-  } catch (e: any) {
-    const status = e?.message === "FORBIDDEN" || e?.message === "UNAUTHORIZED" ? 403 : 500;
+  } catch (e: unknown) {
+    const error = e as { message?: string };
+    const status = error?.message === "FORBIDDEN" || error?.message === "UNAUTHORIZED" ? 403 : 500;
     return NextResponse.json(
-      { success: false, message: e?.message || "Server error" },
+      { success: false, message: error?.message || "Server error" },
       { status }
     );
   }

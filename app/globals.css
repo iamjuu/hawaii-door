@@ -17,12 +17,13 @@
   --font-montserrat: "Montserrat", system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
+/* Disabled dark mode auto-switching to maintain consistent design */
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 /* ===== Base styles ===== */
 /* Hide scrollbar globally while maintaining scroll functionality */

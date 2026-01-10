@@ -6,18 +6,21 @@ import ProductList from "@/components/dashboard/ProductList";
 
 type Product = {
   _id: string;
-  name: string;
+  name?: string;
   price: number;
   createdAt: string;
-  description?: string;
   imageUrl?: string[];
-  videoUrl?: string | string[];
+  type?: string;
+  category?: string;
 };
+
+type TabType = "normal" | "glass";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabType>("normal");
 
   const fetchProducts = async () => {
     try {
@@ -42,6 +45,11 @@ export default function ProductsPage() {
     fetchProducts();
   };
 
+  // Filter products based on active tab
+  const filteredProducts = products.filter(
+    (product) => product.type === activeTab
+  );
+
   return (
     <div className="min-h-screen bg-zinc-900 p-6 sm:p-8">
       <div className="mx-auto max-w-7xl">
@@ -63,10 +71,36 @@ export default function ProductsPage() {
           </div>
         )}
 
+        {/* Tabs */}
+        <div className="mb-6 border-b border-zinc-700">
+          <div className="flex gap-4">
+            <button
+              onClick={() => setActiveTab("normal")}
+              className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
+                activeTab === "normal"
+                  ? "border-white text-white"
+                  : "border-transparent text-zinc-400 hover:text-zinc-300"
+              }`}
+            >
+              Normal Door
+            </button>
+            <button
+              onClick={() => setActiveTab("glass")}
+              className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
+                activeTab === "glass"
+                  ? "border-white text-white"
+                  : "border-transparent text-zinc-400 hover:text-zinc-300"
+              }`}
+            >
+              Glass Door
+            </button>
+          </div>
+        </div>
+
         {loading ? (
           <div className="text-zinc-400">Loading products...</div>
         ) : (
-          <ProductList products={products} onRefresh={fetchProducts} />
+          <ProductList products={filteredProducts} onRefresh={fetchProducts} />
         )}
       </div>
     </div>
