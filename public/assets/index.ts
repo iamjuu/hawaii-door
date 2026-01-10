@@ -37,6 +37,14 @@ export {default as Door4} from './images/doorimage/Gallery 1 - Copy.png'
 export {default as Door5} from './images/doorimage/Frame 138 - Copy.png'
 export {default as Door6} from './images/doorimage/Frame 154.png'
 
+// product images
+export {default as ExteriorWoodStileRail} from './product/Exterior Wood Stile & Rail.svg'
+export {default as ExteriorHero4} from './product/exterior hero 4.svg'
+export {default as InteriorWoodStileRail} from './product/Interior Wood Stile & Rail.svg'
+export {default as InteriorDoorHeroImage3} from './product/interior door hero image 3.svg'
+export {default as LyndenProduct} from './product/lyndenproduct.svg'
+export {default as ProductMain} from './product/productmain.svg'
+
 
 
 export {default as WhatsAppIconSvg} from './icon/whatsapp-svgrepo-com (1).svg'
