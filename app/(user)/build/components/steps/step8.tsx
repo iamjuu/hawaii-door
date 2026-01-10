@@ -283,7 +283,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               value={lockCenterline}
               onChange={(e) => handleLockCenterlineChange(e.target.value)}
               placeholder="Enter In Inches"
-              className="w-full md:w-[350px] border-2 border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-orange-500 text-[#717182] text-[13px] font-robot font-light"
+              className="w-full md:w-[350px] border-2 border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-orange-500 text-black text-[13px] font-robot font-light"
             />
           </div>
         </div>
