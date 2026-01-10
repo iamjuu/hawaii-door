@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import noneimg from "../../../../../public/assets/images/dummy/none.png";
 import plainimg from "../../../../../public/assets/images/dummy/plain.png";
 import ballimg from "../../../../../public/assets/images/dummy/ball.png";
@@ -9,12 +9,18 @@ import ballimg from "../../../../../public/assets/images/dummy/ball.png";
 interface StepProps {
   quoteData: any;
   setQuoteData: (data: any) => void;
+  onNext?: () => void;
 }
 
-const Step10 = ({ quoteData, setQuoteData }: StepProps) => {
+const Step10 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   const [selectedHangOption, setSelectedHangOption] = useState<string | null>(
     quoteData.hangDoorOption || null
   );
+
+  // Sync local state with quoteData when it changes (e.g., when navigating back/forward)
+  useEffect(() => {
+    setSelectedHangOption(quoteData.hangDoorOption || null);
+  }, [quoteData.hangDoorOption]);
 
   const handleHangSelect = (option: string) => {
     setSelectedHangOption(option);
@@ -22,11 +28,18 @@ const Step10 = ({ quoteData, setQuoteData }: StepProps) => {
       ...quoteData,
       hangDoorOption: option,
     });
+
+    // Auto-advance to next step after selecting an option (like Step 7)
+    if (onNext) {
+      setTimeout(() => {
+        onNext();
+      }, 300);
+    }
   };
 
   return (
-    <div className="mt-[50px] mb-[50px]">
-      <h2 className="text-[32px] font-[500] text-black mb-8">Hang Door</h2>
+    <div className="mt-[50px] mb-[50px] max-w-[900px]">
+      <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Hang Door</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* 1: None (pre-hung) */}
@@ -37,7 +50,7 @@ const Step10 = ({ quoteData, setQuoteData }: StepProps) => {
             hover:shadow-lg
             ${
               selectedHangOption === "none"
-                ? "border-orange-500 shadow-lg bg-orange-50"
+                ? "border-gray-200 bg-white shadow-lg"
                 : "border-gray-200 bg-white"
             }
           `}
@@ -61,7 +74,7 @@ const Step10 = ({ quoteData, setQuoteData }: StepProps) => {
             </div>
           )}
 
-          <div className="relative w-full max-w-[150px] aspect-4/3 mx-auto mb-3  mt-5">
+          <div className="relative w-full max-w-[115px] aspect-4/3 mx-auto mb-6  mt-3 md:mt-8">
             <Image
               src={noneimg}
               alt="None (pre-hung door)"
@@ -84,7 +97,7 @@ const Step10 = ({ quoteData, setQuoteData }: StepProps) => {
             hover:shadow-lg
             ${
               selectedHangOption === "plain_bearing"
-                ? "border-orange-500 shadow-lg bg-orange-50"
+                ? "border-gray-200 bg-white shadow-lg"
                 : "border-gray-200 bg-white"
             }
           `}
@@ -133,7 +146,7 @@ const Step10 = ({ quoteData, setQuoteData }: StepProps) => {
             hover:shadow-lg
             ${
               selectedHangOption === "ball_bearing"
-                ? "border-orange-500 shadow-lg bg-orange-50"
+                ? "border-gray-200 bg-white shadow-lg "
                 : "border-gray-200 bg-white"
             }
           `}

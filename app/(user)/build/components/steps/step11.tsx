@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import threeshold from "../../../../../public/assets/images/dummy/threshold.png";
 import usleep from "../../../../../public/assets/images/dummy/usleep.png";
 import staple from "../../../../../public/assets/images/dummy/staple.png";
@@ -10,12 +10,18 @@ import noneimg from "../../../../../public/assets/images/dummy/none.png";
 interface StepProps {
   quoteData: any;
   setQuoteData: (data: any) => void;
+  onNext?: () => void;
 }
 
-const Step11 = ({ quoteData, setQuoteData }: StepProps) => {
+const Step11 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   const [selectedProtectOption, setSelectedProtectOption] = useState<
     string | null
   >(quoteData.protectDoorOption || null);
+
+  // Sync local state with quoteData when it changes (e.g., when navigating back/forward)
+  useEffect(() => {
+    setSelectedProtectOption(quoteData.protectDoorOption || null);
+  }, [quoteData.protectDoorOption]);
 
   const handleProtectSelect = (option: string) => {
     setSelectedProtectOption(option);
@@ -23,11 +29,18 @@ const Step11 = ({ quoteData, setQuoteData }: StepProps) => {
       ...quoteData,
       protectDoorOption: option,
     });
+
+    // Auto-advance to next step after selecting an option (like Step 7 and Step 10)
+    if (onNext) {
+      setTimeout(() => {
+        onNext();
+      }, 300);
+    }
   };
 
   return (
-    <div className="mt-[50px] mb-[50px]">
-      <h2 className="text-[32px] font-medium text-black mb-8">Protect Door</h2>
+    <div className="mt-[50px] mb-[50px] max-w-[900px]">
+      <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Protect Door</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* None */}
@@ -38,7 +51,7 @@ const Step11 = ({ quoteData, setQuoteData }: StepProps) => {
             hover:shadow-lg
             ${
               selectedProtectOption === "none"
-                ? "border-orange-500 shadow-lg bg-orange-50"
+                ? "border-gray-200 bg-white shadow-lg"
                 : "border-gray-200 bg-white"
             }
           `}
@@ -61,7 +74,7 @@ const Step11 = ({ quoteData, setQuoteData }: StepProps) => {
             </div>
           )}
 
-          <div className="relative w-full max-w-[115px] aspect-4/3 mx-auto mb-11  mt-8">
+          <div className="relative w-full max-w-[115px] aspect-4/3 mx-auto mb-4 md:mb-11  mt-3 md:mt-8">
             <Image src={noneimg} alt="None" fill className="object-contain" />
           </div>
           <h3 className="text-sm font-semibold text-black text-center mb-1">
@@ -76,7 +89,7 @@ const Step11 = ({ quoteData, setQuoteData }: StepProps) => {
             relative border-2 p-3 cursor-pointer transition-all flex flex-col hover:shadow-lg
             ${
               selectedProtectOption === "threshold"
-                ? "border-orange-500 shadow-lg bg-orange-50"
+                ? "border-gray-200 bg-white shadow-lg"
                 : "border-gray-200 bg-white"
             }
           `}
@@ -119,7 +132,7 @@ const Step11 = ({ quoteData, setQuoteData }: StepProps) => {
             relative border-2 p-3 cursor-pointer transition-all flex flex-col hover:shadow-lg
             ${
               selectedProtectOption === "usweep"
-                ? "border-orange-500 shadow-lg bg-orange-50"
+                ? "border-gray-200 bg-white shadow-lg"
                 : "border-gray-200 bg-white"
             }
           `}
@@ -162,7 +175,7 @@ const Step11 = ({ quoteData, setQuoteData }: StepProps) => {
             relative border-2 p-3 cursor-pointer transition-all flex flex-col hover:shadow-lg
             ${
               selectedProtectOption === "staple"
-                ? "border-orange-500 shadow-lg bg-orange-50"
+                ? "border-gray-200 bg-white shadow-lg"
                 : "border-gray-200 bg-white"
             }
           `}

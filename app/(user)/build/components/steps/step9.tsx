@@ -112,7 +112,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">Interior Double Rabbet</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Interior Double Rabbet</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedJambType === "interior_double_rabbet" ? "border-orange-500" : "border-gray-300"
             }`}>
@@ -130,7 +130,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">Exterior Single Rabbet</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Exterior Single Rabbet</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedJambType === "exterior_single_rabbet" ? "border-orange-500" : "border-gray-300"
             }`}>
@@ -148,7 +148,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">Exterior Single Rabbet Kerfed</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Exterior Single Rabbet Kerfed</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedJambType === "exterior_single_rabbet_kerfed" ? "border-orange-500" : "border-gray-300"
             }`}>
@@ -164,7 +164,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
       <div className="mb-8">
         <p className="text-[18px] md:text-[26px] font-[400] text-black  font-roboto">Jamb Size</p>
         <div className="flex items-center gap-2 mb-3 md:mb-7">
-          <div className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center">
+          <div className="w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center">
             <svg
               className="w-3 h-3 text-white ml-0.5"
               fill="currentColor"
@@ -197,7 +197,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">Standard</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Standard</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedDBStrikeType === "standard" ? "border-orange-500" : "border-gray-300"
             }`}>
@@ -215,7 +215,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">Radius corner</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Radius corner</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedDBStrikeType === "radius_corner" ? "border-orange-500" : "border-gray-300"
             }`}>
@@ -233,7 +233,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">Box Strike</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Box Strike</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedDBStrikeType === "box_strike" ? "border-orange-500" : "border-gray-300"
             }`}>
@@ -258,7 +258,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">Standard</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Standard</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedLockStrikeType === "standard" ? "border-orange-500" : "border-gray-300"
             }`}>
@@ -276,7 +276,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">Radius Corner</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Radius Corner</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedLockStrikeType === "radius_corner" ? "border-orange-500" : "border-gray-300"
             }`}>
@@ -294,7 +294,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">T-Strike</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">T-Strike</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedLockStrikeType === "t_strike" ? "border-orange-500" : "border-gray-300"
             }`}>
@@ -333,7 +333,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">White</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">White</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedWeatherstripping === "white" ? "border-orange-500" : "border-gray-300"
             }`}>
@@ -351,7 +351,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">Brown</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Brown</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedWeatherstripping === "brown" ? "border-orange-500" : "border-gray-300"
             }`}>
@@ -376,7 +376,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">Adjustable In-swing</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Adjustable In-swing</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedThresholdType === "adjustable_in_swing" ? "border-orange-500" : "border-gray-300"
             }`}>
@@ -394,7 +394,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">Out-Swing</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Out-Swing</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedThresholdType === "out_swing" ? "border-orange-500" : "border-gray-300"
             }`}>
@@ -412,7 +412,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
                 : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
             }`}
           >
-            <span className="text-left text-black font-roboto md:text-[17px]">Flat / Saddle</span>
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Flat / Saddle</span>
             <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
               selectedThresholdType === "flat_saddle" ? "border-orange-500" : "border-gray-300"
             }`}>

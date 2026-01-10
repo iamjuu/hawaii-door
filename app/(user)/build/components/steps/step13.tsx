@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import clearwhite from "../../../../../public/assets/images/dummy/clearwhite1.png";
 import oak from "../../../../../public/assets/images/dummy/oak1.png";
 import primedwhite from "../../../../../public/assets/images/dummy/primed1.png";
@@ -24,6 +24,13 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>(
     quoteData.uploadedFiles || []
   );
+
+  // Sync local state with quoteData when it changes (e.g., when navigating back/forward)
+  useEffect(() => {
+    setSelectedFinishOption(quoteData.doorFinishOption || null);
+    setSpecialInstructions(quoteData.specialInstructions || "");
+    setUploadedFiles(quoteData.uploadedFiles || []);
+  }, [quoteData.doorFinishOption, quoteData.specialInstructions, quoteData.uploadedFiles]);
 
   const handleFinishSelect = (option: string) => {
     setSelectedFinishOption(option);
@@ -107,8 +114,8 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
                 rounded-xl shadow-md hover:shadow-lg max-w-[230px] mx-auto
                 ${
                   selectedFinishOption === option.id
-                    ? "border-2 border-orange-500 shadow-lg"
-                    : ""
+                    ? "border border-gray-200 bg-white shadow-lg"
+                    : "border border-gray-200 bg-white"
                 }
               `}
             >

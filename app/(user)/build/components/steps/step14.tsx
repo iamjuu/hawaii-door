@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface StepProps {
   quoteData: any;
@@ -16,7 +16,27 @@ const Step14 = ({ quoteData, setQuoteData }: StepProps) => {
     poNumber: quoteData.poNumber || "",
   });
 
+  // Sync local state with quoteData when it changes (e.g., when navigating back/forward)
+  useEffect(() => {
+    setFormData({
+      firstName: quoteData.firstName || "",
+      companyName: quoteData.companyName || "",
+      phone: quoteData.phone || "", // Store with +91 prefix if present
+      email: quoteData.email || "",
+      poNumber: quoteData.poNumber || "",
+    });
+  }, [quoteData.firstName, quoteData.companyName, quoteData.phone, quoteData.email, quoteData.poNumber]);
+
   const handleInputChange = (field: string, value: string) => {
+    // For phone field, automatically prepend +91 if not already present and value is not empty
+    if (field === "phone") {
+      // Remove any existing +91 prefix first to avoid duplicates
+      value = value.replace(/^\+91\s*/, '');
+      // Add +91 prefix if user has entered a value
+      if (value) {
+        value = "+91" + value;
+      }
+    }
     const updatedData = { ...formData, [field]: value };
     setFormData(updatedData);
     setQuoteData({
@@ -25,8 +45,14 @@ const Step14 = ({ quoteData, setQuoteData }: StepProps) => {
     });
   };
 
+  // Get phone number without +91 prefix for display in input
+  const getPhoneDisplayValue = (phone: string) => {
+    if (!phone) return "";
+    return phone.startsWith("+91") ? phone.substring(3) : phone;
+  };
+
   return (
-    <div className="mt-[50px] mb-[50px] font-roboto">
+    <div className="mt-[50px] mb-[50px] font-roboto max-w-[950px]">
       <h2 className="text-[32px] font-medium text-black mb-8">Your Details</h2>
 
       <div className="w-full border-2 border-gray-100 rounded-xl p-6">
@@ -70,13 +96,16 @@ const Step14 = ({ quoteData, setQuoteData }: StepProps) => {
             <label className="block text-[14px] font-medium text-[#0A0A0A] mb-2">
               Phone
             </label>
-            <input
-              type="tel"
-              value={formData.phone}
-              onChange={(e) => handleInputChange("phone", e.target.value)}
-              placeholder="(555) 123-4567"
-              className="w-full h-[50px] border-2 border-[#E9EAEE] rounded-[10px] px-3 py-1 text-[14px] placeholder:text-[14px] placeholder:text-[#717182] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-            />
+            <div className="relative flex items-center">
+              <span className="absolute left-3 text-[14px] text-[#0A0A0A] font-medium z-10">+91</span>
+              <input
+                type="tel"
+                value={getPhoneDisplayValue(formData.phone)}
+                onChange={(e) => handleInputChange("phone", e.target.value)}
+                placeholder="1234567890"
+                className="w-full h-[50px] border-2 border-[#E9EAEE] rounded-[10px] pl-12 pr-3 py-1 text-[14px] placeholder:text-[14px] placeholder:text-[#717182] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              />
+            </div>
           </div>
 
           {/* Email */}
