@@ -13,12 +13,10 @@ export const revalidate = 0;
 const navItems = [
   { label: "Dashboard", href: "/admin/dashboard" },
   { label: "Orders", href: "/admin/dashboard/orders" },
-  { label: "Yoga Sessions", href: "/admin/dashboard/sessions" },
-  { label: "Yoga Sessions Enquiries", href: "/admin/dashboard/enquiries" },
+
   { label: "Products", href: "/admin/dashboard/products" },
   { label: "Users", href: "/admin/dashboard/users" },
-  { label: "Blogs", href: "/admin/dashboard/blogs" },
-  { label: "Events", href: "/admin/dashboard/events" },
+
   { label: "Settings", href: "/admin/dashboard/settings" },
 ];
 
