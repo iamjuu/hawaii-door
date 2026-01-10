@@ -1,7 +1,8 @@
+import Image, { StaticImageData } from 'next/image';
+
 interface Feature {
   text?: string;
-  iconType?: 'star' | 'check';
-  image?: string; // Path to image or SVG
+  iconType?: string | StaticImageData; // Path to image or SVG (imported module)
 }
 
 interface HeroSectionProps {
@@ -34,50 +35,17 @@ export default function HeroSection({ contant ,para, bgImage, features }: HeroSe
           <div className="flex flex-col md:flex-row gap-6 md:gap-12">
             {features.map((feature, index) => (
               <div key={index} className="flex items-center gap-3 text-gray-200">
-                <div className="relative w-6 h-6">
-                  {feature.image ? (
-                    // Render custom image or SVG
-                    <img 
-                      src={feature.image} 
+                {feature.iconType && (
+                  <div className="relative w-6 h-6">
+                    <Image 
+                      src={feature.iconType} 
                       alt={feature.text || 'Feature'} 
-                      className="w-6 h-6 object-contain"
+                      width={24}
+                      height={24}
+                      className="object-contain"
                     />
-                  ) : (
-                    // Render default icon with star or check
-                    <>
-                      <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        className="text-gray-300"
-                      >
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                      </svg>
-                      {feature.iconType === 'star' ? (
-                        <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[10px] leading-none text-gray-300">
-                          ★
-                        </span>
-                      ) : feature.iconType === 'check' ? (
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-300"
-                        >
-                          <path d="M1.5 5l2.5 2.5 4.5-4.5" />
-                        </svg>
-                      ) : null}
-                    </>
-                  )}
-                </div>
+                  </div>
+                )}
                 <span className="text-sm md:text-base font-medium">
                   {feature.text || 'Feature'}
                 </span>
