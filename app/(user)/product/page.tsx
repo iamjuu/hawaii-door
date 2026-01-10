@@ -6,8 +6,10 @@ import {
   ProductFootericondoor,
   ProductFooterflag,
   intiordooricon,
-  extiordoor
+  extiordoor,
+  ProductFooter
 } from "@/public/assets";
+import Image from "next/image";
 import { MdOutlineArrowForward } from "react-icons/md";
 import { ChevronRight } from "lucide-react";
 const page = () => {
@@ -97,6 +99,38 @@ const page = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className=" px-6 md:px-12 lg:px-20 py-16 md:py-24">
+          <div className="max-w-7xl px-6 bg-[#84684C] mx-auto">
+            <div className="flex  w-full gap-12 items-center justify-between">
+              {/* Left Side - Text Content */}
+              <div className="w-[43%]">
+                <h2 className="text-[42px] font-[500] text-white">
+                  Create Your Custom Door
+                </h2>
+                <div className="flex flex-col justify-between gap-5">
+                <p className="text-[18px] font-[400] text-[#C6C6C6] leading-relaxed">
+                  Explore doors designed for precision fit, with custom jambs and built to Hawaii Spec for lasting durability. Elevate your space with doors tailored to your style and needs.
+                </p>
+                <button className="bg-[#FF6E4A] hover:bg-[#FF5A3A] text-white px-8 py-[10px] rounded-[35.2px] font-medium text-[18px] justify-between flex items-center gap-4 transition-colors">
+                  Start Building Your Perfect Custom Door Now
+                  <MdOutlineArrowForward className="w-8 h-8 -rotate-30" />
+                </button>
+                </div>
+              </div>
+
+              {/* Right Side - Image */}
+              <div className="relative w-[50%] flex justify-end  h-[500px] lg:h-[600px]">
+                <Image
+                  src={ProductFooter}
+                  alt="Custom Door Illustration"
+                  fill
+                  className="object-contain"
+                />
+              </div>
             </div>
           </div>
         </section>

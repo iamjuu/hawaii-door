@@ -47,6 +47,7 @@ export {default as ProductMain} from './product/productmain.svg'
 
 export {default as intiordooricon} from './product/Interior Door 2.png'
 export {default as extiordoor} from './product/exterior door 3.png'
+export {default as ProductFooter} from './product/Group 15.svg'
 
 
 // product icons 
