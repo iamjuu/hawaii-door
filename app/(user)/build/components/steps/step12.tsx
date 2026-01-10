@@ -1,19 +1,25 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import noneimg from "../../../../../public/assets/images/dummy/none.png";
 import viewer from "../../../../../public/assets/images/dummy/viewer.png";
 
 interface StepProps {
   quoteData: any;
   setQuoteData: (data: any) => void;
+  onNext?: () => void;
 }
 
-const Step12 = ({ quoteData, setQuoteData }: StepProps) => {
+const Step12 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   const [selectedAddOnOption, setSelectedAddOnOption] = useState<string | null>(
     quoteData.addOnOption || null
   );
+
+  // Sync local state with quoteData when it changes (e.g., when navigating back/forward)
+  useEffect(() => {
+    setSelectedAddOnOption(quoteData.addOnOption || null);
+  }, [quoteData.addOnOption]);
 
   const handleAddOnSelect = (option: string) => {
     setSelectedAddOnOption(option);
@@ -21,11 +27,18 @@ const Step12 = ({ quoteData, setQuoteData }: StepProps) => {
       ...quoteData,
       addOnOption: option,
     });
+
+    // Auto-advance to next step after selecting an option (like Step 7, Step 10, and Step 11)
+    if (onNext) {
+      setTimeout(() => {
+        onNext();
+      }, 300);
+    }
   };
 
   return (
-    <div className="mt-[50px] mb-[50px]">
-      <h2 className="text-[32px] font-medium text-black mb-8">Add On&apos;s</h2>
+    <div className="mt-[50px] mb-[50px] max-w-[900px]">
+      <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Add On&apos;s</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[600px]">
         {/* None */}
@@ -36,7 +49,7 @@ const Step12 = ({ quoteData, setQuoteData }: StepProps) => {
             hover:shadow-lg
             ${
               selectedAddOnOption === "none"
-                ? "border-orange-500 shadow-lg bg-orange-50"
+                ? "border-gray-200 bg-whiteshadow-lg"
                 : "border-gray-200 bg-white"
             }
           `}
@@ -59,7 +72,7 @@ const Step12 = ({ quoteData, setQuoteData }: StepProps) => {
             </div>
           )}
 
-          <div className="relative w-full max-w-[115px] aspect-4/3 mx-auto mb-11 mt-8">
+          <div className="relative w-full max-w-[115px] aspect-4/3 mx-auto mb-3 md:mb-11 mbt-3 md:mt-8">
             <Image src={noneimg} alt="None" fill className="object-contain" />
           </div>
           <h3 className="text-sm font-semibold text-black text-center mb-1">
@@ -74,7 +87,7 @@ const Step12 = ({ quoteData, setQuoteData }: StepProps) => {
             relative border-2 p-3 cursor-pointer transition-all flex flex-col hover:shadow-lg
             ${
               selectedAddOnOption === "viewer"
-                ? "border-orange-500 shadow-lg bg-orange-50"
+                ? "border-gray-200 bg-white shadow-lg "
                 : "border-gray-200 bg-white"
             }
           `}

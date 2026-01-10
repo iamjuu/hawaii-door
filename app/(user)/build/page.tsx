@@ -32,6 +32,7 @@ import Step11 from "./components/steps/step11"
 import Step12 from "./components/steps/step12"
 import Step13 from "./components/steps/step13"
 import Step14 from "./components/steps/step14"
+import Step15 from "./components/steps/step15"
 const BuildDoor = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [quoteData, setQuoteData] = useState({
@@ -68,6 +69,17 @@ const BuildDoor = () => {
     undercutMeasurement: "",
     weatherstripping: "",
     thresholdType: "",
+    hangDoorOption: "",
+    protectDoorOption: "",
+    addOnOption: "",
+    doorFinishOption: "",
+    specialInstructions: "",
+    uploadedFiles: [],
+    firstName: "",
+    companyName: "",
+    phone: "",
+    email: "",
+    poNumber: "",
   });
 
   // Define all steps with their info banners
@@ -213,6 +225,16 @@ const BuildDoor = () => {
       },
       percentage: 91,
     },
+    {
+      component: Step15,
+      infoBanner: {
+        icon: vector56,
+        text: "Choose how your door will be hung",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
+      },
+      percentage:100,
+    },
   ];
 
   const CurrentStepComponent = steps[currentStep].component;
@@ -290,6 +312,37 @@ const BuildDoor = () => {
     )) {
       return;
     }
+
+    // Prevent moving to next step if on step 10 (index 9) and hangDoorOption is not selected
+    if (currentStep === 9 && !quoteData.hangDoorOption) {
+      return;
+    }
+
+    // Prevent moving to next step if on step 11 (index 10) and protectDoorOption is not selected
+    if (currentStep === 10 && !quoteData.protectDoorOption) {
+      return;
+    }
+
+    // Prevent moving to next step if on step 12 (index 11) and addOnOption is not selected
+    if (currentStep === 11 && !quoteData.addOnOption) {
+      return;
+    }
+
+    // Prevent moving to next step if on step 13 (index 12) and doorFinishOption is not selected (specialInstructions is optional)
+    if (currentStep === 12 && !quoteData.doorFinishOption) {
+      return;
+    }
+
+    // Prevent moving to next step if on step 14 (index 13) and any required field is not filled
+    if (currentStep === 13 && (
+      !quoteData.firstName ||
+      !quoteData.companyName ||
+      !quoteData.phone ||
+      !quoteData.email ||
+      !quoteData.poNumber
+    )) {
+      return;
+    }
     
     if (currentStep < steps.length - 1) {
       // When leaving Step 3 (index 2), ensure a default thickness is saved
@@ -351,6 +404,17 @@ const BuildDoor = () => {
       undercutMeasurement: "",
       weatherstripping: "",
       thresholdType: "",
+      hangDoorOption: "",
+      protectDoorOption: "",
+      addOnOption: "",
+      doorFinishOption: "",
+      specialInstructions: "",
+      uploadedFiles: [],
+      firstName: "",
+      companyName: "",
+      phone: "",
+      email: "",
+      poNumber: "",
     });
   };
 
@@ -402,6 +466,17 @@ const BuildDoor = () => {
                       !quoteData.lockStrikeType ||
                       !quoteData.weatherstripping ||
                       !quoteData.thresholdType
+                    )) ||
+                    (currentStep === 9 && !quoteData.hangDoorOption) ||
+                    (currentStep === 10 && !quoteData.protectDoorOption) ||
+                    (currentStep === 11 && !quoteData.addOnOption) ||
+                    (currentStep === 12 && !quoteData.doorFinishOption) ||
+                    (currentStep === 13 && (
+                      !quoteData.firstName ||
+                      !quoteData.companyName ||
+                      !quoteData.phone ||
+                      !quoteData.email ||
+                      !quoteData.poNumber
                     ))
                   }
                 />
@@ -425,6 +500,16 @@ const BuildDoor = () => {
                       : currentStep === 7
                       ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
                       : currentStep === 8
+                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
+                      : currentStep === 9
+                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
+                      : currentStep === 10
+                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
+                      : currentStep === 11
+                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
+                      : currentStep === 12
+                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
+                      : currentStep === 13
                       ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
                       : undefined
                   }
