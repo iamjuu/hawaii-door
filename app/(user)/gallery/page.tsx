@@ -84,7 +84,7 @@ const GalleryPage = () => {
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col lg:flex-row gap-8">
               {/* Left Sidebar - Filters */}
-              <aside className="w-full lg:w-[280px] bg-white border border-gray-200 rounded-lg p-6 h-fit">
+              <aside className="w-full lg:w-[280px] bg-white border border-gray-200 rounded-lg p-6 h-fit lg:sticky lg:top-[100px]">
                 <div className="flex items-center gap-3 mb-6">
                   <HiMenu className="w-5 h-5 text-gray-600" />
                   <h2 className="text-lg font-semibold text-black">Filters</h2>
@@ -93,12 +93,12 @@ const GalleryPage = () => {
                 {/* Product Filter */}
                 <div className="mb-8">
                   <h3 className="text-sm font-semibold text-black mb-4">Product</h3>
-                  <div className="space-y-3">
+                  <div className="flex gap-2">
                     {['All', 'Interior', 'Exterior'].map((product) => (
                       <button
                         key={product}
                         onClick={() => setSelectedProduct(product)}
-                        className={`w-full text-left px-3 py-2 rounded-md transition-colors ${
+                        className={`w-[80px] text-center px-3 py-2 rounded-md transition-colors ${
                           selectedProduct === product
                             ? 'bg-[#FF6E4A] text-white'
                             : 'text-gray-700 hover:bg-gray-100'
@@ -117,8 +117,9 @@ const GalleryPage = () => {
                     {['All', 'Single', 'Double', 'Barn', 'Dutch'].map((type) => (
                       <label
                         key={type}
-                        className="flex items-center gap-3 cursor-pointer text-gray-700 hover:text-black"
+                        className="flex items-center justify-between cursor-pointer text-gray-700 hover:text-black"
                       >
+                        <span className="text-[15px]">{type}</span>
                         <input
                           type="checkbox"
                           checked={type === 'All' ? selectedTypes.length === 0 : selectedTypes.includes(type)}
@@ -129,9 +130,8 @@ const GalleryPage = () => {
                               handleTypeToggle(type)
                             }
                           }}
-                          className="w-4 h-4 text-[#FF6E4A] border-gray-300 rounded focus:ring-[#FF6E4A]"
+                          className="custom-checkbox"
                         />
-                        <span>{type}</span>
                       </label>
                     ))}
                   </div>
@@ -144,8 +144,9 @@ const GalleryPage = () => {
                     {['All', 'With Glass', 'Without Glass'].map((glass) => (
                       <label
                         key={glass}
-                        className="flex items-center gap-3 cursor-pointer text-gray-700 hover:text-black"
+                        className="flex items-center justify-between cursor-pointer text-gray-700 hover:text-black"
                       >
+                        <span className="text-[15px]">{glass}</span>
                         <input
                           type="checkbox"
                           checked={glass === 'All' ? selectedGlass.length === 0 : selectedGlass.includes(glass)}
@@ -156,9 +157,8 @@ const GalleryPage = () => {
                               handleGlassToggle(glass)
                             }
                           }}
-                          className="w-4 h-4 text-[#FF6E4A] border-gray-300 rounded focus:ring-[#FF6E4A]"
+                          className="custom-checkbox"
                         />
-                        <span>{glass}</span>
                       </label>
                     ))}
                   </div>
