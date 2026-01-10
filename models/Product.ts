@@ -1,4 +1,4 @@
-import mongoose, { Schema, models, model } from "mongoose";
+import { Schema, models, model } from "mongoose";
 import type { Product as ProductType } from "@/types";
 
 const ProductSchema = new Schema<ProductType>(
@@ -11,11 +11,17 @@ const ProductSchema = new Schema<ProductType>(
   },
   { 
     timestamps: true,
-    strict: true // Only allow fields defined in schema
+    strict: true, // Only allow fields defined in schema
+    strictQuery: true
   }
 );
 
-export default (models.Product as mongoose.Model<ProductType>) || model<ProductType>("Product", ProductSchema);
+// Delete the model from cache to ensure fresh schema
+if (models.Product) {
+  delete models.Product;
+}
+
+export default model<ProductType>("Product", ProductSchema);
 
 
 
