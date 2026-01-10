@@ -5,12 +5,12 @@ import ProductForm from "./ProductForm";
 
 type ProductListItem = {
   _id: string;
-  name: string;
+  name?: string;
   price: number;
   createdAt: string;
-  description?: string;
   imageUrl?: string[];
-  videoUrl?: string | string[];
+  type?: string;
+  category?: string;
 };
 
 type Props = {
@@ -96,10 +96,10 @@ export default function ProductList({ products: initialProducts, onRefresh }: Pr
                       productId={product._id}
                       initialData={{
                         name: product.name,
-                        description: product.description,
                         price: (product.price / 100).toString(),
                         imageUrl: product.imageUrl || [],
-                        videoUrl: product.videoUrl,
+                        type: product.type,
+                        category: product.category,
                       }}
                       onComplete={handleEditComplete}
                       onCancel={() => setEditingId(null)}
@@ -123,16 +123,18 @@ export default function ProductList({ products: initialProducts, onRefresh }: Pr
                         )}
                         <div>
                           <div className="flex items-center gap-2">
-                            <p className="font-medium text-white">{product.name}</p>
-                            {product.videoUrl && (
-                              <span className="text-xs text-zinc-500" title="Has video">
-                                🎥
+                            <p className="font-medium text-white">{product.name || 'Unnamed Product'}</p>
+                            {product.type && (
+                              <span className="text-xs text-zinc-500 bg-zinc-700 px-2 py-0.5 rounded">
+                                {product.type === 'normal' ? 'Normal Door' : 'Glass Door'}
+                              </span>
+                            )}
+                            {product.category && (
+                              <span className="text-xs text-zinc-400">
+                                {product.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                               </span>
                             )}
                           </div>
-                          {product.description && (
-                            <p className="mt-1 line-clamp-2 text-xs text-zinc-400">{product.description}</p>
-                          )}
                         </div>
                       </div>
                     </td>
