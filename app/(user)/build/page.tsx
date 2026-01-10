@@ -61,6 +61,13 @@ const BuildDoor = () => {
     faceplateDimension: "",
     faceplateRadius: "",
     driveInDiameter: "",
+    jambType: "",
+    jambSize: "",
+    dbStrikeType: "",
+    lockStrikeType: "",
+    undercutMeasurement: "",
+    weatherstripping: "",
+    thresholdType: "",
   });
 
   // Define all steps with their info banners
@@ -271,6 +278,18 @@ const BuildDoor = () => {
     )) {
       return;
     }
+
+    // Prevent moving to next step if on step 9 (index 8) and required fields are not selected (Undercut Measurement is optional)
+    if (currentStep === 8 && (
+      !quoteData.jambType ||
+      !quoteData.jambSize ||
+      !quoteData.dbStrikeType ||
+      !quoteData.lockStrikeType ||
+      !quoteData.weatherstripping ||
+      !quoteData.thresholdType
+    )) {
+      return;
+    }
     
     if (currentStep < steps.length - 1) {
       // When leaving Step 3 (index 2), ensure a default thickness is saved
@@ -325,6 +344,13 @@ const BuildDoor = () => {
       faceplateDimension: "",
       faceplateRadius: "",
       driveInDiameter: "",
+      jambType: "",
+      jambSize: "",
+      dbStrikeType: "",
+      lockStrikeType: "",
+      undercutMeasurement: "",
+      weatherstripping: "",
+      thresholdType: "",
     });
   };
 
@@ -368,6 +394,14 @@ const BuildDoor = () => {
                       !quoteData.faceplateRadius ||
                       !quoteData.driveInDiameter ||
                       !quoteData.latchBoreDiameter
+                    )) ||
+                    (currentStep === 8 && (
+                      !quoteData.jambType ||
+                      !quoteData.jambSize ||
+                      !quoteData.dbStrikeType ||
+                      !quoteData.lockStrikeType ||
+                      !quoteData.weatherstripping ||
+                      !quoteData.thresholdType
                     ))
                   }
                 />
@@ -389,6 +423,8 @@ const BuildDoor = () => {
                       : currentStep === 6
                       ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
                       : currentStep === 7
+                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
+                      : currentStep === 8
                       ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
                       : undefined
                   }
