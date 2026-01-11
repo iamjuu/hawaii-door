@@ -28,7 +28,7 @@ export default function HeroSection({ contant ,para, bgImage, features }: HeroSe
           <h1 className="text-white text-4xl md:text-5xl font-bold drop-shadow-lg">
             {contant}
           </h1>
-          <p  className="text-[#C6C6C6] text-sm md:text-base font-medium">{para}</p>
+          <p  className="text-[#C6C6C6] text-sm md:text-base font-medium font-montserrat">{para}</p>
         </div>
 
         <div className="absolute bottom-8 left-0  flex justify-center right-0 z-10 px-16">
