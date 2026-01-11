@@ -2,6 +2,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { message } from "antd";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
 import StepContainer from "./components/StepContainer"
@@ -39,6 +41,7 @@ import Step13 from "./components/steps/step13"
 import Step14 from "./components/steps/step14"
 import Step15 from "./components/steps/step15"
 const BuildDoor = () => {
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [quoteData, setQuoteData] = useState({
     doorType: "",
@@ -346,6 +349,16 @@ const BuildDoor = () => {
       !quoteData.email ||
       !quoteData.poNumber
     )) {
+      return;
+    }
+    
+    // Handle submit on step 15 (index 14)
+    if (currentStep === 14) {
+      message.success("Successfully submitted your quote!");
+      // Navigate to home page after showing success message
+      setTimeout(() => {
+        router.push("/home");
+      }, 1500);
       return;
     }
     
