@@ -292,24 +292,24 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
     if (editingSection === section) {
       return (
         <div key={spec.key} className="flex justify-between items-center border-b border-gray-100 pb-3">
-          <span className="text-[14px] md:text-[16px] font-roboto font-[400] text-black">
+          <span className="text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565]">
             {spec.label}:
           </span>
           <input
             type="text"
             value={getRawValue(spec.key)}
             onChange={(e) => handleInputChange(spec.key, e.target.value)}
-            className="text-[14px] md:text-[16px] font-roboto font-[400] text-gray-700 ml-4 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:border-orange-500 w-[150px] md:w-[200px]"
+            className="text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565] ml-4 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:border-orange-500 w-[150px] md:w-[200px]"
           />
         </div>
       );
     }
     return (
       <div key={spec.key} className="flex justify-between items-start border-b border-gray-100 pb-3">
-        <span className="text-[14px] md:text-[16px] font-roboto font-[400] text-black">
+        <span className="text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565]">
           {spec.label}:
         </span>
-        <span className="text-[14px] md:text-[16px] font-roboto font-[400] text-gray-700 ml-4">
+        <span className="text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565] ml-4">
           {spec.value}
         </span>
       </div>
@@ -366,7 +366,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
       {/* First Box - Primary Specifications with Image */}
       <div className="border-2 border-gray-200 rounded-xl p-6 mb-6">
         {/* Subheading and Edit Button - Flex Between (Full Width) */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-9 md:mb-13">
           <h3 className="text-[14px] md:text-[16px] font-roboto font-[400] text-[#0A0A0A]">
             Door Specifications
           </h3>
@@ -377,7 +377,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
         <div className="flex flex-col md:flex-row gap-6">
           {/* Left Side - Primary Specs */}
           <div className="flex-1">
-            <div className="space-y-4">
+            <div className="space-y-4 ">
               {primarySpecs.map((spec) => renderSpecRow(spec, "primary"))}
             </div>
           </div>
@@ -402,14 +402,14 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
       {/* Second Box - Handing & Hinges */}
       <div className="border-2 border-gray-200 rounded-xl p-8 md:p-6 mb-6">
         {/* Subheading and Edit Button - Flex Between */}
-        <div className="flex justify-between items-center mb-6 border-b border-gray-300">
+        <div className="flex justify-between items-center mb-9 md:mb-13 ">
           <h3 className="text-[14px] md:text-[16px] font-roboto font-[400] text-[#0A0A0A]">
             Handing & Hinges
           </h3>
           {/* Edit/Save/Cancel Button - Top Right */}
           {renderEditButtons("handing")}
         </div>
-        <div className="space-y-4">
+        <div className="space-y-4 text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565">
           {handingHingesSpecs.map((spec) => renderSpecRow(spec, "handing"))}
         </div>
       </div>
@@ -417,7 +417,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
       {/* Third Box - Lock Information */}
       <div className="border-2 border-gray-200 rounded-xl  p-8 md:p-6  mb-6">
         {/* Subheading and Edit Button - Flex Between */}
-        <div className="flex justify-between items-center mb-6 border-b border-gray-300">
+        <div className="flex justify-between items-center mb-9 md:mb-13">
           <h3 className="text-[14px] md:text-[16px] font-roboto font-[400] text-[#0A0A0A]">
             Lock information
           </h3>
@@ -432,7 +432,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
       {/* Fourth Box - Your Details */}
       <div className="border-2 border-gray-200 rounded-xl p-8 md:p-6 mb-6">
         {/* Subheading and Edit Button - Flex Between */}
-        <div className="flex justify-between items-center mb-6 border-b border-gray-300 ">
+        <div className="flex justify-between items-center mb-9 md:mb-13 ">
           <h3 className="text-[14px] md:text-[16px] font-roboto font-[400] text-[#0A0A0A]">
             Your Details
           </h3>
@@ -445,11 +445,11 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
       </div>
 
       {/* Download PDF Box */}
-      <div className="border-2 border-gray-200 rounded-xl p-8 md:p-6">
+      <div className="border-2 border-gray-200 rounded-xl p-2 hover:cursor-pointer">
         <button className="w-full flex items-center justify-center gap-2 text-[14px] md:text-[16px] font-roboto font-[400] text-black hover:text-gray-700 transition-colors">
           {/* Download Icon */}
           <svg
-            className="w-5 h-5 text-black"
+            className="w-4 h-4 text-black"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -459,7 +459,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
           >
             <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg>
-          <span>Download Pdf</span>
+          <span className="text-[14px] text-[#0A0A0A]">Download PDF</span>
         </button>
       </div>
     </div>

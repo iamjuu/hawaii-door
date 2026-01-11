@@ -139,8 +139,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector44,
         text: "Perfect swing: choose your handing and hinges",
-        width: { mobile: 24, desktop: 28 },
-        height: { mobile: 24, desktop: 28 },
+        width: { mobile: 24, desktop: 24 },
+        height: { mobile: 24, desktop: 24 },
       },
       percentage: 35,
     },
@@ -150,8 +150,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector88,
         text: "Choose louver option to control airflow",
-        width: { mobile: 24, desktop: 28 },
-        height: { mobile: 24, desktop: 28 },
+        width: { mobile: 24, desktop: 25 },
+        height: { mobile: 24, desktop: 25 },
       },
       percentage: 42,
     },
@@ -160,8 +160,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: lock,
         text: "Lock-ready doors for your preferred hardware",
-        width: { mobile: 24, desktop: 28 },
-        height: { mobile: 24, desktop: 28 },
+        width: { mobile: 23, desktop: 25 },
+        height: { mobile: 23, desktop: 25 },
       },
       percentage: 49,
     },
@@ -170,8 +170,8 @@ const BuildDoor = () => {
       infoBanner: {
         icon: vector33,
         text: "Custom jambs for a ready-to-install package",
-        width: { mobile: 24, desktop: 28 },
-        height: { mobile: 24, desktop: 28 },
+        width: { mobile: 24, desktop: 24 },
+        height: { mobile: 24, desktop: 24 },
       },
       percentage: 56,
     },
