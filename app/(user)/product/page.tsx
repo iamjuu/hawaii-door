@@ -10,6 +10,7 @@ import {
   ProductFooter
 } from "@/public/assets";
 import Image from "next/image";
+import Link from "next/link";
 import { MdOutlineArrowForward } from "react-icons/md";
 import { ChevronRight } from "lucide-react";
 const page = () => {
@@ -34,14 +35,16 @@ const page = () => {
       description:
         "Interior doors define privacy and movement inside your space. They connect rooms, control noise, and support daily use. Clean design, precise fit, and smooth finishes keep every interior refined.",
       image: intiordooricon,
-      alt: "Interior Door"
+      alt: "Interior Door",
+      link: "/product/interior"
     },
     {
       title: "Exterior Door",
       description:
         "Exterior doors protect your space from weather and wear. They improve security while holding their shape in heat and rain. Built to perform daily and look solid from the street.",
       image: extiordoor,
-      alt: "Exterior Door"
+      alt: "Exterior Door",
+      link: "/product/exterior"
     }
   ];
   return (
@@ -83,17 +86,16 @@ const page = () => {
                           "linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 30%)"
                       }}
                     >
-                      <h1 className="text-[20px] font-[500]">Interior Door</h1>
+                      <h1 className="text-[20px] font-[500]">{door.title}</h1>
                       <p className="text-[14px] font-[300]">
-                        Interior doors define privacy and movement inside your
-                        space.They connect rooms, control noise, and support
-                        daily use.Clean design, precise fit, and smooth finishes
-                        keep every interior refined.
+                   {door.description}
                       </p>
                       <div className=" flex w-full justify-end px-3">
-                      <div className="w-5 h-5 border border-black rounded-full flex items-center justify-center">
-                        <ChevronRight className="w-3 h-3" />
-                      </div>
+                        <Link href={door.link}>
+                          <div className="w-5 h-5 border border-black rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors">
+                            <ChevronRight className="w-3 h-3" />
+                          </div>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -103,8 +105,8 @@ const page = () => {
           </div>
         </section>
 
-        <section className=" px-6 md:px-12 lg:px-20 py-16 md:py-24">
-          <div className="max-w-7xl px-6 bg-[#84684C] mx-auto">
+        <section className=" px-16 py-16 md:py-24">
+          <div className=" px-6 bg-[#84684C] mx-auto">
             <div className="flex  w-full gap-12 items-center justify-between">
               {/* Left Side - Text Content */}
               <div className="w-[43%]">
@@ -134,6 +136,8 @@ const page = () => {
             </div>
           </div>
         </section>
+
+        
       </main>
 
       <Footer />
