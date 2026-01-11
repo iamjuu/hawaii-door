@@ -32,6 +32,8 @@ const Step14 = ({ quoteData, setQuoteData }: StepProps) => {
     if (field === "phone") {
       // Remove any existing +91 prefix first to avoid duplicates
       value = value.replace(/^\+91\s*/, '');
+      // Remove non-numeric characters and limit to 10 digits
+      value = value.replace(/\D/g, '').slice(0, 10);
       // Add +91 prefix if user has entered a value
       if (value) {
         value = "+91" + value;
@@ -103,6 +105,7 @@ const Step14 = ({ quoteData, setQuoteData }: StepProps) => {
                 value={getPhoneDisplayValue(formData.phone)}
                 onChange={(e) => handleInputChange("phone", e.target.value)}
                 placeholder="1234567890"
+                maxLength={10}
                 className="w-full h-[50px] border-2 border-[#E9EAEE] rounded-[10px] pl-12 pr-3 py-1 text-[14px] placeholder:text-[14px] placeholder:text-[#717182] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
               />
             </div>

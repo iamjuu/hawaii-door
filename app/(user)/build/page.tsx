@@ -17,6 +17,11 @@ import vector44 from "../../../public/assets/images/dummy/vector44.png"
 import vector88 from "../../../public/assets/images/dummy/vector88.png"
 import lock from "../../../public/assets/images/dummy/lockk.png"
 import vector33 from "../../../public/assets/images/dummy/vector33.png"
+import vector20 from "../../../public/assets/images/dummy/vector20.png"
+import vector21 from "../../../public/assets/images/dummy/vector21.png"
+import vector22 from "../../../public/assets/images/dummy/vector22.png"
+import vector23 from "../../../public/assets/images/dummy/vector23.png"
+import vector24 from "../../../public/assets/images/dummy/vector24.png"
 // Import all step components
 import Step1SelectCategory from "./components/steps/Step1SelectCategory";
 import Step2SingleOrDouble from "./components/steps/Step2SingleOrDouble";
@@ -178,60 +183,60 @@ const BuildDoor = () => {
     {
       component: Step10,
       infoBanner: {
-        icon: vector56,
-        text: "Choose how your door will be hung",
-        width: { mobile: 24, desktop: 28 },
-        height: { mobile: 24, desktop: 28 },
+        icon: vector20,
+        text: "Select door handing to ensure correct swing and smooth daily use",
+        width: { mobile: 24, desktop: 27 },
+        height: { mobile: 24, desktop: 27 },
       },
       percentage: 63,
     },
     {
       component: Step11,
       infoBanner: {
-        icon: vector56,
-        text: "Choose how your door will be hung",
-        width: { mobile: 24, desktop: 28 },
-        height: { mobile: 24, desktop: 28 },
+        icon: vector21,
+        text: "Choose protection options to keep the door safe",
+        width: { mobile: 24, desktop: 26 },
+        height: { mobile: 24, desktop: 26 },
       },
       percentage: 70,
     },
     {
       component: Step12,
       infoBanner: {
-        icon: vector56,
-        text: "Choose how your door will be hung",
-        width: { mobile: 24, desktop: 28 },
-        height: { mobile: 24, desktop: 28 },
+        icon: vector33,
+        text: "Add upgrades to match perfomance, hardware",
+        width: { mobile: 24, desktop: 24 },
+        height: { mobile: 24, desktop: 24 },
       },
       percentage: 77,
     },
     {
       component: Step13,
       infoBanner: {
-        icon: vector56,
-        text: "Choose how your door will be hung",
-        width: { mobile: 24, desktop: 28 },
-        height: { mobile: 24, desktop: 28 },
+        icon: vector22,
+        text: "Tell us your finish, we'll handle the rest",
+        width: { mobile: 24, desktop: 24 },
+        height: { mobile: 24, desktop: 24 },
       },
       percentage: 84,
     },
     {
       component: Step14,
       infoBanner: {
-        icon: vector56,
-        text: "Choose how your door will be hung",
-        width: { mobile: 24, desktop: 28 },
-        height: { mobile: 24, desktop: 28 },
+        icon: vector23,
+        text: "One last step: add your deatils",
+        width: { mobile: 24, desktop: 24 },
+        height: { mobile: 24, desktop: 24 },
       },
       percentage: 91,
     },
     {
       component: Step15,
       infoBanner: {
-        icon: vector56,
-        text: "Choose how your door will be hung",
-        width: { mobile: 24, desktop: 28 },
-        height: { mobile: 24, desktop: 28 },
+        icon: vector24,
+        text: "Review, submit, and download your specs",
+        width: { mobile: 24, desktop: 24 },
+        height: { mobile: 24, desktop: 24 },
       },
       percentage:100,
     },
