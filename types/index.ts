@@ -50,11 +50,11 @@ export interface IAdministrator extends WithTimestamps {
 
 export interface Product extends WithTimestamps {
   _id: string;
-  name: string;
-  description: string;
+  name?: string;
   price: number; // smallest currency unit
+  type: "normal" | "glass";
+  category: string;
   imageUrl: string[]; // Array of base64 image strings
-  videoUrl?: string | string[]; // Base64 video string(s) or URL(s) - supports up to 2 videos
 }
 
 export interface OrderItem {
@@ -121,6 +121,43 @@ export type CartItem = {
 export type Cart = {
   items: CartItem[];
 };
+
+export type DoorCategory = "interior" | "exterior";
+
+export type InteriorDoorType = 
+  | "Interior Panel Doors"
+  | "Bifold Doors"
+  | "Primed Interior Panel Doors"
+  | "Primed Bifold Doors"
+  | "Louver Doors and Bifold Doors"
+  | "Interior Barn Doors"
+  | "Interior French Doors"
+  | "Primed Interior French Doors"
+  | "20-Minute Fire Doors"
+  | "20-Minute Fire Doors Primed";
+
+export type ExteriorDoorType = 
+  | "Contemporary Collection"
+  | "Craftsman Collection"
+  | "Exterior French Doors"
+  | "Waterbarrier"
+  | "Entry Doors"
+  | "Half Lite Doors"
+  | "Exterior Panel Doors";
+
+export interface Door extends WithTimestamps {
+  _id: string;
+  name: string;
+  description?: string;
+  price: number; // smallest currency unit (cents)
+  category: DoorCategory;
+  doorType: InteriorDoorType | ExteriorDoorType;
+  material?: string;
+  dimensions?: string;
+  color?: string;
+  inStock?: boolean;
+  imageUrl: string[]; // Array of base64 image strings (required)
+}
 
 
 

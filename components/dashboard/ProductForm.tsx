@@ -7,10 +7,10 @@ type ProductFormProps = {
   productId?: string;
   initialData?: {
     name?: string;
-    description?: string;
     price?: string;
     imageUrl?: string[];
-    videoUrl?: string | string[];
+    type?: string;
+    category?: string;
   };
   onComplete?: () => void;
   onCancel?: () => void;
@@ -24,14 +24,10 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
   
   const [formData, setFormData] = useState({
     name: initialData?.name || "",
-    description: initialData?.description || "",
     price: initialData?.price || "",
+    type: initialData?.type || "",
+    category: initialData?.category || "",
     images: initialData?.imageUrl || [] as string[],
-    videos: Array.isArray(initialData?.videoUrl) 
-      ? initialData.videoUrl 
-      : initialData?.videoUrl 
-        ? [initialData.videoUrl] 
-        : [] as string[],
   });
 
   // Helper to convert base64 string to data URL if needed
@@ -47,40 +43,6 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
     return existing.map(normalizeImageUrl);
   });
 
-  // Track number of image fields to show (max 3)
-  const MAX_IMAGES = 3;
-  const [imageFieldCount, setImageFieldCount] = useState(() => {
-    const existing = initialData?.imageUrl || [];
-    return Math.max(1, Math.min(MAX_IMAGES, existing.length)); // At least 1 field, max 3
-  });
-
-  // Helper to normalize video URL
-  const normalizeVideoUrl = (url: string): string => {
-    if (!url) return "";
-    if (url.startsWith("data:video")) return url;
-    if (url.startsWith("http://") || url.startsWith("https://")) return url;
-    return `data:video/mp4;base64,${url}`;
-  };
-
-  // Track number of video fields to show (max 2)
-  const MAX_VIDEOS = 2;
-  const [videoFieldCount, setVideoFieldCount] = useState(() => {
-    const existing = Array.isArray(initialData?.videoUrl) 
-      ? initialData.videoUrl 
-      : initialData?.videoUrl 
-        ? [initialData.videoUrl] 
-        : [];
-    return Math.max(0, Math.min(MAX_VIDEOS, existing.length)); // Max 2 videos
-  });
-
-  const [uploadedVideos, setUploadedVideos] = useState<string[]>(() => {
-    const existing = Array.isArray(initialData?.videoUrl) 
-      ? initialData.videoUrl 
-      : initialData?.videoUrl 
-        ? [initialData.videoUrl] 
-        : [];
-    return existing.map(normalizeVideoUrl);
-  });
 
   // Helper function to compress and convert image to base64
   const compressImageToBase64 = (file: File): Promise<string> => {
@@ -145,119 +107,21 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
     });
   };
 
-  const handleImageUpload = async (index: number, file: File | null) => {
+  const handleImageUpload = async (file: File | null) => {
     if (!file) {
-      const newImages = [...uploadedImages];
-      const newFormImages = [...formData.images];
-      newImages.splice(index, 1);
-      newFormImages.splice(index, 1);
-      setUploadedImages(newImages);
-      setFormData({ ...formData, images: newFormImages });
-      
-      // If removing the last image and there are multiple fields, reduce field count
-      if (index === imageFieldCount - 1 && imageFieldCount > 1) {
-        setImageFieldCount(imageFieldCount - 1);
-      }
+      setUploadedImages([]);
+      setFormData({ ...formData, images: [] });
       return;
     }
 
     try {
       const base64String = await compressImageToBase64(file);
-      const newImages = [...uploadedImages];
-      const newFormImages = [...formData.images];
-      
-      while (newImages.length <= index) {
-        newImages.push("");
-        newFormImages.push("");
-      }
-      
-      newImages[index] = base64String;
-      newFormImages[index] = base64String;
-      
-      setUploadedImages(newImages);
-      setFormData({ ...formData, images: newFormImages });
+      setUploadedImages([base64String]);
+      setFormData({ ...formData, images: [base64String] });
     } catch (error) {
       console.error("Error compressing image:", error);
       alert("Failed to process image. Please try again.");
     }
-  };
-
-  const handleAddImageField = () => {
-    if (imageFieldCount < MAX_IMAGES) {
-      setImageFieldCount(imageFieldCount + 1);
-    } else {
-      alert(`Maximum ${MAX_IMAGES} images allowed`);
-    }
-  };
-
-  const handleVideoUpload = (index: number, file: File | null) => {
-    if (!file) {
-      const newVideos = [...uploadedVideos];
-      const newFormVideos = [...formData.videos];
-      newVideos.splice(index, 1);
-      newFormVideos.splice(index, 1);
-      setUploadedVideos(newVideos);
-      setFormData({ ...formData, videos: newFormVideos });
-      
-      // If removing the last video and there are multiple fields, reduce field count
-      if (index === videoFieldCount - 1 && videoFieldCount > 0) {
-        setVideoFieldCount(videoFieldCount - 1);
-      }
-      return;
-    }
-
-    // Check file size (limit to 50MB for base64 encoding)
-    const MAX_SIZE = 50 * 1024 * 1024; // 50MB
-    if (file.size > MAX_SIZE) {
-      alert("Video file is too large. Maximum size is 50MB. Consider using a video URL instead.");
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result as string;
-      const newVideos = [...uploadedVideos];
-      const newFormVideos = [...formData.videos];
-      
-      while (newVideos.length <= index) {
-        newVideos.push("");
-        newFormVideos.push("");
-      }
-      
-      newVideos[index] = base64String;
-      newFormVideos[index] = base64String;
-      
-      setUploadedVideos(newVideos);
-      setFormData({ ...formData, videos: newFormVideos });
-    };
-    reader.onerror = () => {
-      alert("Failed to read video file. Please try again.");
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleAddVideoField = () => {
-    if (videoFieldCount < MAX_VIDEOS) {
-      setVideoFieldCount(videoFieldCount + 1);
-    } else {
-      alert(`Maximum ${MAX_VIDEOS} videos allowed`);
-    }
-  };
-
-  const handleVideoUrlChange = (index: number, url: string) => {
-    const newVideos = [...uploadedVideos];
-    const newFormVideos = [...formData.videos];
-    
-    while (newVideos.length <= index) {
-      newVideos.push("");
-      newFormVideos.push("");
-    }
-    
-    newVideos[index] = url;
-    newFormVideos[index] = url;
-    
-    setUploadedVideos(newVideos);
-    setFormData({ ...formData, videos: newFormVideos });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -267,14 +131,14 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
     setSuccess(null);
 
     // Validation
-    if (!formData.name.trim()) {
-      setError("Product name is required");
+    if (!formData.type) {
+      setError("Product type is required");
       setLoading(false);
       return;
     }
 
-    if (!formData.description.trim()) {
-      setError("Description is required");
+    if (!formData.category) {
+      setError("Product category is required");
       setLoading(false);
       return;
     }
@@ -291,17 +155,6 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
       return;
     }
 
-    if (formData.images.length > MAX_IMAGES) {
-      setError(`Maximum ${MAX_IMAGES} images allowed`);
-      setLoading(false);
-      return;
-    }
-
-    if (formData.videos.length > MAX_VIDEOS) {
-      setError(`Maximum ${MAX_VIDEOS} videos allowed`);
-      setLoading(false);
-      return;
-    }
 
     try {
       const url = isEdit 
@@ -316,11 +169,11 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: formData.name.trim(),
-          description: formData.description.trim(),
+          name: formData.name.trim() || undefined,
           price: formData.price,
+          type: formData.type,
+          category: formData.category,
           imageUrl: formData.images,
-          videoUrl: formData.videos.length > 0 ? formData.videos : undefined,
         }),
       });
 
@@ -347,33 +200,67 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
     <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-zinc-700 bg-zinc-800 p-6 shadow-sm">
       <div className="space-y-1">
         <label htmlFor="product-name" className="text-sm font-medium text-white">
-          Product name <span className="text-red-500">*</span>
+          Product name
         </label>
         <input
           id="product-name"
           type="text"
-          required
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           className="w-full rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-white focus:outline-none"
-          placeholder="Crystal Healing Bowl"
+          placeholder="Enter product name"
         />
       </div>
 
       <div className="space-y-1">
-        <label htmlFor="product-description" className="text-sm font-medium text-white">
-          Description <span className="text-red-500">*</span>
+        <label htmlFor="product-type" className="text-sm font-medium text-white">
+          Product Type <span className="text-red-500">*</span>
         </label>
-        <textarea
-          id="product-description"
-          rows={3}
+        <select
+          id="product-type"
           required
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+          value={formData.type}
+          onChange={(e) => {
+            setFormData({ ...formData, type: e.target.value, category: "" });
+          }}
           className="w-full rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-white focus:outline-none"
-          placeholder="Short product summary..."
-        />
+        >
+          <option value="">Select product type</option>
+          <option value="normal">Normal Door</option>
+          <option value="glass">Glass Door</option>
+        </select>
       </div>
+
+      {formData.type && (
+        <div className="space-y-1">
+          <label htmlFor="product-category" className="text-sm font-medium text-white">
+            Category <span className="text-red-500">*</span>
+          </label>
+          <select
+            id="product-category"
+            required
+            value={formData.category}
+            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+            className="w-full rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-white focus:outline-none"
+          >
+            <option value="">Select category</option>
+            {formData.type === "normal" && (
+              <>
+                <option value="single">Single</option>
+                <option value="double">Double</option>
+                <option value="barn">Barn</option>
+                <option value="dutch">Dutch</option>
+              </>
+            )}
+            {formData.type === "glass" && (
+              <>
+                <option value="with-glass">With Glass</option>
+                <option value="without-glass">Without Glass</option>
+              </>
+            )}
+          </select>
+        </div>
+      )}
 
       <div className="space-y-1">
         <label htmlFor="product-price" className="text-sm font-medium text-white">
@@ -394,137 +281,43 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
 
       <div className="space-y-1">
         <label className="text-sm font-medium text-white">
-          Product Images <span className="text-red-500">*</span>
+          Product Image <span className="text-red-500">*</span>
         </label>
         <p className="text-xs text-zinc-400 mb-2">
-          At least one image is required. Maximum {MAX_IMAGES} images allowed.
+          One image is required.
         </p>
-        <div className="space-y-4">
-          {Array.from({ length: imageFieldCount }).map((_, index) => (
-            <div key={index} className="space-y-2">
-              <label
-                htmlFor={`product-image-file-${index}`}
-                className="block text-xs text-zinc-400"
+        <div className="space-y-2">
+          <input
+            id="product-image-file"
+            type="file"
+            accept="image/*"
+            className="w-full rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-white focus:outline-none"
+            onChange={(e) => {
+              const file = e.target.files?.[0] || null;
+              handleImageUpload(file);
+            }}
+          />
+          {uploadedImages[0] && (
+            <div className="relative w-full h-32 max-w-[200px] rounded-md border border-zinc-600 overflow-hidden bg-zinc-900">
+              <NextImage
+                src={normalizeImageUrl(uploadedImages[0])}
+                alt="Product Preview"
+                width={200}
+                height={128}
+                className="w-full h-full object-contain"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => handleImageUpload(null)}
+                className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 z-10"
+                title="Remove image"
               >
-                {index === 0 ? "Main Image" : `Image ${index + 1}`}
-              </label>
-              <input
-                id={`product-image-file-${index}`}
-                type="file"
-                accept="image/*"
-                className="w-full rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-white focus:outline-none"
-                onChange={(e) => {
-                  const file = e.target.files?.[0] || null;
-                  handleImageUpload(index, file);
-                }}
-              />
-              {uploadedImages[index] && (
-                <div className="relative  w-full h-32 max-w-[200px] rounded-md border border-zinc-600 overflow-hidden  bg-zinc-900">
-                  <NextImage
-                    src={normalizeImageUrl(uploadedImages[index])}
-                    alt={index === 0 ? "Main Preview" : `Preview ${index + 1}`}
-                    width={200}
-                    height={128}
-                    className="w-full h-full object-contain"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                    }}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleImageUpload(index, null)}
-                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 z-10"
-                    title="Remove image"
-                  >
-                    ×
-                  </button>
-                </div>
-              )}
+                ×
+              </button>
             </div>
-          ))}
-          {imageFieldCount < MAX_IMAGES && (
-            <button
-              type="button"
-              onClick={handleAddImageField}
-              className="inline-flex items-center justify-center rounded-md border border-zinc-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
-            >
-              + Add Image ({imageFieldCount}/{MAX_IMAGES})
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div className="space-y-1">
-        <label className="text-sm font-medium text-white">
-          Product Videos (Optional)
-        </label>
-        <p className="text-xs text-zinc-400 mb-2">
-          Upload video files (max 50MB each) or enter video URLs (YouTube, Vimeo, etc.). Maximum {MAX_VIDEOS} videos allowed.
-        </p>
-        <div className="space-y-4">
-          {Array.from({ length: videoFieldCount }).map((_, index) => (
-            <div key={index} className="space-y-2">
-              <label
-                htmlFor={`product-video-file-${index}`}
-                className="block text-xs text-zinc-400"
-              >
-                Video {index + 1}
-              </label>
-              <input
-                id={`product-video-file-${index}`}
-                type="file"
-                accept="video/*"
-                className="w-full rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-white focus:outline-none"
-                onChange={(e) => {
-                  const file = e.target.files?.[0] || null;
-                  handleVideoUpload(index, file);
-                }}
-              />
-              <input
-                id={`product-video-url-${index}`}
-                type="text"
-                value={uploadedVideos[index] && !uploadedVideos[index].startsWith("data:") ? uploadedVideos[index] : ""}
-                onChange={(e) => {
-                  handleVideoUrlChange(index, e.target.value);
-                }}
-                className="w-full rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-white focus:outline-none"
-                placeholder="Or enter video URL (e.g., https://youtube.com/watch?v=...)"
-              />
-              {uploadedVideos[index] && (
-                <div className="relative w-full rounded-md border border-zinc-600 overflow-hidden bg-zinc-900">
-                  {uploadedVideos[index].startsWith("data:video") ? (
-                    <video
-                      src={normalizeVideoUrl(uploadedVideos[index])}
-                      controls
-                      className="w-full max-h-64 object-contain"
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  ) : uploadedVideos[index].startsWith("http://") || uploadedVideos[index].startsWith("https://") ? (
-                    <div className="p-4 text-sm text-zinc-400">
-                      Video URL: <span className="text-white break-all">{uploadedVideos[index]}</span>
-                    </div>
-                  ) : null}
-                  <button
-                    type="button"
-                    onClick={() => handleVideoUpload(index, null)}
-                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 z-10"
-                    title="Remove video"
-                  >
-                    ×
-                  </button>
-                </div>
-              )}
-            </div>
-          ))}
-          {videoFieldCount < MAX_VIDEOS && (
-            <button
-              type="button"
-              onClick={handleAddVideoField}
-              className="inline-flex items-center justify-center rounded-md border border-zinc-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
-            >
-              + Add Video ({videoFieldCount}/{MAX_VIDEOS})
-            </button>
           )}
         </div>
       </div>
