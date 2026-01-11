@@ -8,13 +8,15 @@ interface StepNavigationProps {
   percentage: number;
   isFirstStep?: boolean;
   isNextDisabled?: boolean;
+  currentStep?: number;
 }
 
-const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = false, isNextDisabled = false }: StepNavigationProps) => {
+const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = false, isNextDisabled = false, currentStep }: StepNavigationProps) => {
   const isBackDisabled = isFirstStep;
+  const isStep15 = currentStep === 14;
   
   return (
-    <div className="relative flex flex-col md:flex-row items-center gap-3 md:gap-0 md:pt-[29px] md:pb-[25px]">
+    <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-0 md:pt-[29px] md:pb-[25px] ${isStep15 ? 'max-w-[950px]' : ''}`}>
       {/* Mobile: Progress Bar (smaller height) at top */}
       <div className="flex md:hidden items-center justify-center w-full">
         <div 
@@ -35,9 +37,9 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
       </div>
 
       {/* Desktop: Original Layout */}
-      <div className="hidden md:flex items-center gap-0 w-full">
+      <div className={`hidden md:flex items-center w-full ${isStep15 ? 'gap-4' : 'gap-0'}`}>
         {/* Left: Go Back Button */}
-        <div className="w-32">
+        <div className={`${isStep15 ? 'w-28' : 'w-32'}`}>
           {showBack && (
             <button
               onClick={isBackDisabled ? undefined : onBack}
@@ -57,9 +59,9 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
         </div>
 
         {/* Center: Progress */}
-        <div className="flex items-center flex-1 justify-center gap-4 ml-[29px]">
+        <div className={`flex items-center flex-1 justify-center gap-4 ml-[29px]`}>
           <div 
-            className="h-[35px] w-full max-w-[800px] rounded-[12px] relative overflow-hidden flex items-center justify-center shadow-inner"
+            className={`h-[35px] w-full rounded-[12px] relative overflow-hidden flex items-center justify-center shadow-inner ${isStep15 ? 'max-w-[600px]' : 'max-w-[800px]'}`}
             style={{ backgroundColor: '#F6F6F6' }}
           >
             <div
@@ -76,19 +78,19 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
         </div>
 
         {/* Right: Next Button */}
-        <div className="w-32 flex justify-end">
+        <div className={`${isStep15 ? 'w-28' : 'w-32'} flex justify-end`}>
           <button
             onClick={isNextDisabled ? undefined : onNext}
             disabled={isNextDisabled}
             className={`
-              flex items-center justify-center gap-[5px] w-[110px] px-4 h-[37px] bg-[#FF6E4A] text-white rounded-l-[10px] transition-opacity font-roboto
+              flex items-center justify-center gap-[5px] w-[110px] px-4 h-[37px] bg-[#FF6E4A] text-white  ${isStep15 ? 'rounded-[10px]' : 'rounded-l-[10px]'} transition-opacity font-roboto
               ${isNextDisabled 
                 ? 'hover:cursor-not-allowed cursor-not-allowed' 
                 : 'hover:opacity-90 hover:cursor-pointer cursor-pointer'
               }
             `}
           >
-            <span className="text-[16px] font-roboto">NEXT</span>
+            <span className="text-[16px] font-roboto">{isStep15 ? 'SUBMIT' : 'NEXT'}</span>
             <GoChevronRight className="text-white text-[20px]" />
           </button>
         </div>
@@ -126,7 +128,7 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
             }
           `}
         >
-          <span className="text-[12px] font-roboto">NEXT</span>
+          <span className="text-[12px] font-roboto">{isStep15 ? 'SUBMIT' : 'NEXT'}</span>
           <GoChevronRight className="text-white text-[16px]" />
         </button>
       </div>

@@ -430,7 +430,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
       </div>
 
       {/* Fourth Box - Your Details */}
-      <div className="border-2 border-gray-200 rounded-xl p-8 md:p-6">
+      <div className="border-2 border-gray-200 rounded-xl p-8 md:p-6 mb-6">
         {/* Subheading and Edit Button - Flex Between */}
         <div className="flex justify-between items-center mb-6 border-b border-gray-300 ">
           <h3 className="text-[14px] md:text-[16px] font-roboto font-[400] text-[#0A0A0A]">
@@ -442,6 +442,25 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
         <div className="space-y-4">
           {yourDetailsSpecs.map((spec) => renderSpecRow(spec, "details"))}
         </div>
+      </div>
+
+      {/* Download PDF Box */}
+      <div className="border-2 border-gray-200 rounded-xl p-8 md:p-6">
+        <button className="w-full flex items-center justify-center gap-2 text-[14px] md:text-[16px] font-roboto font-[400] text-black hover:text-gray-700 transition-colors">
+          {/* Download Icon */}
+          <svg
+            className="w-5 h-5 text-black"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          <span>Download Pdf</span>
+        </button>
       </div>
     </div>
   );
