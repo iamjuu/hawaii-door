@@ -2,9 +2,7 @@ import { getDashboardStats } from "@/lib/admin/stats";
 import Link from "next/link";
 import CurrentDate from "@/components/admin/CurrentDate";
 import OrdersLineChart from "@/components/admin/OrdersLineChart";
-import BookingsPieChart from "@/components/admin/BookingsPieChart";
 import UsersPieChart from "@/components/admin/UsersPieChart";
-import YogaSessionsCard from "@/components/admin/YogaSessionsCard";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -139,13 +137,9 @@ console.log(stats,'data gotted');
     ? (((last7DaysRevenue - prev7DaysRevenue) / prev7DaysRevenue) * 100).toFixed(1)
     : "0.0";
 
-  // Calculate total expenses (bookings revenue as proxy)
-  const totalExpenses = stats.revenue.bookings;
-  const last7DaysExpenses = stats.revenueData.slice(-7).reduce((sum, day) => sum + (day.bookings * 100), 0);
-  const prev7DaysExpenses = stats.revenueData.slice(-14, -7).reduce((sum, day) => sum + (day.bookings * 100), 0);
-  const expenseGrowth = prev7DaysExpenses > 0
-    ? (((last7DaysExpenses - prev7DaysExpenses) / prev7DaysExpenses) * 100).toFixed(1)
-    : "0.0";
+  // Calculate total expenses (placeholder - you can add actual expense tracking later)
+  const totalExpenses = 0;
+  const expenseGrowth = "0.0";
 
   return (
     <div className="min-h-screen bg-zinc-900 p-6 sm:p-8">
@@ -209,7 +203,7 @@ console.log(stats,'data gotted');
           </div>
 
           {/* Statistics Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-zinc-700/50">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-zinc-700/50">
             {/* Total Products */}
             <div className="group p-8 hover:bg-zinc-800/50 transition-all duration-300 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-500/10 to-transparent rounded-full blur-3xl group-hover:scale-150 transition-transform duration-500"></div>
@@ -230,48 +224,25 @@ console.log(stats,'data gotted');
               </div>
             </div>
 
-            {/* Blog Posts */}
+            {/* Total Orders */}
             <div className="group p-8 hover:bg-zinc-800/50 transition-all duration-300 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-pink-500/10 to-transparent rounded-full blur-3xl group-hover:scale-150 transition-transform duration-500"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-3xl group-hover:scale-150 transition-transform duration-500"></div>
               <div className="relative">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-xl bg-pink-500/10 border border-pink-500/20 group-hover:bg-pink-500/20 transition-colors">
-                    <svg className="w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
+                    <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
                   </div>
-                  <div className="px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/20">
-                    <span className="text-xs font-semibold text-pink-400">Published</span>
+                  <div className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20">
+                    <span className="text-xs font-semibold text-blue-400">{stats.orders.paid} Paid</span>
                   </div>
                 </div>
-                <h3 className="text-sm font-medium text-zinc-400 uppercase tracking-wide mb-2">Blog Posts</h3>
-                <p className="text-4xl font-bold text-white mb-1">{stats.blogs.total}</p>
-                <p className="text-xs text-zinc-500">Content articles</p>
+                <h3 className="text-sm font-medium text-zinc-400 uppercase tracking-wide mb-2">Total Orders</h3>
+                <p className="text-4xl font-bold text-white mb-1">{stats.orders.total}</p>
+                <p className="text-xs text-zinc-500">{stats.orders.pending} pending, {stats.orders.cancelled} cancelled</p>
               </div>
             </div>
-
-            {/* Events */}
-            <div className="group p-8 hover:bg-zinc-800/50 transition-all duration-300 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-yellow-500/10 to-transparent rounded-full blur-3xl group-hover:scale-150 transition-transform duration-500"></div>
-              <div className="relative">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 group-hover:bg-yellow-500/20 transition-colors">
-                    <svg className="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <div className="px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20">
-                    <span className="text-xs font-semibold text-yellow-400">{stats.events.upcoming} Upcoming</span>
-                  </div>
-                </div>
-                <h3 className="text-sm font-medium text-zinc-400 uppercase tracking-wide mb-2">Events</h3>
-                <p className="text-4xl font-bold text-white mb-1">{stats.events.total}</p>
-                <p className="text-xs text-zinc-500">{stats.events.past} completed events</p>
-              </div>
-            </div>
-
-            {/* Yoga Sessions */}
-            <YogaSessionsCard yogaSessions={stats.yogaSessions} />
           </div>
 
      
@@ -279,18 +250,7 @@ console.log(stats,'data gotted');
       </section>
 
         {/* Statistics Cards with Charts */}
-        <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
-          <ChartCard
-            title="Total Bookings"
-            value={stats.bookings.total}
-            subtitle={`${stats.bookings.confirmed} confirmed, ${stats.bookings.pending} pending, ${stats.bookings.cancelled} cancelled`}
-          >
-            <BookingsPieChart
-              confirmed={stats.bookings.confirmed}
-              pending={stats.bookings.pending}
-              cancelled={stats.bookings.cancelled}
-            />
-          </ChartCard>
+        <section className="grid gap-6 sm:grid-cols-1 lg:grid-cols-1">
           <ChartCard
             title="Total Users"
             value={stats.users.total}
@@ -316,9 +276,8 @@ console.log(stats,'data gotted');
 
    
 
-        {/* Recent Orders & Bookings */}
-        <section className="grid gap-6 lg:grid-cols-2">
-          {/* Recent Orders */}
+        {/* Recent Orders */}
+        <section className="grid gap-6 lg:grid-cols-1">
           <div className="rounded-2xl bg-zinc-800/50 p-6 backdrop-blur-sm border border-zinc-700/50">
             <div className="mb-4 flex items-center justify-between">
               <div>
@@ -361,54 +320,9 @@ console.log(stats,'data gotted');
               </div>
             )}
           </div>
-
-          {/* Recent Bookings */}
-          <div className="rounded-2xl bg-zinc-800/50 p-6 backdrop-blur-sm border border-zinc-700/50">
-            <div className="mb-4 flex items-center justify-between">
-              <div>
-                <h2 className="text-xl font-semibold text-white">Recent Bookings</h2>
-                <p className="mt-1 text-sm text-zinc-400">Latest yoga session bookings</p>
-              </div>
-              <Link href="/admin/dashboard/sessions" className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors">
-                View All →
-              </Link>
-            </div>
-            {stats.recentBookings.length === 0 ? (
-              <div className="py-8 text-center text-zinc-500">No bookings yet</div>
-            ) : (
-              <div className="space-y-3">
-                {stats.recentBookings.slice(0, 5).map((booking: { _id: string; seats: number; amount: number; status: string; createdAt: string }) => (
-                  <div
-                    key={booking._id}
-                    className="flex items-center justify-between rounded-lg bg-zinc-900/50 p-4 border border-zinc-700/30 hover:bg-zinc-900/70 transition-colors"
-                  >
-                    <div className="flex-1">
-                      <p className="font-mono text-xs text-zinc-400">#{String(booking._id).slice(-8)}</p>
-                      <p className="mt-1 text-sm font-semibold text-white">
-                        {booking.seats} seat{booking.seats !== 1 ? "s" : ""} • {formatCurrency(booking.amount)}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span
-                        className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                          booking.status === "confirmed"
-                            ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                            : booking.status === "pending"
-                            ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                            : "bg-red-500/20 text-red-400 border border-red-500/30"
-                        }`}
-                      >
-                        {booking.status}
-                      </span>
-                      <span className="text-xs text-zinc-500" suppressHydrationWarning>{new Date(booking.createdAt).toLocaleDateString()}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
         </section>
       </div>
     </div>
   );
 }
+
