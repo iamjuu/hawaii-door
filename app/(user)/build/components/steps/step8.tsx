@@ -202,14 +202,14 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
 
           {/* Lock Bore Diameter Section */}
           <div>
-            <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
+            <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto md:mt-3">
               Lock Bore Diameter
             </p>
             <div className="flex flex-col md:grid md:grid-cols-3 gap-2 max-w-full md:max-w-[300px]">
               <button
                 type="button"
                 onClick={() => handleBoreDiameterSelect("1")}
-                className={`w-full relative border-2 rounded-lg px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
                   selectedBoreDiameter === "1"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
@@ -227,7 +227,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleBoreDiameterSelect("7/8")}
-                className={`w-full relative border-2 rounded-lg px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
                   selectedBoreDiameter === "7/8"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
@@ -245,13 +245,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleBoreDiameterSelect("other")}
-                className={`w-full relative border-2 rounded-lg px-3 py-2 font-roboto text-sm font-medium bg-white transition-colors flex items-center justify-between ${
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 font-roboto text-sm font-medium bg-white transition-colors flex items-center justify-between ${
                   selectedBoreDiameter === "other"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
                 }`}
               >
-                <span className="text-left text-black font-roboto">Other</span>
+                <span className="text-left text-black font-roboto font-[400]">Other</span>
                 <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                   selectedBoreDiameter === "other" ? "border-orange-500" : "border-gray-300"
                 }`}>
@@ -265,7 +265,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
 
           {/* Lock Centerline Section */}
           <div className="flex flex-col">
-            <p className="text-[18px] md:text-[26px] font-[400] text-black font-roboto ">Lock Centerline</p>
+            <p className="text-[18px] md:text-[26px] font-[400] text-black font-roboto md:mt-3">Lock Centerline</p>
             <div className="flex items-center gap-2 mb-3 md:mb-5">
               <div className="w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center">
                 <svg
@@ -332,14 +332,14 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
 
           {/* Backset (lock) Section */}
           <div>
-            <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
+            <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto md:mt-3">
               Backset (lock)
             </p>
             <div className="flex flex-col md:grid md:grid-cols-3 gap-3 max-w-full md:max-w-[300px]">
               <button
                 type="button"
                 onClick={() => handleBacksetSelect("2_3/8")}
-                className={`w-full relative border-2 rounded-lg px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
                   selectedBackset === "2_3/8"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
@@ -357,7 +357,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleBacksetSelect("2_3/4")}
-                className={`w-full relative border-2 rounded-lg px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
                   selectedBackset === "2_3/4"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
@@ -375,13 +375,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleBacksetSelect("other")}
-                className={`w-full relative border-2 rounded-lg px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
                   selectedBackset === "other"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
                 }`}
               >
-                <span className="text-left text-black font-roboto">Other</span>
+                <span className="text-left text-black font-roboto font-[400]">Other</span>
                 <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                   selectedBackset === "other" ? "border-orange-500" : "border-gray-300"
                 }`}>
@@ -395,17 +395,17 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
 
           {/* LatchBore Diameter Section */}
           <div>
-            <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-9 font-roboto">LatchBore Diameter</p>
+            <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-9 font-roboto md:mt-3">LatchBore Diameter</p>
             <button
               type="button"
               onClick={() => handleLatchBoreDiameterSelect("default")}
-              className={`w-full md:max-w-[140px] border-2 rounded-lg px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+              className={`w-full md:max-w-[140px] border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
                 selectedLatchBoreDiameter === "default"
                   ? "border-orange-500 text-black"
                   : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
               }`}
             >
-              <span className="text-left text-black font-roboto">1 Default</span>
+              <span className="text-left text-black font-roboto font-[400]">1 Default</span>
               <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                 selectedLatchBoreDiameter === "default" ? "border-orange-500" : "border-gray-300"
               }`}>
@@ -424,7 +424,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
         <div className="flex-1 flex flex-col gap-6">
           {/* Faceplate Dimension Section */}
           <div>
-            <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
+            <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto md:mt-3">
               Faceplate Dimension
             </p>
             <div className="flex flex-col md:grid md:grid-cols-3 gap-3">
@@ -477,7 +477,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
                 }`}
               >
-                <span className="text-left text-black font-roboto text-[15px]">Other</span>
+                <span className="text-left text-black font-roboto text-[15px] font-[400]">Other</span>
                 <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                   selectedFaceplateDimension === "other" ? "border-orange-500" : "border-gray-300"
                 }`}>
@@ -491,14 +491,14 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
 
           {/* Drive-In Diameter Section */}
           <div>
-            <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
+            <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto md:mt-3">
               Drive-In Diameter
             </p>
             <div className="flex flex-col md:grid md:grid-cols-3 gap-3 max-w-full md:max-w-[300px]">
               <button
                 type="button"
                 onClick={() => handleDriveInDiameterSelect('7/8"' )}
-                className={`w-full relative border-2 rounded-lg px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
                   selectedDriveInDiameter === '7/8"'
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
@@ -516,7 +516,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleDriveInDiameterSelect('1"' )}
-                className={`w-full relative border-2 rounded-lg px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
                   selectedDriveInDiameter === '1"'
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
@@ -534,13 +534,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleDriveInDiameterSelect("other")}
-                className={`w-full relative border-2 rounded-lg px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
                   selectedDriveInDiameter === "other"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
                 }`}
               >
-                <span className="text-left text-black font-roboto">Other</span>
+                <span className="text-left text-black font-roboto font-[400]">Other</span>
                 <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                   selectedDriveInDiameter === "other" ? "border-orange-500" : "border-gray-300"
                 }`}>
@@ -557,7 +557,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
         <div className="flex-1">
           {/* Faceplate Radius Section */}
           <div className="max-w-[390px]">
-            <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
+            <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto md:mt-3">
               Faceplate Radius
             </p>
             <div className="flex flex-col md:grid md:grid-cols-2 gap-3">
@@ -579,7 +579,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                       className="object-contain"
                     />
                   </div>
-                  <span className="text-left text-black font-roboto">¼&quot; Radius</span>
+                  <span className="text-left text-black font-roboto font-[400]">¼&quot; Radius</span>
                 </div>
                 <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                   selectedFaceplateRadius === '1/4" radius' ? "border-orange-500" : "border-gray-300"
@@ -607,7 +607,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                       className="object-contain"
                     />
                   </div>
-                  <span className="text-left text-black font-roboto">Square</span>
+                  <span className="text-left text-black font-roboto font-[400]">Square</span>
                 </div>
                 <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                   selectedFaceplateRadius === "square" ? "border-orange-500" : "border-gray-300"
