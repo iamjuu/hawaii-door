@@ -11,7 +11,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   const menuItems = [
-    { label: "PRODUCTS", path: "#" },
+    { label: "PRODUCTS", path: "/product" },
     { label: "GALLERY", path: "/gallery" },
     { label: "ABOUT", path: "/about" },
     { label: "CAREER", path: "/career" },
