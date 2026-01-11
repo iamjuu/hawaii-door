@@ -4,7 +4,7 @@ import { MdOutlineArrowOutward } from 'react-icons/md';
 const FooterBanner=()=>{
     return(
         <div className="w-full px-5 md:px-15 mb-12 py-8 md:pt-12 md:pb-16 lg:pb-20 bg-white  ">
-      <div className="max-w-[1400px] mx-auto">
+      <div className="w-full mx-auto">
         <div className="relative w-full min-h-[400px] md:min-h-[420px] bg-[#84684C] rounded-lg overflow-hidden">
 
           {/* ================= LEFT CONTENT ================= */}
