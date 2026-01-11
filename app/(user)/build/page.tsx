@@ -434,7 +434,7 @@ const BuildDoor = () => {
         height={steps[currentStep].infoBanner.height}
       />
 
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white text-black">
         <div className="pl-6 pr-4 md:px-15 mx-auto  py-8 ">
           <div className="flex flex-col lg:flex-row gap-0">
             {/* Main Content Area */}
