@@ -441,6 +441,7 @@ const BuildDoor = () => {
                   showBack={true}
                   percentage={steps[currentStep].percentage}
                   isFirstStep={currentStep === 0}
+                  currentStep={currentStep}
                   isNextDisabled={
                     (currentStep === 0 && !quoteData.doorType) ||
                     (currentStep === 1 && !quoteData.doorConfig) ||
@@ -517,12 +518,14 @@ const BuildDoor = () => {
               </StepContainer>
             </div>
 
-            {/* Quote Summary Sidebar */}
-            <QuoteSummary
-              quoteData={quoteData}
-              currentStep={currentStep}
-              onRestart={handleRestart}
-            />
+            {/* Quote Summary Sidebar - Hidden on Step 15 */}
+            {currentStep !== 14 && (
+              <QuoteSummary
+                quoteData={quoteData}
+                currentStep={currentStep}
+                onRestart={handleRestart}
+              />
+            )}
           </div>
         </div>
       </div>
