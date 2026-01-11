@@ -112,6 +112,8 @@ export {default as wood7} from './product/intertior/Sketch Face Design.svg'
 export {default as intiordooricon} from './product/Interior Door 2.png'
 export {default as extiordoor} from './product/exterior door 3.png'
 export {default as ProductFooter} from './product/Group 15.svg'
+export {default as FooterTool} from './product/footertool.png'
+export {default as FooterSetting} from './product/footersetting.png'
 
 export {default as Interiorhero} from './product/intertior/lydendoor.svg'
 // export {default as Exteriorhero} from './product/exterior/lydendoor 2.svg'
