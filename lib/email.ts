@@ -40,7 +40,7 @@ export async function sendEmail(to: string, subject: string, html: string, text?
     }
 
     const info = await transporter.sendMail({
-      from: `"Crystal Bowl Studio" <${fromEmail}>`,
+      from: `"Hawaii Studio" <${fromEmail}>`,
       to,
       subject,
       html,
@@ -69,7 +69,7 @@ export async function sendEmail(to: string, subject: string, html: string, text?
 
 // Send OTP email
 export async function sendOTPEmail(email: string, otp: string, name: string) {
-  const subject = "Verify Your Email - Crystal Bowl Studio";
+  const subject = "Verify Your Email - Hawaii Studio";
   const html = `
     <!DOCTYPE html>
     <html>
@@ -88,11 +88,11 @@ export async function sendOTPEmail(email: string, otp: string, name: string) {
     <body>
       <div class="container">
         <div class="header">
-          <h1>Crystal Bowl Studio</h1>
+          <h1>Hawaii Studio</h1>
         </div>
         <div class="content">
           <h2>Hello ${name}!</h2>
-          <p>Thank you for registering with Crystal Bowl Studio. Please verify your email address using the OTP below:</p>
+          <p>Thank you for registering with Hawaii Studio. Please verify your email address using the OTP below:</p>
           <div class="otp-box">
             <div class="otp-code">${otp}</div>
           </div>
@@ -100,7 +100,7 @@ export async function sendOTPEmail(email: string, otp: string, name: string) {
           <p>If you didn't create an account, please ignore this email.</p>
         </div>
         <div class="footer">
-          <p>&copy; ${new Date().getFullYear()} Crystal Bowl Studio. All rights reserved.</p>
+          <p>&copy; ${new Date().getFullYear()} Hawaii Studio. All rights reserved.</p>
         </div>
       </div>
     </body>
@@ -119,7 +119,7 @@ export async function sendOTPEmail(email: string, otp: string, name: string) {
 
 // Send verification email with link
 export async function sendVerificationEmail(email: string, name: string, verificationUrl: string) {
-  const subject = "Verify Your Email - Crystal Bowl Studio";
+  const subject = "Verify Your Email - Hawaii Studio";
   const html = `
     <!DOCTYPE html>
     <html>
@@ -137,11 +137,11 @@ export async function sendVerificationEmail(email: string, name: string, verific
     <body>
       <div class="container">
         <div class="header">
-          <h1>Crystal Bowl Studio</h1>
+          <h1>Hawaii Studio</h1>
         </div>
         <div class="content">
           <h2>Hello ${name}!</h2>
-          <p>Thank you for registering with Crystal Bowl Studio. Please verify your email address by clicking the button below:</p>
+          <p>Thank you for registering with Hawaii Studio. Please verify your email address by clicking the button below:</p>
           <div style="text-align: center;">
             <a href="${verificationUrl}" class="button">Verify Email</a>
           </div>
@@ -150,7 +150,7 @@ export async function sendVerificationEmail(email: string, name: string, verific
           <p>If you didn't create an account, please ignore this email.</p>
         </div>
         <div class="footer">
-          <p>&copy; ${new Date().getFullYear()} Crystal Bowl Studio. All rights reserved.</p>
+          <p>&copy; ${new Date().getFullYear()} Hawaii Studio. All rights reserved.</p>
         </div>
       </div>
     </body>
@@ -255,7 +255,7 @@ export async function sendEnquiryNotificationToAdmin(enquiryData: {
           </p>
         </div>
         <div class="footer">
-          <p>&copy; ${new Date().getFullYear()} Crystal Bowl Studio. All rights reserved.</p>
+          <p>&copy; ${new Date().getFullYear()} Hawaii Studio. All rights reserved.</p>
           <p>This is an automated notification from your website's enquiry form.</p>
         </div>
       </div>
@@ -280,7 +280,7 @@ export async function sendEnquiryConfirmationToUser(enquiryData: {
   services: string;
   sessionType: string;
 }) {
-  const subject = "Thank You for Your Enquiry - Crystal Bowl Studio";
+  const subject = "Thank You for Your Enquiry - Hawaii Studio";
   const html = `
     <!DOCTYPE html>
     <html>
@@ -299,7 +299,7 @@ export async function sendEnquiryConfirmationToUser(enquiryData: {
     <body>
       <div class="container">
         <div class="header">
-          <h1>✨ Crystal Bowl Studio</h1>
+          <h1>✨ Hawaii Studio</h1>
           <p style="margin: 0; font-size: 18px;">Thank You for Your Interest!</p>
         </div>
         <div class="content">
@@ -330,8 +330,8 @@ export async function sendEnquiryConfirmationToUser(enquiryData: {
           </p>
         </div>
         <div class="footer">
-          <p><strong>Crystal Bowl Studio</strong></p>
-          <p>&copy; ${new Date().getFullYear()} Crystal Bowl Studio. All rights reserved.</p>
+          <p><strong>Hawaii Studio</strong></p>
+          <p>&copy; ${new Date().getFullYear()} Hawaii Studio. All rights reserved.</p>
         </div>
       </div>
     </body>
@@ -363,7 +363,7 @@ export async function sendDiscoverySessionConfirmation(discoveryData: {
     throw new Error("Recipient email not configured");
   }
 
-  const subject = "Discovery Session Registration Successful - Crystal Bowl Studio";
+  const subject = "Discovery Session Registration Successful - Hawaii Studio";
   const html = `
     <!DOCTYPE html>
     <html>
@@ -386,7 +386,7 @@ export async function sendDiscoverySessionConfirmation(discoveryData: {
     <body>
       <div class="container">
         <div class="header">
-          <h1>✨ Crystal Bowl Studio</h1>
+          <h1>✨ Hawaii Studio</h1>
           <p style="margin: 0; font-size: 18px;">Discovery Session Registration</p>
         </div>
         <div class="content">
@@ -421,12 +421,12 @@ export async function sendDiscoverySessionConfirmation(discoveryData: {
           </p>
           
           <p style="margin-top: 30px; font-style: italic; color: #666;">
-            We look forward to helping you discover your perfect crystal bowl!
+            We look forward to helping you discover your perfect Hawaii!
           </p>
         </div>
         <div class="footer">
-          <p><strong>Crystal Bowl Studio</strong></p>
-          <p>&copy; ${new Date().getFullYear()} Crystal Bowl Studio. All rights reserved.</p>
+          <p><strong>Hawaii Studio</strong></p>
+          <p>&copy; ${new Date().getFullYear()} Hawaii Studio. All rights reserved.</p>
         </div>
       </div>
     </body>

@@ -68,7 +68,7 @@ export default function AdminLoginPage() {
   return (
     <div className="mx-auto max-w-md px-6 py-20">
       <h1 className="mb-6 text-3xl font-bold">Admin Login</h1>
-      <p className="mb-6 text-sm text-zinc-600">Crystal Bowl Studio Administration</p>
+      <p className="mb-6 text-sm text-zinc-600">hawaii Administration</p>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="email" className="block text-sm font-medium mb-1">

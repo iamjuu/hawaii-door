@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 const FooterBanner=()=>{
     return(
-        <div className="w-full px-5 md:px-15 mb-12 py-8 md:pt-12 md:pb-16 lg:pb-20 bg-white  ">
+        <div className="w-full px-5 md:px-15 mb-12 py-8 md:pt-12  bg-white  ">
       <div className="w-full mx-auto">
         <div className="relative w-full min-h-[400px] md:min-h-[420px] bg-[#84684C] rounded-lg overflow-hidden">
 
@@ -25,7 +25,7 @@ const FooterBanner=()=>{
                 <span className="absolute inset-0 bg-black origin-bottom scale-y-0 transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-y-100" />
 
                 {/* Button content */}
-                <span className="relative z-10 flex items-center gap-3 font-roboto">
+                <span className="relative flex-col md:flex-row z-10 flex items-center gap-3 font-roboto">
                 Start Building Your Perfect Custom Door Now
                   <span className="inline-flex items-center justify-center w-7 h-7 transition-all duration-500 rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0">
                     <MdOutlineArrowOutward className="text-white text-2xl" />

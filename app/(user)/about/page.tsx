@@ -41,7 +41,7 @@ const page = () => {
             </div>
             
             {/* Right Image */}
-            <div className="relative h-[400px] md:h-[500px] lg:h-[600px] rounded-lg overflow-hidden">
+            <div className="relative h-[400px] md:h-[500px] lg:h-[600px] rounded-[15px] overflow-hidden">
               <Image
                 src={About2}
                 alt="Craftsman working"
@@ -90,7 +90,7 @@ const page = () => {
         {/* Second Section - Optional additional content */}
         <section className="px-6 md:px-12 lg:px-20 py-16 ">
           <div className="max-w-7xl mx-auto">
-            <div className="relative h-[300px] md:h-[400px] rounded-lg overflow-hidden">
+            <div className="relative h-[300px] md:h-[400px] rounded-[15px] overflow-hidden">
               <Image
                 src={About1}
                 alt="Hawaii Western Doors"

@@ -13,6 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MdOutlineArrowForward } from "react-icons/md";
 import { ChevronRight } from "lucide-react";
+import FooterBanner from "./components/footerbanner";
 const page = () => {
   const bgImage = "/assets/product/productmain.svg";
   const contant = "Doors That Fit. Every Time.";
@@ -61,7 +62,7 @@ const page = () => {
 
         <section className="px-6 md:px-12 lg:px-20 py-16 md:py-24">
           <div className="">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center lg:justify-items-start">
               {doorCards.map((door, index) => (
                 <div
                   style={{
@@ -75,7 +76,7 @@ const page = () => {
                     backgroundRepeat: "no-repeat"
                   }}
                   key={index}
-                  className="rounded-lg w-[407px] overflow-hidden shadow-lg h-[260px] flex flex-col justify-end"
+                  className="rounded-lg w-full max-w-[407px] lg:w-[407px] overflow-hidden shadow-lg h-[260px] flex flex-col justify-end"
                 >
                   <div className=" w-full h-full flex justify-between">
                     <div className="w-[30%]"></div>
@@ -104,38 +105,8 @@ const page = () => {
             </div>
           </div>
         </section>
+        <FooterBanner />
 
-        <section className=" px-16 py-16 md:py-24">
-          <div className=" px-6 bg-[#84684C] mx-auto">
-            <div className="flex  w-full gap-12 items-center justify-between">
-              {/* Left Side - Text Content */}
-              <div className="w-[43%]">
-                <h2 className="text-[42px] font-[500] text-white">
-                  Create Your Custom Door
-                </h2>
-                <div className="flex flex-col justify-between gap-5">
-                <p className="text-[18px] font-[400] text-[#C6C6C6] leading-relaxed">
-                  Explore doors designed for precision fit, with custom jambs and built to Hawaii Spec for lasting durability. Elevate your space with doors tailored to your style and needs.
-                </p>
-                <button className="bg-[#FF6E4A] hover:bg-[#FF5A3A] text-white px-8 py-[10px] rounded-[35.2px] font-medium text-[18px] justify-between flex items-center gap-4 transition-colors">
-                  Start Building Your Perfect Custom Door Now
-                  <MdOutlineArrowForward className="w-8 h-8 -rotate-30" />
-                </button>
-                </div>
-              </div>
-
-              {/* Right Side - Image */}
-              <div className="relative w-[50%] flex justify-end  h-[500px] lg:h-[600px]">
-                <Image
-                  src={ProductFooter}
-                  alt="Custom Door Illustration"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
 
         
       </main>
