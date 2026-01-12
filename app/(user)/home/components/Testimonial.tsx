@@ -34,49 +34,59 @@ const Testimonial = () => {
           </p>
         </div>
 
-        {/* Testimonial Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div 
-              key={index}
-              className="
-              bg-white
-              rounded-2xl
-              p-6 md:p-8
-              shadow-[0_4px_20px_rgba(0,0,0,0.10)]
-            "            
-            
-            
-            >
-              {/* Quote Icon */}
-              <div className="mb-6">
-                <div className="relative w-12 h-12">
-                  <Image 
-                    src={Comaimg}
-                    alt="Quote icon"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </div>
+     {/* Testimonial Cards Grid */}
+<div className="relative">
 
-              {/* Testimonial Text */}
-              <p className="font-roboto text-base md:text-lg text-black leading-relaxed mb-8">
-                {testimonial.quote}
-              </p>
+{/* Left fade */}
+<div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
 
-              {/* Author Info */}
-              <div className=" border-gray-200">
-                <p className="font-roboto font-medium text-base md:text-lg text-black mb-1">
-                  {testimonial.name}
-                </p>
-                <p className="font-roboto font-light text-sm md:text-base text-[#3B3B3B]">
-                  {testimonial.title}
-                </p>
-              </div>
-            </div>
-          ))}
+{/* Right fade */}
+<div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
+
+{/* YOUR ORIGINAL GRID — unchanged */}
+<div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-6 lg:gap-8">
+  {testimonials.map((testimonial, index) => (
+    <div 
+      key={index}
+      className="
+        bg-white
+        rounded-2xl
+        p-6 md:p-8
+        shadow-[0_4px_20px_rgba(0,0,0,0.10)]
+      "
+    >
+      {/* Quote Icon */}
+      <div className="mb-6">
+        <div className="relative w-12 h-12">
+          <Image 
+            src={Comaimg}
+            alt="Quote icon"
+            fill
+            className="object-contain"
+          />
         </div>
+      </div>
+
+      {/* Testimonial Text */}
+      <p className="font-roboto text-base md:text-lg text-black leading-relaxed mb-8">
+        {testimonial.quote}
+      </p>
+
+      {/* Author Info */}
+      <div className="border-gray-200">
+        <p className="font-roboto font-medium text-base md:text-lg text-black mb-1">
+          {testimonial.name}
+        </p>
+        <p className="font-roboto font-light text-sm md:text-base text-[#3B3B3B]">
+          {testimonial.title}
+        </p>
+      </div>
+    </div>
+  ))}
+</div>
+
+</div>
+
       </div>
     </div>
   )

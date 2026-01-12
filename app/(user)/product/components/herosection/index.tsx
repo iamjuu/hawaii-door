@@ -22,13 +22,13 @@ export default function HeroSection({ contant ,para, bgImage, features }: HeroSe
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
-        className="relative  mt-20 w-full h-[500px]"
+        className="relative   mt-10 md:mt-20 w-full h-[500px]"
       >
         <div className="gap-2  max-w-[700px] z-10 flex flex-col items-start justify-center px-16 h-full">
-          <h1 className="text-white text-4xl md:text-5xl font-bold drop-shadow-lg">
+          <h1 className="text-white text-3xl md:text-[58px] font-bold drop-shadow-lg">
             {contant}
           </h1>
-          <p  className="text-[#C6C6C6] text-sm md:text-base font-medium font-montserrat">{para}</p>
+          <p  className="text-[#C6C6C6] text-base md:text-[18px] font-[400] font-montserrat">{para}</p>
         </div>
 
         <div className="absolute bottom-8 left-0  flex justify-center right-0 z-10 px-16">
