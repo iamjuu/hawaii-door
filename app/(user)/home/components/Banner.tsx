@@ -1,8 +1,10 @@
+"use client";
 import Image from "next/image";
 import bannerimg from "../../../../public/assets/images/landing/banner2.png";
 import {MdOutlineArrowOutward } from "react-icons/md";
-
+import { useRouter } from "next/navigation";
 export default function BannerSection() {
+  const router = useRouter();
   return (
     <section className="relative w-full h-[60vh] md:h-[100vh] overflow-hidden">
       {/* Background Image */}
@@ -40,7 +42,9 @@ export default function BannerSection() {
             </h3>
 
             {/* Button */}
-            <button className="group relative mt-7 inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] px-5 py-2 font-roboto text-xl text-white">
+            <button
+             onClick={() => router.push("/build")}
+             className="group relative mt-7 inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] px-5 py-2 font-roboto text-xl text-white">
 
 {/* WhatsApp-style black reveal */}
 <span

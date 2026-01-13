@@ -1,8 +1,10 @@
+"use client";
 import { MdOutlineArrowOutward } from "react-icons/md"
 import Image from "next/image"
 import Doors from "../../../../public/assets/images/landing/door22.png"
-
+import { useRouter } from "next/navigation";
 const Prehung = () => {
+  const router = useRouter();
   return (
     <div className="w-full px-5 md:px-15 mb-12 py-8 md:pt-12 md:pb-16 lg:pb-20 bg-white  ">
       <div className="max-w-[1400px] mx-auto">
@@ -23,7 +25,9 @@ const Prehung = () => {
               </p>
 
               {/* Button */}
-              <button className="group relative inline-flex items-center gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] text-[15px] md:text-lg font-roboto px-5 py-2  text-white">
+              <button 
+               onClick={() => router.push("/build")}
+              className="group relative inline-flex items-center gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] text-[15px] md:text-lg font-roboto px-5 py-2  text-white">
                 {/* Hover overlay */}
                 <span className="absolute inset-0 bg-black origin-bottom scale-y-0 transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-y-100" />
 
