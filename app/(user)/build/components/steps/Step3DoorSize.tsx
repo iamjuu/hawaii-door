@@ -102,7 +102,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
               {/* Door Diagram */}
               <div className="relative">
                 {/* Height Arrow */}
-                <div className="absolute -left-4 md:-left-8 top-0 bottom-0 flex flex-col items-center justify-between">
+                <div className="absolute -left-4 md:-left-5 top-0 bottom-0 flex flex-col items-center justify-between">
                   <div className="w-[2px] md:w-1 bg-orange-500 flex-1" />
                  
                   <div className="absolute top-1/2 -translate-y-1/2 -left-8 md:-left-12 -rotate-90 origin-center text-[#F97316] text-[12px] md:text-[15px] whitespace-nowrap font-roboto">
@@ -111,14 +111,14 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
                 </div>
 
                 {/* Door Rectangle */}
-                <div className="w-32 h-64 md:w-40 md:h-72 bg-gray-200 border-4 border-gray-700 rounded-md relative">
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 w-3 h-3 bg-gray-700 rounded-full" />
-                  <div className="absolute inset-4 border-2 border-gray-400 rounded" />
-                  <div className="absolute inset-8 border border-gray-400 rounded" />
+                <div className="w-32 h-64 md:w-40 md:h-80 bg-gray-200 border-3 border-gray-700 relative">
+                  <div className="absolute right-6 top-1/2 -translate-y-1/2 w-2 h-2 md:w-3 md:h-3 bg-gray-700 rounded-full" />
+                  <div className="absolute inset-4 border-2 border-gray-400 " />
+               
                 </div>
 
                 {/* Width Arrow */}
-                <div className="absolute -bottom-4 md:-bottom-8 left-0 right-0 flex items-center justify-between">
+                <div className="absolute -bottom-4 md:-bottom-5 left-0 right-0 flex items-center justify-between">
                   <div className="h-[2px] md:h-1 bg-orange-500 flex-1" />
                 
                   <div className="absolute left-1/2 -translate-x-1/2 -bottom-5 md:-bottom-6 text-[#F97316] text-[12px] md:text-[15px] font-roboto whitespace-nowrap">
@@ -131,13 +131,13 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
         </div>
 
         {/* Right Side - Form Fields */}
-        <div className="lg:w-2/3">
+        <div className="lg:w-2/3  pt-5 md:pt-[27px]">
           <div className="flex w-full flex-col">
             <div className="flex flex-col md:mb-[15px]">
               <div className="flex gap-4">
                 {/* Width */}
                 <div className="w-full max-w-[280px]">
-                  <label className="block text-[16px] md:text-[20px] font-roboto mb-2 text-black">Width</label>
+                  <label className="block text-[16px] md:text-[20px] font-roboto mb-3 text-black">Width</label>
                   <div className="relative">
                     <select
                       value={quoteData.width || ""}
@@ -155,7 +155,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
 
                 {/* Height */}
                 <div className="w-full max-w-[280px]">
-                  <label className="block text-[16px] md:text-[20px] font-roboto mb-2 text-black">Height</label>
+                  <label className="block text-[16px] md:text-[20px] font-roboto mb-3 text-black">Height</label>
                   <div className="relative">
                     <select
                       value={quoteData.height || ""}
@@ -176,7 +176,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
             <div className="flex flex-col space-y-6 mt-6">
               {/* Thickness */}
               <div className="flex gap-3 flex-col md:mb-[30px]">
-                <label className="block text-[16px] md:text-[20px] font-roboto mb-1 text-black">Thickness</label>
+                <label className="block text-[16px] md:text-[20px] font-roboto mb-1 md:mb-3 text-black">Thickness</label>
                 <div className="flex w-full max-w-[320px] md:max-w-[400px] gap-3 md:gap-4">
                   <button
                     onClick={() => handleThicknessChange('1 3/8"')}
@@ -213,18 +213,17 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
               
               {/* Quantity */}
               <div>
-                <label className="block text-[16px] md:text-[20px] font-roboto mb-3 text-black">Quantity</label>
-                <div className="flex items-center gap-3 md:gap-4">
-                  <button onClick={decrementQuantity} className="w-10 h-10 md:w-12 md:h-12 rounded-lg border-2 border-gray-300 hover:border-orange-500 flex items-center justify-center text-xl md:text-2xl font-bold text-black">−</button>
+                <label className="block text-[16px] md:text-[20px] font-roboto mb-4 text-black">Quantity</label>
+                <div className=" flex items-center pr-25 md:pr-20">
+                 
                   <input
                     type="number"
                     min="1"
                     value={quoteData.quantity || 1}
                     onChange={handleQuantityChange}
-                    className="w-20 md:w-24 h-10 md:h-12 text-center text-sm md:text-[20px] font-roboto font-semibold border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none text-black"
+                    className="w-full h-10 md:h-12  text-[14px] md:text-[20px]  border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none text-black px-3 font-[300] font-roboto"
                   />
-                  <button onClick={incrementQuantity} className="w-10 h-10 md:w-12 md:h-12 rounded-lg border-2 border-gray-300 hover:border-orange-500 flex items-center justify-center text-xl md:text-2xl font-bold text-black">+</button>
-                  <span className="text-black font-roboto text-sm md:text-base">doors</span>
+
                 </div>
               </div>
             </div>

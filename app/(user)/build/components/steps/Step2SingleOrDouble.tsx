@@ -60,7 +60,7 @@ const Step2SingleOrDouble = ({ quoteData, setQuoteData, onNext }: StepProps) => 
               <div className="absolute top-4 right-4 z-10">
                 <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
                   <svg
-                    className="w-5 h-5 text-black"
+                    className="w-5 h-5 text-white"
                     fill="none"
                     strokeLinecap="round"
                     strokeLinejoin="round"
