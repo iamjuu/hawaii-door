@@ -30,8 +30,14 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("PDF download error:", error);
     const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    console.error("Error details:", {
+      message: errorMessage,
+      stack: errorStack,
+      quoteDataKeys: quoteData ? Object.keys(quoteData) : "No quoteData",
+    });
     return NextResponse.json(
-      { success: false, error: errorMessage },
+      { success: false, error: errorMessage, details: process.env.NODE_ENV === "development" ? errorStack : undefined },
       { status: 500 }
     );
   }
