@@ -1,4 +1,4 @@
-import PDFDocument from "pdfkit";
+import { jsPDF } from "jspdf";
 import fs from "fs";
 import path from "path";
 
@@ -16,7 +16,7 @@ const getDoorImagePath = (doorType: string): string | null => {
 };
 
 // Format values for display (same logic as step15.tsx)
-const formatValue = (key: string, value: any): string => {
+const formatValue = (key: string, value: unknown): string => {
   if (!value || value === "") return "-";
   if (Array.isArray(value)) return value.length > 0 ? `${value.length} file(s)` : "-";
   
@@ -134,22 +134,46 @@ const getDisplayName = (key: string): string => {
   return nameMap[key] || key;
 };
 
-// Generate PDF from quote data
+// Generate PDF from quote data using jsPDF
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     try {
-      const doc = new PDFDocument({ margin: 50, size: "A4" });
-      const chunks: Buffer[] = [];
+      if (!quoteData) {
+        reject(new Error("Quote data is required"));
+        return;
+      }
 
-      doc.on("data", (chunk) => chunks.push(chunk));
-      doc.on("end", () => resolve(Buffer.concat(chunks)));
-      doc.on("error", reject);
+      // Create PDF document
+      const doc = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+      });
+
+      let yPos = 20;
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const margin = 15;
+      const contentWidth = pageWidth - (2 * margin);
+
+      // Helper function to check if we need a new page
+      const checkNewPage = (requiredSpace: number = 20) => {
+        if (yPos + requiredSpace > doc.internal.pageSize.getHeight() - 20) {
+          doc.addPage();
+          yPos = 20;
+        }
+      };
 
       // Header
-      doc.fontSize(24).text("Hawaii Door - Quote Specification", { align: "center" });
-      doc.moveDown(0.5);
-      doc.fontSize(10).text(`Generated on: ${new Date().toLocaleDateString()}`, { align: "center" });
-      doc.moveDown(1);
+      doc.setFontSize(24);
+      doc.setFont("helvetica", "bold");
+      doc.text("Hawaii Door - Quote Specification", pageWidth / 2, yPos, { align: "center" });
+      yPos += 10;
+      
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, pageWidth / 2, yPos, { align: "center" });
+      yPos += 15;
 
       // Primary Specifications Section
       const wallThicknessValue = quoteData.wallThickness || quoteData.customDiameter || "";
@@ -164,42 +188,54 @@ export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
         { key: "wallThickness", label: "Wall Thickness", value: formatValue("wallThickness", wallThicknessValue) },
       ].filter(spec => spec.value !== "-");
 
-      // Door Specifications Box with border effect
-      const boxStartY = doc.y;
-      doc.fontSize(16).text("Door Specifications", { underline: true });
-      doc.moveDown(0.5);
+      checkNewPage(50);
+
+      // Door Specifications Section
+      doc.setFontSize(16);
+      doc.setFont("helvetica", "bold");
+      doc.text("Door Specifications", margin, yPos);
+      yPos += 8;
 
       // Try to add door image on the right side
       const imagePath = getDoorImagePath(quoteData.doorType);
       let imageAdded = false;
-      let imageY = doc.y;
+      const imageStartY = yPos;
+      
       if (imagePath) {
-        const fullImagePath = path.join(process.cwd(), "public", imagePath);
-        if (fs.existsSync(fullImagePath)) {
-          try {
-            doc.image(fullImagePath, 420, imageY, { width: 120, height: 96 });
-            imageAdded = true;
-          } catch (err) {
-            console.log("Could not add image to PDF:", err);
+        try {
+          const imagePathWithoutSlash = imagePath.startsWith("/") ? imagePath.slice(1) : imagePath;
+          const fullImagePath = path.join(process.cwd(), "public", imagePathWithoutSlash);
+          
+          if (fs.existsSync(fullImagePath)) {
+            try {
+              const imageData = fs.readFileSync(fullImagePath);
+              const imageBase64 = `data:image/png;base64,${imageData.toString('base64')}`;
+              const imageX = pageWidth - margin - 40;
+              doc.addImage(imageBase64, 'PNG', imageX, imageStartY, 40, 32);
+              imageAdded = true;
+            } catch (err) {
+              console.log("Could not add image to PDF:", err);
+            }
+          } else {
+            console.log(`Image not found at path: ${fullImagePath}`);
           }
+        } catch (imageError) {
+          console.log("Error processing image path:", imageError);
         }
       }
 
       // Primary specs on the left
-      doc.fontSize(11);
-      const specsStartY = doc.y;
+      doc.setFontSize(11);
+      doc.setFont("helvetica", "normal");
+      
       primarySpecs.forEach((spec, index) => {
-        const currentY = specsStartY + (index * 20);
-        doc.text(`${spec.label}:`, 50, currentY, { width: 180, continued: true });
-        doc.text(spec.value, 230, currentY, { width: 150 });
+        const currentY = yPos + (index * 7);
+        doc.setFont("helvetica", "normal");
+        doc.text(`${spec.label}:`, margin, currentY);
+        doc.text(spec.value, margin + 60, currentY);
       });
       
-      // Move cursor below specs or image, whichever is lower
-      const specsEndY = specsStartY + (primarySpecs.length * 20);
-      const imageEndY = imageY + (imageAdded ? 96 : 0);
-      doc.y = Math.max(specsEndY, imageEndY) + 20;
-
-      doc.moveDown(1);
+      yPos += Math.max(primarySpecs.length * 7, imageAdded ? 35 : 0) + 10;
 
       // Handing & Hinges Section
       const handingHingesSpecs = [
@@ -213,22 +249,21 @@ export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
       ].filter(spec => spec.value !== "-");
 
       if (handingHingesSpecs.length > 0) {
-        // Check if we need a new page
-        if (doc.y > 700) {
-          doc.addPage();
-        } else {
-          doc.moveDown(1);
-        }
-        doc.fontSize(16).text("Handing & Hinges", { underline: true });
-        doc.moveDown(0.5);
-        doc.fontSize(11);
-        const handingStartY = doc.y;
+        checkNewPage(handingHingesSpecs.length * 7 + 15);
+        
+        doc.setFontSize(16);
+        doc.setFont("helvetica", "bold");
+        doc.text("Handing & Hinges", margin, yPos);
+        yPos += 8;
+        
+        doc.setFontSize(11);
+        doc.setFont("helvetica", "normal");
         handingHingesSpecs.forEach((spec, index) => {
-          const currentY = handingStartY + (index * 20);
-          doc.text(`${spec.label}:`, 50, currentY, { width: 180, continued: true });
-          doc.text(spec.value, 230, currentY, { width: 300 });
+          const currentY = yPos + (index * 7);
+          doc.text(`${spec.label}:`, margin, currentY);
+          doc.text(spec.value, margin + 60, currentY);
         });
-        doc.y = handingStartY + (handingHingesSpecs.length * 20) + 20;
+        yPos += handingHingesSpecs.length * 7 + 10;
       }
 
       // Lock Information Section
@@ -253,22 +288,30 @@ export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
         }));
 
       if (lockInfoSpecs.length > 0) {
-        // Check if we need a new page
-        if (doc.y > 700) {
-          doc.addPage();
-        } else {
-          doc.moveDown(1);
-        }
-        doc.fontSize(16).text("Lock Information", { underline: true });
-        doc.moveDown(0.5);
-        doc.fontSize(11);
-        const lockStartY = doc.y;
+        checkNewPage(lockInfoSpecs.length * 7 + 15);
+        
+        doc.setFontSize(16);
+        doc.setFont("helvetica", "bold");
+        doc.text("Lock Information", margin, yPos);
+        yPos += 8;
+        
+        doc.setFontSize(11);
+        doc.setFont("helvetica", "normal");
         lockInfoSpecs.forEach((spec, index) => {
-          const currentY = lockStartY + (index * 20);
-          doc.text(`${spec.label}:`, 50, currentY, { width: 180, continued: true });
-          doc.text(spec.value, 230, currentY, { width: 300 });
+          const currentY = yPos + (index * 7);
+          checkNewPage(7);
+          doc.text(`${spec.label}:`, margin, currentY);
+          
+          // Handle long text by splitting if needed
+          const maxWidth = contentWidth - 60;
+          const splitValue = doc.splitTextToSize(spec.value, maxWidth);
+          doc.text(splitValue, margin + 60, currentY);
+          
+          if (splitValue.length > 1) {
+            yPos += (splitValue.length - 1) * 5;
+          }
         });
-        doc.y = lockStartY + (lockInfoSpecs.length * 20) + 20;
+        yPos += lockInfoSpecs.length * 7 + 10;
       }
 
       // Your Details Section
@@ -281,34 +324,50 @@ export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
       ].filter(spec => spec.value !== "-");
 
       if (yourDetailsSpecs.length > 0) {
-        // Check if we need a new page
-        if (doc.y > 700) {
-          doc.addPage();
-        } else {
-          doc.moveDown(1);
-        }
-        doc.fontSize(16).text("Your Details", { underline: true });
-        doc.moveDown(0.5);
-        doc.fontSize(11);
-        const detailsStartY = doc.y;
+        checkNewPage(yourDetailsSpecs.length * 7 + 15);
+        
+        doc.setFontSize(16);
+        doc.setFont("helvetica", "bold");
+        doc.text("Your Details", margin, yPos);
+        yPos += 8;
+        
+        doc.setFontSize(11);
+        doc.setFont("helvetica", "normal");
         yourDetailsSpecs.forEach((spec, index) => {
-          const currentY = detailsStartY + (index * 20);
-          doc.text(`${spec.label}:`, 50, currentY, { width: 180, continued: true });
-          doc.text(spec.value, 230, currentY, { width: 300 });
+          const currentY = yPos + (index * 7);
+          doc.text(`${spec.label}:`, margin, currentY);
+          doc.text(spec.value, margin + 60, currentY);
         });
-        doc.y = detailsStartY + (yourDetailsSpecs.length * 20) + 20;
+        yPos += yourDetailsSpecs.length * 7 + 10;
       }
 
       // Footer
-      doc.fontSize(8).text(
-        "This is an automated quote specification generated by Hawaii Door.",
-        { align: "center" }
-      );
+      const pageCount = doc.getNumberOfPages();
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+        doc.setFont("helvetica", "normal");
+        doc.text(
+          "This is an automated quote specification generated by Hawaii Door.",
+          pageWidth / 2,
+          doc.internal.pageSize.getHeight() - 10,
+          { align: "center" }
+        );
+      }
 
-      doc.end();
+      // Convert to Buffer
+      const pdfOutput = doc.output("arraybuffer");
+      const buffer = Buffer.from(pdfOutput);
+      
+      if (buffer.length === 0) {
+        reject(new Error("PDF generation produced no data"));
+        return;
+      }
+      
+      resolve(buffer);
     } catch (error) {
+      console.error("PDF generation error:", error);
       reject(error);
     }
   });
 }
-
