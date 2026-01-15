@@ -37,7 +37,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
 
   return (
     <div className="flex min-h-screen bg-zinc-900">
-      <aside className="hidden w-64 border-r border-zinc-800 bg-zinc-950 px-6 py-8 lg:flex lg:flex-col">
+      <aside className="hidden w-64 border-r border-zinc-800 bg-zinc-950 px-6 py-8 lg:flex lg:flex-col sticky top-0 h-screen overflow-y-auto">
         <div>
           <Link href="/admin/dashboard" className="text-lg font-semibold text-white">
             Hawaii Studio

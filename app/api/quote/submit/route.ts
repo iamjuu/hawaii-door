@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendQuoteSubmissionEmail, sendQuoteConfirmationToUser } from "@/lib/email";
+import { generateQuotePDF } from "@/lib/pdfGenerator";
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,8 +18,24 @@ export async function POST(request: NextRequest) {
     // Prepare attachments array
     const attachments: { filename: string; content: string; encoding: string; contentType: string }[] = [];
 
-    // Add PDF if provided
-    if (pdfBase64) {
+    // Generate PDF from quote data
+    let pdfBuffer: Buffer | null = null;
+    try {
+      pdfBuffer = await generateQuotePDF(quoteData);
+      const fileName = `HawaiiDoor_Specifications_${quoteData.firstName || "Quote"}_${new Date().toISOString().split("T")[0]}.pdf`;
+      attachments.push({
+        filename: fileName,
+        content: pdfBuffer.toString("base64"),
+        encoding: "base64",
+        contentType: "application/pdf",
+      });
+    } catch (pdfError) {
+      console.error("Error generating PDF:", pdfError);
+      // Continue without PDF if generation fails
+    }
+
+    // Add PDF if provided from client (fallback)
+    if (!pdfBuffer && pdfBase64) {
       const fileName = `HawaiiDoor_Specifications_${quoteData.firstName || "Quote"}_${new Date().toISOString().split("T")[0]}.pdf`;
       attachments.push({
         filename: fileName,
@@ -46,7 +63,7 @@ export async function POST(request: NextRequest) {
     const adminResult = await sendQuoteSubmissionEmail(quoteData, attachments);
     console.log("✅ Admin email sent:", adminResult.messageId);
 
-    // Send confirmation email to user (no attachments)
+    // Send confirmation email to user with PDF attachment
     try {
       if (quoteData.email) {
         const userResult = await sendQuoteConfirmationToUser({
@@ -55,7 +72,7 @@ export async function POST(request: NextRequest) {
           companyName: quoteData.companyName,
           doorType: quoteData.doorType,
           doorConfig: quoteData.doorConfig,
-        });
+        }, attachments.length > 0 ? attachments : undefined);
         console.log("✅ User confirmation email sent:", userResult.messageId);
       }
     } catch (userEmailError) {

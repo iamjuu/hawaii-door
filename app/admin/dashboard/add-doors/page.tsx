@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const interiorDoorTypes = [
   "Interior Panel Doors",
@@ -37,6 +39,7 @@ interface Door {
 }
 
 export default function AddDoorsPage() {
+  const router = useRouter();
   const [doorCategory, setDoorCategory] = useState<"interior" | "exterior" | "">("");
   const [selectedDoorType, setSelectedDoorType] = useState("");
   const [formData, setFormData] = useState({
@@ -97,20 +100,15 @@ export default function AddDoorsPage() {
       const result = await response.json();
 
       if (result.success) {
-        alert("Door deleted successfully!");
-        
         // If we deleted the last item on a page and it's not page 1, go to previous page
         if (doors.length === 1 && currentPage > 1) {
           setCurrentPage(currentPage - 1);
         }
         
         setRefreshTrigger((prev) => prev + 1); // Refresh the list
-      } else {
-        alert(`Error: ${result.message || "Failed to delete door"}`);
       }
     } catch (error) {
       console.error("Error deleting door:", error);
-      alert("An error occurred while deleting the door.");
     }
   };
 
@@ -161,7 +159,6 @@ export default function AddDoorsPage() {
     
     // Validate image is required
     if (!formData.imageUrl || formData.imageUrl.length === 0) {
-      alert("Please upload at least one image");
       return;
     }
 
@@ -185,8 +182,6 @@ export default function AddDoorsPage() {
       const result = await response.json();
 
       if (result.success) {
-        alert("Door added successfully!");
-        
         // Reset form
         setDoorCategory("");
         setSelectedDoorType("");
@@ -198,12 +193,9 @@ export default function AddDoorsPage() {
         
         // Refresh the product list
         setRefreshTrigger((prev) => prev + 1);
-      } else {
-        alert(`Error: ${result.message || "Failed to add door"}`);
       }
     } catch (error) {
       console.error("Error adding door:", error);
-      alert("An error occurred while adding the door. Please try again.");
     }
   };
 
@@ -476,74 +468,63 @@ export default function AddDoorsPage() {
               {doors.map((door) => (
                 <div
                   key={door._id}
-                  className="bg-zinc-950 border border-zinc-800 rounded-lg overflow-hidden hover:border-zinc-700 transition-colors"
+                  className="bg-zinc-950 border border-zinc-800 rounded-lg overflow-hidden hover:border-zinc-700 transition-colors flex flex-col"
                 >
-                  {/* Door Image */}
-                  <div className="relative h-48 bg-zinc-900">
-                    {door.imageUrl && door.imageUrl.length > 0 ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={door.imageUrl[0]}
-                        alt={door.name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-zinc-600">
-                        <div className="text-6xl">🚪</div>
-                      </div>
-                    )}
-                    {door.imageUrl && door.imageUrl.length > 1 && (
-                      <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                        +{door.imageUrl.length - 1} more
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Door Info */}
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold text-white mb-2 truncate">
-                      {door.name}
-                    </h3>
-                    <div className="space-y-1 text-sm mb-4">
-                      <div className="flex justify-between">
-                        <span className="text-zinc-400">Type:</span>
-                        <span className="text-zinc-300 text-right truncate ml-2">
-                          {door.doorType}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-zinc-400">Price:</span>
-                        <span className="text-green-400 font-semibold">
-                          ${(door.price / 100).toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-zinc-400">Added:</span>
-                        <span className="text-zinc-300">
-                          {new Date(door.createdAt).toLocaleDateString()}
-                        </span>
-                      </div>
+                  {/* Clickable Door Image and Info */}
+                  <Link
+                    href={`/admin/dashboard/add-doors/${door._id}`}
+                    className="flex-1 flex flex-col cursor-pointer"
+                  >
+                    {/* Door Image */}
+                    <div className="relative h-48 bg-zinc-900">
+                      {door.imageUrl && door.imageUrl.length > 0 ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={door.imageUrl[0]}
+                          alt={door.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-zinc-600">
+                          <div className="text-6xl">🚪</div>
+                        </div>
+                      )}
+                      {door.imageUrl && door.imageUrl.length > 1 && (
+                        <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                          +{door.imageUrl.length - 1} more
+                        </div>
+                      )}
                     </div>
 
-                    {/* Actions */}
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleDeleteDoor(door._id)}
-                        className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
-                      >
-                        Delete
-                      </button>
-                      <button
-                        onClick={() => {
-                          // TODO: Implement edit functionality
-                          alert("Edit functionality coming soon!");
-                        }}
-                        className="flex-1 px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors text-sm font-medium"
-                      >
-                        Edit
-                      </button>
+                    {/* Door Info */}
+                    <div className="p-4 flex-1">
+                      <h3 className="text-lg font-semibold text-white mb-2 truncate">
+                        {door.name}
+                      </h3>
+                      <div className="space-y-1 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-zinc-400">Type:</span>
+                          <span className="text-zinc-300 text-right truncate ml-2">
+                            {door.doorType}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-zinc-400">Price:</span>
+                          <span className="text-green-400 font-semibold">
+                            ${(door.price / 100).toFixed(2)}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-zinc-400">Added:</span>
+                          <span className="text-zinc-300">
+                            {new Date(door.createdAt).toLocaleDateString()}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
+
+               
                 </div>
               ))}
             </div>

@@ -40,7 +40,7 @@ export async function sendEmail(to: string, subject: string, html: string, text?
     }
 
     const info = await transporter.sendMail({
-      from: `"Hawaii Studio" <${fromEmail}>`,
+      from: `"Hawaii Door" <${fromEmail}>`,
       to,
       subject,
       html,
@@ -439,6 +439,244 @@ export async function sendDiscoverySessionConfirmation(discoveryData: {
     return result;
   } catch (error) {
     console.error(`❌ Failed to send discovery session confirmation email to ${recipientEmail}:`, error);
+    throw error;
+  }
+}
+
+// Send quote submission email to admin
+export async function sendQuoteSubmissionEmail(
+  quoteData: any,
+  attachments?: { filename: string; content: string; encoding: string; contentType: string }[]
+) {
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
+  
+  if (!adminEmail) {
+    throw new Error("Admin email not configured");
+  }
+
+  const subject = `New Door Quote Submission - ${quoteData.firstName || "Customer"}`;
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 700px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #FF6E4A; color: #fff; padding: 20px; text-align: center; }
+        .content { padding: 30px 20px; background-color: #f9f9f9; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 20px 0; background-color: #fff; }
+        .info-table td { padding: 12px; border-bottom: 1px solid #e0e0e0; }
+        .info-table td:first-child { font-weight: bold; width: 200px; color: #FF6E4A; }
+        .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>🔔 New Door Quote Submission</h1>
+        </div>
+        <div class="content">
+          <h2>New quote received from ${quoteData.firstName || "Customer"}</h2>
+          <p>A new door quote has been submitted. Here are the details:</p>
+          
+          <table class="info-table">
+            <tr>
+              <td>Name</td>
+              <td>${quoteData.firstName || "N/A"}</td>
+            </tr>
+            <tr>
+              <td>Company</td>
+              <td>${quoteData.companyName || "N/A"}</td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td><a href="mailto:${quoteData.email}">${quoteData.email || "N/A"}</a></td>
+            </tr>
+            <tr>
+              <td>Phone</td>
+              <td><a href="tel:${quoteData.phone}">${quoteData.phone || "N/A"}</a></td>
+            </tr>
+            <tr>
+              <td>PO Number</td>
+              <td>${quoteData.poNumber || "N/A"}</td>
+            </tr>
+            <tr>
+              <td>Door Type</td>
+              <td>${quoteData.doorType || "N/A"}</td>
+            </tr>
+            <tr>
+              <td>Door Config</td>
+              <td>${quoteData.doorConfig || "N/A"}</td>
+            </tr>
+            <tr>
+              <td>Dimensions</td>
+              <td>${quoteData.width || "N/A"} x ${quoteData.height || "N/A"}</td>
+            </tr>
+            <tr>
+              <td>Quantity</td>
+              <td>${quoteData.quantity || 1}</td>
+            </tr>
+            <tr>
+              <td>Submitted At</td>
+              <td>${new Date().toLocaleString()}</td>
+            </tr>
+          </table>
+          
+          <p style="margin-top: 30px;">
+            <strong>Action Required:</strong> Please review the attached quote details and contact ${quoteData.firstName || "the customer"} to proceed with the order.
+          </p>
+        </div>
+        <div class="footer">
+          <p>&copy; ${new Date().getFullYear()} Hawaii Door. All rights reserved.</p>
+          <p>This is an automated notification from your website's quote submission form.</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  try {
+    const transporter = getTransporter();
+    const fromEmail = process.env.EMAIL_USER;
+
+    if (!fromEmail) {
+      throw new Error("EMAIL_USER not configured");
+    }
+
+    const mailOptions: any = {
+      from: `"Hawaii Door" <${fromEmail}>`,
+      to: adminEmail,
+      subject,
+      html,
+      text: html.replace(/<[^>]*>/g, ""),
+    };
+
+    // Add attachments if provided
+    if (attachments && attachments.length > 0) {
+      mailOptions.attachments = attachments;
+    }
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log(`✅ Quote submission email sent successfully to admin | Message ID: ${info.messageId}`);
+    return { success: true, messageId: info.messageId };
+  } catch (error) {
+    console.error(`❌ Failed to send quote submission email to admin:`, error);
+    throw error;
+  }
+}
+
+// Send quote confirmation email to user (congratulatory)
+export async function sendQuoteConfirmationToUser(
+  data: {
+    firstName: string;
+    email: string;
+    companyName?: string;
+    doorType?: string;
+    doorConfig?: string;
+  },
+  attachments?: { filename: string; content: string; encoding: string; contentType: string }[]
+) {
+  const subject = "Congratulations! Your Door Quote Has Been Submitted - Hawaii Door";
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #FF6E4A; color: #fff; padding: 30px 20px; text-align: center; }
+        .content { padding: 30px 20px; background-color: #f9f9f9; }
+        .success-box { background-color: #fff; border-left: 4px solid #10b981; padding: 20px; margin: 20px 0; }
+        .highlight-box { background-color: #fff; border: 2px solid #FF6E4A; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
+        .button { display: inline-block; background-color: #FF6E4A; color: #fff; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>🎉 Hawaii Door</h1>
+          <p style="margin: 0; font-size: 18px;">Thank You for Your Booking!</p>
+        </div>
+        <div class="content">
+          <div class="success-box">
+            <h2 style="margin-top: 0; color: #10b981;">✅ Congratulations on Booking Your Product!</h2>
+            <p style="font-size: 18px; margin: 10px 0;">Dear ${data.firstName},</p>
+            <p>We are thrilled to confirm that your door quote has been successfully submitted!</p>
+          </div>
+          
+          <div class="highlight-box">
+            <h3 style="margin-top: 0; color: #FF6E4A;">📋 What's Next?</h3>
+            <p>Our team has received your quote request for:</p>
+            <ul>
+              ${data.doorType ? `<li><strong>Door Type:</strong> ${data.doorType}</li>` : ''}
+              ${data.doorConfig ? `<li><strong>Configuration:</strong> ${data.doorConfig}</li>` : ''}
+            </ul>
+            <p>Our specialists will review your requirements and contact you within 24-48 hours to:</p>
+            <ul>
+              <li>Confirm your order details</li>
+              <li>Discuss pricing and payment options</li>
+              <li>Provide an estimated delivery timeline</li>
+              <li>Answer any questions you may have</li>
+            </ul>
+            ${attachments && attachments.length > 0 ? `
+            <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
+              <strong>📎 Attached:</strong> A detailed PDF specification document with all your door specifications and images has been attached to this email for your records.
+            </p>
+            ` : ''}
+          </div>
+          
+          <p style="margin-top: 30px;">
+            <strong>Need immediate assistance?</strong><br>
+            Feel free to reach out to us directly at <a href="mailto:${process.env.EMAIL_USER}">${process.env.EMAIL_USER}</a>
+          </p>
+          
+          <p style="margin-top: 30px; font-style: italic; color: #666;">
+            Thank you for choosing Hawaii Door. We look forward to bringing your vision to life!
+          </p>
+          
+          <p style="margin-top: 20px;">
+            Best regards,<br>
+            <strong>The Hawaii Door Team</strong>
+          </p>
+        </div>
+        <div class="footer">
+          <p><strong>Hawaii Door</strong></p>
+          <p>&copy; ${new Date().getFullYear()} Hawaii Door. All rights reserved.</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  try {
+    const transporter = getTransporter();
+    const fromEmail = process.env.EMAIL_USER;
+
+    if (!fromEmail) {
+      throw new Error("EMAIL_USER not configured");
+    }
+
+    const mailOptions: any = {
+      from: `"Hawaii Door" <${fromEmail}>`,
+      to: data.email,
+      subject,
+      html,
+      text: html.replace(/<[^>]*>/g, ""),
+    };
+
+    // Add attachments if provided
+    if (attachments && attachments.length > 0) {
+      mailOptions.attachments = attachments;
+    }
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log(`✅ Quote confirmation email sent successfully to ${data.firstName} (${data.email}) | Message ID: ${info.messageId}`);
+    return { success: true, messageId: info.messageId };
+  } catch (error) {
+    console.error(`❌ Failed to send quote confirmation email to ${data.firstName} (${data.email}):`, error);
     throw error;
   }
 }
