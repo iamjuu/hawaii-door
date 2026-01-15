@@ -1,251 +1,238 @@
+
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import m1img from "../../../../../public/assets/images/dummy/m1.png";
-import m2img from "../../../../../public/assets/images/dummy/m2.png";
-import m3img from "../../../../../public/assets/images/dummy/m3.png";
-import m4img from "../../../../../public/assets/images/dummy/m4.png";
+import { ChangeEvent, useEffect } from "react";
+import { ChevronDown } from "lucide-react";
 
 interface StepProps {
   quoteData: any;
   setQuoteData: (data: any) => void;
-  onNext?: () => void;
+  onNext?: () => void; // optional callback
 }
 
-const Step5 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(
-    quoteData.wallThickness || null
-  );
-  const [customDiameter, setCustomDiameter] = useState<string>(
-    quoteData.customDiameter || ""
-  );
 
-  const handleOptionSelect = (option: string) => {
-    setSelectedOption(option);
+const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
+  const widthOptions = [
+    { label: '24"', value: "24" },
+    { label: '28"', value: "28" },
+    { label: '30"', value: "30" },
+    { label: '32"', value: "32" },
+    { label: '36"', value: "36" },
+    { label: '42"', value: "42" },
+    { label: '48"', value: "48" },
+  ];
+
+  const heightOptions = [
+    { label: '80" (6\'8")', value: "80" },
+    { label: '84" (7\'0")', value: "84" },
+    { label: '96" (8\'0")', value: "96" },
+  ];
+
+  // Set default thickness and quantity on mount if not already set
+  useEffect(() => {
+    const updates: any = {};
+    if (!quoteData.thickness) {
+      updates.thickness = '1 3/8"';
+    }
+    if (!quoteData.quantity) {
+      updates.quantity = 1;
+    }
+    if (Object.keys(updates).length > 0) {
+      setQuoteData({
+        ...quoteData,
+        ...updates,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run on mount
+
+  const handleWidthChange = (value: string) => {
     setQuoteData({
       ...quoteData,
-      wallThickness: option,      // store the selected label as wallThickness
-      customDiameter: "",         // clear custom diameter when a preset is chosen
+      width: value,
     });
-
-    // Auto-advance to next step after selecting a preset option (like Step 4)
-    if (onNext) {
-      setTimeout(() => {
-        onNext();
-      }, 300);
-    }
   };
 
-  const handleCustomDiameterChange = (value: string) => {
-    setCustomDiameter(value);
+  const handleHeightChange = (value: string) => {
     setQuoteData({
       ...quoteData,
-      customDiameter: value,
-      wallThickness: "",
+      height: value,
+    });
+  };
+
+  const handleThicknessChange = (value: string) => {
+    setQuoteData({
+      ...quoteData,
+      thickness: value,
+    });
+  };
+
+  const handleQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = Math.max(1, parseInt(e.target.value) || 1);
+    setQuoteData({
+      ...quoteData,
+      quantity: value,
+    });
+  };
+
+  const incrementQuantity = () => {
+    setQuoteData({
+      ...quoteData,
+      quantity: (quoteData.quantity || 1) + 1,
+    });
+  };
+
+  const decrementQuantity = () => {
+    setQuoteData({
+      ...quoteData,
+      quantity: Math.max(1, (quoteData.quantity || 1) - 1),
     });
   };
 
   return (
     <div className="mt-[50px] mb-[50px]">
-      <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">What is the Wall Thickness</h2>
+      <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-8 text-black">Door Size & Specification</h2>
 
-      <div className="max-w-[900px] w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Option 1 */}
-        <div
-          onClick={() => handleOptionSelect(`4-5/8\" (w/wood stud)`)}
-          className={`
-            relative border-2 p-4 flex flex-col items-center cursor-pointer transition-all
-             hover:shadow-lg
-            ${
-              selectedOption === `4-5/8\" (w/wood stud)`
-                ? " shadow-lg border-gray-200 bg-white "
-                : "border-gray-200 bg-white"
-            }
-          `}
-        >
-          {/* Selected Badge */}
-          {selectedOption === `4-5/8\" (w/wood stud)` && (
-            <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-5 h-5 text-black"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7"></path>
-                </svg>
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Left Side - Measurement Guide */}
+        <div className="lg:w-1/3">
+          <div className="bg-white border-2 border-gray-200 rounded-lg p-4 pb-6 md:p-6">
+            <h3 className="text-[14px] text-[#0A0A0A] font-medium mb-4 ">Measurement Guide</h3>
+            <div className="relative bg-gray-50 rounded-lg p-4 md:p-8 flex items-center justify-center min-h-[200px] md:min-h-auto">
+              {/* Door Diagram */}
+              <div className="relative">
+                {/* Height Arrow */}
+                <div className="absolute -left-4 md:-left-5 top-0 bottom-0 flex flex-col items-center justify-between">
+                  <div className="w-[2px] md:w-1 bg-orange-500 flex-1" />
+                 
+                  <div className="absolute top-1/2 -translate-y-1/2 -left-8 md:-left-12 -rotate-90 origin-center text-[#F97316] text-[12px] md:text-[15px] whitespace-nowrap font-roboto">
+                    HEIGHT
+                  </div>
+                </div>
+
+                {/* Door Rectangle */}
+                <div className="w-32 h-64 md:w-40 md:h-80 bg-gray-200 border-3 border-gray-700 relative">
+                  <div className="absolute right-6 top-1/2 -translate-y-1/2 w-2 h-2 md:w-3 md:h-3 bg-gray-700 rounded-full" />
+                  <div className="absolute inset-4 border-2 border-gray-400 " />
+               
+                </div>
+
+                {/* Width Arrow */}
+                <div className="absolute -bottom-4 md:-bottom-5 left-0 right-0 flex items-center justify-between">
+                  <div className="h-[2px] md:h-1 bg-orange-500 flex-1" />
+                
+                  <div className="absolute left-1/2 -translate-x-1/2 -bottom-5 md:-bottom-6 text-[#F97316] text-[12px] md:text-[15px] font-roboto whitespace-nowrap">
+                    WIDTH
+                  </div>
+                </div>
               </div>
             </div>
-          )}
-          <div className="relative w-full aspect-[4/3] mb-3">
-            <Image
-              src={m4img}
-              alt="Wall thickness option 1"
-              fill
-              className="object-contain"
-            />
           </div>
-          <p className="text-[12.7px] text-black font-roboto font-medium text-center">
-           4-5/8" (w/wood stud)
-          </p>
         </div>
 
-        {/* Option 2 */}
-        <div
-          onClick={() => handleOptionSelect(`4-7/8\" (w/wood stud)`)}
-          className={`
-            relative border-2  p-4 flex flex-col items-center cursor-pointer transition-all
-             hover:shadow-lg
-            ${
-              selectedOption === `4-7/8\" (w/wood stud)`
-                ? "shadow-lg border-gray-200 bg-white"
-                : "border-gray-200 bg-white"
-            }
-          `}
-        >
-          {/* Selected Badge */}
-          {selectedOption === `4-7/8\" (w/wood stud)` && (
-            <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-5 h-5 text-black"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7"></path>
-                </svg>
+        {/* Right Side - Form Fields */}
+        <div className="lg:w-2/3  pt-5 md:pt-[27px]">
+          <div className="flex w-full flex-col">
+            <div className="flex flex-col md:mb-[15px]">
+              <div className="flex gap-4">
+                {/* Width */}
+                <div className="w-full max-w-[280px]">
+                  <label className="block text-[16px] md:text-[20px] font-roboto mb-3 text-black">Width</label>
+                  <div className="relative">
+                    <select
+                      value={quoteData.width || ""}
+                      onChange={(e) => handleWidthChange(e.target.value)}
+                      className="w-full rounded-lg px-4 py-1.5 md:py-2 pr-10 text-sm md:text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
+                    >
+                      <option value="" disabled>Select Width</option>
+                      {widthOptions.map(option => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-500 pointer-events-none" />
+                  </div>
+                </div>
+
+                {/* Height */}
+                <div className="w-full max-w-[280px]">
+                  <label className="block text-[16px] md:text-[20px] font-roboto mb-3 text-black">Height</label>
+                  <div className="relative">
+                    <select
+                      value={quoteData.height || ""}
+                      onChange={(e) => handleHeightChange(e.target.value)}
+                      className="w-full rounded-lg px-4 py-1.5 md:py-2 pr-10 text-sm md:text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
+                    >
+                      <option value="" disabled>Select Height</option>
+                      {heightOptions.map(option => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-500 pointer-events-none" />
+                  </div>
+                </div>
               </div>
             </div>
-          )}
-          <div className="relative w-full aspect-[4/3] mb-3">
-            <Image
-              src={m3img}
-              alt="Wall thickness option 2"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <p className="text-[12.7px] text-black font-roboto font-medium text-center">
-            4-7/8" (w/wood stud)
-          </p>
-        </div>
+            
+            <div className="flex flex-col space-y-6 mt-6">
+              {/* Thickness */}
+              <div className="flex gap-3 flex-col md:mb-[30px]">
+                <label className="block text-[16px] md:text-[20px] font-roboto mb-1 md:mb-3 text-black">Thickness</label>
+                <div className="flex w-full max-w-[320px] md:max-w-[400px] gap-3 md:gap-4">
+                  <button
+                    onClick={() => handleThicknessChange('1 3/8"')}
+                    className={`w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border-2 font-medium transition-all flex items-center justify-between ${
+                      (quoteData.thickness || '1 3/8"') === '1 3/8"' ? "border-orange-500 text-black" : "border-gray-300 hover:border-orange-300 text-black bg-white"
+                    }`}
+                  >
+                    <span className="text-sm md:text-base">1 ⅜"</span>
+                    <div className={`w-4 h-4 md:w-5 md:h-5 rounded-full border-2 flex items-center justify-center ${
+                      (quoteData.thickness || '1 3/8"') === '1 3/8"' ? "border-orange-500" : "border-gray-300"
+                    }`}>
+                      {(quoteData.thickness || '1 3/8"') === '1 3/8"' && (
+                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-orange-500"></div>
+                      )}
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => handleThicknessChange('1 3/4"')}
+                    className={`w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border-2 font-medium transition-all flex items-center justify-between ${
+                      quoteData.thickness === '1 3/4"' ? "border-orange-500 text-black" : "border-gray-300 hover:border-orange-300 text-black bg-white"
+                    }`}
+                  >
+                    <span className="text-sm md:text-base">1 ¾"</span>
+                    <div className={`w-4 h-4 md:w-5 md:h-5 rounded-full border-2 flex items-center justify-center ${
+                      quoteData.thickness === '1 3/4"' ? "border-orange-500" : "border-gray-300"
+                    }`}>
+                      {quoteData.thickness === '1 3/4"' && (
+                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-orange-500"></div>
+                      )}
+                    </div>
+                  </button>
+                </div>
+              </div>
+              
+              {/* Quantity */}
+              <div>
+                <label className="block text-[16px] md:text-[20px] font-roboto mb-4 text-black">Quantity</label>
+                <div className=" flex items-center pr-25 md:pr-20">
+                 
+                  <input
+                    type="number"
+                    min="1"
+                    value={quoteData.quantity || 1}
+                    onChange={handleQuantityChange}
+                    className="w-full h-10 md:h-12  text-[14px] md:text-[20px]  border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none text-black px-3 font-[300] font-roboto"
+                  />
 
-        {/* Option 3 */}
-        <div
-          onClick={() => handleOptionSelect(`6-1/8\" (w/wood stud)`)}
-          className={`
-            relative border-2 p-4 flex flex-col items-center cursor-pointer transition-all
-           hover:shadow-lg
-            ${
-              selectedOption === `6-1/8\" (w/wood stud)`
-                ? "shadow-lg border-gray-200 bg-white"
-                : "border-gray-200 bg-white"
-            }
-          `}
-        >
-          {/* Selected Badge */}
-          {selectedOption === `6-1/8\" (w/wood stud)` && (
-            <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-5 h-5 text-black"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7"></path>
-                </svg>
+                </div>
               </div>
             </div>
-          )}
-          <div className="relative w-full aspect-[4/3] mb-3">
-            <Image
-              src={m2img}
-              alt="Wall thickness option 3"
-              fill
-              className="object-contain"
-            />
           </div>
-          <p className="text-[12.7px] text-black font-roboto font-medium text-center">
-          6-1/8" (w/wood stud)
-          </p>
-        </div>
-
-        {/* Option 4 */}
-        <div
-          onClick={() => handleOptionSelect(`6-3/4\" (w/wood stud)`)}
-          className={`
-            relative border-2 p-4 flex flex-col items-center cursor-pointer transition-all
-            hover:shadow-lg
-            ${
-              selectedOption === `6-3/4\" (w/wood stud)`
-                ? "shadow-lg border-gray-200 bg-white"
-                : "border-gray-200 bg-white"
-            }
-          `}
-        >
-          {/* Selected Badge */}
-          {selectedOption === `6-3/4\" (w/wood stud)` && (
-            <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-5 h-5 text-black"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-            </div>
-          )}
-          <div className="relative w-full aspect-[4/3] mb-3">
-            <Image
-              src={m1img}
-              alt="Wall thickness option 4"
-              fill
-              className="object-contain"
-            />
-          </div>
-          <p className="text-[12.7px] text-black font-roboto font-medium text-center">
-            6-3/4" (w/wood stud)
-          </p>
-        </div>
-
-        {/* Input card – custom value */}
-        <div className="border-2 border-[#E9EAEE] p-4 flex flex-col items-center bg-white">
-          <p className="text-[14.17px] font-roboto text-black text-center mb-2 font-robot">
-            Other
-          </p>
-          <input
-            type="text"
-            value={customDiameter}
-            onChange={(e) => handleCustomDiameterChange(e.target.value)}
-            placeholder="Enter Diameter"
-            className="w-full border border-[#E9EAEE] rounded-lg px-3 py-2.5 text-[10.37px] font-roboto text-black placeholder:text-[#9CA3AF] focus:outline-none focus:border-orange-500 "
-          />
-          <p className="mt-2 text-[10.03px] font-roboto text-black text-center font-robot">
-            Enter value then click next
-          </p>
         </div>
       </div>
+{/*  */}
     </div>
   );
 };
 
-export default Step5;
+export default Step3DoorSize;
