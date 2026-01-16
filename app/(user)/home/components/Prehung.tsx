@@ -12,7 +12,7 @@ const Prehung = () => {
         <div className="relative w-full min-h-[400px] md:min-h-[420px] bg-[#84684C] rounded-lg overflow-hidden">
 
           {/* ================= LEFT CONTENT ================= */}
-          <div className="relative z-10 flex flex-col justify-center h-full px-4 sm:px-8 md:px-12 lg:px-16 py-8 sm:py-12 md:py-16">
+          <div className="relative z-10 flex flex-col justify-center h-full px-4 sm:px-8 md:px-12 lg:px-16 pt-8 pt-12 md:py-16">
             <div className="max-w-xl">
               <h2 className="font-roboto font-medium md:font-semibold text-2xl md:text-5xl text-white leading-tight mb-4 md:mb-6">
                 Pre-Hung. Pre-Bored.<br />
@@ -26,21 +26,21 @@ const Prehung = () => {
               </p>
 
               {/* Button */}
-                <Link href={'/build'}>
-              <button className="group relative inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] text-[15px] md:text-lg font-roboto px-4 md:px-5 py-2 text-white">
-                {/* Hover overlay */}
-                <span className="absolute inset-0 bg-black origin-bottom scale-y-0 transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-y-100" />
+              <Link href={'/build'}>
+                <button className="group relative inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] text-[15px] md:text-lg font-roboto px-4 md:px-5 py-2 text-white">
+                  {/* Hover overlay */}
+                  <span className="absolute inset-0 bg-black origin-bottom scale-y-0 transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-y-100" />
 
-                {/* Button content */}
-                <span className="relative z-10 flex items-center gap-2 md:gap-3 font-roboto">
-                  Get a Quote
-                  <span className="inline-flex items-center justify-center w-6 h-6 md:w-7 md:h-7 shrink-0 transition-all duration-500 rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0">
-                    <MdOutlineArrowOutward className="text-white text-xl md:text-2xl" />
+                  {/* Button content */}
+                  <span className="relative z-10 flex items-center gap-2 md:gap-3 font-roboto">
+                    Get a Quote
+                    <span className="inline-flex items-center justify-center w-6 h-6 md:w-7 md:h-7 shrink-0 transition-all duration-500 rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0">
+                      <MdOutlineArrowOutward className="text-white text-xl md:text-2xl" />
+                    </span>
+
                   </span>
 
-                </span>
-
-              </button>
+                </button>
               </Link>
             </div>
           </div>
@@ -59,7 +59,7 @@ const Prehung = () => {
           </div>
 
           {/* ================= MOBILE IMAGE ================= */}
-          <div className="relative md:hidden w-full flex justify-center items-end mt-8 px-4 pb-4">
+          <div className="relative md:hidden w-full flex justify-center items-end mt-2 px-4 pb-4">
             <div className="relative w-full max-w-xs sm:max-w-sm h-[280px] sm:h-[320px]">
               <Image
                 src={Doors}
