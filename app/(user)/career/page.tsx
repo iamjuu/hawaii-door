@@ -12,17 +12,17 @@ export default function CareerPage() {
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 items-center h-full py-8 lg:py-0">
             {/* Left Content */}
             <div className="flex-1 space-y-4 lg:space-y-6">
-              <h1 className="text-[45px] font-roboto font-[600] text-gray-900 ">
+              <h1 className="text-[28px] sm:text-[32px] md:text-[38px] lg:text-[45px] font-roboto font-[600] text-gray-900 ">
                 Join The Island Door Company
               </h1>
               
-              <p className="font-roboto font-[400] text-[18px] text-[#3B3B3B] leading-relaxed">
+              <p className="font-roboto font-[400] text-[14px] sm:text-[16px] lg:text-[18px] text-[#3B3B3B] leading-relaxed">
                 For forty years, we've measured twice, machined once, and delivered
                 doors that fit. At Hawaii Doors, we don't just build doors, we build
                 trust, craftsmanship, and opportunity across every island.
               </p>
               
-              <p className="font-roboto font-[400] text-[18px] text-[#3B3B3B] leading-relaxed">
+              <p className="font-roboto font-[400] text-[14px] sm:text-[16px] lg:text-[18px] text-[#3B3B3B] leading-relaxed">
                 If you value precision, integrity, and doing things right, you'll fit our
                 team. Think you'd be a great addition?{" "}
                 <a 
@@ -54,16 +54,16 @@ export default function CareerPage() {
       {/* Second Section - White Background Contact */}
       <section className="bg-white py-20">
         <div className="container mx-auto px-6">
-          <div className="flex flex-col justify-center items-center text-center space-y-8">
-            <h2 className="text-[45px] font-[600] text-black font-roboto">
+          <div className="flex  gap-3 flex-col justify-center items-center text-center ">
+            <h2 className="text-[28px] sm:text-[32px] md:text-[38px] lg:text-[45px] font-[600] text-black font-roboto">
               Ready for Joining?
             </h2>
             
-            <p className="text-[18px] font-[400] text-gray-700 max-w-2xl">
+            <p className="text-[14px] sm:text-[16px] lg:text-[18px] font-[400] text-gray-700 max-w-2xl">
               Email your resume and cover letter to
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4px-4 sm:px-8 py-4 sm:py-6 rounded-lg  transition-shadow md:w-min">
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 rounded-lg  transition-shadow md:w-min">
               {/* Email Icon */}
 
               <div className=" p-2 rounded-full bg-[#F5F5F4]">
@@ -85,7 +85,7 @@ export default function CareerPage() {
               {/* Email Address */}
               <a 
                 href="mailto:info@hawaiidoors.com" 
-                className="font-[400] text-[32px] text-[#0069A8] transition-colors break-all sm:break-normal text-center sm:text-left"
+                className="font-[400] text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] text-[#0069A8] transition-colors break-all sm:break-normal text-center sm:text-left"
               >
                 info@hawaiidoors.com
               </a>

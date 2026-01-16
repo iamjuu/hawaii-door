@@ -9,9 +9,10 @@ interface StepNavigationProps {
   isFirstStep?: boolean;
   isNextDisabled?: boolean;
   currentStep?: number;
+  isSubmitting?: boolean;
 }
 
-const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = false, isNextDisabled = false, currentStep }: StepNavigationProps) => {
+const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = false, isNextDisabled = false, currentStep, isSubmitting = false }: StepNavigationProps) => {
   const isBackDisabled = isFirstStep;
   const isStep15 = currentStep === 14;
   
@@ -80,18 +81,30 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
         {/* Right: Next Button */}
         <div className={`${isStep15 ? 'w-28' : 'w-32'} flex justify-end`}>
           <button
-            onClick={isNextDisabled ? undefined : onNext}
-            disabled={isNextDisabled}
+            onClick={isNextDisabled || isSubmitting ? undefined : onNext}
+            disabled={isNextDisabled || isSubmitting}
             className={`
               flex items-center justify-center gap-[5px] w-[110px] px-4 h-[37px] bg-[#FF6E4A] text-white  ${isStep15 ? 'rounded-[10px]' : 'rounded-l-[10px]'} transition-opacity font-roboto
-              ${isNextDisabled 
-                ? 'hover:cursor-not-allowed cursor-not-allowed' 
+              ${isNextDisabled || isSubmitting
+                ? 'hover:cursor-not-allowed cursor-not-allowed opacity-70' 
                 : 'hover:opacity-90 hover:cursor-pointer cursor-pointer'
               }
             `}
           >
-            <span className="text-[16px] font-roboto">{isStep15 ? 'SUBMIT' : 'NEXT'}</span>
-            <GoChevronRight className="text-white text-[20px]" />
+            {isSubmitting ? (
+              <>
+                <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span className="text-[16px] font-roboto">SENDING...</span>
+              </>
+            ) : (
+              <>
+                <span className="text-[16px] font-roboto">{isStep15 ? 'SUBMIT' : 'NEXT'}</span>
+                <GoChevronRight className="text-white text-[20px]" />
+              </>
+            )}
           </button>
         </div>
       </div>
@@ -118,18 +131,30 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
 
         {/* Right: Next Button */}
         <button
-          onClick={isNextDisabled ? undefined : onNext}
-          disabled={isNextDisabled}
+          onClick={isNextDisabled || isSubmitting ? undefined : onNext}
+          disabled={isNextDisabled || isSubmitting}
           className={`
             flex items-center justify-center gap-[3px] w-[90px] px-2 h-[32px] bg-[#FF6E4A] text-white rounded-[8px] transition-opacity font-roboto
-            ${isNextDisabled 
-              ? 'hover:cursor-not-allowed cursor-not-allowed' 
+            ${isNextDisabled || isSubmitting
+              ? 'hover:cursor-not-allowed cursor-not-allowed opacity-70' 
               : 'hover:opacity-90 hover:cursor-pointer cursor-pointer'
             }
           `}
         >
-          <span className="text-[12px] font-roboto">{isStep15 ? 'SUBMIT' : 'NEXT'}</span>
-          <GoChevronRight className="text-white text-[16px]" />
+          {isSubmitting ? (
+            <>
+              <svg className="animate-spin h-3 w-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span className="text-[12px] font-roboto">SENDING...</span>
+            </>
+          ) : (
+            <>
+              <span className="text-[12px] font-roboto">{isStep15 ? 'SUBMIT' : 'NEXT'}</span>
+              <GoChevronRight className="text-white text-[16px]" />
+            </>
+          )}
         </button>
       </div>
     </div>

@@ -2,9 +2,10 @@
 import Image from "next/image";
 import bannerimg from "../../../../public/assets/images/landing/banner2.png";
 import {MdOutlineArrowOutward } from "react-icons/md";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+
 export default function BannerSection() {
-  const router = useRouter();
+
   return (
     <section className="relative w-full h-[60vh] md:h-[100vh] overflow-hidden">
       {/* Background Image */}
@@ -42,9 +43,9 @@ export default function BannerSection() {
             </h3>
 
             {/* Button */}
-            <button
-             onClick={() => router.push("/build")}
-             className="group relative mt-7 inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] px-5 py-2 font-roboto text-xl text-white">
+
+            <Link href="/build">
+            <button className="group relative mt-7 inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] px-5 py-2 font-roboto text-xl text-white">
 
 {/* WhatsApp-style black reveal */}
 <span
@@ -56,7 +57,7 @@ export default function BannerSection() {
     transition-transform duration-900 ease-[cubic-bezier(0.4,0,0.2,1)]
     group-hover:scale-y-100
   "
-/>
+/> 
 
 {/* Content */}
 <span className="relative z-10 flex items-center gap-3 text-[15px] md:text-lg">
@@ -76,6 +77,7 @@ export default function BannerSection() {
   </span>
 </span>
 </button>
+</Link>
           </div>
         </div>
       </div>

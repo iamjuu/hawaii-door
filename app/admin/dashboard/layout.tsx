@@ -37,10 +37,10 @@ export default async function DashboardLayout({ children }: { children: ReactNod
 
   return (
     <div className="flex min-h-screen bg-zinc-900">
-      <aside className="hidden w-64 border-r border-zinc-800 bg-zinc-950 px-6 py-8 lg:flex lg:flex-col">
+      <aside className="hidden w-64 border-r border-zinc-800 bg-zinc-950 px-6 py-8 lg:flex lg:flex-col sticky top-0 h-screen overflow-y-auto">
         <div>
           <Link href="/admin/dashboard" className="text-lg font-semibold text-white">
-            Crystal Bowl Studio
+            Hawaii Studio
           </Link>
           <p className="mt-1 text-xs text-zinc-400">Admin Dashboard</p>
         </div>
@@ -56,7 +56,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
         <header className="flex items-center justify-between border-b border-zinc-800 bg-zinc-950 px-4 py-4 sm:px-8">
           <div className="lg:hidden">
             <Link href="/admin/dashboard" className="text-lg font-semibold text-white">
-              Crystal Bowl Studio
+              Hawaii Studio
             </Link>
           </div>
           <AdminLogoutButton />

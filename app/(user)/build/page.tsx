@@ -43,6 +43,7 @@ import Step15 from "./components/steps/step15"
 const BuildDoor = () => {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [quoteData, setQuoteData] = useState({
     doorType: "",
     category: "",
@@ -247,7 +248,7 @@ const BuildDoor = () => {
 
   const CurrentStepComponent = steps[currentStep].component;
 
-  const handleNext = (doorType?: string, doorConfig?: string) => {
+  const handleNext = async (doorType?: string, doorConfig?: string) => {
     // If doorType is provided (and it's actually a string, not an event), update the quoteData first
     if (doorType !== undefined && typeof doorType === 'string') {
       setQuoteData((prev) => ({ ...prev, doorType }));
@@ -354,10 +355,78 @@ const BuildDoor = () => {
     
     // Handle submit on step 15 (index 14)
     if (currentStep === 14) {
-      message.success("Successfully submitted your quote!");
+      setIsSubmitting(true);
+      
+      // Convert uploaded files to base64 if they are File objects
+      const convertFileToBase64 = (file: File): Promise<{ name: string; base64: string; type: string }> => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const base64String = (reader.result as string).split(',')[1]; // Remove data:type;base64, prefix
+            resolve({
+              name: file.name,
+              base64: base64String,
+              type: file.type || "application/octet-stream",
+            });
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      };
+
+      // Send quote submission email
+      try {
+        // Prepare uploaded files as base64
+        let uploadedFilesBase64: { name: string; base64: string; type: string }[] = [];
+        if (quoteData.uploadedFiles && Array.isArray(quoteData.uploadedFiles) && quoteData.uploadedFiles.length > 0) {
+          // Check if files are File objects or already base64
+          const filePromises = quoteData.uploadedFiles.map((file: any) => {
+            if (file instanceof File) {
+              return convertFileToBase64(file);
+            } else if (file && typeof file === 'object' && file.base64) {
+              // Already converted to base64 format
+              return Promise.resolve(file);
+            }
+            return null;
+          }).filter(Boolean);
+          
+          uploadedFilesBase64 = await Promise.all(filePromises);
+        }
+
+        // Prepare quote data without File objects
+        const quoteDataToSend = {
+          ...quoteData,
+          uploadedFiles: undefined, // Remove File objects, we'll send base64 separately
+        };
+
+        const response = await fetch("/api/quote/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            quoteData: quoteDataToSend,
+            uploadedFiles: uploadedFilesBase64,
+          }),
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+          message.success("Successfully submitted your quote! Confirmation email sent.");
+        } else {
+          message.warning("Quote submitted, but email could not be sent. Please contact us directly.");
+        }
+      } catch (error) {
+        console.error("Error submitting quote:", error);
+        message.warning("Quote submitted, but email could not be sent. Please contact us directly.");
+      } finally {
+        setIsSubmitting(false);
+      }
+      
       // Navigate to home page after showing success message
       setTimeout(() => {
-        router.push("/home");
+        router.push("/build");
       }, 1500);
       return;
     }
@@ -460,6 +529,7 @@ const BuildDoor = () => {
                   percentage={steps[currentStep].percentage}
                   isFirstStep={currentStep === 0}
                   currentStep={currentStep}
+                  isSubmitting={isSubmitting}
                   isNextDisabled={
                     (currentStep === 0 && !quoteData.doorType) ||
                     (currentStep === 1 && !quoteData.doorConfig) ||
