@@ -21,10 +21,10 @@ export default function Home() {
 
   return (
     <>
-      <HomePage/>
-      
+      <HomePage />
+
       {/* Floating WhatsApp button */}
-      <a
+      {/* <a
         href={getWhatsAppLink()}
         target="_blank"
         rel="noopener noreferrer"
@@ -34,7 +34,7 @@ export default function Home() {
         }`}
       >
         <Image src={WhatsAppIconSvg} alt="WhatsApp" width={100} /> 
-      </a>
+      </a> */}
     </>
   );
 }
