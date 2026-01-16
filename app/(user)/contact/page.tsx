@@ -63,7 +63,7 @@ export default function Contact() {
     <>
       {/* Contact Section */}
       <Navbar />
-      <section className="bg-white py-12 lg:py-20 px-6   md:px-15  mt-17">
+      <section className="bg-white py-12 lg:pt-20 px-6   md:px-15  mt-17">
         <div className="container mx-auto ">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Left Side - Content */}

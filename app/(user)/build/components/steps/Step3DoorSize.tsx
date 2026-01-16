@@ -89,6 +89,12 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
     });
   };
 
+  // Check if fields are filled
+  const isWidthEmpty = !quoteData.width || quoteData.width === "";
+  const isHeightEmpty = !quoteData.height || quoteData.height === "";
+  const isThicknessEmpty = !quoteData.thickness;
+  const isQuantityEmpty = !quoteData.quantity || quoteData.quantity < 1;
+
   return (
     <div className="mt-[50px] mb-[50px]">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-8 text-black">Door Size & Specification</h2>
@@ -142,7 +148,9 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
                     <select
                       value={quoteData.width || ""}
                       onChange={(e) => handleWidthChange(e.target.value)}
-                      className="w-full rounded-lg px-4 py-1.5 md:py-2 pr-10 text-sm md:text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
+                      className={`w-full rounded-lg px-4 py-1.5 md:py-2 pr-10 text-sm md:text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none ${
+                        isWidthEmpty ? "border-2 border-red-500" : "border-2 border-gray-300"
+                      }`}
                     >
                       <option value="" disabled>Select Width</option>
                       {widthOptions.map(option => (
@@ -160,7 +168,9 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
                     <select
                       value={quoteData.height || ""}
                       onChange={(e) => handleHeightChange(e.target.value)}
-                      className="w-full rounded-lg px-4 py-1.5 md:py-2 pr-10 text-sm md:text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none"
+                      className={`w-full rounded-lg px-4 py-1.5 md:py-2 pr-10 text-sm md:text-lg text-black focus:border-orange-500 focus:outline-none bg-white shadow-md appearance-none ${
+                        isHeightEmpty ? "border-2 border-red-500" : "border-2 border-gray-300"
+                      }`}
                     >
                       <option value="" disabled>Select Height</option>
                       {heightOptions.map(option => (
@@ -176,8 +186,8 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
             <div className="flex flex-col space-y-6 mt-6">
               {/* Thickness */}
               <div className="flex gap-3 flex-col md:mb-[30px]">
-                <label className="block text-[16px] md:text-[20px] font-roboto mb-1 md:mb-3 text-black">Thickness</label>
-                <div className="flex w-full max-w-[320px] md:max-w-[400px] gap-3 md:gap-4">
+                <label className="block text-[16px] md:text-[20px] font-roboto mb-1 text-black">Thickness</label>
+                <div className={`flex w-full max-w-[320px] md:max-w-[400px] gap-3 md:gap-4 ${isThicknessEmpty ? "ring-2 ring-red-500 rounded-lg p-1" : ""}`}>
                   <button
                     onClick={() => handleThicknessChange('1 3/8"')}
                     className={`w-full px-3 py-2 md:px-4 md:py-3 rounded-lg border-2 font-medium transition-all flex items-center justify-between ${
@@ -221,7 +231,9 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
                     min="1"
                     value={quoteData.quantity || 1}
                     onChange={handleQuantityChange}
-                    className="w-full h-10 md:h-12  text-[14px] md:text-[20px]  border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none text-black px-3 font-[300] font-roboto"
+                    className={`w-20 md:w-24 h-10 md:h-12 text-center text-sm md:text-[20px] font-roboto font-semibold rounded-lg focus:border-orange-500 focus:outline-none text-black ${
+                      isQuantityEmpty ? "border-2 border-red-500" : "border-2 border-gray-300"
+                    }`}
                   />
 
                 </div>

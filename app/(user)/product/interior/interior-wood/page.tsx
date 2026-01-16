@@ -1,11 +1,50 @@
-    import React from 'react'
+    "use client";
+
+    import React, { useState, useEffect } from 'react'
     import Navbar from '@/components/user/Navbar'
     import Footer from '@/components/user/Footer'
-    import { interiorDoor1, ProductFootericoncheck, ProductFootericonstar, woodinterior } from '@/public/assets';
+    import { interiorDoor1, ProductFootericoncheck, ProductFootericonstar } from '@/public/assets';
     import HeroSection from '../../components/herosection';
     import Image from 'next/image';
 
+    interface Door {
+      _id: string;
+      name: string;
+      price: number;
+      category: string;
+      doorType: string;
+      imageUrl?: string[];
+      description?: string;
+      inStock?: boolean;
+    }
+
     const InteriorWoodPage = () => {
+    const [doors, setDoors] = useState<Door[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+      const fetchDoors = async () => {
+        try {
+          setLoading(true);
+          const response = await fetch('/api/doors?category=interior&limit=100');
+          const data = await response.json();
+          
+          if (data.success) {
+            setDoors(data.data || []);
+          } else {
+            setError(data.message || 'Failed to fetch doors');
+          }
+        } catch (err) {
+          setError('Error loading doors');
+          console.error('Error fetching doors:', err);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchDoors();
+    }, []);
     const bgImage = "/assets/product/intertior/wood-interior.svg";
     const contant = "Interior Doors";
     const para =
@@ -158,7 +197,65 @@
 
             {/* Right Side - Main Content */}
             <div className="flex-1 space-y-8">
-              {/* Content will go here */}
+              {loading ? (
+                <div className="text-center py-12">
+                  <p className="text-gray-600">Loading doors...</p>
+                </div>
+              ) : error ? (
+                <div className="text-center py-12">
+                  <p className="text-red-600">Error: {error}</p>
+                </div>
+              ) : doors.length === 0 ? (
+                <div className="text-center py-12">
+                  <p className="text-gray-600">No doors found.</p>
+                </div>
+              ) : (
+                <div className="space-y-12">
+                  {/* Group doors by doorType */}
+                  {Array.from(new Set(doors.map(door => door.doorType))).map((doorType) => {
+                    const doorsInType = doors.filter(door => door.doorType === doorType);
+                    return (
+                      <div key={doorType} id={doorType.toLowerCase().replace(/\s+/g, "-")} className="scroll-mt-24">
+                        <h3 className="text-2xl font-semibold text-black mb-6 pb-2 border-b border-gray-200">
+                          {doorType}
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                          {doorsInType.map((door) => (
+                            <div
+                              key={door._id}
+                              className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+                            >
+                              {door.imageUrl && door.imageUrl.length > 0 ? (
+                                <div className="w-full h-64 bg-gray-100 overflow-hidden">
+                                  {(() => {
+                                    const imgSrc = door.imageUrl[0];
+                                    // Check if image already has data URI prefix, if not add it
+                                    const imageUrl = imgSrc.startsWith('data:image') 
+                                      ? imgSrc 
+                                      : `data:image/jpeg;base64,${imgSrc}`;
+                                    return (
+                                      // eslint-disable-next-line @next/next/no-img-element
+                                      <img
+                                        src={imageUrl}
+                                        alt={door.name || "Door image"}
+                                        className="w-full h-full object-cover"
+                                      />
+                                    );
+                                  })()}
+                                </div>
+                              ) : (
+                                <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
+                                  <span className="text-gray-400">No Image</span>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </div>

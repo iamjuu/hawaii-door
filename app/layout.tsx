@@ -3,8 +3,13 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
-  title: "Crystal Bowl Studio - Healing Through Sound",
+  title: "Hawaii Door",
   description: "Experience the healing power of crystal singing bowls and yoga sessions",
+  icons: {
+    icon: "/assets/images/landing/logo.png",
+    shortcut: "/assets/images/landing/logo.png",
+    apple: "/assets/images/landing/logo.png",
+  },
 };
 
 export default function RootLayout({
