@@ -37,16 +37,16 @@ const GalleryPage = () => {
   })
 
   const handleTypeToggle = (type: string) => {
-    setSelectedTypes(prev => 
-      prev.includes(type) 
+    setSelectedTypes(prev =>
+      prev.includes(type)
         ? prev.filter(t => t !== type)
         : [...prev, type]
     )
   }
 
   const handleGlassToggle = (glass: string) => {
-    setSelectedGlass(prev => 
-      prev.includes(glass) 
+    setSelectedGlass(prev =>
+      prev.includes(glass)
         ? prev.filter(g => g !== glass)
         : [...prev, glass]
     )
@@ -61,17 +61,17 @@ const GalleryPage = () => {
   return (
     <>
       <Navbar />
-      
+
       {/* Main Content */}
       <main className="min-h-screen bg-white pt-[70px] md:pt-[80px]">
         <section className="px-6 md:px-12 lg:px-20 py-16 md:py-24">
           <div className="max-w-7xl mx-auto">
             {/* Headline */}
-            <h1 className="text-[56px] font-semibold text-black mb-6 md:mb-8 leading-tight">
+            <h1 className="text-[28px] md:text-[56px] font-semibold text-black mb-6 md:mb-8 leading-tight">
               Doors That Speak<br />
               <span className="">for Themselves</span>
             </h1>
-            
+
             {/* Body Text */}
             <p className="text-[18px] font-normal text-gray-700 leading-relaxed max-w-2xl">
               See recent installs, machining projects, and custom builds across O&apos;ahu, Maui, Kaua&apos;i, and Hawai&apos;i Island. Every project tells the same story, precision, fit, and finish done right.
@@ -98,11 +98,10 @@ const GalleryPage = () => {
                       <button
                         key={product}
                         onClick={() => setSelectedProduct(product)}
-                        className={`w-[80px] text-center px-3 py-2 rounded-md transition-colors ${
-                          selectedProduct === product
+                        className={`w-[80px] text-center px-3 py-2 rounded-md transition-colors ${selectedProduct === product
                             ? 'bg-[#FF6E4A] text-white'
                             : 'text-gray-700 hover:bg-gray-100'
-                        }`}
+                          }`}
                       >
                         {product}
                       </button>
@@ -198,7 +197,7 @@ const GalleryPage = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </>
   )
