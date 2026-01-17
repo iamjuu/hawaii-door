@@ -413,7 +413,7 @@ const BuildDoor = () => {
         const result = await response.json();
         
         if (result.success) {
-          message.success("Successfully submitted your quote! Confirmation email sent.");
+          message.success("Successfully submitted your quote! ");
         } else {
           message.warning("Quote submitted, but email could not be sent. Please contact us directly.");
         }
