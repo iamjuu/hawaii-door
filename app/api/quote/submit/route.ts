@@ -15,41 +15,47 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Prepare attachments array
-    const attachments: { filename: string; content: string; encoding: string; contentType: string }[] = [];
+    // Prepare PDF attachment (for both admin and user)
+    let pdfAttachmentObj: { filename: string; content: string; encoding: string; contentType: string } | null = null;
 
     // Generate PDF from quote data
     let pdfBuffer: Buffer | null = null;
     try {
       pdfBuffer = await generateQuotePDF(quoteData);
       const fileName = `HawaiiDoor_Specifications_${quoteData.firstName || "Quote"}_${new Date().toISOString().split("T")[0]}.pdf`;
-      attachments.push({
+      pdfAttachmentObj = {
         filename: fileName,
         content: pdfBuffer.toString("base64"),
         encoding: "base64",
         contentType: "application/pdf",
-      });
+      };
     } catch (pdfError) {
       console.error("Error generating PDF:", pdfError);
       // Continue without PDF if generation fails
     }
 
     // Add PDF if provided from client (fallback)
-    if (!pdfBuffer && pdfBase64) {
+    if (!pdfAttachmentObj && pdfBase64) {
       const fileName = `HawaiiDoor_Specifications_${quoteData.firstName || "Quote"}_${new Date().toISOString().split("T")[0]}.pdf`;
-      attachments.push({
+      pdfAttachmentObj = {
         filename: fileName,
         content: pdfBase64,
         encoding: "base64",
         contentType: "application/pdf",
-      });
+      };
     }
 
-    // Add uploaded files if provided
+    // Prepare admin attachments: PDF + uploaded files
+    const adminAttachments: { filename: string; content: string; encoding: string; contentType: string }[] = [];
+    if (pdfAttachmentObj) {
+      adminAttachments.push(pdfAttachmentObj);
+    }
+
+    // Add uploaded files to admin attachments
     if (uploadedFiles && Array.isArray(uploadedFiles)) {
       uploadedFiles.forEach((file: { name: string; base64: string; type: string }, index: number) => {
         if (file.base64 && file.name) {
-          attachments.push({
+          adminAttachments.push({
             filename: file.name,
             content: file.base64,
             encoding: "base64",
@@ -59,11 +65,17 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Send email to admin with attachments
-    const adminResult = await sendQuoteSubmissionEmail(quoteData, attachments);
+    // Prepare user attachments: Only PDF (no uploaded files)
+    const userAttachments: { filename: string; content: string; encoding: string; contentType: string }[] = [];
+    if (pdfAttachmentObj) {
+      userAttachments.push(pdfAttachmentObj);
+    }
+
+    // Send email to admin with PDF + uploaded files
+    const adminResult = await sendQuoteSubmissionEmail(quoteData, adminAttachments.length > 0 ? adminAttachments : undefined);
     console.log("✅ Admin email sent:", adminResult.messageId);
 
-    // Send confirmation email to user with PDF attachment
+    // Send confirmation email to user with PDF only (no uploaded documents)
     try {
       if (quoteData.email) {
         const userResult = await sendQuoteConfirmationToUser({
@@ -72,7 +84,7 @@ export async function POST(request: NextRequest) {
           companyName: quoteData.companyName,
           doorType: quoteData.doorType,
           doorConfig: quoteData.doorConfig,
-        }, attachments.length > 0 ? attachments : undefined);
+        }, userAttachments.length > 0 ? userAttachments : undefined);
         console.log("✅ User confirmation email sent:", userResult.messageId);
       }
     } catch (userEmailError) {

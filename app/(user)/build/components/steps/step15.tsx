@@ -23,12 +23,49 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
   const downloadPDF = async () => {
     setIsDownloading(true);
     try {
+      // Convert File objects to base64 if they exist
+      const convertFileToBase64 = (file: File): Promise<{ name: string; base64: string; type: string }> => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const base64String = (reader.result as string).split(',')[1]; // Remove data:type;base64, prefix
+            resolve({
+              name: file.name,
+              base64: base64String,
+              type: file.type || "application/octet-stream",
+            });
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      };
+
+      // Prepare quote data with base64 images
+      let preparedQuoteData = { ...quoteData };
+      if (quoteData.uploadedFiles && Array.isArray(quoteData.uploadedFiles) && quoteData.uploadedFiles.length > 0) {
+        // Check if files are File objects or already base64
+        const filePromises = quoteData.uploadedFiles.map((file: any) => {
+          if (file instanceof File) {
+            return convertFileToBase64(file);
+          } else if (file && typeof file === 'object' && file.base64) {
+            // Already converted to base64 format
+            return Promise.resolve(file);
+          }
+          return null;
+        }).filter(Boolean);
+        
+        preparedQuoteData = {
+          ...quoteData,
+          uploadedFiles: await Promise.all(filePromises),
+        };
+      }
+
       const response = await fetch("/api/quote/download-pdf", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ quoteData }),
+        body: JSON.stringify({ quoteData: preparedQuoteData }),
       });
 
       if (!response.ok) {
@@ -149,7 +186,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
   const getDisplayName = (key: string): string => {
     const nameMap: { [key: string]: string } = {
       doorType: "Category",
-      doorConfig: "Subcategory",
+      doorConfig: "Type",
       width: "Width",
       height: "Height",
       thickness: "Thickness",
@@ -194,19 +231,23 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
     return nameMap[key] || key;
   };
 
-  // Primary specifications (Category, Subcategory, Width, Height, Thickness, Quantity, Wall Built, Wall Thickness)
-  // For Wall Thickness, use wallThickness if available, otherwise use customDiameter
-  const wallThicknessValue = quoteData.wallThickness || quoteData.customDiameter || "";
-  
+  // Primary specifications (Category, Type, Width, Height, Thickness, Quantity)
   const primarySpecs = [
     { key: "doorType", label: "Category", value: formatValue("doorType", quoteData.doorType) },
-    { key: "doorConfig", label: "Subcategory", value: formatValue("doorConfig", quoteData.doorConfig) },
+    { key: "doorConfig", label: "Type", value: formatValue("doorConfig", quoteData.doorConfig) },
     { key: "width", label: "Width", value: formatValue("width", quoteData.width) },
     { key: "height", label: "Height", value: formatValue("height", quoteData.height) },
     { key: "thickness", label: "Thickness", value: formatValue("thickness", quoteData.thickness) },
     { key: "quantity", label: "Quantity", value: formatValue("quantity", quoteData.quantity) },
+  ].filter(spec => spec.value !== "-");
+
+  // Other Details specifications (Wall Built, Wall Thickness, Louver)
+  // For Wall Thickness, use wallThickness if available, otherwise use customDiameter
+  const wallThicknessValue = quoteData.wallThickness || quoteData.customDiameter || "";
+  const otherDetailsSpecs = [
     { key: "wallBuilt", label: "Wall Built", value: formatValue("wallBuilt", quoteData.wallBuilt) },
     { key: "wallThickness", label: "Wall Thickness", value: formatValue("wallThickness", wallThicknessValue) },
+    { key: "louver", label: "Louver", value: formatValue("louver", quoteData.louver) },
   ].filter(spec => spec.value !== "-");
 
   // Handing & Hinges specifications (Door Handling, Hinge Radius, Hinge Type, Hinge Locations, Backset)
@@ -229,18 +270,59 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
     { key: "poNumber", label: "PO Number", value: formatValue("poNumber", quoteData.poNumber) },
   ].filter(spec => spec.value !== "-");
 
-  // Lock information and all other specifications (excluding primary specs, handing & hinges specs, and your details specs)
+  // Jamb specifications
+  const jambSpecs = [
+    { key: "jambType", label: "Jamb Type", value: formatValue("jambType", quoteData.jambType) },
+    { key: "jambSize", label: "Jamb Size", value: formatValue("jambSize", quoteData.jambSize) },
+    { key: "dbStrikeType", label: "DB Strike Type", value: formatValue("dbStrikeType", quoteData.dbStrikeType) },
+    { key: "lockStrikeType", label: "Lock Strike Type", value: formatValue("lockStrikeType", quoteData.lockStrikeType) },
+    { key: "undercutMeasurement", label: "Undercut Measurement", value: formatValue("undercutMeasurement", quoteData.undercutMeasurement) },
+    { key: "weatherstripping", label: "Weatherstripping", value: formatValue("weatherstripping", quoteData.weatherstripping) },
+    { key: "thresholdType", label: "Threshold Type", value: formatValue("thresholdType", quoteData.thresholdType) },
+  ].filter(spec => spec.value !== "-");
+
+  // Options specifications (Hang Door, Protect Door, Add On)
+  const optionsSpecs = [
+    { key: "hangDoorOption", label: "Hang Door", value: formatValue("hangDoorOption", quoteData.hangDoorOption) },
+    { key: "protectDoorOption", label: "Protect Door", value: formatValue("protectDoorOption", quoteData.protectDoorOption) },
+    { key: "addOnOption", label: "Add On", value: formatValue("addOnOption", quoteData.addOnOption) },
+  ].filter(spec => spec.value !== "-");
+
+  // Door Finish & Notes specifications
+  const getFileUploadStatus = (): string => {
+    if (quoteData.uploadedFiles && Array.isArray(quoteData.uploadedFiles) && quoteData.uploadedFiles.length > 0) {
+      const fileCount = quoteData.uploadedFiles.length;
+      return `${fileCount} file${fileCount > 1 ? 's' : ''} uploaded`;
+    }
+    return "No files uploaded";
+  };
+
+  const doorFinishNotesSpecs = [
+    { key: "doorFinishOption", label: "Door Finish", value: formatValue("doorFinishOption", quoteData.doorFinishOption) },
+    { key: "specialInstructions", label: "Special Instructions", value: formatValue("specialInstructions", quoteData.specialInstructions) },
+    { key: "fileUploadStatus", label: "File Upload Status", value: getFileUploadStatus() },
+  ].filter(spec => {
+    // Always show file upload status, but filter out empty doorFinishOption and specialInstructions
+    if (spec.key === "fileUploadStatus") return true;
+    return spec.value !== "-";
+  });
+
+  // Lock information and all other specifications (excluding primary specs, other details, handing & hinges, jamb, pre-hanging, door finish & notes specs, and your details specs)
   const lockInfoSpecs = Object.entries(quoteData)
     .filter(([key, value]) => {
       // Filter out empty values, internal fields, primary specs, handing & hinges specs, and your details specs
       if (!value || value === "" || (Array.isArray(value) && value.length === 0)) return false;
       if (key === "uploadedFiles") return false;
-      // Exclude primary specs, customDiameter, handing & hinges specs, and your details specs
+      // Exclude primary specs, other details, handing & hinges, jamb, pre-hanging specs, and your details specs
       const excludedKeys = [
         "doorType", "doorConfig", "category", "width", "height", "thickness", "quantity", 
-        "wallBuilt", "wallThickness", "customDiameter",
+        "wallBuilt", "wallThickness", "customDiameter", "louver",
         "doorHandling", "hingeRadius", "hingeType", 
         "hingeLocation1", "hingeLocation2", "hingeLocation3", "backset",
+        "jambType", "jambSize", "dbStrikeType", "lockStrikeType", "undercutMeasurement", 
+        "weatherstripping", "thresholdType",
+        "hangDoorOption", "protectDoorOption", "addOnOption",
+        "doorFinishOption", "specialInstructions",
         "firstName", "email", "companyName", "phone", "poNumber"
       ];
       if (excludedKeys.includes(key)) return false;
@@ -262,8 +344,16 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
     let specs: any[] = [];
     if (section === "primary") {
       specs = primarySpecs;
+    } else if (section === "other") {
+      specs = otherDetailsSpecs;
     } else if (section === "handing") {
       specs = handingHingesSpecs;
+    } else if (section === "jamb") {
+      specs = jambSpecs;
+    } else if (section === "options") {
+      specs = optionsSpecs;
+    } else if (section === "doorFinishNotes") {
+      specs = doorFinishNotesSpecs;
     } else if (section === "lock") {
       specs = lockInfoSpecs;
     } else if (section === "details") {
@@ -333,7 +423,10 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
 
   // Render spec row (either display or edit mode)
   const renderSpecRow = (spec: { key: string; label: string; value: string }, section: string) => {
-    if (editingSection === section) {
+    // File upload status is read-only
+    const isReadOnly = spec.key === "fileUploadStatus";
+    
+    if (editingSection === section && !isReadOnly) {
       return (
         <div key={spec.key} className="flex justify-between items-center border-b border-gray-100 pb-3">
           <span className="text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565]">
@@ -443,7 +536,24 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
         </div>
       </div>
 
-      {/* Second Box - Handing & Hinges */}
+      {/* Second Box - Other Details */}
+      {otherDetailsSpecs.length > 0 && (
+        <div className="border-2 border-gray-200 rounded-xl p-8 md:p-6 mb-6">
+          {/* Subheading and Edit Button - Flex Between */}
+          <div className="flex justify-between items-center mb-9 md:mb-13">
+            <h3 className="text-[14px] md:text-[16px] font-roboto font-[400] text-[#0A0A0A]">
+              Other Details
+            </h3>
+            {/* Edit/Save/Cancel Button - Top Right */}
+            {renderEditButtons("other")}
+          </div>
+          <div className="space-y-4 text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565]">
+            {otherDetailsSpecs.map((spec) => renderSpecRow(spec, "other"))}
+          </div>
+        </div>
+      )}
+
+      {/* Third Box - Handing & Hinges */}
       <div className="border-2 border-gray-200 rounded-xl p-8 md:p-6 mb-6">
         {/* Subheading and Edit Button - Flex Between */}
         <div className="flex justify-between items-center mb-9 md:mb-13 ">
@@ -458,7 +568,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
         </div>
       </div>
 
-      {/* Third Box - Lock Information */}
+      {/* Fourth Box - Lock Information */}
       <div className="border-2 border-gray-200 rounded-xl  p-8 md:p-6  mb-6">
         {/* Subheading and Edit Button - Flex Between */}
         <div className="flex justify-between items-center mb-9 md:mb-13">
@@ -473,7 +583,56 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
         </div>
       </div>
 
-      {/* Fourth Box - Your Details */}
+      {/* Jamb Box */}
+      {jambSpecs.length > 0 && (
+        <div className="border-2 border-gray-200 rounded-xl p-8 md:p-6 mb-6">
+          {/* Subheading and Edit Button - Flex Between */}
+          <div className="flex justify-between items-center mb-9 md:mb-13">
+            <h3 className="text-[14px] md:text-[16px] font-roboto font-[400] text-[#0A0A0A]">
+              Jamb
+            </h3>
+            {/* Edit/Save/Cancel Button - Top Right */}
+            {renderEditButtons("jamb")}
+          </div>
+          <div className="space-y-4 text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565]">
+            {jambSpecs.map((spec) => renderSpecRow(spec, "jamb"))}
+          </div>
+        </div>
+      )}
+
+      {/* Options Box */}
+      {optionsSpecs.length > 0 && (
+        <div className="border-2 border-gray-200 rounded-xl p-8 md:p-6 mb-6">
+          {/* Subheading and Edit Button - Flex Between */}
+          <div className="flex justify-between items-center mb-9 md:mb-13">
+            <h3 className="text-[14px] md:text-[16px] font-roboto font-[400] text-[#0A0A0A]">
+              Options
+            </h3>
+            {/* Edit/Save/Cancel Button - Top Right */}
+            {renderEditButtons("options")}
+          </div>
+          <div className="space-y-4 text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565]">
+            {optionsSpecs.map((spec) => renderSpecRow(spec, "options"))}
+          </div>
+        </div>
+      )}
+
+      {/* Door Finish & Notes Box - Always show (file upload status is always included) */}
+      <div className="border-2 border-gray-200 rounded-xl p-8 md:p-6 mb-6">
+        {/* Subheading and Edit Button - Flex Between */}
+        <div className="flex justify-between items-center mb-9 md:mb-13">
+          <h3 className="text-[14px] md:text-[16px] font-roboto font-[400] text-[#0A0A0A]">
+            Door Finish & Notes
+          </h3>
+          {/* Edit/Save/Cancel Button - Top Right */}
+          {renderEditButtons("doorFinishNotes")}
+        </div>
+        <div className="space-y-4 text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565]">
+          {doorFinishNotesSpecs.map((spec) => renderSpecRow(spec, "doorFinishNotes"))}
+        </div>
+      </div>
+
+      {/* Your Details Box */}
       <div className="border-2 border-gray-200 rounded-xl p-8 md:p-6 mb-6">
         {/* Subheading and Edit Button - Flex Between */}
         <div className="flex justify-between items-center mb-9 md:mb-13 ">
