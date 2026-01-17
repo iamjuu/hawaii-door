@@ -6,7 +6,7 @@ import HomePage from "./(user)/home/page"
 import { WhatsAppIconSvg } from "@/public/assets";
 
 export default function Home() {
-  const whatsappNumber = "8075699058";
+  const whatsappNumber = "7025715250";
   const whatsappText = encodeURIComponent("Hi");
   const [isBouncing, setIsBouncing] = useState(false);
 
@@ -24,7 +24,7 @@ export default function Home() {
       <HomePage />
 
       {/* Floating WhatsApp button */}
-      {/* <a
+      <a
         href={getWhatsAppLink()}
         target="_blank"
         rel="noopener noreferrer"
@@ -34,7 +34,7 @@ export default function Home() {
         }`}
       >
         <Image src={WhatsAppIconSvg} alt="WhatsApp" width={100} /> 
-      </a> */}
+      </a>
     </>
   );
 }
