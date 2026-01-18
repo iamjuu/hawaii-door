@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Buildit from "../../../../public/assets/images/landing/build.png";
 import Review from "../../../../public/assets/images/landing/review.png";
@@ -12,6 +13,7 @@ const stepBox =
   "flex flex-col items-center text-center px-2 pt-0 md:pt-10 md:pb-10 w-full max-w-[260px] mx-auto";
 
 const StepsDoor = () => {
+
   return (
     <section className="w-full pt-10 pb-5  bg-white ">
       <div className="max-w-7xl md:max-w-full mx-auto px-4 sm:px-6 md:px-[60px] flex flex-col">

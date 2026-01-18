@@ -3,7 +3,7 @@ import Footer from "@/components/user/Footer";
 import Navbar from "@/components/user/Navbar";
 import { useState } from "react";
 import { MdOutlineArrowOutward } from "react-icons/md";
-
+import Link from "next/link";
 export default function Contact() {
   const [openFAQ, setOpenFAQ] = useState(null);
   const [formData, setFormData] = useState({
@@ -63,7 +63,7 @@ export default function Contact() {
     <>
       {/* Contact Section */}
       <Navbar />
-      <section className="bg-white py-12 lg:pt-20 px-6   md:px-15  mt-17">
+      <section className="bg-white py-12 lg:pt-20 px-6   md:px-15  mt-17 font-roboto">
         <div className="container mx-auto ">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Left Side - Content */}
@@ -77,11 +77,11 @@ export default function Contact() {
                   inquiries. We review every message personally, no bots, no
                   scripts, just people who know doors
                 </p>
-
-                <button className="group relative inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-full bg-[#FF6E4A] px-6 py-3 font-roboto text-base md:text-lg text-white">
-                  {/* WhatsApp-style black reveal */}
-                  <span
-                    className="
+                <Link href="/build">
+                  <button className="group relative inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-full bg-[#FF6E4A] px-6 py-3 font-roboto text-base md:text-lg text-white">
+                    {/* WhatsApp-style black reveal */}
+                    <span
+                      className="
                       absolute inset-0
                       bg-black
                       origin-bottom
@@ -89,29 +89,30 @@ export default function Contact() {
                       transition-transform duration-900 ease-[cubic-bezier(0.4,0,0.2,1)]
                       group-hover:scale-y-100
                     "
-                  />
+                    />
 
-                  {/* Content */}
-                  <span className="relative z-10 flex items-center gap-3">
-                    Build Your Door Now
-                    {/* Arrow */}
-                    <span
-                      className="
+                    {/* Content */}
+                    <span className="relative z-10 flex items-center gap-3">
+                      Build Your Door Now
+                      {/* Arrow */}
+                      <span
+                        className="
                         inline-flex items-center justify-center w-6 h-6
                         transform
                         transition-all duration-500 ease-in-out
                         rotate-0 translate-x-1
                         group-hover:rotate-45 group-hover:translate-x-0
                       "
-                    >
-                      <MdOutlineArrowOutward className="text-white text-xl" />
+                      >
+                        <MdOutlineArrowOutward className="text-white text-xl" />
+                      </span>
                     </span>
-                  </span>
-                </button>
+                  </button>
+                </Link>
               </div>
 
               {/* Map and Visit Us */}
-              <div className=" flex gap-10   mt-8">
+              <div className=" flex flex-col md:flex-row gap-10   mt-8">
                 {/* Google Map - Smaller and more compact */}
                 <div className="relative w-full max-w-md h-[389px] rounded-lg overflow-hidden shadow-md">
                   <iframe
@@ -128,7 +129,7 @@ export default function Contact() {
                 {/* Contact Info - More compact layout */}
                 <div className="flex flex-col justify-around max-w-md">
                   <div>
-                    <p className="text-black">Visit US</p>
+                    <p className="mb-3 md:mb-0 text-black">Visit US</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="bg-orange-50 p-2 rounded-full flex-shrink-0">
@@ -346,43 +347,42 @@ export default function Contact() {
               Find answers to common questions about our services and process.
             </p>
 
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border border-gray-200 rounded-lg overflow-hidden"
-              >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div
+                  key={index}
+                  className="border border-gray-200 rounded-lg overflow-hidden"
                 >
-                  <span className="text-[22px] font-[300] text-gray-900 pr-4">
-                    {faq.question}
-                  </span>
-                  <svg
-                    className={`w-6 h-6 text-black flex-shrink-0 transition-transform ${
-                      openFAQ === index ? "rotate-180" : ""
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                  <button
+                    onClick={() => toggleFAQ(index)}
+                    className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </button>
-                {openFAQ === index && (
-                  <div className="px-6 pb-6 text-gray-700 leading-relaxed">
-                    {faq.answer}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+                    <span className="text-[22px] font-[300] text-gray-900 pr-4">
+                      {faq.question}
+                    </span>
+                    <svg
+                      className={`w-6 h-6 text-black flex-shrink-0 transition-transform ${openFAQ === index ? "rotate-180" : ""
+                        }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  {openFAQ === index && (
+                    <div className="px-6 pb-6 text-gray-700 leading-relaxed">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
