@@ -126,7 +126,10 @@ export default function ProductList({ products: initialProducts, onRefresh }: Pr
                             <p className="font-medium text-white">{product.name || 'Unnamed Product'}</p>
                             {product.type && (
                               <span className="text-xs text-zinc-500 bg-zinc-700 px-2 py-0.5 rounded">
-                                {product.type === 'normal' ? 'Normal Door' : 'Glass Door'}
+                                {product.type === 'normal' ? 'Normal Door' : 
+                                 product.type === 'glass' ? 'Glass Door' :
+                                 product.type === 'interior' ? 'Interior' :
+                                 product.type === 'exterior' ? 'Exterior' : product.type}
                               </span>
                             )}
                             {product.category && (

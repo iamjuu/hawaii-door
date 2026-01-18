@@ -51,9 +51,13 @@ export async function GET(req: NextRequest) {
         hasPrev: page > 1,
       },
     });
-  } catch {
+  } catch (error) {
+    console.error("Error fetching doors:", error);
     return NextResponse.json(
-      { success: false, message: "Server error" },
+      { 
+        success: false, 
+        message: error instanceof Error ? error.message : "Server error" 
+      },
       { status: 500 }
     );
   }

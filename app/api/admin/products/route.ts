@@ -12,37 +12,47 @@ export async function POST(req: NextRequest) {
     const { name, price, type, category, imageUrl } = body;
 
     // Validation
-    if (!price || !type || !category) {
+    if (!price || !type) {
       return NextResponse.json(
-        { success: false, message: "Price, type, and category are required" },
+        { success: false, message: "Price and type are required" },
+        { status: 400 }
+      );
+    }
+    
+    // Category is required only for normal and glass types
+    if (!category && (type === "normal" || type === "glass")) {
+      return NextResponse.json(
+        { success: false, message: "Category is required for normal and glass door types" },
         { status: 400 }
       );
     }
 
     // Validate type
-    if (!["normal", "glass"].includes(type)) {
+    if (!["normal", "glass", "interior", "exterior"].includes(type)) {
       return NextResponse.json(
         { success: false, message: "Invalid product type" },
         { status: 400 }
       );
     }
 
-    // Validate category based on type
-    const normalCategories = ["single", "double", "barn", "dutch"];
-    const glassCategories = ["with-glass", "without-glass"];
-    
-    if (type === "normal" && !normalCategories.includes(category)) {
-      return NextResponse.json(
-        { success: false, message: "Invalid category for normal door" },
-        { status: 400 }
-      );
-    }
-    
-    if (type === "glass" && !glassCategories.includes(category)) {
-      return NextResponse.json(
-        { success: false, message: "Invalid category for glass door" },
-        { status: 400 }
-      );
+    // Validate category based on type (only for normal and glass types)
+    if (type === "normal" || type === "glass") {
+      const normalCategories = ["single", "double", "barn", "dutch"];
+      const glassCategories = ["with-glass", "without-glass"];
+      
+      if (type === "normal" && !normalCategories.includes(category)) {
+        return NextResponse.json(
+          { success: false, message: "Invalid category for normal door" },
+          { status: 400 }
+        );
+      }
+      
+      if (type === "glass" && !glassCategories.includes(category)) {
+        return NextResponse.json(
+          { success: false, message: "Invalid category for glass door" },
+          { status: 400 }
+        );
+      }
     }
 
     if (!Array.isArray(imageUrl) || imageUrl.length === 0) {
