@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="bg-black text-white py-12 px-6 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           {/* Logo and Description */}
           <div className="flex flex-col space-y-4">
             <div className="relative w-48 h-24">
@@ -22,6 +22,7 @@ const Footer = () => {
           </div>
 
           {/* Explore Doors */}
+          <div className='justify-between flex '>
           <div>
             <h3 className="text-lg font-semibold mb-4">Explore Doors</h3>
             <ul className="space-y-3">
@@ -79,7 +80,9 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+          </div>
         </div>
+
 
         {/* Bottom Section - Optional */}
         <div className="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
