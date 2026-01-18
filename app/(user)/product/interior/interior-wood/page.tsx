@@ -1,162 +1,162 @@
-    "use client";
+"use client";
 
-    import React, { useState, useEffect } from 'react'
-    import Navbar from '@/components/user/Navbar'
-    import Footer from '@/components/user/Footer'
-    import { interiorDoor1, ProductFootericoncheck, ProductFootericonstar } from '@/public/assets';
-    import HeroSection from '../../components/herosection';
-    import Image from 'next/image';
+import React, { useState, useEffect } from 'react'
+import Navbar from '@/components/user/Navbar'
+import Footer from '@/components/user/Footer'
+import { interiorDoor1, ProductFootericoncheck, ProductFootericonstar } from '@/public/assets';
+import HeroSection from '../../components/herosection';
+import Image from 'next/image';
 
-    interface Door {
-      _id: string;
-      name: string;
-      price: number;
-      category: string;
-      doorType: string;
-      imageUrl?: string[];
-      description?: string;
-      inStock?: boolean;
+interface Door {
+  _id: string;
+  name: string;
+  price: number;
+  category: string;
+  doorType: string;
+  imageUrl?: string[];
+  description?: string;
+  inStock?: boolean;
+}
+
+const InteriorWoodPage = () => {
+  const [doors, setDoors] = useState<Door[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchDoors = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/doors?category=interior&limit=100');
+        const data = await response.json();
+
+        if (data.success) {
+          setDoors(data.data || []);
+        } else {
+          setError(data.message || 'Failed to fetch doors');
+        }
+      } catch (err) {
+        setError('Error loading doors');
+        console.error('Error fetching doors:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDoors();
+  }, []);
+  const bgImage = "/assets/product/intertior/wood-interior.svg";
+  const contant = "Interior Doors";
+  const para =
+    "Discover interior doors; we offer a variety of door types, designs and styles. You are sure to find the perfectdoor for your project.";
+  const features = [
+    {
+      text: "Interior doors as design features",
+      iconType: ProductFootericoncheck
+    },
+    {
+      text: "Styles that align with your space",
+      iconType: ProductFootericonstar
     }
+  ];
 
-    const InteriorWoodPage = () => {
-    const [doors, setDoors] = useState<Door[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+  return (
+    <>
+      <Navbar />
 
-    useEffect(() => {
-      const fetchDoors = async () => {
-        try {
-          setLoading(true);
-          const response = await fetch('/api/doors?category=interior&limit=100');
-          const data = await response.json();
-          
-          if (data.success) {
-            setDoors(data.data || []);
-          } else {
-            setError(data.message || 'Failed to fetch doors');
-          }
-        } catch (err) {
-          setError('Error loading doors');
-          console.error('Error fetching doors:', err);
-        } finally {
-          setLoading(false);
-        }
-      };
+      <HeroSection
+        contant={contant}
+        bgImage={bgImage}
+        para={para}
+        features={features}
+      />
 
-      fetchDoors();
-    }, []);
-    const bgImage = "/assets/product/intertior/wood-interior.svg";
-    const contant = "Interior Doors";
-    const para =
-        "Discover interior doors; we offer a variety of door types, designs and styles. You are sure to find the perfectdoor for your project.";
-    const features = [
-        {
-        text: "Interior doors as design features",
-        iconType: ProductFootericoncheck
-        },
-        {
-        text: "Styles that align with your space",
-        iconType: ProductFootericonstar
-        }
-    ];
+      <section className='flex flex-col md:flex-row gap-12 px-6 md:px-12 lg:px-20 py-16 md:py-24' >
+        <div className="space-y-8 w-full md:w-1/2 pr-0 md:pr-8">
+          {/* Main Title */}
+          <h2 className="text-[32px] md:text-[46px] font-[500] text-black">
+            Unmatched Versatility with Interior Solid Wood Doors
+          </h2>
 
-    return (
-        <>
-        <Navbar />
-        
-        <HeroSection
-            contant={contant}
-            bgImage={bgImage}
-            para={para}
-            features={features}
-        />
-        
-    <section className='grid grid-cols-2 px-6 md:px-12 lg:px-20 py-16 md:py-24' >
-    <div className="space-y-8 pr-8">
-    {/* Main Title */}
-    <h2 className="text-[46px] font-[500] text-black">
-        Unmatched Versatility with Interior Solid Wood Doors
-    </h2>
+          {/* Introductory Paragraph */}
+          <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
+            Interior Solid Wood Doors provide the ultimate versatility in design, style, and size. Wood doors are available in a variety of wood species and glass options, allowing you to find the perfect door for your needs, whether it&apos;s a standard design or a custom, one-of-a-kind creation.
+          </p>
 
-    {/* Introductory Paragraph */}
-    <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
-        Interior Solid Wood Doors provide the ultimate versatility in design, style, and size. Wood doors are available in a variety of wood species and glass options, allowing you to find the perfect door for your needs, whether it&apos;s a standard design or a custom, one-of-a-kind creation.
-    </p>
+          {/* Key Benefits Section */}
+          <div className="space-y-4">
+            <h3 className="text-[22px] font-[500] text-black uppercase">
+              KEY BENEFITS OF OUR WOOD DOORS:
+            </h3>
+            <ul className="space-y-3 text-gray-700">
+              <li>
+                <span className="font-bold">Diverse Styles:</span> Choose from a wide array of designs to match your interior decor.
+              </li>
+              <li>
+                <span className="font-bold">Customizable Options:</span> Consider unique customizations to create a door that is truly your own.
+              </li>
+              <li>
+                <span className="font-bold">Quality Craftsmanship:</span> Enjoy the superior craftsmanship that ensures durability and aesthetic appeal.
+              </li>
+            </ul>
+          </div>
 
-    {/* Key Benefits Section */}
-    <div className="space-y-4">
-        <h3 className="text-[22px] font-[500] text-black uppercase">
-        KEY BENEFITS OF OUR WOOD DOORS:
-        </h3>
-        <ul className="space-y-3 text-gray-700">
-        <li>
-            <span className="font-bold">Diverse Styles:</span> Choose from a wide array of designs to match your interior decor.
-        </li>
-        <li>
-            <span className="font-bold">Customizable Options:</span> Consider unique customizations to create a door that is truly your own.
-        </li>
-        <li>
-            <span className="font-bold">Quality Craftsmanship:</span> Enjoy the superior craftsmanship that ensures durability and aesthetic appeal.
-        </li>
-        </ul>
-    </div>
+          {/* Explore Our Door Collections Section */}
+          <div className="space-y-6">
+            <h3 className="text-[24px] md:text-[28px] font-[500] text-black">
+              Explore Our Door Collections
+            </h3>
 
-    {/* Explore Our Door Collections Section */}
-    <div className="space-y-6">
-        <h3 className="text-[28px] font-[500] text-black">
-        Explore Our Door Collections
-        </h3>
+            {/* Panel Doors Subsection */}
+            <div className="space-y-3">
+              <h4 className="text-[20px] md:text-[22px] font-[400] text-black uppercase">
+                PANEL DOORS
+              </h4>
+              <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
+                Our panel doors are a timeless choice, offering both classic and modern designs to suit any interior space.
+              </p>
+            </div>
 
-        {/* Panel Doors Subsection */}
-        <div className="space-y-3">
-        <h4 className="text-[22px] font-[400] text-black uppercase">
-            PANEL DOORS
-        </h4>
-        <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
-            Our panel doors are a timeless choice, offering both classic and modern designs to suit any interior space.
-        </p>
+            {/* Decorative French Doors Subsection */}
+            <div className="space-y-3">
+              <h4 className="text-[20px] md:text-[22px] font-[400] text-black uppercase">
+                DECORATIVE FRENCH DOORS
+              </h4>
+              <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
+                Add a touch of elegance to your home with our decorative French doors, featuring intricate designs and premium privacy and textured glass options.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="w-full md:w-1/2 flex items-center justify-center">
+          <Image src={interiorDoor1} alt="Interior Door" className="w-full h-auto object-cover rounded-lg" />
         </div>
 
-        {/* Decorative French Doors Subsection */}
-        <div className="space-y-3">
-        <h4 className="text-[22px] font-[400] text-black uppercase">
-            DECORATIVE FRENCH DOORS
-        </h4>
-        <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
-            Add a touch of elegance to your home with our decorative French doors, featuring intricate designs and premium privacy and textured glass options.
-        </p>
-        </div>
-    </div>
-    </div>
-    <div>
-        <Image src={interiorDoor1} alt="Interior Door" />
-    </div>
-
-    </section>
+      </section>
 
 
 
-    <main className="px-6 md:px-12 lg:px-20 pb-16 bg-white">
+      <main className="px-6 md:px-12 lg:px-20 pb-16 bg-white">
         <section className="space-y-6">
-            {/* Main Heading */}
-            <h2 className="text-[28px] font-[500] text-black">
-                In-Stock at Hawaii Western Door Products
-            </h2>
+          {/* Main Heading */}
+          <h2 className="text-[28px] font-[500] text-black">
+            In-Stock at Hawaii Western Door Products
+          </h2>
 
-            {/* First Paragraph */}
-            <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
-                The following product offering is part of our stocking program. We reserve the right to make changes without notice. Please contact your Hawaii Western Door Products representative to verify availability, lead time, and for more information.
-            </p>
+          {/* First Paragraph */}
+          <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
+            The following product offering is part of our stocking program. We reserve the right to make changes without notice. Please contact your Hawaii Western Door Products representative to verify availability, lead time, and for more information.
+          </p>
 
-            {/* Second Paragraph */}
-            <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
-                Please note that our doors are delivered unfinished. The product images shown below depict finished doors. Due to the natural variations in wood, each door will have a unique appearance, and the stainability of wood species may differ. We recommend consulting with a coatings expert for recommended finishing options and instructions.
-            </p>
+          {/* Second Paragraph */}
+          <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
+            Please note that our doors are delivered unfinished. The product images shown below depict finished doors. Due to the natural variations in wood, each door will have a unique appearance, and the stainability of wood species may differ. We recommend consulting with a coatings expert for recommended finishing options and instructions.
+          </p>
         </section>
-    </main>
+      </main>
 
 
-<main className="px-6 md:px-12 lg:px-20 py-16 md:py-24 bg-white">
+      <main className="px-6 md:px-12 lg:px-20 py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row gap-12">
             {/* Left Sidebar - Navigation Menu */}
@@ -230,8 +230,8 @@
                                   {(() => {
                                     const imgSrc = door.imageUrl[0];
                                     // Check if image already has data URI prefix, if not add it
-                                    const imageUrl = imgSrc.startsWith('data:image') 
-                                      ? imgSrc 
+                                    const imageUrl = imgSrc.startsWith('data:image')
+                                      ? imgSrc
                                       : `data:image/jpeg;base64,${imgSrc}`;
                                     return (
                                       // eslint-disable-next-line @next/next/no-img-element
@@ -261,10 +261,10 @@
         </div>
       </main>
 
-        <Footer />
-        </>
-    )
-    }
+      <Footer />
+    </>
+  )
+}
 
-    export default InteriorWoodPage
+export default InteriorWoodPage
 

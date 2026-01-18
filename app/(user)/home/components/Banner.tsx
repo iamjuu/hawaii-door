@@ -1,9 +1,11 @@
+"use client";
 import Image from "next/image";
 import bannerimg from "../../../../public/assets/images/landing/banner2.png";
 import {MdOutlineArrowOutward } from "react-icons/md";
 import Link from "next/link";
 
 export default function BannerSection() {
+
   return (
     <section className="relative w-full h-[60vh] md:h-[100vh] overflow-hidden">
       {/* Background Image */}

@@ -21,8 +21,8 @@ export default function Home() {
 
   return (
     <>
-      <HomePage/>
-      
+      <HomePage />
+
       {/* Floating WhatsApp button */}
       <a
         href={getWhatsAppLink()}
