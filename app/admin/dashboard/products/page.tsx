@@ -14,7 +14,7 @@ type Product = {
   category?: string;
 };
 
-type TabType = "normal" | "glass";
+type TabType = "normal" | "glass" | "interior" | "exterior";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -93,6 +93,26 @@ export default function ProductsPage() {
               }`}
             >
               Glass Door
+            </button>
+            <button
+              onClick={() => setActiveTab("interior")}
+              className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
+                activeTab === "interior"
+                  ? "border-white text-white"
+                  : "border-transparent text-zinc-400 hover:text-zinc-300"
+              }`}
+            >
+              Interior
+            </button>
+            <button
+              onClick={() => setActiveTab("exterior")}
+              className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
+                activeTab === "exterior"
+                  ? "border-white text-white"
+                  : "border-transparent text-zinc-400 hover:text-zinc-300"
+              }`}
+            >
+              Exterior
             </button>
           </div>
         </div>

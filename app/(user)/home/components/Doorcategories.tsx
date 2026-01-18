@@ -9,6 +9,7 @@ import Door4 from "../../../../public/assets/images/landing/Door4 8.02.03 PM.p
 import Door from "../../../../public/assets/images/landing/Door.png"
 import Settings from "../../../../public/assets/images/landing/Settings.png"
 import Tick from "../../../../public/assets/images/landing/Tick.png"
+import Link from "next/link";
 const DoorCategories = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [windowWidth, setWindowWidth] = useState(1024);
@@ -78,7 +79,7 @@ const DoorCategories = () => {
       <div className="max-w-7xl md:max-w-full mx-auto">
         {/* Header */}
         <div className="mb-10 pl-5 md:pl-[60px] ">
-          <h1 className="text-2xl md:text-4xl font-medium md:font-semibold text-black font-roboto mb-2 md:mb-4">Door Categories</h1>
+          <h1 className="text-2xl md:text-[46px] font-medium  text-black font-roboto mb-2 md:mb-4">Door Categories</h1>
           {/* <p className="text-sm md:text-lg text-[#3B3B3B] font-roboto max-w-xl">
             Explore our full line of pre-hung wood and fiberglass doors,<br/>
             organized by material and style.
@@ -131,9 +132,12 @@ const DoorCategories = () => {
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                         <h3 className="text-sm md:text-base  flex-shrink-0 font-roboto" >{category.title}</h3>
                         {isCurrent && (
+                          <Link href={'/gallery'}>
+                          
                           <button style={{backgroundColor: '#B6D78A', fontSize: "0.875rem"}} className="hover:bg-[#a3c677] text-gray-900  rounded-full px-3 ">
                             View Details
                           </button>
+                          </Link>
                         )}
                       </div>
                     </div>

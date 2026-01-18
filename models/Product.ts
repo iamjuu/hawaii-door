@@ -5,8 +5,8 @@ const ProductSchema = new Schema<ProductType>(
   {
     name: { type: String, required: false },
     price: { type: Number, required: true },
-    type: { type: String, required: true, enum: ["normal", "glass"] },
-    category: { type: String, required: true },
+    type: { type: String, required: true, enum: ["normal", "glass", "interior", "exterior"] },
+    category: { type: String, required: false },
     imageUrl: { type: [String], default: [] }, // Array of base64 image strings (only 1 allowed)
   },
   { 

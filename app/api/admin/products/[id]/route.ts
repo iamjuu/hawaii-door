@@ -23,15 +23,15 @@ export async function PATCH(req: NextRequest, context: RouteContext) {
     }
 
     // Validate type if provided
-    if (type !== undefined && !["normal", "glass"].includes(type)) {
+    if (type !== undefined && !["normal", "glass", "interior", "exterior"].includes(type)) {
       return NextResponse.json(
         { success: false, message: "Invalid product type" },
         { status: 400 }
       );
     }
 
-    // Validate category based on type if both provided
-    if (type && category) {
+    // Validate category based on type if both provided (only for normal and glass types)
+    if (type && category && (type === "normal" || type === "glass")) {
       const normalCategories = ["single", "double", "barn", "dutch"];
       const glassCategories = ["with-glass", "without-glass"];
       
