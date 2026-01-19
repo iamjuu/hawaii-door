@@ -1,21 +1,42 @@
 "use client";
 import Image from "next/image";
-import bannerimg from "../../../../public/assets/images/landing/banner2.png";
+import bannerimg from "../../../../public/assets/door/hq.png";
 import {MdOutlineArrowOutward } from "react-icons/md";
 import Link from "next/link";
+import Navbar from "@/components/user/Navbar";
 
 export default function BannerSection() {
 
   return (
-    <section className="relative w-full h-[60vh] md:h-[100vh] overflow-hidden">
+    <>
+    <Navbar />
+    <Navbar />
+
+<div className="relative w-full aspect-[3840/1996]">
+  <Image
+    src={bannerimg}
+    alt="Hero"
+    fill
+    priority
+    sizes="100vw"
+    style={{
+      objectFit: "cover",
+      objectPosition: "center",
+    }}
+  />
+</div>
+
+
+
+
+
+
+
+
+    <section className="relative  w-full h-full md:h-screen overflow-hidden">
       {/* Background Image */}
-      <Image
-        src={bannerimg}
-        alt="Door Banner"
-        fill
-        priority
-        className="object-center"
-      />
+
+
 
       {/* Dark overlay: smooth fade from 70% dark to clear */}
       <div
@@ -82,7 +103,10 @@ export default function BannerSection() {
         </div>
       </div>
     </section>
+    </>
+
+
   );
 }
-/* undraw_publish-article_u3z6 1 */
+
 
