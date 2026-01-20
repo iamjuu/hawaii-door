@@ -10,36 +10,39 @@ export default function BannerSection() {
   return (
     <>
     <Navbar />
-    <Navbar />
 
-<div className="relative w-full aspect-[3840/1996]">
-  <Image
-    src={bannerimg}
-    alt="Hero"
-    fill
-    priority
-    sizes="100vw"
-    style={{
-      objectFit: "cover",
-      objectPosition: "center",
-    }}
-  />
-</div>
+    <div
+      className="
+        relative
+        w-full
 
+        /* Desktop – ORIGINAL DESIGN (UNCHANGED) */
+        aspect-[3840/1996]
 
+        /* Tablet */
+        md:aspect-[3840/1996]
 
+        /* Mobile */
+        sm:aspect-[3840/1996]
 
-
-
-
-
-    <section className="relative  w-full h-full md:h-screen overflow-hidden">
-      {/* Background Image */}
-
-
-
-      {/* Dark overlay: smooth fade from 70% dark to clear */}
-      <div
+        overflow-hidden
+      "
+    >
+      <Image
+        src={bannerimg}
+        alt="Hero"
+        fill
+        priority
+        sizes="(max-width: 640px) 100vw,
+               (max-width: 1024px) 100vw,
+               100vw"
+        style={{
+          objectFit: "cover",
+          objectPosition: "center",
+        }}
+      />
+         {/* Dark overlay: smooth fade from 70% dark to clear */}
+         <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
@@ -102,7 +105,8 @@ export default function BannerSection() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
+
     </>
 
 
