@@ -8,26 +8,21 @@ import Greenarrow from "../../../../public/assets/images/landing/greenarrow.png"
 import Downarrow from "../../../../public/assets/images/landing/downarrow.png";
 import Truck from "../../../../public/assets/images/landing/truck.png";
 import { MdOutlineArrowOutward } from "react-icons/md";
+import LinkButton from '../components/link-button'
 import Link from "next/link";
+import Heading from "./header";
 const stepBox =
   "flex flex-col items-center text-center px-2 pt-0 md:pt-10 md:pb-10 w-full max-w-[260px] mx-auto";
 
 const StepsDoor = () => {
 
   return (
-    <section className="w-full pt-10 pb-5  bg-white ">
-      <div className="max-w-7xl md:max-w-full mx-auto px-4 sm:px-6 md:px-[60px] gap-[46px] flex flex-col">
-        {/* HEADING */}
-        <div className="flex flex-col leading-0">
-          <h2 className="text-2xl md:text-[46px] font-roboto text-black font-medium md:font-semibold ml-1 md:ml-0">
-            How To Order Doors
-          </h2>
-          <p className="mt-2  text-[#3B3B3B] text-[18px] md:text-[18px] font-montserrat max-w-xl ml-1 md:ml-0 pr-1">
-            Four easy steps to get your perfect premium door delivered
-          </p>
+    <section className="w-full   py-[50px]  pb-5   font-inter ">
+      <div className="max-w-7xl md:max-w-full  mx-auto px-4 sm:px-6 md:px-[60px] gap-[46px] flex flex-col">
+        <div className="flex items-center justify-start">
+          <Heading heading="How To Order Doors" subheading="Four easy steps to get your perfect premium door delivered" />
         </div>
-
-        {/* GRID (HOVER PARENT) */}
+       
         <div className="group w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-0 md:gap-12 items-start font-roboto ">
           {/* STEP 1 */}
           <div className="relative flex flex-col justify-center items-center overflow-visible">
@@ -178,38 +173,10 @@ const StepsDoor = () => {
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-center items-center ">
+      <div className="w-full   pb-10 flex justify-center items-center ">
         <Link href="/build">
-          <button className="group relative  inline-flex items-center gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] px-5 py-2 font-roboto text-xl text-white mt-10 md:mt-4  mb-[25px] md:mb-[62px]">
-            {/* WhatsApp-style black reveal */}
-            <span
-              className="
-    absolute inset-0
-    bg-black
-    origin-bottom
-    scale-y-0
-    transition-transform duration-900 ease-[cubic-bezier(0.4,0,0.2,1)]
-    group-hover:scale-y-100
-  "
-            />
-
-            {/* Content */}
-            <span className="relative z-10 flex items-center gap-3 text-[15px] md:text-lg">
-              Start Building Your Door Now
-              {/* Arrow (your previous working animation) */}
-              <span
-                className="
-      inline-flex items-center justify-center w-7 h-7
-      transform
-      transition-all duration-500 ease-in-out
-      rotate-0 translate-x-1.5
-      group-hover:rotate-45 group-hover:translate-x-0
-    "
-              >
-                <MdOutlineArrowOutward className="text-white text-2xl" />
-              </span>
-            </span>
-          </button>
+          <LinkButton label="Start Building Your Door Now" icon={<MdOutlineArrowOutward className="text-2xl  py-[15px]" />}
+          />
         </Link>
       </div>
       <div className="relative w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-4 md:mt-0">

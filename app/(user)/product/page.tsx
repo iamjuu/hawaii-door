@@ -52,7 +52,7 @@ const page = () => {
     <div className="">
       <Navbar />
 
-      <main className=" bg-black">
+      <main className=" ">
         <HeroSection
           contant={contant}
           bgImage={bgImage}
@@ -101,11 +101,13 @@ const page = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                </Link>
+              </div>
             </div>
           </div>
-        </section>
+        ))}
+      </div>
+    </section>
         <FooterBanner />
 
 

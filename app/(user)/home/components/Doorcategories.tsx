@@ -10,6 +10,9 @@ import Door from "../../../../public/assets/images/landing/Door.png"
 import Settings from "../../../../public/assets/images/landing/Settings.png"
 import Tick from "../../../../public/assets/images/landing/Tick.png"
 import Link from "next/link";
+import PillCTAButton from "./link-button";
+import { MdOutlineArrowOutward } from "react-icons/md";
+import Heading from "./header";
 const DoorCategories = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [windowWidth, setWindowWidth] = useState(1024);
@@ -75,22 +78,12 @@ const DoorCategories = () => {
   };
 
   return (
-<div className="w-full bg-white pt-4 pb-10 md:py-10">
+<div className="w-full   py-[50px]  pb-5   font-inter ">
   
   {/* MAIN CONTENT – constrained */}
-  <div className="max-w-7xl mx-auto">
+  <div className="max-w-7xl md:max-w-full  mx-auto px-4 sm:px-6 md:px-[60px] gap-[46px] flex flex-col">
     {/* Header */}
-    <div className=" ">
-      <h1 className="text-2xl md:text-[46px] font-medium text-black font-roboto mb-2 md:mb-4">
-        Door Categories
-      </h1>
-
-      <p className="text-sm md:text-[18px] text-[#3B3B3B] font-[400] font-roboto max-w-xl pr-2">
-        Explore our full line of pre-hung wood and fiberglass doors,
-        <span className="hidden md:block"></span>
-        organized by material and style.
-      </p>
-    </div>
+<Heading heading="Door Categories"subheading="Explore our full line of pre-hung wood and fiberglass doors, organized by material and style."/>
 
     {/* Carousel */}
     <div className="relative flex items-center justify-center">
