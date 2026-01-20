@@ -16,13 +16,13 @@ const StepsDoor = () => {
 
   return (
     <section className="w-full pt-10 pb-5  bg-white ">
-      <div className="max-w-7xl md:max-w-full mx-auto px-4 sm:px-6 md:px-[60px] flex flex-col">
+      <div className="max-w-7xl md:max-w-full mx-auto px-4 sm:px-6 md:px-[60px] gap-[46px] flex flex-col">
         {/* HEADING */}
-        <div className="mb-12 md:mb-8 text-left">
-          <h2 className="text-2xl md:text-4xl font-roboto text-black font-medium md:font-semibold ml-1 md:ml-0">
+        <div className="flex flex-col leading-0">
+          <h2 className="text-2xl md:text-[46px] font-roboto text-black font-medium md:font-semibold ml-1 md:ml-0">
             How To Order Doors
           </h2>
-          <p className="mt-2 md:mt-3 text-[#3B3B3B] text-sm md:text-base font-montserrat max-w-xl ml-1 md:ml-0 pr-1">
+          <p className="mt-2  text-[#3B3B3B] text-[18px] md:text-[18px] font-montserrat max-w-xl ml-1 md:ml-0 pr-1">
             Four easy steps to get your perfect premium door delivered
           </p>
         </div>
