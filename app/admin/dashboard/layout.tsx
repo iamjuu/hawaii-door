@@ -11,8 +11,8 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 const navItems = [
-  { label: "Dashboard", href: "/admin/dashboard" },
-  { label: "Orders", href: "/admin/dashboard/orders" },
+  // { label: "Dashboard", href: "/admin/dashboard" },
+  // { label: "Orders", href: "/admin/dashboard/orders" },
   { label: "Add Doors", href: "/admin/dashboard/add-doors" },
   { label: "Products", href: "/admin/dashboard/products" },
   { label: "Users", href: "/admin/dashboard/users" },

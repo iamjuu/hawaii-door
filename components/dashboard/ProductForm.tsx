@@ -137,7 +137,8 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
       return;
     }
 
-    if (!formData.category) {
+    // Category is only required for normal and glass types
+    if (!formData.category && (formData.type === "normal" || formData.type === "glass")) {
       setError("Product category is required");
       setLoading(false);
       return;
@@ -228,10 +229,12 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
           <option value="">Select product type</option>
           <option value="normal">Normal Door</option>
           <option value="glass">Glass Door</option>
+          <option value="interior">Interior</option>
+          <option value="exterior">Exterior</option>
         </select>
       </div>
 
-      {formData.type && (
+      {formData.type && (formData.type === "normal" || formData.type === "glass") && (
         <div className="space-y-1">
           <label htmlFor="product-category" className="text-sm font-medium text-white">
             Category <span className="text-red-500">*</span>

@@ -1,24 +1,48 @@
 "use client";
 import Image from "next/image";
-import bannerimg from "../../../../public/assets/images/landing/banner2.png";
+import bannerimg from "../../../../public/assets/door/hq.png";
 import {MdOutlineArrowOutward } from "react-icons/md";
 import Link from "next/link";
+import Navbar from "@/components/user/Navbar";
 
 export default function BannerSection() {
 
   return (
-    <section className="relative w-full h-[60vh] md:h-[100vh] overflow-hidden">
-      {/* Background Image */}
+    <>
+    <Navbar />
+
+    <div
+      className="
+        relative
+        w-full
+
+        /* Desktop – ORIGINAL DESIGN (UNCHANGED) */
+        aspect-[3840/1996]
+
+        /* Tablet */
+        md:aspect-[3840/1996]
+
+        /* Mobile */
+        sm:aspect-[3840/1996]
+
+        overflow-hidden
+      "
+    >
       <Image
         src={bannerimg}
-        alt="Door Banner"
+        alt="Hero"
         fill
         priority
-        className="object-center"
+        sizes="(max-width: 640px) 100vw,
+               (max-width: 1024px) 100vw,
+               100vw"
+        style={{
+          objectFit: "cover",
+          objectPosition: "center",
+        }}
       />
-
-      {/* Dark overlay: smooth fade from 70% dark to clear */}
-      <div
+         {/* Dark overlay: smooth fade from 70% dark to clear */}
+         <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
@@ -81,8 +105,12 @@ export default function BannerSection() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
+
+    </>
+
+
   );
 }
-/* undraw_publish-article_u3z6 1 */
+
 
