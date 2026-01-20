@@ -12,7 +12,7 @@ import Prehung from "./components/Prehung";
 export default function Home() {
   return (
     <>
-    <Navbar />
+    {/* <Navbar /> */}
     <BannerSection />
     <Box />
     <StepsDoor />

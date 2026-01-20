@@ -49,10 +49,10 @@ const page = () => {
     }
   ];
   return (
-    <>
+    <div className="">
       <Navbar />
 
-      <main className="min-h-screen bg-white">
+      <main className=" bg-black">
         <HeroSection
           contant={contant}
           bgImage={bgImage}
@@ -112,7 +112,7 @@ const page = () => {
       </main>
 
       <Footer />
-    </>
+    </div>
   );
 };
 

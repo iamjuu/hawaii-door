@@ -52,8 +52,8 @@ export interface Product extends WithTimestamps {
   _id: string;
   name?: string;
   price: number; // smallest currency unit
-  type: "normal" | "glass";
-  category: string;
+  type: "normal" | "glass" | "interior" | "exterior";
+  category?: string;
   imageUrl: string[]; // Array of base64 image strings
 }
 

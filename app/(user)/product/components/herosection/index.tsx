@@ -22,10 +22,10 @@ export default function HeroSection({ contant, para, bgImage, features }: HeroSe
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
-      className="relative  mt-5 md:mt-20 w-full h-[500px] font-roboto"
+      className="relative  mt-5 md:mt-20 w-full h-[750px] font-roboto"
     >
       <div className="gap-3 md:gap-6 max-w-[650px] z-10 flex flex-col items-start justify-center px-6 md:px-16 h-full">
-        <h1 className="text-white text-3xl md:text-[58px] font-bold drop-shadow-lg">
+        <h1 className="text-white text-3xl md:text-[58px] font-[600] drop-shadow-lg">
           {contant}
         </h1>
         <p className="text-[#C6C6C6] text-base md:text-[18px] font-[400] font-roboto">{para}</p>
@@ -46,7 +46,7 @@ export default function HeroSection({ contant, para, bgImage, features }: HeroSe
                   />
                 </div>
               )}
-              <span className="text-sm md:text-base font-medium">
+              <span className="text-sm md:text-[24px] font-[400]">
                 {feature.text || 'Feature'}
               </span>
             </div>
