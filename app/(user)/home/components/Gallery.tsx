@@ -49,17 +49,19 @@ const CONTENT_WIDTH = "max-w-7xl";
 
 const Gallerysection = () => {
   return (
-    <div className="w-full bg-white">
-
+    <div className="w-full   py-[50px]  pb-5   font-inter ">
+<div className="max-w-7xl md:max-w-full  mx-auto px-4 sm:px-6 md:px-[60px] gap-[46px] flex flex-col">
       {/* MAIN CONTENT */}
-      <div className={`${CONTENT_WIDTH} mx-auto`}>
+      <div  className="">
+        <div className="mb-[60px]">
         <Headings
-          heading="Door Categories"
+          heading="Gallery"
           subheading="Explore our full line of pre-hung wood and fiberglass doors, organized by material and style."
-        />
+          />
+          </div>
 
         {/* Gallery Grid */}
-        <div className="px-5 md:px-[60px] pb-12 bg-white">
+        <div className=" pb-12 bg-white">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             {/* First Row */}
@@ -155,7 +157,7 @@ const Gallerysection = () => {
 
         </div>
       </div>
-
+      </div>
     </div>
   );
 };

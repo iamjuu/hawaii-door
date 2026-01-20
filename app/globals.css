@@ -1,35 +1,31 @@
+/* ===== Google Fonts ===== */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:wght@100..900&family=Playfair+Display:wght@400..900&display=swap");
+
+/* ===== Tailwind v4 ===== */
 @import "tailwindcss";
 
-/* ===== Global color + font variables (Tailwind v4 flow style) ===== */
+/* ===== Global color variables ===== */
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
+/* ===== Tailwind theme tokens ===== */
 @theme {
-  /* Map CSS vars into Tailwind design tokens */
+  /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Custom font families */
-  --font-playfair: "Playfair Display", serif;
-  --font-roboto: "Roboto", system-ui, sans-serif;
+  /* Fonts */
+  --font-inter: "Inter", system-ui, sans-serif;
   --font-montserrat: "Montserrat", system-ui, sans-serif;
+  --font-playfair: "Playfair Display", serif;
 }
 
-/* Disabled dark mode auto-switching to maintain consistent design */
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
-
 /* ===== Base styles ===== */
-/* Hide scrollbar globally while maintaining scroll functionality */
 * {
   scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  -ms-overflow-style: none; /* IE & Edge */
 }
 
 *::-webkit-scrollbar {
@@ -40,26 +36,27 @@ html,
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-montserrat), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  font-family: var(--font-inter), system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* ===== Font utility classes matching old project ===== */
+/* ===== Font utility classes ===== */
+.font-inter {
+  font-family: var(--font-inter), system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
 .font-montserrat {
-  font-family: var(--font-montserrat), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif !important;
-}
-
-.font-roboto {
-  font-family: var(--font-roboto), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif !important;
+  font-family: var(--font-montserrat), system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif !important;
 }
 
 .font-playfair {
-  font-family: var(--font-playfair), "Times New Roman", Times, serif !important;
+  font-family: var(--font-playfair), "Times New Roman",
+    Times, serif !important;
 }
 
-/* ===== Animations (kept from existing project) ===== */
+/* ===== Animations ===== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -88,7 +85,7 @@ body {
   animation: shimmer 2s infinite;
 }
 
-/* ===== Custom Checkbox Styling ===== */
+/* ===== Custom Checkbox ===== */
 .custom-checkbox {
   appearance: none;
   -webkit-appearance: none;
@@ -104,12 +101,12 @@ body {
 }
 
 .custom-checkbox:checked {
-  background-color: #FF6E4A;
-  border-color: #FF6E4A;
+  background-color: #ff6e4a;
+  border-color: #ff6e4a;
 }
 
 .custom-checkbox:checked::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 50%;
   top: 50%;
