@@ -46,9 +46,10 @@ export default function HeroSection({ contant, para, bgImage, features }: HeroSe
                   />
                 </div>
               )}
-              <span className="text-sm md:text-[24px] font-[400]">
-                {feature.text || 'Feature'}
-              </span>
+     <span className="text-sm md:text-[24px] font-roboto font-[400]">
+  {feature.text || 'Feature'}
+</span>
+
             </div>
           ))}
         </div>
