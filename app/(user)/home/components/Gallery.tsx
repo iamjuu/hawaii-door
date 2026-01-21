@@ -8,6 +8,7 @@ import Sclcimg from "../../../../public/assets/images/landing/sclc.png"
 import Vector5 from "../../../../public/assets/images/landing/vector5.png"
 import Vector6 from "../../../../public/assets/images/landing/vector6.png"
 import Headings from "../components/header"
+// import Heading from "./Heading";
 const galleryItems = [
   {
     id: 1,
@@ -40,10 +41,10 @@ const galleryItems = [
     image: Sclcimg,
   },
 
-// import Heading from "./Heading";
+
 ]
 // 👉 CHANGE WIDTH HERE ONLY
-const CONTENT_WIDTH = "max-w-7xl"; 
+const CONTENT_WIDTH = "max-w-7xl";
 // try: "max-w-4xl" | "max-w-5xl" | "max-w-7xl"
 
 const Gallerysection = () => {
@@ -139,7 +140,7 @@ const Gallerysection = () => {
       {/* FULL WIDTH STRIP */}
       <div className="w-full bg-[#F6F5F1]">
         <div className={`${CONTENT_WIDTH} mx-auto relative min-h-[68px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 group cursor-pointer mt-0 md:mt-[60px]`}>
-          
+
           <div className="flex items-center gap-2">
             <Image src={Vector5} alt="Use" className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 filter md:grayscale md:group-hover:grayscale-0 transition-all duration-500" />
             <span className="text-[#585858] font-roboto text-sm md:text-lg">
