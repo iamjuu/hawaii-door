@@ -17,7 +17,7 @@ export default function HeroSection({ contant, para, bgImage, features }: HeroSe
   return (
     <section
       style={{
-        backgroundImage: `url('${bgImage}')`,
+        background: `url('${bgImage}') center / cover no-repeat`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
