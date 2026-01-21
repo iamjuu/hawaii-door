@@ -10,18 +10,18 @@ const page = () => {
       <Navbar />
       
       {/* Main Content */}
-      <main className="min-h-screen bg-white pt-[70px] md:pt-[80px]">
+      <main className="min-h-screen bg-white  ">
         {/* Hero Section */}
-        <section className="px-6 md:px-12 lg:px-20 py-16 md:py-24">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <section className="  w-full px-6 md:px-12 lg:px-20 py-16 md:py-4  mt-[120px]">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             {/* Left Content */}
-            <div className="space-y-6">
-              <h1 className="text-4xl md:text-[46px] font-[600] text-black ">
+            <div className="space-y-6 ">
+            <h1 className="text-4xl md:text-[46px] font-semibold text-black leading-[56px]">
                 Built for Hawaii.<br />
                 Crafted with Integrity.
               </h1>
               
-              <p className="text-gray-600 text-base text-[18px] font-[300] italic leading-relaxed">
+              <p className="text-[#3B3B3B] text-[19px] font-[300] italic leading-[31px] tracking-[-1%]">
                 Hawaii Western Doors was founded in 1995 by Leah Harris, a 500-year 
                 hire at a 100-million-block machine shop, and William Jasper Beal III, 
                 1960-2014. We&apos;re a local, woman-owned business that offers each opening 
@@ -34,22 +34,23 @@ const page = () => {
               </p>
               <div className='flex w-full justify-end'>
 
-              <button className=" text-black px-8 py-3   text-[20px] font -[400]  italic rounded-md hover:bg-gray-800 transition-colors font-medium">
+              <button className=" text-[#3B3B3B] px-8 py-2   text-[20px] font -[400]  italic rounded-md hover:bg-gray-800 transition-colors leading-[31px]">
               — Leah Heen
               </button>
               </div>
             </div>
             
             {/* Right Image */}
-            <div className="relative h-[400px] md:h-[500px] lg:h-[600px] rounded-[15px] overflow-hidden">
-              <Image
-                src={About2}
-                alt="Craftsman working"
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
+            <div className="relative w-[587px] h-[523px] rounded-[15px] overflow-hidden">
+  <Image
+    src={About2}
+    alt="Craftsman working"
+    fill
+    className="object-cover"
+    priority
+  />
+</div>
+
           </div>
         </section>
 
