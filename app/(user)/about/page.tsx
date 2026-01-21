@@ -11,48 +11,41 @@ const page = () => {
       
       {/* Main Content */}
       <main className="min-h-screen bg-white  ">
-        {/* Hero Section */}
-        <section className="  w-full px-6 md:px-12 lg:px-20 py-16 md:py-4  mt-[120px]">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            {/* Left Content */}
-            <div className="space-y-6 ">
-            <h1 className="text-4xl md:text-[46px] font-semibold text-black leading-[56px]">
-                Built for Hawaii.<br />
-                Crafted with Integrity.
-              </h1>
-              
-              <p className="text-[#3B3B3B] text-[19px] font-[300] italic leading-[31px] tracking-[-1%]">
-                Hawaii Western Doors was founded in 1995 by Leah Harris, a 500-year 
-                hire at a 100-million-block machine shop, and William Jasper Beal III, 
-                1960-2014. We&apos;re a local, woman-owned business that offers each opening 
-                and door/frame to each island. Every door is precision-machined and pre-
-                hung in our shop, finished for each opening and delivered to each island 
-                and shop. Our team is made up of skilled craftsmen, machinists and 
-                installers who deeply respect, every door is precision-machined and pre-
-                hung in our shop, finished for each opening and delivered to each island 
-                and shop. That&apos;s how Hawaii Doors operates, from quote to delivery.
-              </p>
-              <div className='flex w-full justify-end'>
+    {/* Hero Section */}
+    <section className="w-full px-6 md:px-12 lg:px-20 py-16 md:py-4 md:mt-[120px]">
+    <div className="w-full md:max-w-7xl md:mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
+      
+      {/* Left Content */}
+      <div className="flex w-full gap-5 flex-col">
+        <h1 className="text-[23px] md:text-[46px] font-medium  leading-[56px] text-black font-roboto">
+          Built for Hawaii.<br />
+          Crafted with Integrity.
+        </h1>
 
-              <button className=" text-[#3B3B3B] px-8 py-2   text-[20px] font -[400]  italic rounded-md hover:bg-gray-800 transition-colors leading-[31px]">
-              — Leah Heen
-              </button>
-              </div>
-            </div>
-            
-            {/* Right Image */}
-            <div className="relative w-[587px] h-[523px] rounded-[15px] overflow-hidden">
-  <Image
-    src={About2}
-    alt="Craftsman working"
-    fill
-    className="object-cover"
-    priority
-  />
-</div>
+        <p className="text-sm md:text-[18px] font-[400] text-[#3B3B3B] font-montserrat w-full md:max-w-xl tracking-[-1%]">
+        My father started this company with one rule: get it right the first time. Forty years later, we still measure twice, machine once, and deliver doors that fit. We're not a franchise. We're local, women-owned, and proud to serve the builders, architects, and homeowners who shape Hawaii.
+        Every door is precision-machined and pre-hung in our shop, labeled for each opening, and backed by both vendor and shop warranties. Integrity means showing up, documenting specs clearly, and keeping promises. That's how Hawaiʻi Doors operates, from quote to delivery.
+        </p>
 
-          </div>
-        </section>
+        <div className="flex w-full justify-end mt-4">
+          <button className="text-[#3B3B3B] px-8 py-2 text-[20px] italic rounded-md leading-[31px]">
+            — Leah Heen
+          </button>
+        </div>
+      </div>
+
+      {/* Right Image */}
+      <div className="relative w-full md:w-[587px] h-[300px] md:h-[523px] rounded-[15px] overflow-hidden">
+        <Image
+          src={About2}
+          alt="Craftsman working"
+          fill
+          className="object-cover"
+          priority
+        />
+      </div>
+    </div>
+  </section>
 
 
         <section className="px-6 md:px-12 lg:px-20 py-16">

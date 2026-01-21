@@ -20,16 +20,25 @@ export default function PillCTAButton({
     <button
       onClick={onClick}
       className={`
-        inline-flex items-center gap-3
+        inline-flex items-center justify-center
+        gap-2 sm:gap-3
         rounded-full
         bg-[#FF6E4A]
-         px-[40px] py-3
+
+        /* Responsive padding (safe) */
+        px-6 sm:px-8 md:px-[40px]
+        py-3
+
         text-white
-        text-[22px]
+        text-[22px]      
         font-normal
         leading-none
+        whitespace-nowrap
+
         transition-all duration-300 ease-in-out
         hover:brightness-110
+        active:scale-[0.98]
+
         ${className}
       `}
       style={{ fontFamily: "'Roboto', sans-serif" }}
@@ -37,11 +46,17 @@ export default function PillCTAButton({
       <span>{label}</span>
 
       {icon && (
-  <span className="flex items-center justify-center pl-1 text-[28px]">
-    {/* {icon} */} <MdOutlineArrowOutward/>
-  </span>
-)}
-
+        <span
+          className="
+            flex items-center justify-center
+            pl-1
+            text-[22px] sm:text-[26px] md:text-[28px]
+            shrink-0
+          "
+        >
+          <MdOutlineArrowOutward />
+        </span>
+      )}
     </button>
   );
 }
