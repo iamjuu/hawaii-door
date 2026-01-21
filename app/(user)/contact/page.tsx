@@ -4,6 +4,7 @@ import Navbar from "@/components/user/Navbar";
 import { useState } from "react";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import Link from "next/link";
+import Heading from "../home/components/header";
 export default function Contact() {
   const [openFAQ, setOpenFAQ] = useState(null);
   const [formData, setFormData] = useState({
@@ -68,15 +69,20 @@ export default function Contact() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Left Side - Content */}
             <div className="space-y-6">
-              <div>
-                <h1 className="text-[46px] font-[500] font-roboto font-bold text-black mb-6">
+              <div className=" flex flex-col gap-[40px]">
+                {/* <h1 className="text-[46px] font-[500] font-roboto font-bold text-black mb-6">
                   Let's Get Your Door Right
                 </h1>
                 <p className="text-base text-[18px] font-[400] font-roboto text-gray-600 leading-relaxed mb-10">
                   Reach out for quotes, project coordination, or vendor
                   inquiries. We review every message personally, no bots, no
                   scripts, just people who know doors
-                </p>
+                </p> */}
+
+
+                <Heading heading="Let’s Get Your Door Right"  subheading="
+                Reach out for quotes, project coordination, or vendor inquiries.
+We review every message personally, no bots, no scripts, just people who know doors"/>
                 <Link href="/build">
                   <button className="group relative inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-full bg-[#FF6E4A] px-6 py-3 font-roboto text-base md:text-lg text-white">
                     {/* WhatsApp-style black reveal */}
@@ -255,7 +261,7 @@ export default function Contact() {
 
             {/* Right Side - Form */}
             <div className="bg-white p-6 lg:p-8 rounded-xl shadow-lg h-min">
-              <h2 className="text-base md:text-lg font-semibold text-gray-700 mb-6">
+              <h2 className=" font-Roboto  text-[18px] font-[400] mb-6">
                 Fill out the form below and we'll get back to you within 24
                 hours.
               </h2>
@@ -326,7 +332,7 @@ export default function Contact() {
 
                 <button
                   onClick={handleSubmit}
-                  className="w-full bg-white border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-semibold py-3 rounded-md transition-all text-base"
+                  className="w-full bg-white border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-semibold py-4 rounded-md transition-all text-base"
                 >
                   Get In Touch
                 </button>
