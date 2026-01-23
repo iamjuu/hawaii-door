@@ -109,8 +109,8 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
         </div>
       </div>
 
-      {/* Mobile: Buttons row at bottom */}
-      <div className="flex md:hidden items-center justify-between w-full gap-2">
+      {/* Mobile: Buttons row at top - Sticky */}
+      <div className="flex md:hidden items-center justify-between w-full gap-2 fixed top-0 left-0 right-0 bg-white p-4 shadow-[0_2px_10px_rgba(0,0,0,0.1)] z-50">
         {/* Left: Go Back Button */}
         {showBack && (
           <button
