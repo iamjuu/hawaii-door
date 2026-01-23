@@ -1,4 +1,7 @@
-import React from "react";
+
+"use client";
+
+import React, { useState } from "react";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
 import {
@@ -93,8 +96,13 @@ import HeroSection from "../../components/herosection";
 import Image from "next/image";
 import { MdOutlineArrowForward } from "react-icons/md";
 import FooterBanner from "../../components/footerbanner";
+import { FiX } from "react-icons/fi";
+import { HiMenu } from "react-icons/hi";
 
 const LyndenDoorPage = () => {
+
+  const [openMenu, setOpenMenu] = useState(false);
+
   const bgImage = "/assets/product/interior door hero image 3.svg";
   const contant = "Lynden Door";
   const para =
@@ -110,6 +118,8 @@ const LyndenDoorPage = () => {
     }
   ];
 
+  
+
   return (
     <>
       <Navbar />
@@ -121,15 +131,57 @@ const LyndenDoorPage = () => {
         features={features}
       />
 
+      {/* MOBILE MENU BUTTON - STICKY */}
+      <button
+        onClick={() => setOpenMenu(true)}
+        className="md:hidden fixed top-[80px] left-6 z-30 flex items-center gap-2 border bg-[#b7d7a8] border-gray-300 rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#a8c798] transition-colors shadow-lg"
+      >
+        <HiMenu className="text-lg" />
+        Menu
+      </button>
+
+      {/* OVERLAY */}
+      {openMenu && (
+        <div
+          onClick={() => setOpenMenu(false)}
+          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+        />
+      )}
+
       <section className="px-8 md:px-12 lg:px-20 py-1 bg-white font-roboto">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row gap-12">
             {/* Left Sidebar - Navigation Menu */}
-            <aside className="w-full lg:w-[280px] flex-shrink-0 mt-3 md:mt-15">
-              <div className="bg-white border border-gray-200 rounded-lg p-6 lg:sticky lg:top-[100px]">
-                <h2 className="text-xl font-semibold text-black mb-6">
-                  Lynden Door
-                </h2>
+          {/* LEFT SIDEBAR */}
+          <aside
+              className={`
+                fixed md:static top-0 left-0 h-full md:h-auto
+                w-[280px] bg-white flex-shrink-0
+                z-50 md:z-auto
+                transform transition-transform duration-300 ease-in-out
+                ${openMenu ? "translate-x-0" : "-translate-x-full"}
+                md:translate-x-0
+              `}
+            >
+              <div className="bg-white border border-gray-200 rounded-lg p-6 h-full lg:sticky lg:top-[100px]">
+
+                {/* MOBILE HEADER */}
+                <div className="flex bg-[#b7d7a8] justify-between items-center mb-6 md:hidden">
+                  <h2 className="text-lg font-semibold text-black">
+                    Lynden Door
+                  </h2>
+                  <button onClick={() => setOpenMenu(false)}>
+                    <FiX className="text-xl" />
+                  </button>
+                </div>
+
+                {/* DESKTOP HEADER - Simple Title */}
+                <div className="hidden md:block mb-6">
+                  <h2 className="text-lg font-semibold">
+                    Lynden Door
+                  </h2>
+                </div>
+
                 <nav className="space-y-0">
                   {[
                     "Overview",
@@ -146,6 +198,7 @@ const LyndenDoorPage = () => {
                     <div key={item}>
                       <a
                         href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                        onClick={() => setOpenMenu(false)}
                         className="block py-3 text-gray-700 hover:text-[#FF6E4A] transition-colors text-sm font-medium"
                       >
                         {item}
@@ -158,7 +211,6 @@ const LyndenDoorPage = () => {
                 </nav>
               </div>
             </aside>
-
             {/* Right Side - Main Content */}
             <div className="flex-1 space-y-8 mt-2 md:mt-15">
               {/* Logo */}

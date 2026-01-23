@@ -126,6 +126,15 @@ export {default as ProductFooterflag} from './product/icon/United States of Amer
 export {default as ProductFootericoncheck} from './product/icon/true.svg'
 export {default as ProductFootericonstar} from './product/icon/star.svg'
 export {default as ProductFootericondoor} from './product/icon/door.svg'
+export {default as ProductFootericonTruck} from './icon/truck.svg'
+export {default as ProductFootericonDoor} from './icon/dooricon.svg'
+export {default as ProductFootericonSettings} from './icon/settingsicon.svg'
+export {default as ProductFootericonTck} from './icon/tickicon.svg'
+
+export {default as ProductFootericonDoor1} from './icon/tickicon.svg'
+export {default as ProductFootericonSettings2} from './icon/tickicon.svg'
+export {default as ProductFootericonBlock} from './icon/tickicon.svg'
+
 
 // palywood
 

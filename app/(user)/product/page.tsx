@@ -60,8 +60,10 @@ const page = () => {
 
         {/* Door Cards Section */}
         <section className="px-6 md:px-12 lg:px-20 py-16 md:py-24 bg-white">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center lg:justify-items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-0 justify-items-center lg:justify-items-start">
             {doorCards.map((door, index) => (
+              <>
+                <Link className="w-full" href={door.link}>
               <div
                 key={index}
                 style={{
@@ -96,15 +98,17 @@ const page = () => {
                     </div>
 
                     <div className="flex w-full justify-end px-3 mb-2">
-                      <Link href={door.link}>
+                    
                         <div className="w-5 h-5 border border-black rounded-full flex items-center justify-center cursor-pointer group-hover:border-[#FF6E4A] group-hover:text-[#FF6E4A] transition-colors">
                           <ChevronRight className="w-3 h-3" />
                         </div>
-                      </Link>
+                  
                     </div>
                   </div>
                 </div>
               </div>
+              </Link>
+              </>
             ))}
           </div>
         </section>

@@ -6,6 +6,7 @@ import Footer from '@/components/user/Footer'
 import { interiorDoor1, ProductFootericoncheck, ProductFootericonstar } from '@/public/assets';
 import HeroSection from '../../components/herosection';
 import Image from 'next/image';
+import Heading from '@/app/(user)/home/components/header';
 
 interface Door {
   _id: string;
@@ -22,6 +23,7 @@ const InteriorWoodPage = () => {
   const [doors, setDoors] = useState<Door[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [openFilter, setOpenFilter] = useState(false);
 
   useEffect(() => {
     const fetchDoors = async () => {
@@ -45,10 +47,12 @@ const InteriorWoodPage = () => {
 
     fetchDoors();
   }, []);
+
   const bgImage = "/assets/product/intertior/wood-interior.svg";
   const contant = "Interior Doors";
   const para =
     "Discover interior doors; we offer a variety of door types, designs and styles. You are sure to find the perfectdoor for your project.";
+
   const features = [
     {
       text: "Interior doors as design features",
@@ -71,192 +75,118 @@ const InteriorWoodPage = () => {
         features={features}
       />
 
-      <section className='flex flex-col md:flex-row gap-12 px-6 md:px-12 lg:px-20 py-16 md:py-24' >
+      {/* INTRO SECTION */}
+      <section className="flex flex-col md:flex-row gap-12 px-6 md:px-12 lg:px-20 py-16 md:py-24">
         <div className="space-y-8 w-full md:w-1/2 pr-0 md:pr-8">
-          {/* Main Title */}
-          <h2 className="text-[32px] md:text-[46px] font-[500] text-black">
-            Unmatched Versatility with Interior Solid Wood Doors
-          </h2>
+          <Heading
+            heading="Unmatched Versatility with Interior Solid Wood Doors"
+            subheading="Interior Solid Wood Doors provide the ultimate versatility in design, style, and size. Wood doors are available in a variety of wood species and glass options, allowing you to find the perfect door for your needs, whether it's a standard design or a custom, one-of-a-kind creation."
+          />
 
-          {/* Introductory Paragraph */}
-          <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
-            Interior Solid Wood Doors provide the ultimate versatility in design, style, and size. Wood doors are available in a variety of wood species and glass options, allowing you to find the perfect door for your needs, whether it&apos;s a standard design or a custom, one-of-a-kind creation.
-          </p>
-
-          {/* Key Benefits Section */}
           <div className="space-y-4">
             <h3 className="text-[22px] font-[500] text-black uppercase">
               KEY BENEFITS OF OUR WOOD DOORS:
             </h3>
             <ul className="space-y-3 text-gray-700">
-              <li>
-                <span className="font-bold">Diverse Styles:</span> Choose from a wide array of designs to match your interior decor.
-              </li>
-              <li>
-                <span className="font-bold">Customizable Options:</span> Consider unique customizations to create a door that is truly your own.
-              </li>
-              <li>
-                <span className="font-bold">Quality Craftsmanship:</span> Enjoy the superior craftsmanship that ensures durability and aesthetic appeal.
-              </li>
+              <li><span className="font-bold">Diverse Styles:</span> Choose from a wide array of designs.</li>
+              <li><span className="font-bold">Customizable Options:</span> Create a door that is truly your own.</li>
+              <li><span className="font-bold">Quality Craftsmanship:</span> Superior durability and beauty.</li>
             </ul>
           </div>
 
-          {/* Explore Our Door Collections Section */}
-          <div className="space-y-6">
-            <h3 className="text-[24px] md:text-[28px] font-[500] text-black">
-              Explore Our Door Collections
-            </h3>
-
-            {/* Panel Doors Subsection */}
-            <div className="space-y-3">
-              <h4 className="text-[20px] md:text-[22px] font-[400] text-black uppercase">
-                PANEL DOORS
-              </h4>
-              <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
-                Our panel doors are a timeless choice, offering both classic and modern designs to suit any interior space.
-              </p>
-            </div>
-
-            {/* Decorative French Doors Subsection */}
-            <div className="space-y-3">
-              <h4 className="text-[20px] md:text-[22px] font-[400] text-black uppercase">
-                DECORATIVE FRENCH DOORS
-              </h4>
-              <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
-                Add a touch of elegance to your home with our decorative French doors, featuring intricate designs and premium privacy and textured glass options.
-              </p>
-            </div>
-          </div>
+          <Heading
+            heading="DECORATIVE FRENCH DOORS"
+            subheading="Add a touch of elegance to your home with decorative French doors, featuring premium glass options."
+          />
         </div>
+
         <div className="w-full md:w-1/2 flex items-center justify-center">
-          <Image src={interiorDoor1} alt="Interior Door" className="w-full h-auto object-cover rounded-lg" />
+          <Image   src={interiorDoor1} alt="Interior Door" className="w-full h-[600px] rounded-lg" />
         </div>
-
       </section>
 
-
-
+      {/* STOCK INFO */}
       <main className="px-6 md:px-12 lg:px-20 pb-16 bg-white">
-        <section className="space-y-6">
-          {/* Main Heading */}
-          <h2 className="text-[28px] font-[500] text-black">
-            In-Stock at Hawaii Western Door Products
-          </h2>
-
-          {/* First Paragraph */}
-          <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
-            The following product offering is part of our stocking program. We reserve the right to make changes without notice. Please contact your Hawaii Western Door Products representative to verify availability, lead time, and for more information.
-          </p>
-
-          {/* Second Paragraph */}
-          <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
-            Please note that our doors are delivered unfinished. The product images shown below depict finished doors. Due to the natural variations in wood, each door will have a unique appearance, and the stainability of wood species may differ. We recommend consulting with a coatings expert for recommended finishing options and instructions.
-          </p>
-        </section>
+        <h2 className="text-[28px] font-[500] text-black mb-4">
+          In-Stock at Hawaii Western Door Products
+        </h2>
+        <p className="text-[16px] font-[300] text-gray-700 mb-4">
+          Product availability may change without notice. Contact your representative for details.
+        </p>
+        <p className="text-[16px] font-[300] text-gray-700">
+          Doors are delivered unfinished. Wood grain and stainability may vary.
+        </p>
       </main>
 
+      {/* MOBILE FILTER BUTTON */}
+      <div className="lg:hidden px-6 mb-6">
+        <button
+          onClick={() => setOpenFilter(true)}
+          className="flex items-center gap-2 border border-gray-300 rounded-lg px-4 py-2 text-sm font-medium text-black"
+        >
+          {/* FILTER ICON (SVG – no library) */}
+          <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M3 5h12M5 9h8M7 13h4" />
+          </svg>
+          Filter
+        </button>
+      </div>
 
-      <main className="px-6 md:px-12 lg:px-20 py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row gap-12">
-            {/* Left Sidebar - Navigation Menu */}
-            <aside className="w-full lg:w-[280px] flex-shrink-0">
-              <div className="bg-white border border-gray-200 rounded-lg p-6 lg:sticky lg:top-[100px]">
-                <h2 className="text-xl font-semibold text-black mb-6">
-                  Interior Wood Doors
-                </h2>
-                <nav className="space-y-0">
-                  {[
-                    "Overview",
-                    "Interior Panel Doors",
-                    "Bifold Doors",
-                    "Primed Interior Panel Doors",
-                    "Primed Bifold Doors",
-                    "Louver Doors and Bifold Doors",
-                    "Interior Barn Doors",
-                    "Interior French Doors",
-                    "Primed Interior French Doors",
-                    "20-Minute Fire Doors",
-                    "20-Minute Fire Doors Primed"
-                  ].map((item, index) => (
-                    <div key={item}>
-                      <a
-                        href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                        className="block py-3 text-gray-700 hover:text-[#FF6E4A] transition-colors text-sm font-medium"
-                      >
-                        {item}
-                      </a>
-                      {index < 10 && (
-                        <div className="border-t border-gray-200"></div>
-                      )}
-                    </div>
-                  ))}
-                </nav>
+      {/* OVERLAY */}
+      {openFilter && (
+        <div
+          onClick={() => setOpenFilter(false)}
+          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+        />
+      )}
+
+      {/* MAIN CONTENT */}
+      <main className="px-6 md:px-12 lg:px-20 py-16 bg-white">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12">
+
+          {/* SIDEBAR */}
+          <aside
+            className={`
+              fixed lg:static top-0 left-0 h-full lg:h-auto
+              w-[280px] bg-white z-50 lg:z-auto
+              transform transition-transform duration-300
+              ${openFilter ? "translate-x-0" : "-translate-x-full"}
+              lg:translate-x-0
+            `}
+          >
+            <div className="border border-gray-200 rounded-lg p-6 h-full lg:sticky lg:top-[100px]">
+              <div className="flex justify-between items-center mb-6 lg:hidden">
+                <h2 className="font-semibold text-black">Interior Wood Doors</h2>
+                <button onClick={() => setOpenFilter(false)}>✕</button>
               </div>
-            </aside>
 
-            {/* Right Side - Main Content */}
-            <div className="flex-1 space-y-8">
-              {loading ? (
-                <div className="text-center py-12">
-                  <p className="text-gray-600">Loading doors...</p>
-                </div>
-              ) : error ? (
-                <div className="text-center py-12">
-                  <p className="text-red-600">Error: {error}</p>
-                </div>
-              ) : doors.length === 0 ? (
-                <div className="text-center py-12">
-                  <p className="text-gray-600">No doors found.</p>
-                </div>
-              ) : (
-                <div className="space-y-12">
-                  {/* Group doors by doorType */}
-                  {Array.from(new Set(doors.map(door => door.doorType))).map((doorType) => {
-                    const doorsInType = doors.filter(door => door.doorType === doorType);
-                    return (
-                      <div key={doorType} id={doorType.toLowerCase().replace(/\s+/g, "-")} className="scroll-mt-24">
-                        <h3 className="text-2xl font-semibold text-black mb-6 pb-2 border-b border-gray-200">
-                          {doorType}
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                          {doorsInType.map((door) => (
-                            <div
-                              key={door._id}
-                              className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
-                            >
-                              {door.imageUrl && door.imageUrl.length > 0 ? (
-                                <div className="w-full h-64 bg-gray-100 overflow-hidden">
-                                  {(() => {
-                                    const imgSrc = door.imageUrl[0];
-                                    // Check if image already has data URI prefix, if not add it
-                                    const imageUrl = imgSrc.startsWith('data:image')
-                                      ? imgSrc
-                                      : `data:image/jpeg;base64,${imgSrc}`;
-                                    return (
-                                      // eslint-disable-next-line @next/next/no-img-element
-                                      <img
-                                        src={imageUrl}
-                                        alt={door.name || "Door image"}
-                                        className="w-full h-full object-cover"
-                                      />
-                                    );
-                                  })()}
-                                </div>
-                              ) : (
-                                <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
-                                  <span className="text-gray-400">No Image</span>
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
+              <h2 className="text-xl font-semibold text-black mb-6 hidden lg:block">
+                Interior Wood Doors
+              </h2>
+
+              {[
+                "Overview",
+                "Interior Panel Doors",
+                "Bifold Doors",
+                "Interior Barn Doors",
+                "Interior French Doors"
+              ].map((item, i) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                  onClick={() => setOpenFilter(false)}
+                  className="block py-3 text-gray-700 hover:text-[#FF6E4A]"
+                >
+                  {item}
+                </a>
+              ))}
             </div>
+          </aside>
+
+          {/* CONTENT */}
+          <div className="flex-1">
+            {loading && <p>Loading doors...</p>}
+            {error && <p className="text-red-600">{error}</p>}
           </div>
         </div>
       </main>
@@ -267,4 +197,3 @@ const InteriorWoodPage = () => {
 }
 
 export default InteriorWoodPage
-

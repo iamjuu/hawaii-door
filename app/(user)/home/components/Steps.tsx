@@ -11,6 +11,7 @@ import { MdOutlineArrowOutward } from "react-icons/md";
 import LinkButton from "../components/link-button";
 import Link from "next/link";
 import Heading from "./header";
+import { ProductFootericonTruck } from "@/public/assets";
 
 const stepBox =
   "flex flex-col items-center text-center px-2 pt-4 pb-6 md:pt-10 md:pb-10 w-full max-w-[260px] mx-auto";
@@ -145,7 +146,7 @@ const StepsDoor = () => {
           </div>
 
           {/* CTA */}
-          <div className="w-full flex justify-center items-center mt-4 md:mt-0">
+          <div className="w-full flex  mb-[60px] justify-center items-center mt-4 md:mt-0">
             <Link href="/build">
               <LinkButton
                 label="Start Building Your Door Now"
@@ -160,7 +161,7 @@ const StepsDoor = () => {
       <div className="relative w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-6">
         <div className="flex items-center gap-2">
           <Image
-            src={Truck}
+            src={ProductFootericonTruck}
             alt="Delivered"
             width={32}
             height={32}
