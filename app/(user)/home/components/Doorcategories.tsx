@@ -6,13 +6,9 @@ import Image from "next/image";
  import Door1 from "../../../../public/assets/images/landing/Door1 8.02.03 PM.png"
 import Door3 from "../../../../public/assets/images/landing/Door3 8.02.03 PM.png"
 import Door4 from "../../../../public/assets/images/landing/Door4 8.02.03 PM.png"
-import Door from "../../../../public/assets/images/landing/Door.png"
-import Settings from "../../../../public/assets/images/landing/Settings.png"
-import Tick from "../../../../public/assets/images/landing/Tick.png"
 import Link from "next/link";
-import PillCTAButton from "./link-button";
-import { MdOutlineArrowOutward } from "react-icons/md";
 import Heading from "./header";
+import { ProductFootericonDoor, ProductFootericonSettings, ProductFootericonTruck } from "@/public/assets";
 const DoorCategories = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [windowWidth, setWindowWidth] = useState(1024);
@@ -56,16 +52,19 @@ const DoorCategories = () => {
     setCurrentIndex((prev) => (prev - 1 + categories.length) % categories.length);
   };
 
-  const getTranslateX = (position:any) => {
-    if (windowWidth < 768) return position * 200;
-    if (windowWidth < 1024) return position * 280;
-    return position * 380;
+  const getTranslateX = (position: number) => {
+    if (windowWidth < 640) return position * 170; // sm: smaller spacing
+    if (windowWidth < 768) return position * 220; // md: medium spacing
+    if (windowWidth < 1024) return position * 280; // lg: larger spacing
+    if (windowWidth < 1280) return position * 350; // xl: even larger
+    return position * 380; // 2xl: maximum spacing
   };
 
-  const getScale = (isCurrent:any) => {
-    if (windowWidth < 768) return isCurrent ? 1 : 0.75;
-    if (windowWidth < 1024) return isCurrent ? 1.05 : 0.85;
-    return isCurrent ? 1.1 : 0.9;
+  const getScale = (isCurrent: boolean) => {
+    if (windowWidth < 640) return isCurrent ? 1 : 0.7; // sm: more contrast
+    if (windowWidth < 768) return isCurrent ? 1 : 0.75; // md
+    if (windowWidth < 1024) return isCurrent ? 1.05 : 0.85; // lg
+    return isCurrent ? 1.1 : 0.9; // xl+
   };
 
   const getVisibleCards = () => {
@@ -78,26 +77,27 @@ const DoorCategories = () => {
   };
 
   return (
-<div className="w-full   py-[50px]  pb-5   font-inter ">
+<div className="w-full py-8 sm:py-12 md:py-[50px] pb-5 font-inter">
   
   {/* MAIN CONTENT – constrained */}
-  <div className="max-w-7xl md:max-w-full  mx-auto px-4 sm:px-6 md:px-[60px] gap-[46px] flex flex-col">
+  <div className="max-w-7xl md:max-w-full mx-auto px-4 sm:px-6 md:px-[60px] gap-6 sm:gap-8 md:gap-[46px] flex flex-col">
     {/* Header */}
-<Heading heading="Door Categories"subheading="Explore our full line of pre-hung wood and fiberglass doors, organized by material and style."/>
+<Heading heading="Door Categories" subheading="Explore our full line of pre-hung wood and fiberglass doors, organized by material and style." classname="" />
 
     {/* Carousel */}
     <div className="relative flex items-center justify-center">
       {/* Previous Button */}
       <button
         onClick={prevSlide}
-        className="absolute left-0 md:left-4 lg:left-0 z-20 w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 ml-4 md:ml-13 rounded-full bg-gray-400 hover:bg-gray-500 text-white flex items-center justify-center transition-all shadow-lg"
+        className="absolute left-0 sm:left-2 md:left-4 lg:left-0 z-20 w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 ml-2 sm:ml-3 md:ml-4 rounded-full bg-gray-400 hover:bg-gray-500 text-white flex items-center justify-center transition-all shadow-lg"
+        aria-label="Previous slide"
       >
-        <ChevronLeft className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
+        <ChevronLeft className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
       </button>
 
       {/* Cards Container */}
-      <div className="relative w-full max-w-5xl h-[350px] md:h-[450px] lg:h-[500px] flex items-center justify-center overflow-hidden">
-        {getVisibleCards().map((category, idx) => {
+      <div className="relative w-full max-w-5xl h-[320px] sm:h-[350px] md:h-[450px] lg:h-[500px] flex items-center justify-center overflow-hidden">
+        {getVisibleCards().map((category) => {
           const isCurrent = category.position === 0;
 
           return (
@@ -105,30 +105,30 @@ const DoorCategories = () => {
               key={category.id}
               className={`absolute transition-all duration-500 ease-out ${
                 isCurrent
-                  ? "z-30 scale-100 md:scale-105 lg:scale-110 opacity-100"
-                  : "z-10 scale-75 md:scale-85 lg:scale-90 opacity-40 md:opacity-50 lg:opacity-60"
+                  ? "z-30 opacity-100"
+                  : "z-10 opacity-30 sm:opacity-40 md:opacity-50 lg:opacity-60"
               }`}
               style={{
                 transform: `translateX(${getTranslateX(category.position)}px) scale(${getScale(isCurrent)})`,
               }}
             >
-              <div className="relative w-48 h-[300px] md:w-64 md:h-[380px] lg:w-80 rounded-xl md:rounded-2xl overflow-hidden">
+              <div className="relative w-40 h-[280px] sm:w-48 sm:h-[300px] md:w-64 md:h-[380px] lg:w-80 lg:h-[420px] rounded-xl md:rounded-2xl overflow-hidden shadow-lg">
                 <Image
                   src={category.image}
                   alt={category.title}
                   className="w-full h-full object-cover rounded-xl md:rounded-2xl"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 lg:p-6 text-white">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                    <h3 className="text-sm md:text-base font-roboto">
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-3 md:p-4 lg:p-6 text-white">
+                  <div className="flex flex-col sm:flex-col md:flex-row md:items-center md:justify-between gap-2">
+                    <h3 className="text-xs sm:text-sm md:text-base lg:text-lg font-roboto font-medium">
                       {category.title}
                     </h3>
                     {isCurrent && (
                       <Link href={"/gallery"}>
                         <button
-                          style={{ backgroundColor: "#B6D78A", fontSize: "0.875rem" }}
-                          className="hover:bg-[#a3c677] text-gray-900 rounded-full px-3"
+                          style={{ backgroundColor: "#B6D78A" }}
+                          className="hover:bg-[#a3c677] text-gray-900 rounded-full px-3 py-1 sm:py-1.5 text-xs sm:text-sm transition-colors whitespace-nowrap"
                         >
                           View Details
                         </button>
@@ -145,31 +145,59 @@ const DoorCategories = () => {
       {/* Next Button */}
       <button
         onClick={nextSlide}
-        className="absolute right-0 md:right-4 lg:right-0 z-20 w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 mr-4 md:mr-13 rounded-full bg-gray-400 hover:bg-gray-500 text-white flex items-center justify-center transition-all shadow-lg"
+        className="absolute right-0 sm:right-2 md:right-4 lg:right-0 z-20 w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 mr-2 sm:mr-3 md:mr-4 rounded-full bg-gray-400 hover:bg-gray-500 text-white flex items-center justify-center transition-all shadow-lg"
+        aria-label="Next slide"
       >
-        <ChevronRight className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
+        <ChevronRight className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
       </button>
     </div>
 
     {/* Dots */}
-    <div className="flex justify-center gap-2 mt-5 md:mt-12">
+    <div className="flex justify-center gap-1.5 sm:gap-2 mt-4 sm:mt-5 md:mt-8 lg:mt-12">
       {categories.map((_, idx) => (
         <button
           key={idx}
           onClick={() => setCurrentIndex(idx)}
-          className={`h-2 rounded-full transition-all ${
+          className={`h-1.5 sm:h-2 rounded-full transition-all ${
             idx === currentIndex
-              ? "w-8 bg-orange-500"
-              : "w-2 bg-gray-300 hover:bg-gray-400"
+              ? "w-6 sm:w-8 bg-orange-500"
+              : "w-1.5 sm:w-2 bg-gray-300 hover:bg-gray-400"
           }`}
+          aria-label={`Go to slide ${idx + 1}`}
         />
       ))}
     </div>
   </div>
 
-  {/* FULL WIDTH FOOTER STRIP – unchanged */}
-  <div className="relative w-full min-h-[68px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-[50px] md:mt-[75px] mb-0 md:mb-6">
-    {/* existing items unchanged */}
+  {/* FULL WIDTH FOOTER STRIP – Responsive */}
+  <div className="relative w-full flex flex-col md:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-8 lg:gap-16 py-4 sm:py-5 md:py-0 min-h-[60px] md:h-[68px] bg-[#F6F5F1] group cursor-pointer mt-8 sm:mt-10 md:mt-[50px] lg:mt-[75px] mb-0 md:mb-6">
+    <div className="py-3 sm:py-4 md:py-[25px] flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 lg:gap-[10px] items-center">
+
+    <p className="flex items-center gap-2 sm:gap-2.5 md:gap-[10px] text-xs sm:text-sm md:text-base">
+      
+    <Image src={ProductFootericonDoor} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px]" alt="Door" width={100} height={100} />
+      
+    <span className="whitespace-nowrap">Custom Doors</span>
+
+      
+    </p>
+
+    <p className="flex items-center gap-2 sm:gap-2.5 md:gap-[10px] text-xs sm:text-sm md:text-base">
+      
+      <Image src={ProductFootericonSettings} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px]" alt="Settings" width={100} height={100} />
+      <span className="whitespace-nowrap">Custom Jambs</span>
+  
+        
+      </p>
+      
+      <p className="flex items-center gap-2 sm:gap-2.5 md:gap-[10px] text-xs sm:text-sm md:text-base">
+      
+      <Image src={ProductFootericonTruck} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px]" alt="Truck" width={100} height={100} />
+        
+      <span className="whitespace-nowrap">Complete Precision</span>
+        
+      </p>
+    </div>
   </div>
 
 </div>
