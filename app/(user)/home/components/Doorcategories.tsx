@@ -7,10 +7,10 @@ import Link from "next/link";
 import Heading from "./header";
 import { ProductFootericonDoor, ProductFootericonSettings, ProductFootericonTruck } from "@/public/assets";
 
-// Using public paths for production compatibility (spaces in filenames work with public paths)
-const Door1 = "/assets/images/landing/Door1 8.02.03 PM.png";
-const Door3 = "/assets/images/landing/Door3 8.02.03 PM.png";
-const Door4 = "/assets/images/landing/Door4 8.02.03 PM.png";
+// Using public paths - NO SPACES in filenames for production compatibility
+const Door1 = "/assets/images/landing/door22.png";
+const Door3 = "/assets/images/landing/door33.png";
+const Door4 = "/assets/images/landing/door41.png";
 
 const DoorCategories = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
@@ -123,6 +123,8 @@ const DoorCategories = () => {
                   className="object-cover rounded-xl md:rounded-2xl"
                   sizes="(max-width: 640px) 160px, (max-width: 768px) 192px, (max-width: 1024px) 256px, 320px"
                   priority={isCurrent}
+                  quality={85}
+                  loading={isCurrent ? "eager" : "lazy"}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-3 md:p-4 lg:p-6 text-white">

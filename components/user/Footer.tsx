@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Footerimg from "../../public/assets/footer/footerimg 8.56.53 PM.png";
 
 const Footer = () => {
   return (
@@ -13,11 +12,12 @@ const Footer = () => {
           <div className="flex flex-col space-y-4">
             <div className="relative w-48 h-24">
               <Image
-                src="/assets/footer/footerimg 8.56.53 PM.png"
+                src="/assets/images/landing/logo.png"
                 alt="Hawaii Western Doors Logo"
                 fill
                 className="object-contain object-left"
-                unoptimized
+                priority
+                quality={90}
               />
             </div>
 
@@ -64,6 +64,11 @@ const Footer = () => {
                 <li>
                   <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
                     Fibreglass Door (FG 1 3/4")
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+                    Hollow Core Doors (HC 1 3/8")
                   </a>
                 </li>
                 <li>
