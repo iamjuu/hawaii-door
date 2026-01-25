@@ -8,7 +8,7 @@ import Windowimage from '../../../../public/assets/product/exterior/window.jpg';
 import FooterBanner from '../components/footerbanner';
 import Link from "next/link";
 const ExteriorPage = () => {
-  const bgImage = "/assets/product/exterior/exterior.webp";
+  const bgImage = "https://hawaai-doors-bucket.s3.us-west-2.amazonaws.com/uploads/1769351031081-hero_exterior.webp";
   const contant = "Exterior Doors";
   const para =
     "Choose from our beautiful, low maintenance woodgrain textured and smooth Fiberglass Doors or create a stunning entrance with our unsurpassed Wood Stile & RailDoors.";
