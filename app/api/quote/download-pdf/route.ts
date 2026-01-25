@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateQuotePDF } from "@/lib/pdfGenerator";
 
 export async function POST(request: NextRequest) {
+  let quoteData: any;
   try {
     const body = await request.json();
-    const { quoteData } = body;
+    quoteData = body.quoteData;
 
     // Validate required fields
     if (!quoteData) {
@@ -19,7 +20,8 @@ export async function POST(request: NextRequest) {
     const fileName = `HawaiiDoor_Specifications_${quoteData.firstName || "Quote"}_${new Date().toISOString().split("T")[0]}.pdf`;
 
     // Return PDF as response
-    return new NextResponse(pdfBuffer, {
+    // Convert Buffer to Uint8Array for NextResponse
+    return new NextResponse(new Uint8Array(pdfBuffer), {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",

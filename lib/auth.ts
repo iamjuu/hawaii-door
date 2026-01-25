@@ -14,8 +14,7 @@ const JWT_SECRET: jwt.Secret = envSecret;
 export type JwtPayload = { userId: string; role: UserRole; isAdmin?: boolean };
 
 export function signToken(payload: JwtPayload, expiresIn: string = "7d") {
-  const options: jwt.SignOptions = { expiresIn };
-  return jwt.sign(payload, JWT_SECRET, options);
+  return jwt.sign(payload, JWT_SECRET, { expiresIn } as jwt.SignOptions);
 }
 
 export function verifyToken(token: string): JwtPayload {

@@ -21,6 +21,7 @@ export default function RootLayout({
     <html lang="en" className="light" style={{ colorScheme: 'light' }}>
       <head>
         <meta name="color-scheme" content="light" />
+        <link rel="icon" href="/assets/images/landing/logo.png" type="image/png" />
         {/* Google Fonts – Exo 2, Nunito, Playfair Display, Roboto, Montserrat, Titan One */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

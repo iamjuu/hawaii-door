@@ -82,7 +82,7 @@ const DoorCategories = () => {
   {/* MAIN CONTENT – constrained */}
   <div className="max-w-7xl md:max-w-full mx-auto px-4 sm:px-6 md:px-[60px] gap-6 sm:gap-8 md:gap-[46px] flex flex-col">
     {/* Header */}
-<Heading heading="Door Categories" subheading="Explore our full line of pre-hung wood and fiberglass doors, organized by material and style." classname="" />
+<Heading heading="Door Categories" subheading="Explore our full line of pre-hung wood and fiberglass doors, organized by material and style." className="" />
 
     {/* Carousel */}
     <div className="relative flex items-center justify-center">

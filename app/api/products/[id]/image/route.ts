@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
-import Product from "@/models/Product";
+import Product from "@/models/Gallery";
 import { requireAdmin } from "@/lib/auth";
 
 type RouteContext = { params: Promise<{ id: string }> };

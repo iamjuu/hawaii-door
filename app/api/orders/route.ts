@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Order from "@/models/Order";
-import Product from "@/models/Product";
+import Door from "@/models/Door";
 import { requireAuth } from "@/lib/auth";
 
 export async function GET(req: NextRequest) {
@@ -25,15 +25,17 @@ export async function POST(req: NextRequest) {
     if (!items?.length) return NextResponse.json({ success: false, message: "No items" }, { status: 400 });
 
     await connectDB();
-    const dbProducts = await Product.find({ _id: { $in: items.map((i) => i.productId) } }).lean();
+    const dbProducts = await Door.find({ _id: { $in: items.map((i) => i.productId) } }).lean();
     const idToProduct = new Map(dbProducts.map((p) => [String(p._id), p]));
 
+    // Note: Door model doesn't have price field. Using placeholder price of 0
     let amount = 0;
     const orderItems = items.map((i) => {
       const p = idToProduct.get(i.productId);
       if (!p) throw new Error("Product not found");
-      amount += p.price * i.quantity;
-      return { productId: String(p._id), name: p.name, price: p.price, quantity: i.quantity };
+      const price = 0; // Placeholder - Door model doesn't have price field
+      amount += price * i.quantity;
+      return { productId: String(p._id), name: p.name, price, quantity: i.quantity };
     });
 
     const order = await Order.create({ userId: user._id, items: orderItems, amount, currency: "INR", status: "pending" });

@@ -1,12 +1,21 @@
 "use client";
 import Footer from "@/components/user/Footer";
 import Navbar from "@/components/user/Navbar";
-import { useState } from "react";
+import PageLoader from "@/components/user/PageLoader";
+import { useState, useEffect } from "react";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import Link from "next/link";
 import Heading from "../home/components/header";
 export default function Contact() {
   const [openFAQ, setOpenFAQ] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -62,6 +71,7 @@ export default function Contact() {
 
   return (
     <>
+      <PageLoader isLoading={isLoading} />
       {/* Contact Section */}
       <Navbar />
       <section className="bg-white py-12 lg:pt-20 px-6   md:px-15  mt-17 font-roboto">

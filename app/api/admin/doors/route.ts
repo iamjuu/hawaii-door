@@ -1,32 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
-import Door from "@/models/Door";
+import Gallery from "@/models/Gallery";
 import { requireAdmin } from "@/lib/auth";
 
-const interiorDoorTypes = [
-  "Interior Panel Doors",
-  "Bifold Doors",
-  "Primed Interior Panel Doors",
-  "Primed Bifold Doors",
-  "Louver Doors and Bifold Doors",
-  "Interior Barn Doors",
-  "Interior French Doors",
-  "Primed Interior French Doors",
-  "20-Minute Fire Doors",
-  "20-Minute Fire Doors Primed",
-];
 
-const exteriorDoorTypes = [
-  "Contemporary Collection",
-  "Craftsman Collection",
-  "Exterior French Doors",
-  "Waterbarrier",
-  "Entry Doors",
-  "Half Lite Doors",
-  "Exterior Panel Doors",
-];
-
-// GET - Fetch all doors with pagination and filters
+// GET - Fetch all gallery items with pagination and filters
 export async function GET(req: NextRequest) {
   try {
     await requireAdmin(req);
@@ -37,27 +15,27 @@ export async function GET(req: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "20", 10);
     const skip = (page - 1) * limit;
     
-    // Optional filters
+    // Filters - Gallery model has category, subCategory, hasGlass
     const category = searchParams.get("category"); // "interior" or "exterior"
-    const doorType = searchParams.get("doorType");
-    const inStock = searchParams.get("inStock");
+    const subCategory = searchParams.get("subCategory"); // "Single", "Double", "Barn", "Dutch"
+    const hasGlass = searchParams.get("hasGlass"); // "true" or "false"
     
     // Build query
     const query: Record<string, unknown> = {};
     if (category) query.category = category;
-    if (doorType) query.doorType = doorType;
-    if (inStock !== null && inStock !== undefined) {
-      query.inStock = inStock === "true";
+    if (subCategory) query.subCategory = subCategory;
+    if (hasGlass !== null && hasGlass !== undefined) {
+      query.hasGlass = hasGlass === "true";
     }
 
-    const [doors, total] = await Promise.all([
-      Door.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
-      Door.countDocuments(query),
+    const [galleryItems, total] = await Promise.all([
+      Gallery.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+      Gallery.countDocuments(query),
     ]);
 
     return NextResponse.json({
       success: true,
-      data: doors,
+      data: galleryItems,
       pagination: {
         page,
         limit,
@@ -77,33 +55,19 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST - Create a new door
+// POST - Create a new gallery item
 export async function POST(req: NextRequest) {
   try {
     await requireAdmin(req);
     await connectDB();
     
     const body = await req.json();
-    const { 
-      name, 
-      price, 
-      category, 
-      doorType, 
-      imageUrl 
-    } = body;
+    const { name, category, subCategory, hasGlass, imageUrl } = body;
 
-    // Validation
-    if (!name || !price || !category || !doorType) {
+    // Validation - Gallery model requires name, category, subCategory, hasGlass, imageUrl
+    if (!name || !category || !subCategory || hasGlass === undefined || hasGlass === null) {
       return NextResponse.json(
-        { success: false, message: "Name, price, category, and door type are required" },
-        { status: 400 }
-      );
-    }
-
-    // Validate imageUrl is required
-    if (!Array.isArray(imageUrl) || imageUrl.length === 0) {
-      return NextResponse.json(
-        { success: false, message: "At least one image is required" },
+        { success: false, message: "Name, category, subCategory, and hasGlass are required" },
         { status: 400 }
       );
     }
@@ -116,43 +80,35 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Validate doorType based on category
-    if (category === "interior" && !interiorDoorTypes.includes(doorType)) {
+    // Validate subCategory
+    if (!["Single", "Double", "Barn", "Dutch"].includes(subCategory)) {
       return NextResponse.json(
-        { success: false, message: "Invalid door type for interior category" },
-        { status: 400 }
-      );
-    }
-    
-    if (category === "exterior" && !exteriorDoorTypes.includes(doorType)) {
-      return NextResponse.json(
-        { success: false, message: "Invalid door type for exterior category" },
+        { success: false, message: "Invalid subCategory. Must be 'Single', 'Double', 'Barn', or 'Dutch'" },
         { status: 400 }
       );
     }
 
-    // Price should be in smallest currency unit (cents)
-    const priceInCents = Math.round(Number(price) * 100);
-    if (isNaN(priceInCents) || priceInCents <= 0) {
+    // Validate imageUrl
+    if (!Array.isArray(imageUrl) || imageUrl.length === 0) {
       return NextResponse.json(
-        { success: false, message: "Invalid price. Must be a positive number" },
+        { success: false, message: "At least one image is required" },
         { status: 400 }
       );
     }
 
-    // Prepare door data
-    const doorData: Record<string, unknown> = {
+    // Prepare gallery data
+    const galleryData = {
       name: String(name).trim(),
-      price: priceInCents,
       category,
-      doorType,
+      subCategory,
+      hasGlass: Boolean(hasGlass),
       imageUrl: imageUrl,
     };
 
-    const door = await Door.create(doorData);
+    const galleryItem = await Gallery.create(galleryData);
 
     return NextResponse.json(
-      { success: true, data: door, message: "Door created successfully" },
+      { success: true, data: galleryItem, message: "Gallery item created successfully" },
       { status: 201 }
     );
   } catch (e: unknown) {
@@ -165,17 +121,17 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// DELETE - Delete all doors (use with caution)
+// DELETE - Delete all gallery items (use with caution)
 export async function DELETE(req: NextRequest) {
   try {
     await requireAdmin(req);
     await connectDB();
     
-    const result = await Door.deleteMany({});
+    const result = await Gallery.deleteMany({});
     
     return NextResponse.json({
       success: true,
-      message: `Deleted ${result.deletedCount} doors`,
+      message: `Deleted ${result.deletedCount} gallery items`,
       data: { deletedCount: result.deletedCount }
     });
   } catch (e: unknown) {

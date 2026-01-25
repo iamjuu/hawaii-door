@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function AdminLoginPage() {
+export const dynamic = 'force-dynamic';
+
+function AdminLoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -16,7 +18,29 @@ export default function AdminLoginPage() {
     if (searchParams.get("registered") === "true") {
       setSuccess("Registration successful! Please login with your credentials.");
     }
-  }, [searchParams]);
+
+    // Check if admin is already logged in
+    const checkAdminAuth = async () => {
+      try {
+        const res = await fetch("/api/admin/profile", {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.data) {
+            // Admin is already logged in, redirect to dashboard
+            router.push("/admin/dashboard");
+          }
+        }
+      } catch {
+        // If check fails, admin is not logged in, stay on login page
+      }
+    };
+
+    checkAdminAuth();
+  }, [searchParams, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,8 +91,8 @@ export default function AdminLoginPage() {
 
   return (
     <div className="mx-auto max-w-md px-6 py-20">
-      <h1 className="mb-6 text-3xl font-bold">Admin Login</h1>
-      <p className="mb-6 text-sm text-zinc-600">hawaii Administration</p>
+      <h1 className="mb-6 text-3xl font-bold">Hawaii Admin Login</h1>
+      {/* <p className="mb-6 text-sm text-zinc-600">hawaii Administration</p> */}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="email" className="block text-sm font-medium mb-1">
@@ -81,7 +105,7 @@ export default function AdminLoginPage() {
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             className="w-full rounded-md border border-zinc-300 px-3 py-2"
-            placeholder="admin@crystalbow.com"
+            placeholder="Admin@Hawaii.com"
           />
         </div>
         <div>
@@ -122,3 +146,17 @@ export default function AdminLoginPage() {
   );
 }
 
+export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="mx-auto max-w-md px-6 py-20">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-black mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <AdminLoginContent />
+    </Suspense>
+  );
+}

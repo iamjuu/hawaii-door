@@ -7,7 +7,6 @@ type ProductFormProps = {
   productId?: string;
   initialData?: {
     name?: string;
-    price?: string;
     imageUrl?: string[];
     type?: string;
     category?: string;
@@ -24,7 +23,6 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
   
   const [formData, setFormData] = useState({
     name: initialData?.name || "",
-    price: initialData?.price || "",
     type: initialData?.type || "",
     category: initialData?.category || "",
     images: initialData?.imageUrl || [] as string[],
@@ -42,6 +40,9 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
     const existing = initialData?.imageUrl || [];
     return existing.map(normalizeImageUrl);
   });
+
+  // Store the selected file temporarily (not uploaded until form submit)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
 
   // Helper function to compress and convert image to base64
@@ -107,20 +108,31 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
     });
   };
 
-  const handleImageUpload = async (file: File | null) => {
+  const handleImageSelect = async (file: File | null) => {
     if (!file) {
       setUploadedImages([]);
       setFormData({ ...formData, images: [] });
+      setSelectedFile(null);
+      // If editing and removing image, restore original image
+      if (isEdit && initialData?.imageUrl && initialData.imageUrl.length > 0) {
+        setUploadedImages(initialData.imageUrl.map(normalizeImageUrl));
+        setFormData({ ...formData, images: initialData.imageUrl });
+      }
       return;
     }
 
+    // Only create preview, don't upload yet
     try {
       const base64String = await compressImageToBase64(file);
       setUploadedImages([base64String]);
-      setFormData({ ...formData, images: [base64String] });
+      setSelectedFile(file);
+      // Clear old imageUrl when selecting new file (both create and edit)
+      setFormData({ ...formData, images: [] });
     } catch (error) {
-      console.error("Error compressing image:", error);
-      alert("Failed to process image. Please try again.");
+      console.error("Error processing image:", error);
+      setError(error instanceof Error ? error.message : "Failed to process image");
+      setUploadedImages([]);
+      setSelectedFile(null);
     }
   };
 
@@ -144,20 +156,41 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
       return;
     }
 
-    if (!formData.price || Number.parseFloat(formData.price) <= 0) {
-      setError("Valid price is required");
-      setLoading(false);
-      return;
-    }
-
-    if (formData.images.length === 0) {
+    // Check if we have an image (either selected file or existing imageUrl)
+    if (!selectedFile && formData.images.length === 0) {
       setError("At least one image is required");
       setLoading(false);
       return;
     }
 
-
     try {
+      let imageUrls = formData.images;
+
+      // Upload new file to S3 if a file was selected
+      if (selectedFile) {
+        const uploadFormData = new FormData();
+        uploadFormData.append("file", selectedFile);
+
+        const token = typeof window !== "undefined" ? document.cookie.split("; ").find(row => row.startsWith("adminToken="))?.split("=")[1] : null;
+        
+        const uploadResponse = await fetch("/api/upload/image", {
+          method: "POST",
+          headers: {
+            ...(token && { Authorization: `Bearer ${token}` }),
+          },
+          body: uploadFormData,
+        });
+
+        const uploadData = await uploadResponse.json();
+
+        if (!uploadData.success || !uploadData.data?.url) {
+          throw new Error(uploadData.message || "Failed to upload image");
+        }
+
+        imageUrls = [uploadData.data.url];
+      }
+
+      // Now save the product with the S3 URL
       const url = isEdit 
         ? `/api/admin/products/${productId}`
         : `/api/admin/products`;
@@ -171,10 +204,9 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
         },
         body: JSON.stringify({
           name: formData.name.trim() || undefined,
-          price: formData.price,
           type: formData.type,
           category: formData.category,
-          imageUrl: formData.images,
+          imageUrl: imageUrls,
         }),
       });
 
@@ -266,23 +298,6 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
       )}
 
       <div className="space-y-1">
-        <label htmlFor="product-price" className="text-sm font-medium text-white">
-          Price (₹) <span className="text-red-500">*</span>
-        </label>
-        <input
-          id="product-price"
-          type="number"
-          step="0.01"
-          min="0"
-          required
-          value={formData.price}
-          onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-          className="w-full rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-white focus:outline-none"
-          placeholder="2999.00"
-        />
-      </div>
-
-      <div className="space-y-1">
         <label className="text-sm font-medium text-white">
           Product Image <span className="text-red-500">*</span>
         </label>
@@ -297,7 +312,7 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
             className="w-full rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-white focus:outline-none"
             onChange={(e) => {
               const file = e.target.files?.[0] || null;
-              handleImageUpload(file);
+              handleImageSelect(file);
             }}
           />
           {uploadedImages[0] && (
@@ -314,7 +329,7 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
               />
               <button
                 type="button"
-                onClick={() => handleImageUpload(null)}
+                onClick={() => handleImageSelect(null)}
                 className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 z-10"
                 title="Remove image"
               >

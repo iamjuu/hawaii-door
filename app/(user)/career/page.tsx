@@ -1,11 +1,26 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Careerimg from "../../../public/assets/images/landing/career.png";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
+import PageLoader from "@/components/user/PageLoader";
+
 export default function CareerPage() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div>
-        <Navbar />
+      <PageLoader isLoading={isLoading} />
+      <Navbar />
       {/* First Section - Hero with Gradient */}
       <section className="relative w-full h-auto lg:h-[500px] bg-[#efede9] mt-17">
         <div className="container mx-auto px-6 lg:px-12 h-full">

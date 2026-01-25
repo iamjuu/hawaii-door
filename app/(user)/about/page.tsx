@@ -1,12 +1,25 @@
-import React from 'react'
+"use client";
+
+import React, { useState, useEffect } from 'react'
 import Navbar from '@/components/user/Navbar'
 import Footer from '@/components/user/Footer'
+import PageLoader from '@/components/user/PageLoader'
 import Image from 'next/image'
 import { About1, About2 } from '@/public/assets'
 
 const page = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
+      <PageLoader isLoading={isLoading} />
       <Navbar />
       
       {/* Main Content */}

@@ -1,6 +1,9 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
+import PageLoader from "@/components/user/PageLoader";
 import HeroSection from "./components/herosection";
 import {
   ProductFootericondoor,
@@ -13,10 +16,20 @@ import { ChevronRight } from "lucide-react";
 import FooterBanner from "./components/footerbanner";
 
 const page = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate page load
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
+
   const bgImage = "/assets/product/productmain.svg";
   const contant = "Doors That Fit. Every Time.";
   const para =
-    "Explore our full line of pre-hung wood and fiberglass doors, organized by material and style. All units are machined in-house to match your project’s exact hinge, bore, and jamb specs.";
+    "Explore our full line of pre-hung wood and fiberglass doors, organized by material and style. All units are machined in-house to match your project's exact hinge, bore, and jamb specs.";
 
   const features = [
     {
@@ -48,6 +61,7 @@ const page = () => {
 
   return (
     <div>
+      <PageLoader isLoading={isLoading} />
       <Navbar />
 
       <main>

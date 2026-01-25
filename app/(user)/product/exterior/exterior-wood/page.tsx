@@ -1,15 +1,100 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from '@/components/user/Navbar'
 import Footer from '@/components/user/Footer'
 import { ProductFootericoncheck, ProductFootericonstar } from '@/public/assets'
 import HeroSection from '../../components/herosection'
 import { FiFilter, FiX } from 'react-icons/fi'
 
+interface Door {
+  _id: string;
+  name: string;
+  price: number;
+  category: string;
+  doorType: string;
+  imageUrl?: string[];
+  description?: string;
+  inStock?: boolean;
+}
 
 const ExteriorWoodPage = () => {
-  const [openFilter, setOpenFilter] = useState(false)
+  const [doors, setDoors] = useState<Door[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [openFilter, setOpenFilter] = useState(false);
+  
+  // Modal state for door preview
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentDoorIndex, setCurrentDoorIndex] = useState(0);
+  const [currentDoorGroup, setCurrentDoorGroup] = useState<Door[]>([]);
+
+  useEffect(() => {
+    const fetchDoors = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/products?category=exterior&limit=200');
+        const data = await response.json();
+
+        if (data.success) {
+          setDoors(data.data || []);
+        } else {
+          setError(data.message || 'Failed to fetch doors');
+        }
+      } catch (err) {
+        setError('Error loading doors');
+        console.error('Error fetching doors:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDoors();
+  }, []);
+
+  // Handle door image click - open modal with that door's group
+  const handleDoorClick = (door: Door, doorType: string) => {
+    const doorsInType = doors.filter((d) => d.doorType === doorType);
+    const doorIndex = doorsInType.findIndex((d) => d._id === door._id);
+    setCurrentDoorGroup(doorsInType);
+    setCurrentDoorIndex(doorIndex >= 0 ? doorIndex : 0);
+    setIsModalOpen(true);
+  };
+
+  // Navigate to previous door in the same group
+  const handlePrev = () => {
+    setCurrentDoorIndex((prev) => (prev > 0 ? prev - 1 : currentDoorGroup.length - 1));
+  };
+
+  // Navigate to next door in the same group
+  const handleNext = () => {
+    setCurrentDoorIndex((prev) => (prev < currentDoorGroup.length - 1 ? prev + 1 : 0));
+  };
+
+  // Close modal
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    if (!isModalOpen) return;
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        setCurrentDoorIndex((prev) => (prev > 0 ? prev - 1 : currentDoorGroup.length - 1));
+      }
+      if (e.key === 'ArrowRight') {
+        setCurrentDoorIndex((prev) => (prev < currentDoorGroup.length - 1 ? prev + 1 : 0));
+      }
+      if (e.key === 'Escape') {
+        handleCloseModal();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isModalOpen, currentDoorGroup.length]);
 
   const bgImage = "/assets/product/intertior/wood-interior.svg"
   const contant = "Exterior Doors"
@@ -85,7 +170,7 @@ const ExteriorWoodPage = () => {
                 md:translate-x-0
               `}
             >
-              <div className="bg-white border border-gray-200 rounded-lg p-6 h-full md:sticky md:top-[100px]">
+              <div className="bg-white border border-gray-200 rounded-lg p-6 h-full md:sticky md:top-[100px] md:max-h-[calc(100vh-120px)] md:overflow-y-auto">
 
                 {/* MOBILE HEADER */}
                 <div className="flex  items-center justify-between mb-6 md:hidden">
@@ -131,12 +216,137 @@ const ExteriorWoodPage = () => {
 
             {/* RIGHT CONTENT */}
             <div className="flex-1 space-y-8">
-              {/* Content will go here */}
+              {loading && (
+                <div className="flex justify-center items-center py-12">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF6E4A]"></div>
+                </div>
+              )}
+              {error && <p className="text-red-600">{error}</p>}
+              
+              {!loading && !error && (
+                <>
+                  {/* Group doors by doorType */}
+                  {[
+                    "Contemporary Collection",
+                    "Craftsman Collection",
+                    "Exterior French Doors",
+                    "Waterbarrier",
+                    "Entry Doors",
+                    "Half Lite Doors",
+                    "Exterior Panel Doors"
+                  ].map((doorType) => {
+                    const doorsInType = doors.filter((door) => door.doorType === doorType);
+                    if (doorsInType.length === 0) return null;
+
+                    const sectionId = doorType.toLowerCase().replace(/\s+/g, "-");
+                    
+                    return (
+                      <section key={doorType} id={sectionId} className="mb-16 scroll-mt-24">
+                        <h2 className="text-2xl font-semibold text-black mb-6">{doorType}</h2>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                          {doorsInType.map((door) => (
+                            <div key={door._id} className="relative group cursor-pointer" onClick={() => handleDoorClick(door, doorType)}>
+                              {door.imageUrl && door.imageUrl[0] && (
+                                <div className="w-full h-48 rounded-lg  group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex items-center justify-center">
+                                  <img
+                                    src={door.imageUrl[0]}
+                                    alt={door.name}
+                                    className="w-full h-full object-contain transition-transform group-hover:scale-105"
+                                  />
+                                </div>
+                              )}
+                              <div className="mt-2">
+                                <p className="text-sm font-medium text-black truncate text-center">{door.name}</p>
+                                {door.description && (
+                                  <p className="text-xs text-gray-600 line-clamp-2 mt-1">{door.description}</p>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </section>
+                    );
+                  })}
+                </>
+              )}
             </div>
 
           </div>
         </div>
       </main>
+
+      {/* Door Preview Modal */}
+      {isModalOpen && currentDoorGroup.length > 0 && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
+          onClick={handleCloseModal}
+        >
+          {/* Modal Container */}
+          <div 
+            className="relative w-full h-full flex items-center justify-center p-4 md:p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={handleCloseModal}
+              className="fixed top-4 right-4 z-20 text-white hover:text-[#FF6E4A] transition-colors bg-black/60 rounded-full p-3 hover:bg-black/80"
+              aria-label="Close"
+            >
+              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Previous Button */}
+            {currentDoorGroup.length > 1 && (
+              <button
+                onClick={handlePrev}
+                className="absolute left-2 md:left-8 z-20 text-white hover:text-[#FF6E4A] transition-all bg-black/60 rounded-full p-2 md:p-3 hover:bg-black/80 hover:scale-110"
+                aria-label="Previous"
+              >
+                <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+            )}
+
+            {/* Next Button */}
+            {currentDoorGroup.length > 1 && (
+              <button
+                onClick={handleNext}
+                className="absolute right-2 md:right-8 z-20 text-white hover:text-[#FF6E4A] transition-all bg-black/60 rounded-full p-2 md:p-3 hover:bg-black/80 hover:scale-110"
+                aria-label="Next"
+              >
+                <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            )}
+
+            {/* Image Container */}
+            <div className="flex flex-col items-center justify-center w-full h-full max-w-7xl">
+              {currentDoorGroup[currentDoorIndex]?.imageUrl?.[0] && (
+                <>
+                  <img
+                    key={currentDoorIndex}
+                    src={currentDoorGroup[currentDoorIndex].imageUrl[0]}
+                    alt={currentDoorGroup[currentDoorIndex].name}
+                    className="w-auto h-auto max-w-[75%] max-h-[55vh] md:max-w-[70%] md:max-h-[65vh] lg:max-w-[65%] lg:max-h-[70vh] object-contain"
+                  />
+                  
+                  {/* Door Info */}
+                  <div className="mt-4 md:mt-6 text-center text-white">
+                    <p className="text-base md:text-lg lg:text-xl font-semibold">{currentDoorGroup[currentDoorIndex]?.name}</p>
+                    <p className="text-xs md:text-sm text-gray-300 mt-1 md:mt-2">
+                      {currentDoorIndex + 1} / {currentDoorGroup.length}
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </>

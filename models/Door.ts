@@ -1,5 +1,5 @@
 import { Schema, models, model } from "mongoose";
-import type { Door as DoorType } from "@/types";
+import type { Product as ProductType } from "@/types";
 
 const interiorDoorTypes = [
   "Interior Panel Doors",
@@ -24,11 +24,10 @@ const exteriorDoorTypes = [
   "Exterior Panel Doors",
 ];
 
-const DoorSchema = new Schema<DoorType>(
+const DoorSchema = new Schema<ProductType>(
   {
     name: { type: String, required: true },
     description: { type: String, required: false },
-    price: { type: Number, required: true },
     category: { 
       type: String, 
       required: true, 
@@ -43,7 +42,7 @@ const DoorSchema = new Schema<DoorType>(
     dimensions: { type: String, required: false },
     color: { type: String, required: false },
     inStock: { type: Boolean, required: false, default: true },
-    imageUrl: { type: [String], required: true },
+    imageUrl: { type: [String], required: true }, // Array of image URLs (S3 URLs)
   },
   { 
     timestamps: true,
@@ -60,6 +59,9 @@ DoorSchema.index({ inStock: 1 });
 if (models.Door) {
   delete models.Door;
 }
+if (models.Doors) {
+  delete models.Doors;
+}
 
-export default model<DoorType>("Door", DoorSchema);
-
+// Model name "Doors" will create MongoDB collection "doors"
+export default model<ProductType>("Doors", DoorSchema);

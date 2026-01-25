@@ -139,12 +139,36 @@ export default function SettingsPage() {
     }
 
     try {
+      // Create preview from base64
       const base64String = await compressImageToBase64(file);
-      setFormData({ ...formData, image: base64String });
       setPreviewUrl(base64String);
+
+      // Upload to S3
+      const uploadFormData = new FormData();
+      uploadFormData.append("file", file);
+
+      const token = typeof window !== "undefined" ? document.cookie.split("; ").find(row => row.startsWith("adminToken="))?.split("=")[1] : null;
+      
+      const uploadResponse = await fetch("/api/upload/image", {
+        method: "POST",
+        headers: {
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
+        body: uploadFormData,
+      });
+
+      const uploadData = await uploadResponse.json();
+
+      if (uploadData.success && uploadData.data?.url) {
+        setFormData({ ...formData, image: uploadData.data.url });
+        setSuccess("Image uploaded successfully");
+      } else {
+        throw new Error(uploadData.message || "Failed to upload image");
+      }
     } catch (error) {
-      console.error("Error compressing image:", error);
-      setError("Failed to process image");
+      console.error("Error uploading image:", error);
+      setError(error instanceof Error ? error.message : "Failed to upload image");
+      setPreviewUrl("");
     }
   };
 
@@ -206,7 +230,33 @@ export default function SettingsPage() {
       }
 
       if (formData.image) {
-        requestBody.imageUrl = typeof formData.image === "string" ? formData.image : undefined;
+        // If image is a string, it's either a base64 or S3 URL
+        // S3 URLs start with https://, base64 starts with data:
+        if (typeof formData.image === "string") {
+          if (formData.image.startsWith("https://")) {
+            // It's an S3 URL, use it directly
+            requestBody.imageUrl = formData.image;
+          } else if (formData.image.startsWith("data:")) {
+            // It's base64, upload to S3 first
+            const uploadFormData = new FormData();
+            uploadFormData.append("base64", formData.image);
+            
+            const token = typeof window !== "undefined" ? document.cookie.split("; ").find(row => row.startsWith("adminToken="))?.split("=")[1] : null;
+            
+            const uploadResponse = await fetch("/api/upload/image", {
+              method: "POST",
+              headers: {
+                ...(token && { Authorization: `Bearer ${token}` }),
+              },
+              body: uploadFormData,
+            });
+            
+            const uploadData = await uploadResponse.json();
+            if (uploadData.success && uploadData.data?.url) {
+              requestBody.imageUrl = uploadData.data.url;
+            }
+          }
+        }
       }
 
       const response = await fetch("/api/admin/profile", {
@@ -379,16 +429,16 @@ export default function SettingsPage() {
           </div>
 
           <div className="space-y-1">
-            <label htmlFor="profile-image" className="text-sm font-medium text-white">
+            {/* <label htmlFor="profile-image" className="text-sm font-medium text-white">
               Profile Image
-            </label>
-            <input
+            </label> */}
+            {/* <input
               id="profile-image"
               type="file"
               accept="image/*"
               onChange={(e) => handleImageUpload(e.target.files?.[0] || null)}
               className="w-full rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-white focus:outline-none"
-            />
+            /> */}
             {previewUrl && (
               <div className="relative w-full h-48 max-w-md rounded-md border border-zinc-600 overflow-hidden bg-zinc-900 mt-2">
                 <img

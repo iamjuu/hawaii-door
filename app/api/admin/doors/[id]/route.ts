@@ -1,33 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
-import Door from "@/models/Door";
+import Gallery from "@/models/Gallery";
 import { requireAdmin } from "@/lib/auth";
+import { deleteFromS3 } from "@/lib/s3";
 import mongoose from "mongoose";
 
-const interiorDoorTypes = [
-  "Interior Panel Doors",
-  "Bifold Doors",
-  "Primed Interior Panel Doors",
-  "Primed Bifold Doors",
-  "Louver Doors and Bifold Doors",
-  "Interior Barn Doors",
-  "Interior French Doors",
-  "Primed Interior French Doors",
-  "20-Minute Fire Doors",
-  "20-Minute Fire Doors Primed",
-];
 
-const exteriorDoorTypes = [
-  "Contemporary Collection",
-  "Craftsman Collection",
-  "Exterior French Doors",
-  "Waterbarrier",
-  "Entry Doors",
-  "Half Lite Doors",
-  "Exterior Panel Doors",
-];
-
-// GET - Fetch a single door by ID
+// GET - Fetch a single gallery item by ID
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -40,23 +19,23 @@ export async function GET(
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
-        { success: false, message: "Invalid door ID" },
+        { success: false, message: "Invalid gallery item ID" },
         { status: 400 }
       );
     }
 
-    const door = await Door.findById(id).lean();
+    const galleryItem = await Gallery.findById(id).lean();
 
-    if (!door) {
+    if (!galleryItem) {
       return NextResponse.json(
-        { success: false, message: "Door not found" },
+        { success: false, message: "Gallery item not found" },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      data: door,
+      data: galleryItem,
     });
   } catch (e: unknown) {
     const error = e as { message?: string };
@@ -68,7 +47,7 @@ export async function GET(
   }
 }
 
-// PUT - Update a door by ID
+// PUT - Update a gallery item by ID
 export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -81,61 +60,55 @@ export async function PUT(
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
-        { success: false, message: "Invalid door ID" },
+        { success: false, message: "Invalid gallery item ID" },
         { status: 400 }
       );
     }
 
     const body = await req.json();
-    const { 
-      name, 
-      description, 
-      price, 
-      category, 
-      doorType, 
-      material, 
-      dimensions, 
-      color, 
-      inStock,
-      imageUrl 
-    } = body;
+    const { name, category, subCategory, hasGlass, imageUrl } = body;
 
-    // Find existing door
-    const existingDoor = await Door.findById(id);
-    if (!existingDoor) {
+    // Find existing gallery item
+    const existingItem = await Gallery.findById(id);
+    if (!existingItem) {
       return NextResponse.json(
-        { success: false, message: "Door not found" },
+        { success: false, message: "Gallery item not found" },
         { status: 404 }
       );
     }
 
-    // Prepare update data
+    // If images are being updated, delete old images from S3
+    if (imageUrl !== undefined && existingItem.imageUrl && Array.isArray(existingItem.imageUrl)) {
+      const oldImages = existingItem.imageUrl;
+      const newImages = Array.isArray(imageUrl) ? imageUrl : [imageUrl];
+      
+      // Find images that are being removed
+      const imagesToDelete = oldImages.filter((oldImg: string) => !newImages.includes(oldImg));
+      
+      // Delete removed images from S3
+      const deletePromises = imagesToDelete.map(async (imageUrlToDelete: string) => {
+        try {
+          // Only delete if it's an S3 URL
+          if (imageUrlToDelete && (imageUrlToDelete.includes("s3.amazonaws.com") || imageUrlToDelete.includes("s3."))) {
+            await deleteFromS3(imageUrlToDelete);
+          }
+        } catch (error) {
+          console.error(`Failed to delete old image from S3: ${imageUrlToDelete}`, error);
+          // Continue with update even if S3 deletion fails
+        }
+      });
+      await Promise.all(deletePromises);
+    }
+
+    // Prepare update data - Gallery model has: name, category, subCategory, hasGlass, imageUrl
     const updateData: Record<string, unknown> = {};
 
-    // Update name if provided
+    // Update name if provided (required)
     if (name !== undefined) {
-      if (!name || !String(name).trim()) {
-        return NextResponse.json(
-          { success: false, message: "Name cannot be empty" },
-          { status: 400 }
-        );
-      }
       updateData.name = String(name).trim();
     }
 
-    // Update price if provided
-    if (price !== undefined) {
-      const priceInCents = Math.round(Number(price) * 100);
-      if (isNaN(priceInCents) || priceInCents <= 0) {
-        return NextResponse.json(
-          { success: false, message: "Invalid price. Must be a positive number" },
-          { status: 400 }
-        );
-      }
-      updateData.price = priceInCents;
-    }
-
-    // Update category if provided
+    // Update category if provided (required)
     if (category !== undefined) {
       if (!["interior", "exterior"].includes(category)) {
         return NextResponse.json(
@@ -146,48 +119,35 @@ export async function PUT(
       updateData.category = category;
     }
 
-    // Update doorType if provided
-    if (doorType !== undefined) {
-      const finalCategory = category || existingDoor.category;
-      
-      if (finalCategory === "interior" && !interiorDoorTypes.includes(doorType)) {
+    // Update subCategory if provided (required)
+    if (subCategory !== undefined) {
+      if (!["Single", "Double", "Barn", "Dutch"].includes(subCategory)) {
         return NextResponse.json(
-          { success: false, message: "Invalid door type for interior category" },
+          { success: false, message: "Invalid subCategory. Must be 'Single', 'Double', 'Barn', or 'Dutch'" },
           { status: 400 }
         );
       }
-      
-      if (finalCategory === "exterior" && !exteriorDoorTypes.includes(doorType)) {
+      updateData.subCategory = subCategory;
+    }
+
+    // Update hasGlass if provided (required)
+    if (hasGlass !== undefined && hasGlass !== null) {
+      updateData.hasGlass = Boolean(hasGlass);
+    }
+
+    // Update imageUrl if provided
+    if (imageUrl !== undefined) {
+      if (Array.isArray(imageUrl)) {
+        updateData.imageUrl = imageUrl;
+      } else {
         return NextResponse.json(
-          { success: false, message: "Invalid door type for exterior category" },
+          { success: false, message: "imageUrl must be an array" },
           { status: 400 }
         );
       }
-      
-      updateData.doorType = doorType;
     }
 
-    // Update optional fields
-    if (description !== undefined) {
-      updateData.description = description ? String(description).trim() : "";
-    }
-    if (material !== undefined) {
-      updateData.material = material ? String(material).trim() : "";
-    }
-    if (dimensions !== undefined) {
-      updateData.dimensions = dimensions ? String(dimensions).trim() : "";
-    }
-    if (color !== undefined) {
-      updateData.color = color ? String(color).trim() : "";
-    }
-    if (inStock !== undefined) {
-      updateData.inStock = Boolean(inStock);
-    }
-    if (imageUrl !== undefined && Array.isArray(imageUrl)) {
-      updateData.imageUrl = imageUrl;
-    }
-
-    const updatedDoor = await Door.findByIdAndUpdate(
+    const updatedItem = await Gallery.findByIdAndUpdate(
       id,
       { $set: updateData },
       { new: true, runValidators: true }
@@ -195,8 +155,8 @@ export async function PUT(
 
     return NextResponse.json({
       success: true,
-      data: updatedDoor,
-      message: "Door updated successfully",
+      data: updatedItem,
+      message: "Gallery item updated successfully",
     });
   } catch (e: unknown) {
     const error = e as { message?: string };
@@ -208,7 +168,7 @@ export async function PUT(
   }
 }
 
-// DELETE - Delete a door by ID
+// DELETE - Delete a gallery item by ID
 export async function DELETE(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -221,24 +181,44 @@ export async function DELETE(
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
-        { success: false, message: "Invalid door ID" },
+        { success: false, message: "Invalid gallery item ID" },
         { status: 400 }
       );
     }
 
-    const door = await Door.findByIdAndDelete(id).lean();
-
-    if (!door) {
+    // Get gallery item before deleting to access image URLs
+    const galleryItem = await Gallery.findById(id);
+    
+    if (!galleryItem) {
       return NextResponse.json(
-        { success: false, message: "Door not found" },
+        { success: false, message: "Gallery item not found" },
         { status: 404 }
       );
     }
 
+    // Delete images from S3 before deleting the gallery item
+    if (galleryItem.imageUrl && Array.isArray(galleryItem.imageUrl)) {
+      const deletePromises = galleryItem.imageUrl.map(async (imageUrl: string) => {
+        try {
+          // Only delete if it's an S3 URL
+          if (imageUrl && (imageUrl.includes("s3.amazonaws.com") || imageUrl.includes("s3."))) {
+            await deleteFromS3(imageUrl);
+          }
+        } catch (error) {
+          console.error(`Failed to delete image from S3: ${imageUrl}`, error);
+          // Continue with deletion even if S3 deletion fails
+        }
+      });
+      await Promise.all(deletePromises);
+    }
+
+    // Delete the gallery item from database
+    await Gallery.findByIdAndDelete(id);
+
     return NextResponse.json({
       success: true,
-      message: "Door deleted successfully",
-      data: door,
+      message: "Gallery item deleted successfully",
+      data: galleryItem,
     });
   } catch (e: unknown) {
     const error = e as { message?: string };

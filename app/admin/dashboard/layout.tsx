@@ -11,13 +11,9 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 const navItems = [
-  // { label: "Dashboard", href: "/admin/dashboard" },
-  // { label: "Orders", href: "/admin/dashboard/orders" },
-  { label: "Add Doors", href: "/admin/dashboard/add-doors" },
-  { label: "Products", href: "/admin/dashboard/products" },
-  { label: "Users", href: "/admin/dashboard/users" },
-
-  { label: "Settings", href: "/admin/dashboard/settings" },
+  { label: "Dashboard", href: "/admin/dashboard" },
+  { label: "Doors Management", href: "/admin/dashboard/add-doors" },
+  { label: "Gallery Management", href: "/admin/dashboard/gallery" },
 ];
 
 export default async function DashboardLayout({ children }: { children: ReactNode }) {
@@ -45,10 +41,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
           <p className="mt-1 text-xs text-zinc-400">Admin Dashboard</p>
         </div>
         <div className="flex-1">
-          <DashboardNav items={navItems.filter(item => item.label !== "Settings")} />
-        </div>
-        <div className="mt-auto pt-4 border-t border-zinc-800">
-          <DashboardNav items={navItems.filter(item => item.label === "Settings")} />
+          <DashboardNav items={navItems} />
         </div>
       </aside>
 

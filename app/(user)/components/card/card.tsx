@@ -2,46 +2,32 @@
 import { useEffect, useState } from "react";
 import { ParallaxScroll } from "../ui/parallax-scroll";
 
+// Define Door type first
+type Door = {
+  id: string
+  image: string
+  product: string
+  type: string
+  glass: string
+}
 
+interface ParallaxScrollSecondDemoProps {
+  filteredItems?: Door[];
+}
 
-export function ParallaxScrollSecondDemo() {
-
-  const [selectedProduct, setSelectedProduct] = useState('All')
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([])
-  const [selectedGlass, setSelectedGlass] = useState<string[]>([])
+export function ParallaxScrollSecondDemo({ filteredItems }: ParallaxScrollSecondDemoProps = {}) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [alldoors, setAllDoors] = useState<Door[]>([])
-
-
-
-  // state
-  type Door = {
-    id: string
-    image: string
-    product: string
-    type: string
-    glass: string
-  }
   
-  type ApiProduct = {
+  type ApiGalleryItem = {
     _id?: string
     id?: string
     imageUrl?: string[]
-    category?: string
-    type?: "normal" | "glass" | "interior" | "exterior"
+    category?: "interior" | "exterior"
+    subCategory?: "Single" | "Double" | "Barn" | "Dutch"
+    hasGlass?: boolean
     name?: string
-    price?: number
-  }
-  
-  type ApiDoor = {
-    _id?: string
-    id?: string
-    imageUrl?: string[]
-    image?: string
-    category?: string
-    type?: string
-    doorType?: string
   }
 
   // Helper function to normalize image URL
@@ -59,57 +45,41 @@ export function ParallaxScrollSecondDemo() {
 
 
 
- // Fetch products from API
+ // Fetch gallery items from API
  useEffect(() => {
-  const fetchProducts = async () => {
+  // If filtered items are passed as props, use them
+  if (filteredItems && filteredItems.length > 0) {
+    setAllDoors(filteredItems)
+    setLoading(false)
+    return
+  }
+
+  const fetchGalleryItems = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/products?limit=100')
-      console.log("response", response)
+      const response = await fetch('/api/gallery?limit=200')
       const result = await response.json()
       
       if (result.success && result.data) {
         // Transform API data to match gallery format
-        const transformedDoors: Door[] = result.data.map((product: ApiProduct) => {
+        const transformedDoors: Door[] = result.data.map((item: ApiGalleryItem) => {
           // Get first image - handle empty strings in array
-          const firstImage = product.imageUrl?.[0]?.trim() || ""
-          const category = product.category || ""
-          const productType = (product.type || "normal").toLowerCase().trim()
+          const firstImage = item.imageUrl?.[0]?.trim() || ""
           
-          // Map category to type (single -> Single, etc.)
-          // For interior/exterior types, category might be empty, so use a default
-          const doorType = category ? capitalize(category) : (productType === "interior" || productType === "exterior" ? "" : "Normal")
+          // Map category to display name
+          const productCategory = item.category === "interior" ? "Interior" : 
+                                 item.category === "exterior" ? "Exterior" : "Other"
           
-          // Map type to glass field (glass -> With Glass, normal -> Without Glass)
-          // For interior/exterior, don't show glass info
-          const glass = productType === "glass" ? "With Glass" : productType === "interior" || productType === "exterior" ? "" : "Without Glass"
+          // Map subCategory to type
+          const doorType = item.subCategory || ""
           
-          // Map product type to Interior/Exterior category - STRICT MATCHING
-          // Only assign Interior/Exterior to products that actually have those types
-          let productCategory = "Other" // Default for normal/glass types
-          if (productType === "interior") {
-            productCategory = "Interior"
-          } else if (productType === "exterior") {
-            productCategory = "Exterior"
-          } else {
-            // For normal and glass types, use "Other" so they don't show in Interior/Exterior filters
-            productCategory = "Other"
-          }
+          // Map hasGlass to glass field
+          const glass = item.hasGlass ? "With Glass" : "Without Glass"
           
           const imageUrl = getImageUrl(firstImage)
           
-          // Debug logging for all products to see what's being assigned
-          console.log(`Product mapping:`, {
-            id: product._id?.substring(0, 8),
-            rawType: product.type,
-            productType: productType,
-            assignedCategory: productCategory,
-            hasImage: !!firstImage && firstImage !== "",
-            imageUrlLength: imageUrl.length
-          })
-          
           return {
-            id: product._id || product.id,
+            id: item._id || item.id || "",
             image: imageUrl,
             product: productCategory,
             type: doorType,
@@ -121,29 +91,21 @@ export function ParallaxScrollSecondDemo() {
           return hasValidImage
         })
       
-        console.log("Total doors after transform:", transformedDoors.length)
-        console.log("Interior doors count:", transformedDoors.filter(d => d.product === "Interior").length)
-        console.log("Exterior doors count:", transformedDoors.filter(d => d.product === "Exterior").length)
-        console.log("Other doors count:", transformedDoors.filter(d => d.product === "Other").length)
-        console.log("All products by category:", transformedDoors.reduce((acc, d) => {
-          acc[d.product] = (acc[d.product] || 0) + 1
-          return acc
-        }, {} as Record<string, number>))
         setAllDoors(transformedDoors)
       } else {
-        setError("Failed to load products")
+        setError("Failed to load gallery items")
       }
     } catch (err) {
-      setError("Error loading products")
-      console.error("Error fetching products:", err)
+      setError("Error loading gallery items")
+      console.error("Error fetching gallery items:", err)
     } finally {
       setLoading(false)
     }
   }
 
-  fetchProducts()
+  fetchGalleryItems()
 
-}, [])
+}, [filteredItems])
 
 
   return <ParallaxScroll images={alldoors} />;

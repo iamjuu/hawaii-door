@@ -30,7 +30,6 @@ const exteriorDoorTypes = [
 interface Door {
   _id: string;
   name: string;
-  price: number;
   category: "interior" | "exterior";
   doorType: string;
   imageUrl: string[];
@@ -44,14 +43,16 @@ export default function AddDoorsPage() {
   const [selectedDoorType, setSelectedDoorType] = useState("");
   const [formData, setFormData] = useState({
     name: "",
-    price: "",
     imageUrl: [] as string[],
   });
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   
   // Products listing state
   const [viewTab, setViewTab] = useState<"interior" | "exterior">("interior");
   const [doors, setDoors] = useState<Door[]>([]);
   const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [deletingDoorId, setDeletingDoorId] = useState<string | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -69,7 +70,7 @@ export default function AddDoorsPage() {
     setLoading(true);
     try {
       const response = await fetch(
-        `/api/admin/doors?category=${viewTab}&page=${currentPage}&limit=${itemsPerPage}`
+        `/api/admin/products?category=${viewTab}&page=${currentPage}&limit=${itemsPerPage}`
       );
       const result = await response.json();
       if (result.success) {
@@ -93,7 +94,8 @@ export default function AddDoorsPage() {
     if (!confirm("Are you sure you want to delete this door?")) return;
 
     try {
-      const response = await fetch(`/api/admin/doors/${doorId}`, {
+      setDeletingDoorId(doorId);
+      const response = await fetch(`/api/admin/products/${doorId}`, {
         method: "DELETE",
       });
 
@@ -106,9 +108,14 @@ export default function AddDoorsPage() {
         }
         
         setRefreshTrigger((prev) => prev + 1); // Refresh the list
+      } else {
+        alert(result.message || "Failed to delete door");
       }
     } catch (error) {
       console.error("Error deleting door:", error);
+      alert("An error occurred while deleting the door");
+    } finally {
+      setDeletingDoorId(null);
     }
   };
 
@@ -125,26 +132,36 @@ export default function AddDoorsPage() {
     }));
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
 
     const fileArray = Array.from(files);
-    const promises = fileArray.map((file) => {
-      return new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
+    
+    try {
+      // Create preview URLs for immediate display (base64)
+      const previewPromises = fileArray.map((file) => {
+        return new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
       });
-    });
 
-    Promise.all(promises).then((base64Images) => {
+      const previewUrls = await Promise.all(previewPromises);
+      
+      // Store File objects for later upload
+      setSelectedFiles((prev) => [...prev, ...fileArray]);
+      
+      // Set preview URLs immediately (base64, not S3 URLs)
       setFormData((prev) => ({
         ...prev,
-        imageUrl: base64Images,
+        imageUrl: [...prev.imageUrl, ...previewUrls],
       }));
-    });
+    } catch (error) {
+      console.error("Error creating image preview:", error);
+    }
   };
 
   const removeImage = (index: number) => {
@@ -152,6 +169,8 @@ export default function AddDoorsPage() {
       ...prev,
       imageUrl: prev.imageUrl.filter((_, i) => i !== index),
     }));
+    // Also remove the corresponding file
+    setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -162,16 +181,48 @@ export default function AddDoorsPage() {
       return;
     }
 
-    const doorData = {
-      name: formData.name,
-      price: parseFloat(formData.price),
-      category: doorCategory,
-      doorType: selectedDoorType,
-      imageUrl: formData.imageUrl,
-    };
+    setSubmitting(true);
 
     try {
-      const response = await fetch("/api/admin/doors", {
+      // Upload images to S3 only when Create button is clicked
+      let s3ImageUrls: string[] = [];
+      
+      if (selectedFiles.length > 0) {
+        const uploadFormData = new FormData();
+        selectedFiles.forEach((file) => {
+          uploadFormData.append("files", file);
+        });
+
+        const token = typeof window !== "undefined" ? document.cookie.split("; ").find(row => row.startsWith("adminToken="))?.split("=")[1] : null;
+        
+        const uploadResponse = await fetch("/api/upload/image", {
+          method: "POST",
+          headers: {
+            ...(token && { Authorization: `Bearer ${token}` }),
+          },
+          body: uploadFormData,
+        });
+
+        const uploadData = await uploadResponse.json();
+
+        if (uploadData.success && uploadData.data && Array.isArray(uploadData.data)) {
+          s3ImageUrls = uploadData.data.map((item: { url: string }) => item.url);
+        } else {
+          throw new Error(uploadData.message || "Failed to upload images");
+        }
+      } else {
+        // If no new files, use existing S3 URLs (if any)
+        s3ImageUrls = formData.imageUrl.filter((url) => url.startsWith("https://"));
+      }
+
+      const doorData = {
+        name: formData.name,
+        category: doorCategory,
+        doorType: selectedDoorType,
+        imageUrl: s3ImageUrls,
+      };
+
+      const response = await fetch("/api/admin/products", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -187,15 +238,20 @@ export default function AddDoorsPage() {
         setSelectedDoorType("");
         setFormData({
           name: "",
-          price: "",
           imageUrl: [],
         });
+        setSelectedFiles([]);
         
         // Refresh the product list
         setRefreshTrigger((prev) => prev + 1);
+      } else {
+        alert(result.message || "Failed to add door");
       }
     } catch (error) {
       console.error("Error adding door:", error);
+      alert(error instanceof Error ? error.message : "An error occurred while adding the door");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -288,24 +344,6 @@ export default function AddDoorsPage() {
                   />
                 </div>
 
-                {/* Price */}
-                <div>
-                  <label className="block text-sm font-medium text-zinc-300 mb-2">
-                    Price ($) *
-                  </label>
-                  <input
-                    type="number"
-                    name="price"
-                    value={formData.price}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
-                    placeholder="0.00"
-                    step="0.01"
-                    min="0"
-                    required
-                  />
-                </div>
-
                 {/* Image Upload */}
                 <div>
                   <label className="block text-sm font-medium text-zinc-300 mb-2">
@@ -365,9 +403,9 @@ export default function AddDoorsPage() {
                   setSelectedDoorType("");
                   setFormData({
                     name: "",
-                    price: "",
                     imageUrl: [],
                   });
+                  setSelectedFiles([]);
                 }}
                 className="px-6 py-3 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors"
               >
@@ -375,9 +413,17 @@ export default function AddDoorsPage() {
               </button>
               <button
                 type="submit"
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                disabled={submitting}
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
               >
-                Add Door
+                {submitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    <span>Adding Door...</span>
+                  </>
+                ) : (
+                  "Add Door"
+                )}
               </button>
             </div>
           )}
@@ -402,12 +448,6 @@ export default function AddDoorsPage() {
                 <div className="flex justify-between">
                   <span className="text-zinc-400">Name:</span>
                   <span className="text-white font-medium">{formData.name}</span>
-                </div>
-              )}
-              {formData.price && (
-                <div className="flex justify-between">
-                  <span className="text-zinc-400">Price:</span>
-                  <span className="text-white font-medium">${formData.price}</span>
                 </div>
               )}
             </div>
@@ -509,12 +549,6 @@ export default function AddDoorsPage() {
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-zinc-400">Price:</span>
-                          <span className="text-green-400 font-semibold">
-                            ${(door.price / 100).toFixed(2)}
-                          </span>
-                        </div>
-                        <div className="flex justify-between">
                           <span className="text-zinc-400">Added:</span>
                           <span className="text-zinc-300">
                             {new Date(door.createdAt).toLocaleDateString()}
@@ -524,7 +558,32 @@ export default function AddDoorsPage() {
                     </div>
                   </Link>
 
-               
+                  {/* Action Buttons */}
+                  <div className="p-4 pt-4 flex gap-2 border-t border-zinc-800">
+                    <Link
+                      href={`/admin/dashboard/add-doors/${door._id}`}
+                      className="flex-1 px-3 py-2 bg-zinc-800 text-white text-sm rounded hover:bg-zinc-700 transition-colors text-center"
+                    >
+                      Edit
+                    </Link>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleDeleteDoor(door._id);
+                      }}
+                      disabled={deletingDoorId === door._id}
+                      className="flex-1 px-3 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {deletingDoorId === door._id ? (
+                        <>
+                          <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                          <span>Deleting...</span>
+                        </>
+                      ) : (
+                        "Delete"
+                      )}
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>

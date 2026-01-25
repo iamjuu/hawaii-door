@@ -1,11 +1,12 @@
 // app/build/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { message } from "antd";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
+import PageLoader from "@/components/user/PageLoader";
 import StepContainer from "./components/StepContainer"
 import StepNavigation from "./components/StepNavigation"
 import InfoBanner from "./components/InfoBanner";
@@ -44,6 +45,14 @@ const BuildDoor = () => {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
   const [quoteData, setQuoteData] = useState({
     doorType: "",
     category: "",
@@ -507,6 +516,7 @@ const BuildDoor = () => {
 
   return (
     <>
+      <PageLoader isLoading={isLoading} />
       <Navbar />
       
       <InfoBanner

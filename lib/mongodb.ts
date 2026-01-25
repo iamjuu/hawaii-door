@@ -1,10 +1,16 @@
 import mongoose from "mongoose";
 
-// const MONGODB_URI = process.env.MONGODB_URI  as string;
-const MONGODB_URI = "mongodb://localhost:27017/hawai-door";
+const MONGODB_URI = process.env.MONGODB_URI?.trim();
 
 if (!MONGODB_URI) {
-  throw new Error("MONGODB_URI is not set in environment variables");
+  throw new Error("MONGODB_URI is not set in environment variables. Please add MONGODB_URI to your .env.local file");
+}
+
+// Validate connection string format
+if (!MONGODB_URI.startsWith("mongodb://") && !MONGODB_URI.startsWith("mongodb+srv://")) {
+  throw new Error(
+    `Invalid MONGODB_URI format. Connection string must start with "mongodb://" or "mongodb+srv://". Current value: ${MONGODB_URI.substring(0, 20)}...`
+  );
 }
 
 declare global {
@@ -20,7 +26,7 @@ if (!cached) {
 export default async function connectDB() {
   if (cached!.conn) return cached!.conn;
   if (!cached!.promise) {
-    cached!.promise = mongoose.connect(MONGODB_URI, {
+    cached!.promise = mongoose.connect(MONGODB_URI as string, {
       dbName: process.env.MONGODB_DB || undefined,
     });
   }

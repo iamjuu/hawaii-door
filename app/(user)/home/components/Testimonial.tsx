@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image"
 import Comaimg from "../../../../public/assets/images/landing/coma.png"
 import Heading from "./header"

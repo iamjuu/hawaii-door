@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
-import Product from "@/models/Product";
+import Door from "@/models/Door";
 import { requireAdmin } from "@/lib/auth";
 
 export async function GET(req: NextRequest) {
@@ -11,10 +11,17 @@ export async function GET(req: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "20", 10);
     const skip = (page - 1) * limit;
     const excludeImages = searchParams.get("excludeImages") === "true";
+    const category = searchParams.get("category"); // "interior" or "exterior"
+    const doorType = searchParams.get("doorType");
+
+    // Build query
+    const query: Record<string, unknown> = {};
+    if (category) query.category = category;
+    if (doorType) query.doorType = doorType;
 
     const [products, total] = await Promise.all([
-      Product.find().sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
-      Product.countDocuments(),
+      Door.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+      Door.countDocuments(query),
     ]);
 
     // If images are excluded, remove them to reduce payload size (for better performance)
@@ -47,7 +54,7 @@ export async function POST(req: NextRequest) {
     await requireAdmin(req);
     await connectDB();
     const body = await req.json();
-    const created = await Product.create(body);
+    const created = await Door.create(body);
     return NextResponse.json({ success: true, data: created }, { status: 201 });
   } catch (e: any) {
     const status = e?.message === "FORBIDDEN" || e?.message === "UNAUTHORIZED" ? 403 : 500;

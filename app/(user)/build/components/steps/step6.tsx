@@ -462,8 +462,20 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <p className="text-[16px] md:text-[20px] font-medium font-montserrat text-black">Backset</p>
-              <div className="w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs font-bold">?</span>
+              <div className="relative group">
+                <div className="w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center cursor-pointer">
+                  <span className="text-white text-xs font-bold">?</span>
+                </div>
+                <div className="absolute left-full ml-2 top-1/2 -translate-y-1/2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="relative">
+                    <div className="bg-gray-100 rounded-lg px-4 py-3 shadow-lg whitespace-nowrap">
+                      <p className="text-sm text-black font-roboto">
+                        A door's backset is the distance from the edge of the door to the center of the lock or hardware hole
+                      </p>
+                    </div>
+                    <div className="absolute right-full top-1/2 -translate-y-1/2 w-0 h-0 border-t-8 border-b-8 border-r-8 border-transparent border-r-gray-100"></div>
+                  </div>
+                </div>
               </div>
             </div>
             <input

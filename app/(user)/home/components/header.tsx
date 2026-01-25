@@ -2,11 +2,11 @@ import React from "react";
 
 interface HeadingProps {
   heading: string;
-  subheading: string;
-  classname:string;
+  subheading?: string;
+  className?: string;
 }
 
-const Heading: React.FC<HeadingProps> = ({ heading, subheading,className }) => {
+const Heading: React.FC<HeadingProps> = ({ heading, subheading, className = "" }) => {
   return (
 <div
   className={`
@@ -22,9 +22,11 @@ const Heading: React.FC<HeadingProps> = ({ heading, subheading,className }) => {
         {heading}
       </h1>
 
-      <p className="text-sm md:text-[18px] font-[400] text-[#3B3B3B] font-montserrat max-w-xl">
-        {subheading}
-      </p>
+      {subheading && (
+        <p className="text-sm md:text-[18px] font-[400] text-[#3B3B3B] font-montserrat max-w-xl">
+          {subheading}
+        </p>
+      )}
     </div>
   );
 };

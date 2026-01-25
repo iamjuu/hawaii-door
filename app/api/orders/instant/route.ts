@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Order from "@/models/Order";
-import Product from "@/models/Product";
+import Door from "@/models/Door";
 import { requireAuth } from "@/lib/auth";
 
 // Instant buy - direct purchase without cart
@@ -19,23 +19,24 @@ export async function POST(req: NextRequest) {
 
     await connectDB();
 
-    // Get product
-    const product = await Product.findById(productId).lean();
+    // Get product (door)
+    const product = await Door.findById(productId).lean();
     if (!product) {
       return NextResponse.json({ success: false, message: "Product not found" }, { status: 404 });
     }
 
-    // Create order
+    // Note: Door model doesn't have price field. Using placeholder price of 0
+    // This instant order feature may need to be updated for actual pricing
     const orderItems = [
       {
         productId: String(product._id),
         name: product.name,
-        price: product.price,
+        price: 0, // Placeholder - Door model doesn't have price field
         quantity,
       },
     ];
 
-    const amount = product.price * quantity;
+    const amount = 0 * quantity;
 
     const order = await Order.create({
       userId: user._id,

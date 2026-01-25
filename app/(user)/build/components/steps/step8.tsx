@@ -17,12 +17,18 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   const [selectedLockType, setSelectedLockType] = useState<string | null>(
     quoteData.lockType || null
   );
-  const [selectedBoreDiameter, setSelectedBoreDiameter] = useState<string | null>(
-    quoteData.lockBoreDiameter || null
-  );
-  const [selectedBackset, setSelectedBackset] = useState<string | null>(
-    quoteData.lockBackset || null
-  );
+  const [selectedBoreDiameter, setSelectedBoreDiameter] = useState<string | null>(() => {
+    const value = quoteData.lockBoreDiameter;
+    if (!value) return null;
+    if (value === "1" || value === "7/8" || value === "other") return value;
+    return "other"; // Custom value, treat as "other"
+  });
+  const [selectedBackset, setSelectedBackset] = useState<string | null>(() => {
+    const value = quoteData.lockBackset;
+    if (!value) return null;
+    if (value === "2_3/8" || value === "2_3/4" || value === "other") return value;
+    return "other"; // Custom value, treat as "other"
+  });
   const [selectedLatchBoreDiameter, setSelectedLatchBoreDiameter] = useState<string | null>(
     quoteData.latchBoreDiameter || "default"
   );
@@ -37,18 +43,55 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
       }));
     }
   }, [quoteData.latchBoreDiameter, setQuoteData]);
+
   const [lockCenterline, setLockCenterline] = useState<string>(
     quoteData.lockCenterline || ""
   );
-  const [selectedFaceplateDimension, setSelectedFaceplateDimension] = useState<string | null>(
-    quoteData.faceplateDimension || null
-  );
+  const [selectedFaceplateDimension, setSelectedFaceplateDimension] = useState<string | null>(() => {
+    const value = quoteData.faceplateDimension;
+    if (!value) return null;
+    if (value === '1" x 2 1/4" x 5/32"' || value === '1 1/8" x 2 1/4" x 5/32"' || value === "other") return value;
+    return "other"; // Custom value, treat as "other"
+  });
   const [selectedFaceplateRadius, setSelectedFaceplateRadius] = useState<string | null>(
     quoteData.faceplateRadius || null
   );
-  const [selectedDriveInDiameter, setSelectedDriveInDiameter] = useState<string | null>(
-    quoteData.driveInDiameter || null
-  );
+  const [selectedDriveInDiameter, setSelectedDriveInDiameter] = useState<string | null>(() => {
+    const value = quoteData.driveInDiameter;
+    if (!value) return null;
+    if (value === '7/8"' || value === '1"' || value === "other") return value;
+    return "other"; // Custom value, treat as "other"
+  });
+
+  // Custom "Other" input values - initialized from quoteData if it's a custom value
+  const [lockBoreDiameterOther, setLockBoreDiameterOther] = useState<string>(() => {
+    const value = quoteData.lockBoreDiameter;
+    if (value && value !== "1" && value !== "7/8" && value !== "other") {
+      return value;
+    }
+    return "";
+  });
+  const [lockBacksetOther, setLockBacksetOther] = useState<string>(() => {
+    const value = quoteData.lockBackset;
+    if (value && value !== "2_3/8" && value !== "2_3/4" && value !== "other") {
+      return value;
+    }
+    return "";
+  });
+  const [faceplateDimensionOther, setFaceplateDimensionOther] = useState<string>(() => {
+    const value = quoteData.faceplateDimension;
+    if (value && value !== '1" x 2 1/4" x 5/32"' && value !== '1 1/8" x 2 1/4" x 5/32"' && value !== "other") {
+      return value;
+    }
+    return "";
+  });
+  const [driveInDiameterOther, setDriveInDiameterOther] = useState<string>(() => {
+    const value = quoteData.driveInDiameter;
+    if (value && value !== '7/8"' && value !== '1"' && value !== "other") {
+      return value;
+    }
+    return "";
+  });
 
   const handleLockTypeSelect = (type: string) => {
     setSelectedLockType(type);
@@ -60,6 +103,9 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
 
   const handleBoreDiameterSelect = (diameter: string) => {
     setSelectedBoreDiameter(diameter);
+    if (diameter !== "other") {
+      setLockBoreDiameterOther("");
+    }
     setQuoteData({
       ...quoteData,
       lockBoreDiameter: diameter,
@@ -68,6 +114,9 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
 
   const handleBacksetSelect = (backset: string) => {
     setSelectedBackset(backset);
+    if (backset !== "other") {
+      setLockBacksetOther("");
+    }
     setQuoteData({
       ...quoteData,
       lockBackset: backset,
@@ -92,6 +141,9 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
 
   const handleFaceplateDimensionSelect = (value: string) => {
     setSelectedFaceplateDimension(value);
+    if (value !== "other") {
+      setFaceplateDimensionOther("");
+    }
     setQuoteData({
       ...quoteData,
       faceplateDimension: value,
@@ -108,9 +160,45 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
 
   const handleDriveInDiameterSelect = (value: string) => {
     setSelectedDriveInDiameter(value);
+    if (value !== "other") {
+      setDriveInDiameterOther("");
+    }
     setQuoteData({
       ...quoteData,
       driveInDiameter: value,
+    });
+  };
+
+  // Handlers for "Other" input fields - store directly in main field
+  const handleLockBoreDiameterOtherChange = (value: string) => {
+    setLockBoreDiameterOther(value);
+    setQuoteData({
+      ...quoteData,
+      lockBoreDiameter: value || "other",
+    });
+  };
+
+  const handleLockBacksetOtherChange = (value: string) => {
+    setLockBacksetOther(value);
+    setQuoteData({
+      ...quoteData,
+      lockBackset: value || "other",
+    });
+  };
+
+  const handleFaceplateDimensionOtherChange = (value: string) => {
+    setFaceplateDimensionOther(value);
+    setQuoteData({
+      ...quoteData,
+      faceplateDimension: value || "other",
+    });
+  };
+
+  const handleDriveInDiameterOtherChange = (value: string) => {
+    setDriveInDiameterOther(value);
+    setQuoteData({
+      ...quoteData,
+      driveInDiameter: value || "other",
     });
   };
 
@@ -261,6 +349,15 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 </div>
               </button>
             </div>
+            {selectedBoreDiameter === "other" && (
+              <input
+                type="text"
+                value={lockBoreDiameterOther}
+                onChange={(e) => handleLockBoreDiameterOtherChange(e.target.value)}
+                placeholder="Enter Diameter"
+                className="w-full md:max-w-[300px] mt-3 border-2 border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-orange-500 text-black font-roboto"
+              />
+            )}
           </div>
 
           {/* Lock Centerline Section */}
@@ -391,6 +488,15 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 </div>
               </button>
             </div>
+            {selectedBackset === "other" && (
+              <input
+                type="text"
+                value={lockBacksetOther}
+                onChange={(e) => handleLockBacksetOtherChange(e.target.value)}
+                placeholder="Enter Diameter"
+                className="w-full md:max-w-[300px] mt-3 border-2 border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-orange-500 text-black font-roboto"
+              />
+            )}
           </div>
 
           {/* LatchBore Diameter Section */}
@@ -487,6 +593,15 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 </div>
               </button>
             </div>
+            {selectedFaceplateDimension === "other" && (
+              <input
+                type="text"
+                value={faceplateDimensionOther}
+                onChange={(e) => handleFaceplateDimensionOtherChange(e.target.value)}
+                placeholder="Enter Diameter"
+                className="w-full md:max-w-[300px] mt-3 border-2 border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-orange-500 text-black font-roboto"
+              />
+            )}
           </div>
 
           {/* Drive-In Diameter Section */}
@@ -550,6 +665,15 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 </div>
               </button>
             </div>
+            {selectedDriveInDiameter === "other" && (
+              <input
+                type="text"
+                value={driveInDiameterOther}
+                onChange={(e) => handleDriveInDiameterOtherChange(e.target.value)}
+                placeholder="Enter Diameter"
+                className="w-full md:max-w-[300px] mt-3 border-2 border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-orange-500 text-black font-roboto"
+              />
+            )}
           </div>
         </div>
 

@@ -3,26 +3,27 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
+import PageLoader from "@/components/user/PageLoader";
 import { FiFilter, FiX } from "react-icons/fi";
 import { ParallaxScrollSecondDemo } from "../components/card/card";
 
 /* ---------------- TYPES ---------------- */
-type Door = {
+type GalleryItem = {
   id: string;
   image: string;
-  product: string;
-  type: string;
-  glass: string;
+  product: string; // "Interior" or "Exterior"
+  type: string; // "Single", "Double", "Barn", "Dutch"
+  glass: string; // "With Glass" or "Without Glass"
 };
 
-type ApiProduct = {
+type ApiGalleryItem = {
   _id?: string;
   id?: string;
   imageUrl?: string[];
-  category?: string;
-  type?: "normal" | "glass" | "interior" | "exterior";
+  category?: "interior" | "exterior";
+  subCategory?: "Single" | "Double" | "Barn" | "Dutch";
+  hasGlass?: boolean;
   name?: string;
-  price?: number;
 };
 
 /* ---------------- COMPONENT ---------------- */
@@ -34,7 +35,7 @@ const GalleryPage = () => {
   const [selectedGlass, setSelectedGlass] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [alldoors, setAllDoors] = useState<Door[]>([]);
+  const [allGalleryItems, setAllGalleryItems] = useState<GalleryItem[]>([]);
 
   /* ---------------- HELPERS ---------------- */
   const getImageUrl = (imageUrl: string): string => {
@@ -49,65 +50,83 @@ const GalleryPage = () => {
 
   /* ---------------- FETCH ---------------- */
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchGalleryItems = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/products?limit=100");
+        
+        // Build query params based on filters
+        const params = new URLSearchParams();
+        params.append("limit", "200");
+        
+        if (selectedProduct !== "All") {
+          params.append("category", selectedProduct.toLowerCase());
+        }
+        
+        // Note: API doesn't support multiple subCategories, so we'll filter client-side for types
+        // For glass, if only one option selected, filter server-side
+        if (selectedGlass.length === 1) {
+          const hasGlass = selectedGlass[0] === "With Glass";
+          params.append("hasGlass", hasGlass.toString());
+        }
+        
+        const response = await fetch(`/api/gallery?${params.toString()}`);
         const result = await response.json();
 
         if (result.success && result.data) {
-          const transformedDoors: Door[] = result.data
-            .map((product: ApiProduct) => {
-              const firstImage = product.imageUrl?.[0]?.trim() || "";
-              const productType = (product.type || "normal").toLowerCase();
+          const transformedItems: GalleryItem[] = result.data
+            .map((item: ApiGalleryItem) => {
+              const firstImage = item.imageUrl?.[0]?.trim() || "";
               const image = getImageUrl(firstImage);
 
-              let productCategory = "Other";
-              if (productType === "interior") productCategory = "Interior";
-              if (productType === "exterior") productCategory = "Exterior";
+              // Map category to display name
+              const productCategory = item.category === "interior" ? "Interior" : 
+                                     item.category === "exterior" ? "Exterior" : "Other";
 
               return {
-                id: product._id || product.id || "",
+                id: item._id || item.id || "",
                 image,
                 product: productCategory,
-                type: product.category ? capitalize(product.category) : "",
-                glass:
-                  productType === "glass"
-                    ? "With Glass"
-                    : productType === "normal"
-                      ? "Without Glass"
-                      : "",
+                type: item.subCategory || "",
+                glass: item.hasGlass ? "With Glass" : "Without Glass",
               };
             })
             .filter(
-              (d: Door) =>
-                d.image && d.image !== "data:image/jpeg;base64,"
+              (item: GalleryItem) =>
+                item.image && item.image !== "data:image/jpeg;base64,"
             );
 
-          setAllDoors(transformedDoors);
+          // Apply client-side filters for subCategory (since API doesn't support multiple)
+          let filtered = transformedItems;
+          
+          if (selectedTypes.length > 0) {
+            filtered = filtered.filter((item) => selectedTypes.includes(item.type));
+          }
+          
+          // If multiple glass options selected or none selected, filter client-side
+          if (selectedGlass.length > 1 || (selectedGlass.length === 0 && selectedProduct === "All")) {
+            // No additional filtering needed - already filtered by API if single glass option
+          } else if (selectedGlass.length === 0 && selectedProduct !== "All") {
+            // If no glass filter but product filter is active, show all
+            // (already handled by API)
+          }
+
+          setAllGalleryItems(filtered);
         } else {
-          setError("Failed to load products");
+          setError("Failed to load gallery items");
         }
       } catch {
-        setError("Error loading products");
+        setError("Error loading gallery items");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProducts();
-  }, []);
+    fetchGalleryItems();
+  }, [selectedProduct, selectedTypes, selectedGlass]);
 
   /* ---------------- FILTER LOGIC ---------------- */
-  const filteredDoors = alldoors.filter((door) => {
-    if (selectedProduct !== "All" && door.product !== selectedProduct)
-      return false;
-    if (selectedTypes.length && !selectedTypes.includes(door.type))
-      return false;
-    if (selectedGlass.length && !selectedGlass.includes(door.glass))
-      return false;
-    return true;
-  });
+  // Filtering is now done in the fetch effect, but we keep this for consistency
+  const filteredDoors = allGalleryItems;
 
   const handleTypeToggle = (type: string) => {
     setSelectedTypes((prev) =>
@@ -131,6 +150,7 @@ const GalleryPage = () => {
   /* ---------------- RENDER ---------------- */
   return (
     <>
+      <PageLoader isLoading={loading} />
       <Navbar />
 
       {/* MOBILE FILTER BUTTON - STICKY */}
@@ -263,7 +283,7 @@ const GalleryPage = () => {
 
               {/* RIGHT CONTENT */}
               <div className="flex-1">
-                <ParallaxScrollSecondDemo />
+                <ParallaxScrollSecondDemo filteredItems={filteredDoors} />
               </div>
             </div>
           </div>

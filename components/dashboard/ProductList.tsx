@@ -6,7 +6,6 @@ import ProductForm from "./ProductForm";
 type ProductListItem = {
   _id: string;
   name?: string;
-  price: number;
   createdAt: string;
   imageUrl?: string[];
   type?: string;
@@ -17,8 +16,6 @@ type Props = {
   products: ProductListItem[];
   onRefresh: () => void;
 };
-
-const formatCurrency = (amount: number) => `₹${(amount / 100).toFixed(2)}`;
 
 const getMainImageUrl = (product: ProductListItem) => {
   const img = product.imageUrl?.[0];
@@ -82,7 +79,6 @@ export default function ProductList({ products: initialProducts, onRefresh }: Pr
           <thead>
             <tr className="border-b border-zinc-700 bg-zinc-900 text-left text-xs uppercase tracking-wide text-zinc-400">
               <th className="px-6 py-3 font-medium">Name</th>
-              <th className="px-6 py-3 font-medium">Price</th>
               <th className="px-6 py-3 font-medium">Created</th>
               <th className="px-6 py-3 font-medium">Actions</th>
             </tr>
@@ -91,12 +87,11 @@ export default function ProductList({ products: initialProducts, onRefresh }: Pr
             {products.map((product) => (
               <tr key={product._id} className="border-b border-zinc-700 last:border-0">
                 {editingId === product._id ? (
-                  <td colSpan={4} className="px-6 py-4">
+                  <td colSpan={3} className="px-6 py-4">
                     <ProductForm
                       productId={product._id}
                       initialData={{
                         name: product.name,
-                        price: (product.price / 100).toString(),
                         imageUrl: product.imageUrl || [],
                         type: product.type,
                         category: product.category,
@@ -141,7 +136,6 @@ export default function ProductList({ products: initialProducts, onRefresh }: Pr
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 font-medium text-white">{formatCurrency(product.price)}</td>
                     <td className="px-6 py-4 text-zinc-400">
                       {new Date(product.createdAt).toLocaleDateString(undefined, {
                         year: "numeric",
@@ -149,7 +143,7 @@ export default function ProductList({ products: initialProducts, onRefresh }: Pr
                         day: "numeric",
                       })}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-42">
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => setEditingId(product._id)}

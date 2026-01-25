@@ -160,26 +160,6 @@ export default function OrdersLineChart({ data }: OrdersLineChartProps) {
             valueFormatter: (value) => `${value}`,
           },
         ]}
-        sx={{
-          '& .MuiChartsLegend-series text': {
-            fill: 'white !important',
-          },
-          '& .MuiChartsAxis-tickLabel': {
-            fill: 'white !important',
-          },
-          '& .MuiChartsAxis-label': {
-            fill: 'white !important',
-          },
-          '& text': {
-            fill: 'white !important',
-          },
-          '& .MuiChartsAxis-line': {
-            stroke: '#52525b',
-          },
-          '& .MuiChartsAxis-tick': {
-            stroke: '#52525b',
-          },
-        }}
       >
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
           <ChartsLegend />

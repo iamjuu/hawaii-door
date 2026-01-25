@@ -50,11 +50,15 @@ export interface IAdministrator extends WithTimestamps {
 
 export interface Product extends WithTimestamps {
   _id: string;
-  name?: string;
-  price: number; // smallest currency unit
-  type: "normal" | "glass" | "interior" | "exterior";
-  category?: string;
-  imageUrl: string[]; // Array of base64 image strings
+  name: string;
+  description?: string;
+  category: DoorCategory;
+  doorType: InteriorDoorType | ExteriorDoorType;
+  material?: string;
+  dimensions?: string;
+  color?: string;
+  inStock?: boolean;
+  imageUrl: string[]; // Array of image URLs (S3 URLs)
 }
 
 export interface OrderItem {
@@ -73,54 +77,13 @@ export interface Order extends WithTimestamps {
   amount: number;
   currency: string;
   status: OrderStatus;
-  paymentProvider?: "razorpay" | "stripe";
+  paymentProvider?: string;
   paymentRef?: string;
 }
 
-export interface YogaSession extends WithTimestamps {
-  _id: string;
-  instructor: string;
-  date: string; // ISO date
-  startTime: string; // HH:mm
-  endTime: string; // HH:mm
-  totalSeats: number;
-  bookedSeats: number;
-  price: number; // smallest unit
-  sessionType?: "regular" | "corporate" | "private";
-  sessionName?: string;
-  duration?: number; // in minutes
-  title?: string;
-  description?: string;
-  imageUrl?: string;
-  videoUrl?: string;
-  format?: string;
-  benefits?: string[];
-}
 
-export type BookingStatus = "pending" | "confirmed" | "cancelled";
 
-export interface Booking extends WithTimestamps {
-  _id: string;
-  userId: string;
-  sessionId: string;
-  seats: number;
-  amount: number;
-  status: BookingStatus;
-  phone?: string;
-  comment?: string;
-}
 
-export type CartItem = {
-  id: string;
-  name: string;
-  price: number;
-  imageUrl?: string;
-  quantity: number;
-};
-
-export type Cart = {
-  items: CartItem[];
-};
 
 export type DoorCategory = "interior" | "exterior";
 
@@ -145,18 +108,23 @@ export type ExteriorDoorType =
   | "Half Lite Doors"
   | "Exterior Panel Doors";
 
-export interface Door extends WithTimestamps {
+// Gallery model for gallery collection
+export interface GalleryItem extends WithTimestamps {
   _id: string;
   name: string;
-  description?: string;
-  price: number; // smallest currency unit (cents)
-  category: DoorCategory;
-  doorType: InteriorDoorType | ExteriorDoorType;
-  material?: string;
-  dimensions?: string;
-  color?: string;
-  inStock?: boolean;
-  imageUrl: string[]; // Array of base64 image strings (required)
+  category: "interior" | "exterior"; // Product Type
+  subCategory: "Single" | "Double" | "Barn" | "Dutch"; // Main Category
+  hasGlass: boolean; // With Glass (true) or Without Glass (false)
+  imageUrl: string[]; // Array of image URLs (S3 URLs)
+}
+
+// Door model for gallery collection - simpler schema (deprecated, kept for backward compatibility)
+export interface Door extends WithTimestamps {
+  _id: string;
+  name?: string;
+  type: "normal" | "glass" | "interior" | "exterior";
+  category?: string;
+  imageUrl: string[]; // Array of image URLs (S3 URLs)
 }
 
 
