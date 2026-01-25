@@ -154,7 +154,7 @@ const LyndenDoorPage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const bgImage = "/assets/product/interior door hero image 3.svg";
+  const bgImage = "/assets/product/interior-door-hero-3.webp";
   const contant = "Lynden Door";
   const para =
     "Discover premium Lynden Door interior solutions; we offer a variety of door types, designs and styles. Experience quality craftsmanship and design excellence.";

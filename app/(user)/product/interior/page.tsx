@@ -15,7 +15,7 @@ import FooterBanner from '../components/footerbanner'
 import Heading from '../../home/components/header'
 
 const InteriorPage = () => {
-  const bgImage = "/assets/product/interior door hero image 3.svg";
+  const bgImage = "/assets/product/interior-door-hero-3.webp";
   const contant = "Interior Doors";
   const para =
     "Discover interior doors; we offer a variety of door types, designs and styles. You are sure to find the perfectdoor for your project.";

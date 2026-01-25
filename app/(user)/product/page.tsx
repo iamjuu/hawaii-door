@@ -26,7 +26,7 @@ const page = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const bgImage = "/assets/product/productmain.svg";
+  const bgImage = "/assets/product/productmain.webp";
   const contant = "Doors That Fit. Every Time.";
   const para =
     "Explore our full line of pre-hung wood and fiberglass doors, organized by material and style. All units are machined in-house to match your project's exact hinge, bore, and jamb specs.";

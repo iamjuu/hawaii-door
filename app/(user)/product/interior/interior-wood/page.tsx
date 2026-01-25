@@ -97,7 +97,7 @@ const InteriorWoodPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isModalOpen, currentDoorGroup.length]);
 
-  const bgImage = "/assets/product/intertior/wood-interior.svg";
+  const bgImage = "/assets/product/intertior/wood-interior.webp";
   const contant = "Interior Doors";
   const para =
     "Discover interior doors; we offer a variety of door types, designs and styles. You are sure to find the perfectdoor for your project.";

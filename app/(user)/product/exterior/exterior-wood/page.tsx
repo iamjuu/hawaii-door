@@ -96,7 +96,7 @@ const ExteriorWoodPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isModalOpen, currentDoorGroup.length]);
 
-  const bgImage = "/assets/product/intertior/wood-interior.svg"
+  const bgImage = "/assets/product/intertior/wood-interior.webp"
   const contant = "Exterior Doors"
   const para =
     "Discover exterior doors; we offer a variety of door types, designs and styles. You are sure to find the perfect door for your project."
