@@ -22,14 +22,25 @@ export default function HeroSection({
   const loopFeatures = [...features, ...features];
 
   return (
-    <section
-      style={{
-        background: `url('${bgImage}') center / cover no-repeat`,
-      }}
-      className="relative mt-5 md:mt-20 w-full h-[750px] font-roboto"
-    >
+    <section className="relative mt-5 md:mt-20 w-full h-[750px] font-roboto overflow-hidden">
+      {/* Optimized Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src={bgImage}
+          alt="Hero Background"
+          fill
+          priority
+          quality={85}
+          className="object-cover"
+          sizes="100vw"
+        />
+      </div>
+
+      {/* Overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/20 z-[1]" />
+
       {/* HERO CONTENT */}
-      <div className="gap-3 md:gap-6 max-w-[650px] z-10 flex flex-col items-start justify-center px-6 md:px-16 h-full">
+      <div className="gap-3 md:gap-6 max-w-[650px] z-10 relative flex flex-col items-start justify-center px-6 md:px-16 h-full">
         <h1 className="text-white text-3xl md:text-[58px] font-[600] drop-shadow-lg">
           {contant}
         </h1>
@@ -40,7 +51,7 @@ export default function HeroSection({
       </div>
 
       {/* FEATURE CAROUSEL */}
-      <div className="absolute bottom-3 md:bottom-8 left-0 right-0 z-10 px-6 md:px-1">
+      <div className="absolute bottom-3 md:bottom-8 left-0 right-0 z-20 px-6 md:px-1">
         <div className="carousel-wrapper">
           <div className="carousel-track gap-6 md:gap-12">
             {loopFeatures.map((feature, index) => (

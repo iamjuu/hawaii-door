@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
 import {
@@ -102,6 +102,57 @@ import { HiMenu } from "react-icons/hi";
 const LyndenDoorPage = () => {
 
   const [openMenu, setOpenMenu] = useState(false);
+  const [activeSection, setActiveSection] = useState("overview");
+
+  // Smooth scroll to section
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 100; // Offset for fixed navbar
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      setOpenMenu(false); // Close mobile menu
+    }
+  };
+
+  // Track active section on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = [
+        "overview",
+        "new-products",
+        "fineline",
+        "elemental",
+        "stileline",
+        "rediscovery",
+        "molded",
+        "wood-veneer",
+        "prefinished",
+        "lynden-ventilated-door"
+      ];
+
+      const scrollPosition = window.scrollY + 150;
+
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const bgImage = "/assets/product/interior door hero image 3.svg";
   const contant = "Lynden Door";
@@ -163,7 +214,7 @@ const LyndenDoorPage = () => {
                 md:translate-x-0
               `}
             >
-              <div className="bg-white border border-gray-200 rounded-lg p-6 h-full lg:sticky lg:top-[100px]">
+              <div className="bg-white border border-gray-200 rounded-lg p-6 h-full lg:sticky lg:top-[100px] lg:max-h-[calc(100vh-120px)] overflow-y-auto">
 
                 {/* MOBILE HEADER */}
                 <div className="flex bg-[#b7d7a8] justify-between items-center mb-6 md:hidden">
@@ -184,25 +235,28 @@ const LyndenDoorPage = () => {
 
                 <nav className="space-y-0">
                   {[
-                    "Overview",
-                    "New Products",
-                    "FineLine",
-                    "Elemental",
-                    "StileLine",
-                    "ReDiscovery",
-                    "Molded",
-                    "Wood Veneer",
-                    "Prefinished",
-                    "Lynden Ventilated Door"
+                    { label: "Overview", id: "overview" },
+                    { label: "New Products", id: "new-products" },
+                    { label: "FineLine", id: "fineline" },
+                    { label: "Elemental", id: "elemental" },
+                    { label: "StileLine", id: "stileline" },
+                    { label: "ReDiscovery", id: "rediscovery" },
+                    { label: "Molded", id: "molded" },
+                    { label: "Wood Veneer", id: "wood-veneer" },
+                    { label: "Prefinished", id: "prefinished" },
+                    { label: "Lynden Ventilated Door", id: "lynden-ventilated-door" }
                   ].map((item, index) => (
-                    <div key={item}>
-                      <a
-                        href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                        onClick={() => setOpenMenu(false)}
-                        className="block py-3 text-gray-700 hover:text-[#FF6E4A] transition-colors text-sm font-medium"
+                    <div key={item.id}>
+                      <button
+                        onClick={() => scrollToSection(item.id)}
+                        className={`block w-full text-left py-3 transition-colors text-sm font-medium ${
+                          activeSection === item.id
+                            ? "text-[#FF6E4A] font-semibold"
+                            : "text-gray-700 hover:text-[#FF6E4A]"
+                        }`}
                       >
-                        {item}
-                      </a>
+                        {item.label}
+                      </button>
                       {index < 9 && (
                         <div className="border-t border-gray-200"></div>
                       )}
@@ -213,6 +267,8 @@ const LyndenDoorPage = () => {
             </aside>
             {/* Right Side - Main Content */}
             <div className="flex-1 space-y-8 mt-2 md:mt-15">
+              {/* Overview Section */}
+              <div id="overview">
               {/* Logo */}
               <div className="flex items-center gap-3 mb-6">
                 <Image
@@ -355,8 +411,9 @@ const LyndenDoorPage = () => {
                   </p>
                 </div>
               </div>
-              {/* **********************image******************* */}
-              <div className="mt-16 space-y-8">
+              </div>
+              {/* New Products Section */}
+              <div id="new-products" className="mt-16 space-y-8">
                 {/* Section Heading */}
                 <h2 className="text-[28px] font-[500] text-black">
                   New Designs - FineLine Collection
@@ -434,7 +491,7 @@ const LyndenDoorPage = () => {
               </div>
 
               {/* FineLine Door Collection Image Section */}
-              <div className="mt-16 space-y-6">
+              <div id="fineline" className="mt-16 space-y-6 scroll-mt-24">
                 <h2 className="text-[28px] font-[500] text-black">
                   FineLine Door Collection
                 </h2>
@@ -643,7 +700,7 @@ const LyndenDoorPage = () => {
               </div>
 
 
-              <div className="mt-16 space-y-6">
+              <div id="elemental" className="mt-16 space-y-6 scroll-mt-24">
                 <h2 className="text-[28px] font-[500] text-black">
                   Elemental Door Collection
                 </h2>
@@ -787,7 +844,7 @@ const LyndenDoorPage = () => {
 
 
               {/* StileLine Door Collection Image Section */}
-              <div className="mt-16 space-y-6">
+              <div id="stileline" className="mt-16 space-y-6 scroll-mt-24">
                 <h2 className="text-[28px] font-[500] text-black">
                   StileLine Door Collection
                 </h2>
@@ -924,7 +981,7 @@ const LyndenDoorPage = () => {
 
 
               {/* ReDiscovery Door Collection Image Section */}
-              <div className="mt-16 space-y-6">
+              <div id="rediscovery" className="mt-16 space-y-6 scroll-mt-24">
                 <h2 className="text-[28px] font-[500] text-black">
                   ReDiscovery Door Collection
                 </h2>
@@ -1058,7 +1115,7 @@ const LyndenDoorPage = () => {
                   ))}
                 </div>
                 {/* Molded Door Collection Image Section */}
-                <div className="mt-16 space-y-6">
+                <div id="molded" className="mt-16 space-y-6 scroll-mt-24">
                   <h2 className="text-[28px] font-[500] text-black">
                     Molded Door Collection
                   </h2>
@@ -1210,7 +1267,7 @@ const LyndenDoorPage = () => {
 
 
                 {/* Wood Veneer Door Collection Image Section */}
-                <div className="mt-16 space-y-6">
+                <div id="wood-veneer" className="mt-16 space-y-6 scroll-mt-24">
                   <h2 className="text-[28px] font-[500] text-black">
                     Wood Veneer Door Collection
                   </h2>
@@ -1361,7 +1418,7 @@ const LyndenDoorPage = () => {
 
 
                 {/* Prefinished Door Collection Image Section */}
-                <div className="mt-16 space-y-6">
+                <div id="prefinished" className="mt-16 space-y-6 scroll-mt-24">
                   <h2 className="text-[28px] font-[500] text-black">
                     Prefinished Door Collection
                   </h2>
@@ -1525,7 +1582,7 @@ const LyndenDoorPage = () => {
 
 
                 {/* Lynden Ventilated Doors Image Section */}
-                <div className="mt-16 space-y-6">
+                <div id="lynden-ventilated-door" className="mt-16 space-y-6 scroll-mt-24">
                   <h2 className="text-[36px] font-[500] text-black">
                     Lynden Ventilated Doors
                   </h2>
