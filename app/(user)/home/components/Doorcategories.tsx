@@ -3,12 +3,15 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
- import Door1 from "../../../../public/assets/images/landing/Door1 8.02.03 PM.png"
-import Door3 from "../../../../public/assets/images/landing/Door3 8.02.03 PM.png"
-import Door4 from "../../../../public/assets/images/landing/Door4 8.02.03 PM.png"
 import Link from "next/link";
 import Heading from "./header";
 import { ProductFootericonDoor, ProductFootericonSettings, ProductFootericonTruck } from "@/public/assets";
+
+// Using public paths for production compatibility (spaces in filenames work with public paths)
+const Door1 = "/assets/images/landing/Door1 8.02.03 PM.png";
+const Door3 = "/assets/images/landing/Door3 8.02.03 PM.png";
+const Door4 = "/assets/images/landing/Door4 8.02.03 PM.png";
+
 const DoorCategories = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [windowWidth, setWindowWidth] = useState(1024);
@@ -34,7 +37,7 @@ const DoorCategories = () => {
     {
       id: 3,
       title: "Hollow Core Doors",
-      image:Door3,
+      image: Door3,
     },
     {
       id: 4,
@@ -116,7 +119,10 @@ const DoorCategories = () => {
                 <Image
                   src={category.image}
                   alt={category.title}
-                  className="w-full h-full object-cover rounded-xl md:rounded-2xl"
+                  fill
+                  className="object-cover rounded-xl md:rounded-2xl"
+                  sizes="(max-width: 640px) 160px, (max-width: 768px) 192px, (max-width: 1024px) 256px, 320px"
+                  priority={isCurrent}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-3 md:p-4 lg:p-6 text-white">

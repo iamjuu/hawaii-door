@@ -13,10 +13,11 @@ const Footer = () => {
           <div className="flex flex-col space-y-4">
             <div className="relative w-48 h-24">
               <Image
-                src={Footerimg}
+                src="/assets/footer/footerimg 8.56.53 PM.png"
                 alt="Hawaii Western Doors Logo"
                 fill
                 className="object-contain object-left"
+                unoptimized
               />
             </div>
 

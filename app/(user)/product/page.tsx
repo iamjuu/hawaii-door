@@ -76,10 +76,9 @@ const page = () => {
         <section className="px-6 md:px-12 lg:px-20 py-16 md:py-24 bg-white">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-0 justify-items-center lg:justify-items-start">
             {doorCards.map((door, index) => (
-              <>
+              <React.Fragment key={index}>
                 <Link className="w-full" href={door.link}>
               <div
-                key={index}
                 style={{
                   backgroundImage: `url('${
                     typeof door.image === "string"
@@ -122,7 +121,7 @@ const page = () => {
                 </div>
               </div>
               </Link>
-              </>
+              </React.Fragment>
             ))}
           </div>
         </section>
