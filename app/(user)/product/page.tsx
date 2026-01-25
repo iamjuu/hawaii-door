@@ -63,18 +63,20 @@ const page = () => {
     <div>
       <PageLoader isLoading={isLoading} />
       <Navbar />
-
+<div >
       <main>
         <HeroSection
           contant={contant}
           bgImage={bgImage}
           para={para}
           features={features}
-        />
+          />
 
+          
         {/* Door Cards Section */}
-        <section className="px-6 md:px-12 lg:px-20 py-16 md:py-24 bg-white">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-0 justify-items-center lg:justify-items-start">
+        <div className="w-full font-inter">
+        <section className=" py-[50px]  max-w-7xl md:max-w-full mx-auto px-5 md:px-[80px]">
+          <div className="grid  grid-cols-1 lg:grid-cols-3 gap-5  md:gap-0 justify-items-center lg:justify-items-start">
             {doorCards.map((door, index) => (
               <React.Fragment key={index}>
                 <Link className="w-full" href={door.link}>
@@ -125,10 +127,12 @@ const page = () => {
             ))}
           </div>
         </section>
-
+        </div>
+< div className="pb-[50px]">
         <FooterBanner />
+</div>
       </main>
-
+</div>
       <Footer />
     </div>
   );

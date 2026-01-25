@@ -1,14 +1,16 @@
 "use client";
+import { useState } from "react"
 import { MdOutlineArrowOutward } from "react-icons/md"
 import Image from "next/image"
 import Doors from "../../../../public/assets/images/landing/door22.png"
 import Link from "next/link"
 
 const Prehung = () => {
+  const [maxWidth] = useState("max-w-7xl")
 
   return (
-    <div className="w-full px-5 md:px-15 mb-12 py-8 md:pt-12 md:pb-16 lg:pb-20 bg-white  ">
-      <div className="max-w-[1400px] mx-auto">
+    <div className="w-full  bg-white  ">
+      <div className={`${maxWidth} md:max-w-full  mx-auto px-5 md:px-[80px] gap-[46px] flex flex-col`}>
         <div className="relative w-full min-h-[400px] md:min-h-[420px] bg-[#84684C] rounded-lg overflow-hidden">
 
           {/* ================= LEFT CONTENT ================= */}

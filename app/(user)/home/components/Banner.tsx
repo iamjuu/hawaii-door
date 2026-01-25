@@ -9,7 +9,7 @@ import PillCTAButton from "../../home/components/link-button";
 export default function BannerSection() {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <div
         className="
@@ -55,7 +55,7 @@ export default function BannerSection() {
             pt-16 sm:pt-0
           "
         >
-          <div className="w-full px-6 sm:px-8 md:px-15">
+          <div className="w-full px-5 md:px-[80px]">
             <div className="max-w-7xl">
               <div className="text-white max-w-[95%] sm:max-w-[90%]">
 

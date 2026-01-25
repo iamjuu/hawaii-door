@@ -4,9 +4,9 @@ import { MdOutlineArrowOutward } from 'react-icons/md';
 import Link from "next/link"
 const FooterBanner = () => {
   return (
-    <div className="w-full px-5 md:px-15 mb-12 py-8 md:pt-12  bg-white  ">
-      <div className="w-full mx-auto">
-        <div className="relative w-full min-h-[400px] md:min-h-[420px] bg-[#84684C] rounded-lg overflow-hidden">
+    <div className=" w-full font-inter ">
+      <div className="   max-w-7xl md:max-w-full mx-auto px-5 md:px-[80px]">
+        <div className="relative min-h-[400px] md:min-h-[420px] bg-[#84684C] rounded-lg overflow-hidden">
 
           {/* ================= LEFT CONTENT ================= */}
           <div className="relative z-10 flex flex-col justify-center h-full px-8 md:px-12 lg:px-16 pt-12 md:py-16">
@@ -37,7 +37,7 @@ const FooterBanner = () => {
           </div>
 
           {/* ================= DESKTOP IMAGE ================= */}
-          {/* ================= DESKTOP IMAGE ================= */}
+
           <div className="absolute right-0 bottom-0 top-10 hidden md:block w-[50%] h-full pr-10">
             <div className="relative w-full h-full">
 
@@ -72,8 +72,7 @@ const FooterBanner = () => {
           </div>
 
 
-          {/* ================= MOBILE IMAGE ================= */}
-          {/* ================= MOBILE IMAGE ================= */}
+
           <div className="relative md:hidden w-full h-[260px] mt-2 md:mt-8">
 
             {/* DOOR */}

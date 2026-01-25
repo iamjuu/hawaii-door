@@ -169,24 +169,24 @@ const GalleryPage = () => {
           className="fixed inset-0 bg-black/40 z-40 md:hidden"
         />
       )}
-
-      <main className="min-h-screen bg-white pt-[70px] md:pt-[80px]">
+<div className="w-full font-inter">
+        <div className=" md:w-full mx-auto px-5 md:px-[80px]">
+      <main className="min-h-screen w-full bg-white">
         {/* HERO */}
-        <section className="px-6 md:px-12 lg:px-20 py-16 md:py-24">
-          <div className="max-w-7xl mx-auto">
-            <h1 className="text-[28px] md:text-[56px] font-semibold mb-6">
+        <section className=" py-[50px]">
+          <div className="w-full">
+            <h1 className="text-[23px] md:text-[46px] font-medium  letter leading-[56px] text-black font-roboto">
               Doors That Speak <br /> for Themselves
             </h1>
             <p className="text-[18px] text-gray-700 max-w-2xl">
-              See recent installs, machining projects, and custom builds across
-              Hawai‘i.
+            See recent installs, machining projects, and custom builds across Oʻahu, Maui, Kauaʻi, and Hawaiʻi Island.Every project tells the same story, precision, fit, and finish done right.             
             </p>
           </div>
         </section>
 
         {/* CONTENT */}
-        <section className="px-6 md:px-12 lg:px-20 pb-16">
-          <div className="max-w-7xl mx-auto">
+        <section className="">
+          <div className="w-full">
             <div className="flex flex-col lg:flex-row gap-8">
 
               {/* FILTER SIDEBAR */}
@@ -289,8 +289,11 @@ const GalleryPage = () => {
           </div>
         </section>
       </main>
-
+        </div>
+      </div>
+      <div className="relative z-[9999]">
       <Footer />
+      </div>
     </>
   );
 };

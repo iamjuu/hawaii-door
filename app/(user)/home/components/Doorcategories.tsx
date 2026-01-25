@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Heading from "./header";
-import { ProductFootericonDoor, ProductFootericonSettings, ProductFootericonTruck } from "@/public/assets";
+import DoorCategoryBox from "./DoorCategoryBox";
 
 // Using public paths - NO SPACES in filenames for production compatibility
 const Door1 = "/assets/images/landing/door22.png";
@@ -80,12 +80,13 @@ const DoorCategories = () => {
   };
 
   return (
-<div className="w-full py-8 sm:py-12 md:py-[50px] pb-5 font-inter">
+<div className="w-full font-inter">
   
   {/* MAIN CONTENT – constrained */}
-  <div className="max-w-7xl md:max-w-full mx-auto px-4 sm:px-6 md:px-[60px] gap-6 sm:gap-8 md:gap-[46px] flex flex-col">
+  <div className="max-w-7xl md:max-w-full mx-auto px-5 md:px-[80px] gap-6 sm:gap-8 md:gap-[46px] flex flex-col">
     {/* Header */}
-<Heading heading="Door Categories" subheading="Explore our full line of pre-hung wood and fiberglass doors, organized by material and style." className="" />
+
+<Heading heading="Door Categories" subheading="Explore our full line of pre-hung wood and fiberglass doors, organized by material and style." className="flex  flex-col gap-[5px]" />
 
     {/* Carousel */}
     <div className="relative flex items-center justify-center">
@@ -161,7 +162,7 @@ const DoorCategories = () => {
     </div>
 
     {/* Dots */}
-    <div className="flex justify-center gap-1.5 sm:gap-2 mt-4 sm:mt-5 md:mt-8 lg:mt-12">
+    <div className="flex justify-center gap-1.5 sm:gap-2 ">
       {categories.map((_, idx) => (
         <button
           key={idx}
@@ -177,36 +178,6 @@ const DoorCategories = () => {
     </div>
   </div>
 
-  {/* FULL WIDTH FOOTER STRIP – Responsive */}
-  <div className="relative w-full flex flex-col md:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-8 lg:gap-16 py-4 sm:py-5 md:py-0 min-h-[60px] md:h-[68px] bg-[#F6F5F1] group cursor-pointer mt-8 sm:mt-10 md:mt-[50px] lg:mt-[75px] mb-0 md:mb-6">
-    <div className="py-3 sm:py-4 md:py-[25px] flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 lg:gap-[10px] items-center">
-
-    <p className="flex items-center gap-2 sm:gap-2.5 md:gap-[10px] text-xs sm:text-sm md:text-base">
-      
-    <Image src={ProductFootericonDoor} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px]" alt="Door" width={100} height={100} />
-      
-    <span className="whitespace-nowrap">Custom Doors</span>
-
-      
-    </p>
-
-    <p className="flex items-center gap-2 sm:gap-2.5 md:gap-[10px] text-xs sm:text-sm md:text-base">
-      
-      <Image src={ProductFootericonSettings} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px]" alt="Settings" width={100} height={100} />
-      <span className="whitespace-nowrap">Custom Jambs</span>
-  
-        
-      </p>
-      
-      <p className="flex items-center gap-2 sm:gap-2.5 md:gap-[10px] text-xs sm:text-sm md:text-base">
-      
-      <Image src={ProductFootericonTruck} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px]" alt="Truck" width={100} height={100} />
-        
-      <span className="whitespace-nowrap">Complete Precision</span>
-        
-      </p>
-    </div>
-  </div>
 
 </div>
 

@@ -63,13 +63,14 @@ const Testimonial = () => {
   const loopTestimonials = [...testimonials, ...testimonials]
 
   return (
-    <div className="w-full px-5 md:px-15 pt-12 pb-12 md:py-16 lg:py-20 bg-white font-roboto">
-    <div className="max-w-[1400px] mx-auto">
+    <div className="w-full   font-inter">
+    <div className="max-w-7xl md:max-w-full  mx-auto px-5 md:px-[80px] gap-[46px] flex flex-col">
       {/* Header Section */}
       <div className="mb-10 md:mb-12">
         <Heading  
           heading="Testimonial" 
           subheading="Real feedback from the people who build, design, and live with our doors."
+          className="flex felx-col gap-[5px]"
         />
       </div>
   

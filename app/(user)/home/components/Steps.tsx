@@ -6,24 +6,24 @@ import Submit from "../../../../public/assets/images/landing/submit.png";
 import Yourdoor from "../../../../public/assets/images/landing/yourdoor.png";
 import Greenarrow from "../../../../public/assets/images/landing/greenarrow.png";
 import Downarrow from "../../../../public/assets/images/landing/downarrow.png";
-import Truck from "../../../../public/assets/images/landing/truck.png";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import LinkButton from "../components/link-button";
 import Link from "next/link";
 import Heading from "./header";
-import { ProductFootericonTruck } from "@/public/assets";
+import DeliveredLorry from "./DeliveredLorry";
 
 const stepBox =
   "flex flex-col items-center text-center px-2 pt-4 pb-6 md:pt-10 md:pb-10 w-full max-w-[260px] mx-auto";
 
 const StepsDoor = () => {
   return (
-    <section className="w-full py-[50px] pb-5 font-inter">
-      <div className="max-w-7xl md:max-w-full mx-auto px-4 sm:px-6 md:px-[60px] flex flex-col">
+    <section className="w-full   font-inter">
+      <div className="max-w-7xl md:max-w-full mx-auto px-5 md:px-[80px] flex flex-col">
 
         {/* Heading */}
         <div className="flex items-center justify-start">
           <Heading
+          className="flex  gap-[5px]"
             heading="How To Order Doors"
             subheading="Four easy steps to get your perfect premium door delivered"
           />
@@ -145,8 +145,13 @@ const StepsDoor = () => {
 
           </div>
 
-          {/* CTA */}
-          <div className="w-full flex  mb-[60px] justify-center items-center mt-4 md:mt-0">
+       
+        </div>
+      </div>
+
+ 
+         <div className=" flex flex-col gap-[64px]">
+         <div className="w-full flex   justify-center items-center ">
             <Link href="/build">
               <LinkButton
                 label="Start Building Your Door Now"
@@ -154,23 +159,6 @@ const StepsDoor = () => {
               />
             </Link>
           </div>
-        </div>
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="relative w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-6">
-        <div className="flex items-center gap-2">
-          <Image
-            src={ProductFootericonTruck}
-            alt="Delivered"
-            width={32}
-            height={32}
-            className="w-6 h-6 md:w-8 md:h-8 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
-          />
-          <span className="text-[#585858] font-roboto text-sm md:text-lg">
-            Delivered Across Hawaii.
-          </span>
-        </div>
       </div>
     </section>
   );

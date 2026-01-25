@@ -23,10 +23,10 @@ const page = () => {
       <Navbar />
       
       {/* Main Content */}
-      <main className="min-h-screen bg-white  ">
+      <main className=" bg-white  flex flex-col items-center ">
     {/* Hero Section */}
-    <section className="w-full px-6 md:px-12 lg:px-20 py-16 md:py-4 md:mt-[120px]">
-    <div className="w-full md:max-w-7xl md:mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
+    <section className="bg-red-100 flex items-center justify-center">
+    <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
       
       {/* Left Content */}
       <div className="flex w-full gap-5 flex-col">
@@ -95,14 +95,15 @@ const page = () => {
 
 
         {/* Second Section - Optional additional content */}
-        <section className="px-6 md:px-12 lg:px-20 py-16 ">
-          <div className="max-w-7xl mx-auto">
-            <div className="relative h-[300px] md:h-[400px] rounded-[15px] overflow-hidden">
+        <section className="px-6 md:px-12 lg:px-20 py-16">
+          <div className="">
+            <div className="relative w-full rounded-[15px] h-full overflow-hidden">
               <Image
                 src={About1}
                 alt="Hawaii Western Doors"
                 fill
                 className="object-cover"
+                priority
               />
             </div>
           </div>

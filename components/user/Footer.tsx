@@ -2,15 +2,15 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white py-12 px-6 md:px-12 lg:px-20">
+    <footer className="bg-black text-white w-full py-[50px]   font-inter">
       {/* Container */}
-      <div className="w-full md:max-w-7xl md:mx-auto">
+      <div className="max-w-7xl md:max-w-full  mx-auto px-5 md:px-[80px] gap-[46px] flex flex-col">
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12">
           
           {/* Logo + Description */}
           <div className="flex flex-col space-y-4">
-            <div className="relative w-48 h-24">
+            <div className="relative w-16 h-16">
               <Image
                 src="/assets/images/landing/logo.png"
                 alt="Hawaii Western Doors Logo"

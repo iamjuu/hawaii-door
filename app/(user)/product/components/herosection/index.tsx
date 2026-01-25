@@ -22,7 +22,7 @@ export default function HeroSection({
   const loopFeatures = [...features, ...features];
 
   return (
-    <section className="relative mt-5 md:mt-20 w-full h-[750px] font-roboto overflow-hidden">
+    <section className="relative mt-5 md:mt-20 w-full h-[750px] font-roboto overflow-hidden max-w-7xl md:max-w-full  mx-auto px-3 ">
       {/* Optimized Background Image */}
       <div className="absolute inset-0 z-0">
         <Image

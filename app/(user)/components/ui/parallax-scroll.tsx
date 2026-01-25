@@ -46,7 +46,7 @@ export const ParallaxScroll = ({
         ref={gridRef}
       >
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start max-w-5xl mx-auto gap-10 py-40 px-10"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-between items-start max-w-7xl  gap-2 "
         >
           <div className="grid gap-10">
             {firstPart.map((el, idx) => (

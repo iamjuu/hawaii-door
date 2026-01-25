@@ -5,10 +5,8 @@ import Hollowcoreimg from "../../../../public/assets/images/landing/hollowcore.p
 import Fiberglassimg from "../../../../public/assets/images/landing/fiberglass.png"
 import Particlecoreimg from "../../../../public/assets/images/landing/particlecore.png"
 import Sclcimg from "../../../../public/assets/images/landing/sclc.png"
-import Vector5 from "../../../../public/assets/images/landing/vector5.png"
-import Vector6 from "../../../../public/assets/images/landing/vector6.png"
 import Headings from "../components/header"
-import { ProductFootericonDoor, ProductFootericonSettings } from "@/public/assets"
+import GalleryBox from "./GalleryBox"
 // import Heading from "./Heading";
 const galleryItems = [
   {
@@ -44,18 +42,16 @@ const galleryItems = [
 
 
 ]
-// 👉 CHANGE WIDTH HERE ONLY
-const CONTENT_WIDTH = "max-w-7xl";
-// try: "max-w-4xl" | "max-w-5xl" | "max-w-7xl"
 
 const Gallerysection = () => {
   return (
-    <div className="w-full   py-[50px]  pb-5   font-inter ">
-<div className="max-w-7xl md:max-w-full  mx-auto px-4 sm:px-6 md:px-[60px] gap-[46px] flex flex-col">
+    <div className="w-full   font-inter ">
+<div className="max-w-7xl md:max-w-full  mx-auto px-5 md:px-[80px] gap-[46px] flex flex-col">
       {/* MAIN CONTENT */}
       <div  className="">
         <div className="mb-[60px]">
         <Headings
+        className="flex  -col gap-[5px]"
           heading="Gallery"
           subheading="Explore our full line of pre-hung wood and fiberglass doors, organized by material and style."
           />
@@ -140,34 +136,6 @@ const Gallerysection = () => {
 
       {/* FULL WIDTH STRIP */}
    
-      </div>
-      <div className="w-full flex items-center justify-center bg-[#F6F5F1]">
-        <div className={`${CONTENT_WIDTH}  relative  flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-[25px] group cursor-pointer mt-0 `}>
-
-          {/* <div className="flex items-center gap-2">
-            <Image src={Vector5} alt="Use" className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 filter md:grayscale md:group-hover:grayscale-0 transition-all duration-500" />
-            <span className="text-[#585858] font-roboto text-sm md:text-lg">
-              Machined to Perfection
-            </span>
-          </div> */}
-
-          {/* <div className="flex items-center gap-2">
-            <Image src={Vector6} alt="Use" width={32} height={32} className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 filter md:grayscale md:group-hover:grayscale-0 transition-all duration-500" />
-            <span className="text-[#585858] font-roboto text-sm md:text-lg">
-              True Hawaii Spec
-            </span>
-          </div> */}
-
-<p className="flex items-center gap-[10px] items-center">      
-      <Image src={ProductFootericonDoor} className="size-[32px]  " alt="Door" width={100} height={100} />        
-        Delivered Across Hawaii.        
-      </p>
-      <p className="flex items-center gap-[10px] items-center">      
-      <Image src={ProductFootericonSettings} className="size-[32px]  " alt="Door" width={100} height={100} />        
-      True Hawaii Spec    
-      </p>
-
-        </div>
       </div>
     </div>
   );

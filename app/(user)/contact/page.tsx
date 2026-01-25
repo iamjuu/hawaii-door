@@ -74,25 +74,20 @@ export default function Contact() {
       <PageLoader isLoading={isLoading} />
       {/* Contact Section */}
       <Navbar />
-      <section className="bg-white py-12 lg:pt-20 px-6   md:px-15  mt-17 font-roboto">
-        <div className="container mx-auto ">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+
+      <section className="bg-white py-12 lg:pt-20 px-6 max-w-7xl md:max-w-full px-5 md:px-[80px] flex flex-col gap-[20px] mx-auto   md:px-15  mt-17 font-roboto">
+        <div className="container  w-full mx-auto ">
+          <div className="grid grid-cols-1  lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Left Side - Content */}
             <div className="space-y-6">
               <div className=" flex flex-col gap-[40px]">
-                {/* <h1 className="text-[46px] font-[500] font-roboto font-bold text-black mb-6">
-                  Let's Get Your Door Right
-                </h1>
-                <p className="text-base text-[18px] font-[400] font-roboto text-gray-600 leading-relaxed mb-10">
-                  Reach out for quotes, project coordination, or vendor
-                  inquiries. We review every message personally, no bots, no
-                  scripts, just people who know doors
-                </p> */}
-
+            
 
                 <Heading heading="Let’s Get Your Door Right"  subheading="
                 Reach out for quotes, project coordination, or vendor inquiries.
-We review every message personally, no bots, no scripts, just people who know doors"/>
+We review every message personally, no bots, no scripts, just people who know doors"
+className="flex flex-col gap-[20px]"
+/>
                 <Link href="/build">
                   <button className="group relative inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-full bg-[#FF6E4A] px-6 py-3 font-roboto text-base md:text-lg text-white">
                     {/* WhatsApp-style black reveal */}
