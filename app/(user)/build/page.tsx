@@ -527,8 +527,9 @@ const BuildDoor = () => {
       />
 
       <div className="min-h-screen bg-white text-black">
-        <div className="pl-6 pr-4 md:px-15 mx-auto  py-8 ">
-          <div className="flex flex-col lg:flex-row gap-0">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px] py-8">
+          <div className="max-w-[1400px] 2xl:mx-auto">
+            <div className="flex flex-col lg:flex-row gap-0 lg:gap-8">
             {/* Main Content Area */}
             <div className="flex-1">
               <StepContainer>                
@@ -624,6 +625,7 @@ const BuildDoor = () => {
                 onRestart={handleRestart}
               />
             )}
+            </div>
           </div>
         </div>
       </div>

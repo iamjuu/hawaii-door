@@ -80,7 +80,7 @@ const DoorCategories = () => {
   };
 
   return (
-<div className="w-full py-10 sm:py-12 md:py-[50px] font-inter">
+<div className="w-full py-10 sm:py-12 md:py-[0px] md:pt-[50px] font-inter ">
   
   {/* MAIN CONTENT – constrained */}
   <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
@@ -135,11 +135,22 @@ const DoorCategories = () => {
                     </h3>
                     {isCurrent && (
                       <Link href={"/product"}>
-                        <button
-                          style={{ backgroundColor: "#B6D78A" }}
-                          className="hover:bg-[#a3c677] text-gray-900 rounded-full px-3 py-1 sm:py-1.5 text-xs sm:text-sm transition-colors whitespace-nowrap"
-                        >
-                          View Details
+                        <button className="group relative inline-flex items-center overflow-hidden rounded-full bg-[#B6D78A] px-3 py-1 sm:py-1.5 text-xs sm:text-sm text-[#000000] whitespace-nowrap">
+                          {/* Hover overlay */}
+                          <span
+                            className="
+                              absolute inset-0
+                              bg-black
+                              origin-bottom
+                              scale-y-0
+                              transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+                              group-hover:scale-y-100
+                            "
+                          />
+                          {/* Content */}
+                          <span className="relative z-10 group-hover:text-white transition-colors duration-500">
+                            View Details
+                          </span>
                         </button>
                       </Link>
                     )}
@@ -180,7 +191,7 @@ const DoorCategories = () => {
   </div>
 
   {/* FULL WIDTH FOOTER STRIP – Responsive */}
-  <div className="relative w-full flex flex-col md:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-8 lg:gap-16 py-4 sm:py-5 md:py-0 min-h-[60px] md:h-[68px] bg-[#F6F5F1] group cursor-pointer mt-8 sm:mt-10 md:mt-[50px] lg:mt-[75px] mb-0 md:mb-6 transition-all duration-300">
+  <div className="relative w-full flex flex-col md:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-8 lg:gap-16 py-4 sm:py-5 md:py-0 min-h-[60px] md:h-[68px] bg-[#F6F5F1] group cursor-pointer mt-8 sm:mt-10 md:mt-[50px] lg:mt-[50px] mb-0  transition-all duration-300 ">
     <div className="py-3 sm:py-4 md:py-[25px] flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 items-center">
 
     <p className="flex items-center gap-3 sm:gap-3.5 md:gap-4 text-xs sm:text-sm md:text-base">

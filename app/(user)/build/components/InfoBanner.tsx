@@ -15,7 +15,7 @@ interface InfoBannerProps {
     const mobileHeight = typeof height === 'number' ? height : height.mobile;
     
     return (
-      <div className="relative w-full min-h-[60px] md:h-[60px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-18 md:mt-20 pl-6 pr-4 md:p-6">
+      <div className="relative w-full min-h-[60px] md:h-[60px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-18 md:mt-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
         <div className="flex items-center md:flex-row gap-3 md:gap-3">
         <div
           className="relative shrink-0"

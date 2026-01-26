@@ -10,16 +10,16 @@ const Measure = () => {
   return (
     <>
       {/* Main Section */}
-      <div className="w-full py-10 sm:py-12 md:py-[50px] font-inter">
+      <div className="w-full py-10 sm:py-12 md:pt-[50px] md:py-[0px] font-inter ">
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
         <div className="max-w-[1400px] 2xl:mx-auto flex flex-col">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start">
 
             {/* Left Content */}
-            <div className="order-2 lg:order-1 flex flex-col justify-between gap-10 md:gap-[70px]">
+            <div className="order-2 lg:order-1 flex flex-col justify-between gap-10 md:gap-[59px] ">
               <div className="flex flex-col gap-6 max-w-[95%] md:max-w-none">
 
-                <h1 className="text-[23px] md:text-[46px] font-[600] text-black font-roboto leading-[32px] md:leading-[62px] tracking-normal">
+                <h1 className="text-[23px] md:text-[46px] font-[600] text-black font-roboto leading-[32px] md:leading-[56px] tracking-normal">
                   Measure Twice.
                   <br />
                   Deliver Once.
@@ -38,7 +38,7 @@ const Measure = () => {
 
               {/* CTA */}
               <Link href="/product">
-                <button className="w-max group relative inline-flex items-center gap-3 overflow-hidden rounded-3xl bg-[#B6D78A] px-5 py-2 font-roboto text-xl text-white mt-5 md:mt-6 mb-[20px]">
+                <button className="w-max group relative inline-flex items-center gap-3 overflow-hidden rounded-3xl bg-[#B6D78A] px-5 py-2 font-roboto text-xl mt-5 md:mt-6 mb-[20px]">
                   {/* Hover overlay */}
                   <span
                     className="
@@ -52,7 +52,7 @@ const Measure = () => {
                   />
 
                   {/* Content */}
-                  <span className="relative z-10 flex items-center gap-3 text-[15px] md:text-lg whitespace-nowrap">
+                  <span className="relative z-10 flex items-center gap-3 text-[15px] md:text-lg whitespace-nowrap text-[#000000] group-hover:text-white transition-colors duration-900">
                     Explore Now
                     <span
                       className="
@@ -62,7 +62,7 @@ const Measure = () => {
                         group-hover:rotate-45 group-hover:translate-x-0
                       "
                     >
-                      <MdOutlineArrowOutward className="text-white text-2xl" />
+                      <MdOutlineArrowOutward className="text-[#000000] group-hover:text-white text-2xl transition-colors duration-900" />
                     </span>
                   </span>
                 </button>
@@ -88,7 +88,7 @@ const Measure = () => {
       </div>
 
       {/* Bottom Info Bar */}
-      <div className="relative px-5 md:px-0 w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-4 md:mt-9">
+      <div className="relative px-5 md:px-0 w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-4 md:mt-9 h-[68px] ">
         <div className="flex items-center gap-2">
           <Image
             src={Vector7}

@@ -17,7 +17,7 @@ const stepBox =
 
 const StepsDoor = () => {
   return (
-    <section className="w-full py-10 sm:py-12 md:py-[50px] font-inter">
+    <section className="w-full py-10 sm:py-12 md:py-[0px] md:pt-[50px] font-inter ">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
       <div className="max-w-[1400px] 2xl:mx-auto flex flex-col">
 
@@ -30,12 +30,12 @@ const StepsDoor = () => {
         </div>
 
         {/* Steps */}
-        <div className="flex flex-col gap-10 md:gap-[50px]">
-          <div className="group w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 items-start font-roboto">
+        <div className="flex flex-col gap-10 md:gap-[20px]  ">
+          <div className="group w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 items-start font-roboto ">
 
             {/* STEP 1 */}
-            <div className="relative flex flex-col justify-center items-center">
-              <div className={stepBox}>
+            <div className="relative flex flex-col justify-center items-center  ">
+              <div className={stepBox} >
                 <Image
                   src={Buildit}
                   alt="Build It"
@@ -49,7 +49,7 @@ const StepsDoor = () => {
                 </p>
               </div>
 
-              <div className="flex md:hidden justify-center my-4">
+              <div className="flex md:hidden justify-center my-4 ">
                 <Image src={Downarrow} alt="Down Arrow" width={20} height={20} />
               </div>
 
@@ -146,7 +146,7 @@ const StepsDoor = () => {
           </div>
 
           {/* CTA */}
-          <div className="w-full flex  mb-[60px] justify-center items-center mt-4 md:mt-0">
+          <div className="w-full flex  mb-[0px] justify-center items-center mt-4 md:mt-0 ">
             <Link href="/build">
               <button className="group relative inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] text-[15px] md:text-lg font-roboto px-4 md:px-5 py-2 text-white">
                 {/* Hover overlay */}
@@ -167,7 +167,7 @@ const StepsDoor = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="relative w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-6 transition-all duration-300">
+      <div className="  relative w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-[55px] transition-all duration-300">
         <div className="flex items-center gap-3 md:gap-4">
           <div className="relative w-6 h-6 md:w-8 md:h-8">
             <Image
