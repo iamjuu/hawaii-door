@@ -20,10 +20,13 @@ export default function PillCTAButton({
     <button
       onClick={onClick}
       className={`
+        group
+        relative
         inline-flex items-center justify-center
         gap-2 sm:gap-3
         rounded-full
         bg-[#FF6E4A]
+        overflow-hidden
 
         /* Responsive padding (safe) */
         px-6 sm:px-8 md:px-[40px]
@@ -35,28 +38,44 @@ export default function PillCTAButton({
         leading-none
         whitespace-nowrap
 
-        transition-all duration-300 ease-in-out
-        hover:brightness-110
         active:scale-[0.98]
 
         ${className}
       `}
       style={{ fontFamily: "'Roboto', sans-serif" }}
     >
-      <span>{label}</span>
+      {/* Hover overlay */}
+      <span
+        className="
+          absolute inset-0
+          bg-black
+          origin-bottom
+          scale-y-0
+          transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+          group-hover:scale-y-100
+        "
+      />
 
-      {icon && (
-        <span
-          className="
-            flex items-center justify-center
-            pl-1
-            text-[22px] sm:text-[26px] md:text-[28px]
-            shrink-0
-          "
-        >
-          <MdOutlineArrowOutward />
-        </span>
-      )}
+      {/* Content */}
+      <span className="relative z-10 flex items-center gap-2 sm:gap-3">
+        <span>{label}</span>
+
+        {icon && (
+          <span
+            className="
+              flex items-center justify-center
+              pl-1
+              text-[22px] sm:text-[26px] md:text-[28px]
+              shrink-0
+              transition-all duration-500 ease-in-out
+              rotate-0 translate-x-1.5
+              group-hover:rotate-45 group-hover:translate-x-0
+            "
+          >
+            <MdOutlineArrowOutward />
+          </span>
+        )}
+      </span>
     </button>
   );
 }
