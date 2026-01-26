@@ -52,12 +52,12 @@ export default function CareerPage() {
 
             {/* Right Image */}
             <div className="flex-1 w-full h-64 sm:h-80 lg:h-full lg:max-h-[450px] relative">
-              <div className="relative w-full h-full mt-[24px] ">
+              <div className="relative w-full h-full mt-[49px] ">
                 <Image
                   src={Careerimg}
                   alt="Happy team members collaborating"
                   fill
-                  className="object-fill "
+                  className="object-contain "
                   priority
                   sizes="(max-width: 768px) "
                 />

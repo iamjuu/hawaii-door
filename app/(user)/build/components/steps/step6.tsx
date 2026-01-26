@@ -116,29 +116,11 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               hover:shadow-lg
               ${
                 selectedHandling === "LH"
-                  ? "shadow-lg border-gray-200 bg-white"
+                  ? "shadow-lg border-[#FF6E4A] bg-white"
                   : "border-gray-200 bg-white"
               }
             `}
           >
-            {/* Selected Badge */}
-            {selectedHandling === "LH" && (
-              <div className="absolute top-3 right-3 z-10">
-                <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
-                  <svg
-                    className="w-5 h-5 text-white"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M5 13l4 4L19 7"></path>
-                  </svg>
-                </div>
-              </div>
-            )}
             <div className="relative w-full max-w-[320px] mx-auto aspect-[4/3] mb-4">
               <Image
                 src={lhImage}
@@ -147,8 +129,20 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 className="object-contain"
               />
             </div>
-            <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">LH</p>
-            <p className="text-[11.96px] text-[#000000] font-light text-center">Left Hand (hinges on left, door swings in)</p>
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">LH</p>
+                <p className="text-[11.96px] text-[#000000] font-light text-center">Left Hand (hinges on left, door swings in)</p>
+              </div>
+              {/* Selected Badge */}
+              {selectedHandling === "LH" && (
+                <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0 ml-2">
+                  <svg className="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* RH - Right Hand */}
@@ -159,29 +153,11 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               hover:shadow-lg
               ${
                 selectedHandling === "RH"
-                  ? "shadow-lg border-gray-200 bg-white"
+                  ? "shadow-lg border-[#FF6E4A] bg-white"
                   : "border-gray-200 bg-white"
               }
             `}
           >
-            {/* Selected Badge */}
-            {selectedHandling === "RH" && (
-              <div className="absolute top-3 right-3 z-10">
-                <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
-                  <svg
-                    className="w-5 h-5 text-white"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M5 13l4 4L19 7"></path>
-                  </svg>
-                </div>
-              </div>
-            )}
             <div className="relative w-full max-w-[320px] mx-auto aspect-[4/3] mb-4">
               <Image
                 src={rhImage}
@@ -190,8 +166,20 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 className="object-contain"
               />
             </div>
-            <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">RH</p>
-            <p className="text-[11.96px] text-[#000000] font-light text-center">Right Hand (hinges on right, door swings in)</p>
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">RH</p>
+                <p className="text-[11.96px] text-[#000000] font-light text-center">Right Hand (hinges on right, door swings in)</p>
+              </div>
+              {/* Selected Badge */}
+              {selectedHandling === "RH" && (
+                <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0 ml-2">
+                  <svg className="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -207,29 +195,11 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
              hover:shadow-lg
             ${
               selectedHandling === "LHRA"
-                ? "shadow-lg border-gray-200 bg-white"
+                ? "shadow-lg border-[#FF6E4A] bg-white"
                 : "border-gray-200 bg-white"
             }
           `}
         >
-          {/* Selected Badge */}
-          {selectedHandling === "LHRA" && (
-            <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-            </div>
-          )}
           <div className="relative w-full max-w-[320px] mx-auto aspect-[4/3] mb-4">
             <Image
               src={lhra}
@@ -238,9 +208,20 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               className="object-contain"
             />
           </div>
-          <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">LHRA</p>
-          <p className="text-[11.96px] text-[#000000] font-light text-center">Left Hand Reverse Active</p>
-
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">LHRA</p>
+              <p className="text-[11.96px] text-[#000000] font-light text-center">Left Hand Reverse Active</p>
+            </div>
+            {/* Selected Badge */}
+            {selectedHandling === "LHRA" && (
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0 ml-2">
+                <svg className="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* 2: LHA */}
@@ -251,29 +232,11 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
              hover:shadow-lg
             ${
               selectedHandling === "LHA"
-                ? "shadow-lg border-gray-200 bg-white"
+                ? "shadow-lg border-[#FF6E4A] bg-white"
                 : "border-gray-200 bg-white"
             }
           `}
         >
-          {/* Selected Badge */}
-          {selectedHandling === "LHA" && (
-            <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-            </div>
-          )}
           <div className="relative w-full max-w-[320px] mx-auto aspect-[4/3] mb-4">
             <Image
               src={lha}
@@ -282,8 +245,20 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               className="object-contain"
             />
           </div>
-          <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">LHA</p>
-          <p className="text-[11.96px] text-[#000000] font-light text-center">Left Hand Active</p>
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">LHA</p>
+              <p className="text-[11.96px] text-[#000000] font-light text-center">Left Hand Active</p>
+            </div>
+            {/* Selected Badge */}
+            {selectedHandling === "LHA" && (
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0 ml-2">
+                <svg className="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* 3: RHA */}
@@ -294,29 +269,11 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
              hover:shadow-lg
             ${
               selectedHandling === "RHA"
-                ? "shadow-lg border-gray-200 bg-white"
+                ? "shadow-lg border-[#FF6E4A] bg-white"
                 : "border-gray-200 bg-white"
             }
           `}
         >
-          {/* Selected Badge */}
-          {selectedHandling === "RHA" && (
-            <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-            </div>
-          )}
           <div className="relative w-full max-w-[320px] mx-auto aspect-[4/3] mb-4">
             <Image
               src={rha}
@@ -325,8 +282,20 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               className="object-contain"
             />
           </div>
-          <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">RHA</p>
-          <p className="text-[11.96px] text-[#000000] font-light text-center">Right Hand Active</p>
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">RHA</p>
+              <p className="text-[11.96px] text-[#000000] font-light text-center">Right Hand Active</p>
+            </div>
+            {/* Selected Badge */}
+            {selectedHandling === "RHA" && (
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0 ml-2">
+                <svg className="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* 4: RHRA */}
@@ -337,29 +306,11 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             hover:shadow-lg
             ${
               selectedHandling === "RHRA"
-                ? "shadow-lg border-gray-200 bg-white"
+                ? "shadow-lg border-[#FF6E4A] bg-white"
                 : "border-gray-200 bg-white"
             }
           `}
         >
-          {/* Selected Badge */}
-          {selectedHandling === "RHRA" && (
-            <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-            </div>
-          )}
           <div className="relative w-full max-w-[320px] mx-auto aspect-[4/3] mb-4">
             <Image
               src={rhra}
@@ -368,8 +319,20 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               className="object-contain"
             />
           </div>
-          <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">RHRA</p>
-          <p className="text-[11.96px] text-[#000000] font-light text-center">Right Hand Reverse Active</p>
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">RHRA</p>
+              <p className="text-[11.96px] text-[#000000] font-light text-center">Right Hand Reverse Active</p>
+            </div>
+            {/* Selected Badge */}
+            {selectedHandling === "RHRA" && (
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0 ml-2">
+                <svg className="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
+          </div>
         </div>
         </div>
       )}
@@ -387,7 +350,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             type="button"
             onClick={() => handleRadiusSelect("1/4")}
             className={`w-full font-roboto px-3 py-2 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
-              selectedRadius === "1/4" ? "border-orange-500 text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
+              selectedRadius === "1/4" ? "border-[#FF6E4A] text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
             }`}
           >
             <div className="flex items-center gap-3">
@@ -401,19 +364,19 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               </div>
               <span className="text-[13px] md:text-[16px] font-normal text-black">1/4&quot; Round Corner</span>
             </div>
-            <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 flex items-center justify-center ${
-              selectedRadius === "1/4" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedRadius === "1/4" && (
-                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedRadius === "1/4" && (
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
           <button
             type="button"
             onClick={() => handleRadiusSelect("5/8")}
             className={`w-full font-roboto px-3 py-2 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
-              selectedRadius === "5/8" ? "border-orange-500 text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
+              selectedRadius === "5/8" ? "border-[#FF6E4A] text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
             }`}
           >
             <div className="flex items-center gap-3">
@@ -427,19 +390,19 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               </div>
               <span className="text-[13px] md:text-[16px] font-normal text-black">5/8&quot; Round Corner</span>
             </div>
-            <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 flex items-center justify-center ${
-              selectedRadius === "5/8" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedRadius === "5/8" && (
-                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedRadius === "5/8" && (
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
           <button
             type="button"
             onClick={() => handleRadiusSelect("square")}
             className={`w-full font-roboto px-3 py-2 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
-              selectedRadius === "square" ? "border-orange-500 text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
+              selectedRadius === "square" ? "border-[#FF6E4A] text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
             }`}
           >
             <div className="flex items-center gap-3">
@@ -453,13 +416,13 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               </div>
               <span className="text-[13px] md:text-[16px] font-normal text-black">Square</span>
             </div>
-            <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 flex items-center justify-center ${
-              selectedRadius === "square" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedRadius === "square" && (
-                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedRadius === "square" && (
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
         </div>
       </div>
@@ -472,7 +435,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             type="button"
             onClick={() => handleTypeSelect("residential")}
             className={`w-full font-roboto px-3 py-2 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
-              selectedType === "residential" ? "border-orange-500 text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
+              selectedType === "residential" ? "border-[#FF6E4A] text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
             }`}
           >
             <div className="flex items-center gap-3">
@@ -486,19 +449,19 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               </div>
               <span className="text-[13px] md:text-[16px] font-normal text-black">Residential</span>
             </div>
-            <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 flex items-center justify-center ${
-              selectedType === "residential" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedType === "residential" && (
-                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedType === "residential" && (
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
           <button
             type="button"
             onClick={() => handleTypeSelect("commercial")}
             className={`w-full font-roboto px-3 py-2 rounded-[10px] border-2 font-medium transition-all flex items-center justify-between ${
-              selectedType === "commercial" ? "border-orange-500 text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
+              selectedType === "commercial" ? "border-[#FF6E4A] text-black" : "border-[#E9EAEE] hover:border-orange-300 text-black bg-white"
             }`}
           >
             <div className="flex items-center gap-3">
@@ -512,13 +475,13 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               </div>
               <span className="text-[13px] md:text-[16px] font-normal text-black">Commercial</span>
             </div>
-            <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 flex items-center justify-center ${
-              selectedType === "commercial" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedType === "commercial" && (
-                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedType === "commercial" && (
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-3 h-3 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
         </div>
       </div>

@@ -17,7 +17,7 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
   const isStep15 = currentStep === 14;
   
   return (
-    <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-0 md:pt-[29px] md:pb-[25px] ${isStep15 ? 'max-w-[950px]' : ''}`}>
+    <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-0 md:pt-[29px] md:pb-[25px] ${isStep15 ? 'max-w-[950px] mx-auto' : ''}`}>
       {/* Mobile: Progress Bar (smaller height) at top */}
       <div className="flex md:hidden items-center justify-center w-full">
         <div 
@@ -40,7 +40,7 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
       {/* Desktop: Original Layout */}
       <div className={`hidden md:flex items-center w-full ${isStep15 ? 'gap-4' : 'gap-0'}`}>
         {/* Left: Go Back Button */}
-        <div className={`${isStep15 ? 'w-28' : 'w-32'}`}>
+        <div className={`${isStep15 ? 'w-28' : 'w-auto shrink-0'}`}>
           {showBack && (
             <button
               onClick={isBackDisabled ? undefined : onBack}
@@ -60,9 +60,9 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
         </div>
 
         {/* Center: Progress */}
-        <div className={`flex items-center flex-1 justify-center gap-4 ml-[29px]`}>
+        <div className={`flex items-center flex-1 justify-center gap-4 ${isStep15 ? 'mx-4' : 'mx-4 xl:mx-[29px]'}`}>
           <div 
-            className={`h-[35px] w-full rounded-[12px] relative overflow-hidden flex items-center justify-center shadow-inner ${isStep15 ? 'max-w-[600px]' : 'max-w-[800px]'}`}
+            className={`h-[35px] w-full rounded-[12px] relative overflow-hidden flex items-center justify-center shadow-inner ${isStep15 ? 'max-w-[550px]' : 'max-w-[500px] xl:max-w-[700px]'}`}
             style={{ backgroundColor: '#F6F6F6' }}
           >
             <div
@@ -79,12 +79,12 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
         </div>
 
         {/* Right: Next Button */}
-        <div className={`${isStep15 ? 'w-28' : 'w-32'} flex justify-end`}>
+        <div className={`${isStep15 ? 'w-28' : 'w-auto shrink-0'} flex justify-end`}>
           <button
             onClick={isNextDisabled || isSubmitting ? undefined : onNext}
             disabled={isNextDisabled || isSubmitting}
             className={`
-              flex items-center justify-center gap-[5px] w-[110px] px-4 h-[37px] bg-[#FF6E4A] text-white  ${isStep15 ? 'rounded-[10px]' : 'rounded-l-[10px]'} transition-opacity font-roboto
+              flex items-center justify-center gap-[5px] w-[110px] px-4 h-[37px] bg-[#FF6E4A] text-white ${isStep15 ? 'rounded-[10px]' : 'rounded-l-[10px]'} transition-opacity font-roboto
               ${isNextDisabled || isSubmitting
                 ? 'hover:cursor-not-allowed cursor-not-allowed opacity-70' 
                 : 'hover:opacity-90 hover:cursor-pointer cursor-pointer'

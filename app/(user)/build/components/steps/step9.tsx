@@ -113,13 +113,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Interior Double Rabbet</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedJambType === "interior_double_rabbet" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedJambType === "interior_double_rabbet" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedJambType === "interior_double_rabbet" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
           <button
             type="button"
@@ -131,13 +131,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Exterior Single Rabbet</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedJambType === "exterior_single_rabbet" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedJambType === "exterior_single_rabbet" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedJambType === "exterior_single_rabbet" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
           <button
             type="button"
@@ -149,13 +149,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Exterior Single Rabbet Kerfed</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedJambType === "exterior_single_rabbet_kerfed" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedJambType === "exterior_single_rabbet_kerfed" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedJambType === "exterior_single_rabbet_kerfed" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
         </div>
       </div>
@@ -198,13 +198,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Standard</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedDBStrikeType === "standard" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedDBStrikeType === "standard" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedDBStrikeType === "standard" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
           <button
             type="button"
@@ -216,13 +216,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Radius corner</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedDBStrikeType === "radius_corner" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedDBStrikeType === "radius_corner" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedDBStrikeType === "radius_corner" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
           <button
             type="button"
@@ -234,13 +234,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Box Strike</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedDBStrikeType === "box_strike" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedDBStrikeType === "box_strike" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedDBStrikeType === "box_strike" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
         </div>
       </div>
@@ -259,13 +259,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Standard</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedLockStrikeType === "standard" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedLockStrikeType === "standard" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedLockStrikeType === "standard" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
           <button
             type="button"
@@ -277,13 +277,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Radius Corner</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedLockStrikeType === "radius_corner" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedLockStrikeType === "radius_corner" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedLockStrikeType === "radius_corner" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
           <button
             type="button"
@@ -295,13 +295,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">T-Strike</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedLockStrikeType === "t_strike" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedLockStrikeType === "t_strike" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedLockStrikeType === "t_strike" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
         </div>
       </div>
@@ -334,13 +334,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">White</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedWeatherstripping === "white" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedWeatherstripping === "white" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedWeatherstripping === "white" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
           <button
             type="button"
@@ -352,13 +352,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Brown</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedWeatherstripping === "brown" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedWeatherstripping === "brown" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedWeatherstripping === "brown" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
         </div>
       </div>
@@ -377,13 +377,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Adjustable In-swing</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedThresholdType === "adjustable_in_swing" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedThresholdType === "adjustable_in_swing" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedThresholdType === "adjustable_in_swing" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
           <button
             type="button"
@@ -395,13 +395,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Out-Swing</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedThresholdType === "out_swing" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedThresholdType === "out_swing" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedThresholdType === "out_swing" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
           <button
             type="button"
@@ -413,13 +413,13 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
             }`}
           >
             <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Flat / Saddle</span>
-            <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-              selectedThresholdType === "flat_saddle" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedThresholdType === "flat_saddle" && (
-                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedThresholdType === "flat_saddle" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </button>
         </div>
       </div>

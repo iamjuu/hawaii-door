@@ -46,25 +46,27 @@ const Step2SingleOrDouble = ({ quoteData, setQuoteData, onNext }: StepProps) => 
             key={option.id}
             onClick={() => handleSelection(option.name)}
             className={`
-              relative border p-3 cursor-pointer transition-all
+              relative border-2 p-3 cursor-pointer transition-all
               w-full h-auto min-h-[140px] md:min-h-[180px]
-              hover:border-orange-500 hover:shadow-lg
+              hover:shadow-lg
              bg-white
+             ${
+               quoteData.doorConfig === option.name
+                 ? "border-[#FF6E4A] shadow-lg"
+                 : "border-gray-300"
+             }
             `}
-            style={{
-              borderColor: '#A3A3A3'
-            }}
           >
             {/* Selected Badge */}
             {quoteData.doorConfig === option.name && (
-              <div className="absolute top-4 right-4 z-10">
-                <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
+              <div className="absolute top-3 right-3 z-10">
+                <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center">
                   <svg
-                    className="w-5 h-5 text-white"
+                    className="w-3 h-3 md:w-4 md:h-4 text-white"
                     fill="none"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth="2"
+                    strokeWidth="3"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >

@@ -495,7 +495,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
   };
 
   return (
-    <div className="mt-[50px] mb-[50px] max-w-6xl font-roboto">
+    <div className="mt-[50px] mb-[50px] max-w-6xl mx-auto font-roboto">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">
         Review & Submit
       </h2>

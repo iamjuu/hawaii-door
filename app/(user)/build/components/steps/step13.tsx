@@ -111,23 +111,23 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
               onClick={() => handleFinishSelect(option.id)}
               className={`
                 relative cursor-pointer transition-all flex flex-col overflow-hidden
-                rounded-xl shadow-md hover:shadow-lg max-w-[230px] mx-auto
+                rounded-xl shadow-md hover:shadow-lg max-w-[230px] mx-auto border-2
                 ${
                   selectedFinishOption === option.id
-                    ? "border border-gray-200 bg-white shadow-lg"
-                    : "border border-gray-200 bg-white"
+                    ? "border-[#FF6E4A] bg-white shadow-lg"
+                    : "border-gray-200 bg-white"
                 }
               `}
             >
               {selectedFinishOption === option.id && (
-                <div className="absolute top-2 right-2 z-10">
-                  <div className="w-6 h-6 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
+                <div className="absolute top-3 right-3 z-10">
+                  <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center">
                     <svg
-                      className="w-4 h-4 text-white"
+                      className="w-3 h-3 md:w-4 md:h-4 text-white"
                       fill="none"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      strokeWidth="2"
+                      strokeWidth="3"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                     >

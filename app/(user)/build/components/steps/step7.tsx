@@ -76,24 +76,24 @@ const Step7 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           <div
             key={option.id}
             onClick={() => handleSelection(option.name)}
-            className={`relative border   pb-3 cursor-pointer transition-all
-               hover:shadow-2xl hover:scale-105
+            className={`relative border-2 pb-3 cursor-pointer transition-all
+               hover:shadow-lg
               ${
                 quoteData.louver === option.name
-                  ? " shadow-2xl border border-[#A3A3A3] bg-white"
-                  : "border border-[#A3A3A3] bg-white"
+                  ? "shadow-lg border-[#FF6E4A] bg-white"
+                  : "border-gray-300 bg-white"
               }`}
           >
-            {/* Selected Badge (same style as Step 2) */}
+            {/* Selected Badge */}
             {quoteData.louver === option.name && (
-              <div className="absolute top-2 right-2 z-10">
-                <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
+              <div className="absolute top-3 right-3 z-10">
+                <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center">
                   <svg
-                    className="w-5 h-5 text-white"
+                    className="w-3 h-3 md:w-4 md:h-4 text-white"
                     fill="none"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth="2"
+                    strokeWidth="3"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useState } from "react";
 import { GoChevronRight } from "react-icons/go";
 import FiberDoorImage from "../../../../../public/assets/images/landing/door41.png"
 import HollowCoreDoorImage from "../../../../../public/assets/images/landing/door5050.png"
@@ -24,6 +25,12 @@ interface StepProps {
       { name: "Other (Special Order)", image: OtherDoorImage, size: "8'0\"" },
       
     ];
+
+    const predefinedCategories = doorCategories.map(cat => cat.name);
+    const isCustomDoor = quoteData.doorType && !predefinedCategories.includes(quoteData.doorType);
+    
+    const [customDoorType, setCustomDoorType] = useState(isCustomDoor ? quoteData.doorType : "");
+    const [showOtherInput, setShowOtherInput] = useState(isCustomDoor);
   
     return (
       <div className="mt-[50px] md:mb-[70px] mb-[50px]  md:pr-20">
@@ -34,11 +41,17 @@ interface StepProps {
             <div
               key={category.name}
               onClick={() => {
-                setQuoteData({ ...quoteData, doorType: category.name });
-                if (onNext) {
-                  setTimeout(() => {
-                    onNext(category.name);
-                  }, 300);
+                if (category.name === "Other (Special Order)") {
+                  setQuoteData({ ...quoteData, doorType: category.name });
+                  setShowOtherInput(true);
+                } else {
+                  setQuoteData({ ...quoteData, doorType: category.name });
+                  setShowOtherInput(false);
+                  if (onNext) {
+                    setTimeout(() => {
+                      onNext(category.name);
+                    }, 300);
+                  }
                 }
               }}
               className={`
@@ -52,7 +65,7 @@ interface StepProps {
               `}
             >
               {/* Selected Badge */}
-              {quoteData.doorType === category.name && (
+              {(quoteData.doorType === category.name || (category.name === "Other (Special Order)" && isCustomDoor)) && (
                 <div className="absolute top-3 right-3 z-10">
                   <div className="w-8 h-8 bg-[#FF6E4A] rounded-full flex items-center justify-center shadow-lg">
                     <svg
@@ -100,6 +113,38 @@ interface StepProps {
             </div>
           ))}
         </div>
+
+        {/* Custom Door Type Input for "Other" */}
+        {showOtherInput && (
+          <div className="mt-6 max-w-md">
+            <input
+              type="text"
+              value={customDoorType}
+              onChange={(e) => {
+                const value = e.target.value.slice(0, 20); // Limit to 20 characters
+                setCustomDoorType(value);
+                setQuoteData({ ...quoteData, doorType: value || "Other (Special Order)" });
+              }}
+              onBlur={() => {
+                if (customDoorType.trim()) {
+                  setQuoteData({ ...quoteData, doorType: customDoorType.trim() });
+                  if (onNext) {
+                    setTimeout(() => {
+                      onNext(customDoorType.trim());
+                    }, 300);
+                  }
+                }
+              }}
+              maxLength={20}
+              placeholder="Please specify your door"
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 text-[14px] md:text-[16px] font-roboto"
+              autoFocus
+            />
+            <p className="text-xs text-gray-500 mt-2">
+              {customDoorType.length}/20 characters
+            </p>
+          </div>
+        )}
       </div>
     );
   };

@@ -59,29 +59,11 @@ const Step5 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
              hover:shadow-lg
             ${
               selectedOption === `4-5/8\" (w/wood stud)`
-                ? " shadow-lg border-gray-200 bg-white "
+                ? " shadow-lg border-[#FF6E4A] bg-white "
                 : "border-gray-200 bg-white"
             }
           `}
         >
-          {/* Selected Badge */}
-          {selectedOption === `4-5/8\" (w/wood stud)` && (
-            <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-            </div>
-          )}
           <div className="relative w-full aspect-[4/3] mb-3">
             <Image
               src={m4img}
@@ -90,9 +72,27 @@ const Step5 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               className="object-contain"
             />
           </div>
-          <p className="text-[12.7px] text-black font-roboto font-medium text-center">
-           4-5/8" (w/wood stud)
-          </p>
+          <div className="flex items-center justify-between w-full">
+            <p className="text-[12.7px] text-black font-roboto font-medium text-center flex-1">
+              4-5/8" (w/wood stud)
+            </p>
+            {/* Selected Badge */}
+            {selectedOption === `4-5/8\" (w/wood stud)` && (
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0 ml-2">
+                <svg
+                  className="w-3 h-3 md:w-4 md:h-4 text-white"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="3"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Option 2 */}
@@ -103,29 +103,11 @@ const Step5 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
              hover:shadow-lg
             ${
               selectedOption === `4-7/8\" (w/wood stud)`
-                ? "shadow-lg border-gray-200 bg-white"
+                ? "shadow-lg border-[#FF6E4A] bg-white"
                 : "border-gray-200 bg-white"
             }
           `}
         >
-          {/* Selected Badge */}
-          {selectedOption === `4-7/8\" (w/wood stud)` && (
-            <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-            </div>
-          )}
           <div className="relative w-full aspect-[4/3] mb-3">
             <Image
               src={m3img}
@@ -134,9 +116,27 @@ const Step5 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               className="object-contain"
             />
           </div>
-          <p className="text-[12.7px] text-black font-roboto font-medium text-center">
-            4-7/8" (w/wood stud)
-          </p>
+          <div className="flex items-center justify-between w-full">
+            <p className="text-[12.7px] text-black font-roboto font-medium text-center flex-1">
+              4-7/8" (w/wood stud)
+            </p>
+            {/* Selected Badge */}
+            {selectedOption === `4-7/8\" (w/wood stud)` && (
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0 ml-2">
+                <svg
+                  className="w-3 h-3 md:w-4 md:h-4 text-white"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="3"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Option 3 */}
@@ -147,29 +147,11 @@ const Step5 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
            hover:shadow-lg
             ${
               selectedOption === `6-1/8\" (w/wood stud)`
-                ? "shadow-lg border-gray-200 bg-white"
+                ? "shadow-lg border-[#FF6E4A] bg-white"
                 : "border-gray-200 bg-white"
             }
           `}
         >
-          {/* Selected Badge */}
-          {selectedOption === `6-1/8\" (w/wood stud)` && (
-            <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-            </div>
-          )}
           <div className="relative w-full aspect-[4/3] mb-3">
             <Image
               src={m2img}
@@ -178,9 +160,27 @@ const Step5 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               className="object-contain"
             />
           </div>
-          <p className="text-[12.7px] text-black font-roboto font-medium text-center">
-          6-1/8" (w/wood stud)
-          </p>
+          <div className="flex items-center justify-between w-full">
+            <p className="text-[12.7px] text-black font-roboto font-medium text-center flex-1">
+              6-1/8" (w/wood stud)
+            </p>
+            {/* Selected Badge */}
+            {selectedOption === `6-1/8\" (w/wood stud)` && (
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0 ml-2">
+                <svg
+                  className="w-3 h-3 md:w-4 md:h-4 text-white"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="3"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Option 4 */}
@@ -191,29 +191,11 @@ const Step5 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             hover:shadow-lg
             ${
               selectedOption === `6-3/4\" (w/wood stud)`
-                ? "shadow-lg border-gray-200 bg-white"
+                ? "shadow-lg border-[#FF6E4A] bg-white"
                 : "border-gray-200 bg-white"
             }
           `}
         >
-          {/* Selected Badge */}
-          {selectedOption === `6-3/4\" (w/wood stud)` && (
-            <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M5 13l4 4L19 7"></path>
-                </svg>
-              </div>
-            </div>
-          )}
           <div className="relative w-full aspect-[4/3] mb-3">
             <Image
               src={m1img}
@@ -222,9 +204,27 @@ const Step5 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               className="object-contain"
             />
           </div>
-          <p className="text-[12.7px] text-black font-roboto font-medium text-center">
-            6-3/4" (w/wood stud)
-          </p>
+          <div className="flex items-center justify-between w-full">
+            <p className="text-[12.7px] text-black font-roboto font-medium text-center flex-1">
+              6-3/4" (w/wood stud)
+            </p>
+            {/* Selected Badge */}
+            {selectedOption === `6-3/4\" (w/wood stud)` && (
+              <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0 ml-2">
+                <svg
+                  className="w-3 h-3 md:w-4 md:h-4 text-white"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="3"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Input card – custom value */}

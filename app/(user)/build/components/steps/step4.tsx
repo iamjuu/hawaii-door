@@ -24,11 +24,11 @@ const Step4 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   };
 
   return (
-    <div className="mt-[50px] mb-[50px] ">
-      <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Has the wall been built yet?</h2>
+    <div className="mt-[50px] mb-[50px] max-w-[700px] mx-auto">
+      <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black text-center">Has the wall been built yet?</h2>
 
       <div>
-        <div className="grid grid-cols-2 gap-3 max-w-[700px]">
+        <div className="grid grid-cols-2 gap-3">
           <button
             onClick={() => handleSelect("yes")}
             className={`px-1 md:px-4 py-1 md:py-3 border font-medium transition-all text-center hover:shadow-lg hover:cursor-pointer ${

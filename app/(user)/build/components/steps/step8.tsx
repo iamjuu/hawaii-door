@@ -216,18 +216,18 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             onClick={() => handleLockTypeSelect("deadbolt")}
             className={`relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${
               selectedLockType === "deadbolt"
-                ? "border-gray-200 bg-white shadow-lg"
+                ? "border-[#FF6E4A] bg-white shadow-lg"
                 : "border-gray-200 bg-white"
             }`}
           >
             {/* Circle indicator top right */}
-            <div className={`absolute top-3 right-3 w-5 h-5  rounded-full border-2 flex items-center justify-center ${
-              selectedLockType === "deadbolt" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedLockType === "deadbolt" && (
-                <div className="w-3 h-3  rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedLockType === "deadbolt" && (
+              <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-[#FF6E4A] flex items-center justify-center z-10">
+                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
             
             <div className="flex items-center gap-4">
               {/* Image before text */}
@@ -254,18 +254,18 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             onClick={() => handleLockTypeSelect("door_knob")}
             className={`md:hidden relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${
               selectedLockType === "door_knob"
-                ? "border-gray-200 bg-whiteshadow-lg"
+                ? "border-[#FF6E4A] bg-white shadow-lg"
                 : "border-gray-200 bg-white"
             }`}
           >
             {/* Circle indicator top right */}
-            <div className={`absolute top-3 right-3 w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-              selectedLockType === "door_knob" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedLockType === "door_knob" && (
-                <div className="w-3 h-3 rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedLockType === "door_knob" && (
+              <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-[#FF6E4A] flex items-center justify-center z-10">
+                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
             
             <div className="flex items-center gap-4">
               {/* Image before text */}
@@ -304,13 +304,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 }`}
               >
                 <span className="text-left text-black font-roboto">1&quot;</span>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedBoreDiameter === "1" ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedBoreDiameter === "1" && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedBoreDiameter === "1" && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
               <button
                 type="button"
@@ -322,13 +322,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 }`}
               >
                 <span className="text-left text-black font-roboto">⅞&quot;</span>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedBoreDiameter === "7/8" ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedBoreDiameter === "7/8" && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedBoreDiameter === "7/8" && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
               <button
                 type="button"
@@ -340,13 +340,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 }`}
               >
                 <span className="text-left text-black font-roboto font-[400]">Other</span>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedBoreDiameter === "other" ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedBoreDiameter === "other" && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedBoreDiameter === "other" && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
             </div>
             {selectedBoreDiameter === "other" && (
@@ -393,18 +393,18 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             onClick={() => handleLockTypeSelect("door_knob")}
             className={`hidden md:block relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${
               selectedLockType === "door_knob"
-                ? "border-gray-200 bg-whiteshadow-lg"
+                ? "border-[#FF6E4A] bg-white shadow-lg"
                 : "border-gray-200 bg-white"
             }`}
           >
             {/* Circle indicator top right */}
-            <div className={`absolute top-3 right-3 w-5 h-5  rounded-full border-2 flex items-center justify-center ${
-              selectedLockType === "door_knob" ? "border-orange-500" : "border-gray-300"
-            }`}>
-              {selectedLockType === "door_knob" && (
-                <div className="w-3 h-3  rounded-full bg-[#FF6E4A]-500"></div>
-              )}
-            </div>
+            {selectedLockType === "door_knob" && (
+              <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-[#FF6E4A] flex items-center justify-center z-10">
+                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
             
             <div className="flex items-center gap-4">
               {/* Image before text */}
@@ -512,13 +512,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               }`}
             >
               <span className="text-left text-black font-roboto font-[400]">1 Default</span>
-              <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                selectedLatchBoreDiameter === "default" ? "border-orange-500" : "border-gray-300"
-              }`}>
-                {selectedLatchBoreDiameter === "default" && (
-                  <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                )}
-              </div>
+              {selectedLatchBoreDiameter === "default" && (
+                <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                  <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              )}
             </button>
           </div>
         </div>
@@ -546,13 +546,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 }`}
               >
                 <span className="text-left text-black font-roboto">1&quot; x 2 ¼&quot; x 5/32&quot;</span>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedFaceplateDimension === '1" x 2 1/4" x 5/32"' ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedFaceplateDimension === '1" x 2 1/4" x 5/32"' && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedFaceplateDimension === '1" x 2 1/4" x 5/32"' && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
               <button
                 type="button"
@@ -566,13 +566,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 }`}
               >
                 <span className="text-left text-black font-roboto">1 ⅛&quot; x 2 ¼&quot; x 5/32&quot;</span>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedFaceplateDimension === '1 1/8" x 2 1/4" x 5/32"' ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedFaceplateDimension === '1 1/8" x 2 1/4" x 5/32"' && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedFaceplateDimension === '1 1/8" x 2 1/4" x 5/32"' && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
               <button
                 type="button"
@@ -584,13 +584,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 }`}
               >
                 <span className="text-left text-black font-roboto text-[15px] font-[400]">Other</span>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedFaceplateDimension === "other" ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedFaceplateDimension === "other" && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedFaceplateDimension === "other" && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
             </div>
             {selectedFaceplateDimension === "other" && (
@@ -620,13 +620,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 }`}
               >
                 <span className="text-left text-black font-roboto">⅞&quot;</span>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedDriveInDiameter === '7/8"' ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedDriveInDiameter === '7/8"' && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedDriveInDiameter === '7/8"' && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
               <button
                 type="button"
@@ -638,13 +638,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 }`}
               >
                 <span className="text-left text-black font-roboto">1&quot;</span>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedDriveInDiameter === '1"' ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedDriveInDiameter === '1"' && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedDriveInDiameter === '1"' && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
               <button
                 type="button"
@@ -656,13 +656,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 }`}
               >
                 <span className="text-left text-black font-roboto font-[400]">Other</span>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedDriveInDiameter === "other" ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedDriveInDiameter === "other" && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedDriveInDiameter === "other" && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
             </div>
             {selectedDriveInDiameter === "other" && (
@@ -705,13 +705,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   </div>
                   <span className="text-left text-black font-roboto font-[400]">¼&quot; Radius</span>
                 </div>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedFaceplateRadius === '1/4" radius' ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedFaceplateRadius === '1/4" radius' && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedFaceplateRadius === '1/4" radius' && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
               <button
                 type="button"
@@ -733,13 +733,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   </div>
                   <span className="text-left text-black font-roboto font-[400]">Square</span>
                 </div>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedFaceplateRadius === "square" ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedFaceplateRadius === "square" && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedFaceplateRadius === "square" && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
             </div>
           </div>
