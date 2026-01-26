@@ -55,8 +55,8 @@ export default function BannerSection() {
             pt-16 sm:pt-0
           "
         >
-          <div className="w-full px-6 sm:px-8 md:px-15">
-            <div className="max-w-7xl">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+            <div className="max-w-[1400px] 2xl:mx-auto">
               <div className="text-white max-w-[95%] sm:max-w-[90%]">
 
                 {/* Heading */}

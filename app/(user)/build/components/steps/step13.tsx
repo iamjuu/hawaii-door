@@ -121,7 +121,7 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
             >
               {selectedFinishOption === option.id && (
                 <div className="absolute top-2 right-2 z-10">
-                  <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                  <div className="w-6 h-6 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
                     <svg
                       className="w-4 h-4 text-white"
                       fill="none"

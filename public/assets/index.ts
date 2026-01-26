@@ -131,6 +131,11 @@ export {default as ProductFootericonDoor} from './icon/dooricon.svg'
 export {default as ProductFootericonSettings} from './icon/settingsicon.svg'
 export {default as ProductFootericonTck} from './icon/tickicon.svg'
 
+// Green hover versions
+export {default as ProductFootericonDoorGreen} from './icon/door-green.svg'
+export {default as ProductFootericonSettingsGreen} from './icon/settings-green.svg'
+export {default as ProductFootericonTruckGreen} from './icon/truck-green.svg'
+
 export {default as ProductFootericonDoor1} from './icon/tickicon.svg'
 export {default as ProductFootericonSettings2} from './icon/tickicon.svg'
 export {default as ProductFootericonBlock} from './icon/tickicon.svg'

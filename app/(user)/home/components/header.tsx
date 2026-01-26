@@ -18,12 +18,12 @@ const Heading: React.FC<HeadingProps> = ({ heading, subheading, className = "" }
     font-roboto
   `}
 >
-      <h1 className="text-[23px] md:text-[46px] font-medium text-black font-roboto">
+      <h1 className="text-[23px] md:text-[46px] font-[500] text-black font-roboto leading-[32px] md:leading-[62px] tracking-normal">
         {heading}
       </h1>
 
       {subheading && (
-        <p className="text-sm md:text-[18px] font-[400] text-[#3B3B3B] font-montserrat max-w-xl">
+        <p className="text-sm md:text-base font-[400] text-[#3B3B3B] font-roboto max-w-xl">
           {subheading}
         </p>
       )}

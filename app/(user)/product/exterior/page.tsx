@@ -115,7 +115,7 @@ const ExteriorPage = () => {
                 <li>Variety of wood species and glass options</li>
               </ul>
               <Link href="/product/exterior/exterior-wood">
-                <button className="w-fit px-8 py-3 bg-[#FF6E4A] text-white rounded-md hover:bg-orange-500 transition">
+                <button className="w-fit px-8 py-3 bg-[#FF6E4A] text-white rounded-md hover:bg-[#FF6E4A]-500 transition">
                   LEARN MORE
                 </button>
               </Link>

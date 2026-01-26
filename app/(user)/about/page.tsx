@@ -5,7 +5,7 @@ import Navbar from '@/components/user/Navbar'
 import Footer from '@/components/user/Footer'
 import PageLoader from '@/components/user/PageLoader'
 import Image from 'next/image'
-import { About1, About2 } from '@/public/assets'
+import { About1, About2, iconAbout1, iconAbout2, iconAbout3 } from '@/public/assets'
 
 const page = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,10 +23,11 @@ const page = () => {
       <Navbar />
       
       {/* Main Content */}
-      <main className="min-h-screen bg-white  ">
+      <main className="min-h-screen bg-white">
     {/* Hero Section */}
-    <section className="w-full px-6 md:px-12 lg:px-20 py-16 md:py-4 md:mt-[120px]">
-    <div className="w-full md:max-w-7xl md:mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
+    <section className="w-full py-16 md:py-4 md:mt-[120px]">
+    <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+    <div className="max-w-[1400px] 2xl:mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
       
       {/* Left Content */}
       <div className="flex w-full gap-5 flex-col">
@@ -58,13 +59,15 @@ const page = () => {
         />
       </div>
     </div>
+    </div>
   </section>
 
 
-        <section className="px-6 md:px-12 lg:px-20 py-16">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-[130px]">
-            {/* Centered Card with Border */}
-            <div className="bg-white border-[40px] border-[#D4A574] border-b-0  p-8 md:p-12 lg:p-16">
+        <section className="w-full py-10 sm:py-12 md:py-[50px]">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+            <div className="max-w-[1400px] 2xl:mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-[130px]">
+              {/* Centered Card with Border */}
+              <div className="bg-white border-[40px] border-[#D4A574] border-b-0  p-8 md:p-12 lg:p-16">
             <div className="text-center space-y-6">
                 <p className='text-[14px] font-[500] text-black'>
                   Our Vision
@@ -80,31 +83,108 @@ const page = () => {
             <div className="bg-white border-[40px] border-[#D4A574] border-b-0  p-8 md:p-12 lg:p-16">
             <div className="text-center space-y-6">
                 <p className='text-[14px] font-[500] text-black'>
-                  Our Vision
+                  Our Mission
                 </p>
                 <h1 className='text-3xl md:text-4xl lg:text-[36px] font-[600] text-black leading-tight'>
-                  Build doors that set the standard for Hawaii
+                  Built with purpose.<br />
+                  Driven by precision.
                 </h1>
-                <p className='text-base md:text-[16px] font-[300] text-black leading-relaxed max-w-2xl mx-auto'>
-                  Become the only door company architects & builders call when the fit, timeline, and reputation all have to be perfect.
+                <p className='text-base md:text-[16px] font-[300] text-[#3B3B3B] leading-relaxed max-w-2xl mx-auto'>
+                  Deliver premium door craftsmanship, every time. The door industry settled for 'good enough.' We didn't. Precision-machined. Pre-hung. Island-ready. That's not premium service. That's the baseline.
                 </p>
               </div>
             </div>
           </div>
+          </div>
         </section>
 
 
-        {/* Second Section - Optional additional content */}
-        <section className="px-6 md:px-12 lg:px-20 py-16 ">
-          <div className="max-w-7xl mx-auto">
+        {/* Horizontal Bar - Measure, Machine, Deliver */}
+        <section className="w-full bg-[#F6F5F1] h-20 flex items-center">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+          <div className="max-w-[1400px] 2xl:mx-auto w-full">
+            <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 lg:gap-16">
+              {/* Measure */}
+              <div className="flex flex items-center gap-2">
+                <div className="relative w-6 h-6 md:w-7 md:h-7">
+                  <Image
+                    src={iconAbout2}
+                    alt="Measure"
+                    width={28}
+                    height={28}
+                    className="w-6 h-6 md:w-7 md:h-7"
+                  />
+                </div>
+                <span className="text-[#585858] font-roboto text-xs md:text-sm font-[400]">
+                  Measure
+                </span>
+              </div>
+
+              {/* Machine */}
+              <div className="flex flex items-center gap-2">
+                <div className="relative w-6 h-6 md:w-7 md:h-7">
+                  <Image
+                    src={iconAbout3}
+                    alt="Machine"
+                    width={28}
+                    height={28}
+                    className="w-6 h-6 md:w-7 md:h-7"
+                  />
+                </div>
+                <span className="text-[#585858] font-roboto text-xs md:text-sm font-[400]">
+                  Machine
+                </span>
+              </div>
+
+              {/* Deliver */}
+              <div className="flex  items-center gap-2">
+                <div className="relative w-6 h-6 md:w-7 md:h-7">
+                  <Image
+                    src={iconAbout1}
+                    alt="Deliver"
+                    width={28}
+                    height={28}
+                    className="w-6 h-6 md:w-7 md:h-7"
+                  />
+                </div>
+                <span className="text-[#585858] font-roboto text-xs md:text-sm font-[400]">
+                  Deliver
+                </span>
+              </div>
+            </div>
+          </div>
+          </div>
+        </section>
+
+        {/* Meet Our Team Section */}
+        <section className="w-full mt-[50px]">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+          <div className="max-w-[1400px] 2xl:mx-auto">
+            <div className="text-left space-y-6">
+              <h2 className="text-[23px] md:text-[46px] font-[600] text-black font-roboto leading-[56px] tracking-[0%]">
+                Meet Our Team
+              </h2>
+              <p className="text-sm md:text-base font-[400] text-[#3B3B3B] font-roboto leading-relaxed max-w-3xl">
+                A group of experienced makers, each adding precision and knowledge to <br /> raise the quality of every project.
+              </p>
+            </div>
+          </div>
+          </div>
+        </section>
+
+        {/* Photo Section */}
+        <section className="w-full py-10 sm:py-12 md:py-[50px]">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+          <div className="max-w-[1400px] 2xl:mx-auto">
             <div className="relative h-[300px] md:h-[400px] rounded-[15px] overflow-hidden">
               <Image
                 src={About1}
-                alt="Hawaii Western Doors"
+                alt="Hawaii Western Doors Team"
                 fill
                 className="object-cover"
               />
             </div>
+          </div>
           </div>
         </section>
       </main>

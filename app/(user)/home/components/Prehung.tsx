@@ -7,14 +7,15 @@ import Link from "next/link"
 const Prehung = () => {
 
   return (
-    <div className="w-full px-5 md:px-15 mb-12 py-8 md:pt-12 md:pb-16 lg:pb-20 bg-white  ">
-      <div className="max-w-[1400px] mx-auto">
+    <div className="w-full py-10 sm:py-12 md:py-[50px] bg-white">
+      <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+      <div className="max-w-[1400px] 2xl:mx-auto">
         <div className="relative w-full min-h-[400px] md:min-h-[420px] bg-[#84684C] rounded-lg overflow-hidden">
 
           {/* ================= LEFT CONTENT ================= */}
           <div className="relative z-10 flex flex-col justify-center h-full px-4 sm:px-8 md:px-12 lg:px-16 pt-8 pt-12 md:py-16">
             <div className="max-w-xl">
-              <h2 className="font-roboto font-medium md:font-semibold text-2xl md:text-5xl text-white leading-tight mb-4 md:mb-6">
+              <h2 className="font-roboto font-[500] text-[23px] md:text-[46px] text-white leading-[32px] md:leading-[62px] tracking-normal mb-4 md:mb-6">
                 Pre-Hung. Pre-Bored.<br />
                 Problem-Solved.
               </h2>
@@ -73,6 +74,7 @@ const Prehung = () => {
           </div>
 
         </div>
+      </div>
       </div>
     </div>
   )

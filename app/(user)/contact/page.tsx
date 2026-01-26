@@ -148,7 +148,7 @@ We review every message personally, no bots, no scripts, just people who know do
                     <p className="mb-3 md:mb-0 text-black">Visit US</p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="bg-orange-50 p-2 rounded-full flex-shrink-0">
+                    <div className="bg-[#FF6E4A]-50 p-2 rounded-full flex-shrink-0">
                       <svg
                         className="w-5 h-5 text-orange-500"
                         fill="none"
@@ -184,7 +184,7 @@ We review every message personally, no bots, no scripts, just people who know do
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="bg-orange-50 p-2 rounded-full flex-shrink-0">
+                    <div className="bg-[#FF6E4A]-50 p-2 rounded-full flex-shrink-0">
                       <svg
                         className="w-5 h-5 text-orange-500"
                         fill="none"
@@ -213,7 +213,7 @@ We review every message personally, no bots, no scripts, just people who know do
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="bg-orange-50 p-2 rounded-full flex-shrink-0">
+                    <div className="bg-[#FF6E4A]-50 p-2 rounded-full flex-shrink-0">
                       <svg
                         className="w-5 h-5 text-orange-500"
                         fill="none"
@@ -242,7 +242,7 @@ We review every message personally, no bots, no scripts, just people who know do
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="bg-orange-50 p-2 rounded-full flex-shrink-0">
+                    <div className="bg-[#FF6E4A]-50 p-2 rounded-full flex-shrink-0">
                       <svg
                         className="w-5 h-5 text-orange-500"
                         fill="currentColor"
@@ -342,7 +342,7 @@ We review every message personally, no bots, no scripts, just people who know do
 
                 <button
                   onClick={handleSubmit}
-                  className="w-full bg-white border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-semibold py-4 rounded-md transition-all text-base"
+                  className="w-full bg-white border-2 border-orange-500 text-orange-500 hover:bg-[#FF6E4A]-500 hover:text-white font-semibold py-4 rounded-md transition-all text-base"
                 >
                   Get In Touch
                 </button>

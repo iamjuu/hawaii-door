@@ -172,22 +172,24 @@ const GalleryPage = () => {
 
       <main className="min-h-screen bg-white pt-[70px] md:pt-[80px]">
         {/* HERO */}
-        <section className="px-6 md:px-12 lg:px-20 py-16 md:py-24">
-          <div className="max-w-7xl mx-auto">
-            <h1 className="text-[28px] md:text-[56px] font-semibold mb-6">
-              Doors That Speak <br /> for Themselves
-            </h1>
-            <p className="text-[18px] text-gray-700 max-w-2xl">
-              See recent installs, machining projects, and custom builds across
-              Hawai‘i.
-            </p>
+        <section className="w-full py-10 sm:py-12 md:py-16">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+            <div className="max-w-[1400px] 2xl:mx-auto">
+              <h1 className="text-[23px] md:text-[46px] font-[600] text-black font-roboto leading-[32px] md:leading-[56px] tracking-normal mb-4">
+                Doors That Speak<br />for Themselves
+              </h1>
+              <p className="text-sm md:text-base font-[400] text-[#3B3B3B] font-roboto max-w-2xl">
+                See recent installs, machining projects, and custom builds across O'ahu, Maui, Kaua'i, and Hawai'i Island. Every project tells the same story: precision, fit, and finish done right.
+              </p>
+            </div>
           </div>
         </section>
 
         {/* CONTENT */}
-        <section className="px-6 md:px-12 lg:px-20 pb-16">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col lg:flex-row gap-8">
+        <section className="w-full pb-16">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+          <div className="max-w-[1400px] 2xl:mx-auto">
+            <div className="flex flex-col lg:flex-row gap-8 items-start">
 
               {/* FILTER SIDEBAR */}
               <aside
@@ -198,7 +200,7 @@ const GalleryPage = () => {
                   transform transition-transform duration-300
                   ${openFilter ? "translate-x-0" : "-translate-x-full"}
                   md:translate-x-0
-                  lg:sticky lg:top-[100px]
+                  lg:sticky lg:top-[100px] lg:self-start lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto
                 `}
               >
                 {/* MOBILE HEADER */}
@@ -210,13 +212,16 @@ const GalleryPage = () => {
                 </div>
 
                 {/* DESKTOP HEADER - Simple Title */}
-                <div className="hidden md:block mb-6">
-                  <h2 className="text-lg font-semibold">Filters</h2>
+                <div className="hidden md:block">
+                  <div className="flex items-center gap-2">
+                    <FiFilter className="text-lg" />
+                    <h2 className="text-lg font-semibold">Filters</h2>
+                  </div>
                 </div>
 
 
                 {/* PRODUCT */}
-                <div className="mb-8">
+                <div className="mb-8 mt-6">
                   <h3 className="text-sm font-semibold mb-4">Product</h3>
                   <div className="flex gap-2">
                     {["All", "Interior", "Exterior"].map((p) => (
@@ -240,16 +245,23 @@ const GalleryPage = () => {
                 {/* TYPE */}
                 <div className="mb-8">
                   <h3 className="text-sm font-semibold mb-4">Type</h3>
-                  {["Single", "Double", "Barn", "Dutch"].map((type) => (
+                  {[{ label: "All", value: "All" }, { label: "Single", value: "Single" }, { label: "Double", value: "Double" }, { label: "Barn", value: "Barn" }, { label: "Dutch", value: "Dutch" }].map((type) => (
                     <label
-                      key={type}
+                      key={type.value}
                       className="flex justify-between items-center mb-3 cursor-pointer"
                     >
-                      <span>{type}</span>
+                      <span className="text-sm">{type.label}</span>
                       <input
                         type="checkbox"
-                        checked={selectedTypes.includes(type)}
-                        onChange={() => handleTypeToggle(type)}
+                        checked={type.value === "All" ? selectedTypes.length === 0 : selectedTypes.includes(type.value)}
+                        onChange={() => {
+                          if (type.value === "All") {
+                            setSelectedTypes([]);
+                          } else {
+                            handleTypeToggle(type.value);
+                          }
+                        }}
+                        className="w-4 h-4"
                       />
                     </label>
                   ))}
@@ -258,16 +270,23 @@ const GalleryPage = () => {
                 {/* GLASS */}
                 <div className="mb-8">
                   <h3 className="text-sm font-semibold mb-4">Glass</h3>
-                  {["With Glass", "Without Glass"].map((g) => (
+                  {[{ label: "All", value: "All" }, { label: "With Glass", value: "With Glass" }, { label: "Without Glass", value: "Without Glass" }].map((g) => (
                     <label
-                      key={g}
+                      key={g.value}
                       className="flex justify-between items-center mb-3 cursor-pointer"
                     >
-                      <span>{g}</span>
+                      <span className="text-sm">{g.label}</span>
                       <input
                         type="checkbox"
-                        checked={selectedGlass.includes(g)}
-                        onChange={() => handleGlassToggle(g)}
+                        checked={g.value === "All" ? selectedGlass.length === 0 : selectedGlass.includes(g.value)}
+                        onChange={() => {
+                          if (g.value === "All") {
+                            setSelectedGlass([]);
+                          } else {
+                            handleGlassToggle(g.value);
+                          }
+                        }}
+                        className="w-4 h-4"
                       />
                     </label>
                   ))}
@@ -282,10 +301,17 @@ const GalleryPage = () => {
               </aside>
 
               {/* RIGHT CONTENT */}
-              <div className="flex-1">
+              <div className="flex-1 overflow-x-hidden">
+                {/* Showing count */}
+                <div className="mb-3">
+                  <p className="text-sm font-[400] text-[#585858] font-roboto">
+                    Showing {filteredDoors.length} doors
+                  </p>
+                </div>
                 <ParallaxScrollSecondDemo filteredItems={filteredDoors} />
               </div>
             </div>
+          </div>
           </div>
         </section>
       </main>

@@ -460,7 +460,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => handleSave(section)}
-            className="flex items-center gap-1 px-3 py-1 bg-orange-500 text-white rounded text-[12px] md:text-[14px] font-roboto hover:bg-orange-600 transition-colors"
+            className="flex items-center gap-1 px-3 py-1 bg-[#FF6E4A]-500 text-white rounded text-[12px] md:text-[14px] font-roboto hover:bg-[#FF6E4A]-600 transition-colors"
           >
             Save
           </button>

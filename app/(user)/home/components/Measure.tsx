@@ -10,26 +10,27 @@ const Measure = () => {
   return (
     <>
       {/* Main Section */}
-      <div className="w-full py-[50px] pb-5 font-inter">
-        <div className="max-w-7xl md:max-w-full mx-auto px-4 sm:px-6 md:px-[60px] flex flex-co">
+      <div className="w-full py-10 sm:py-12 md:py-[50px] font-inter">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+        <div className="max-w-[1400px] 2xl:mx-auto flex flex-col">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start">
 
             {/* Left Content */}
             <div className="order-2 lg:order-1 flex flex-col justify-between gap-10 md:gap-[70px]">
               <div className="flex flex-col gap-6 max-w-[95%] md:max-w-none">
 
-                <h1 className="text-[23px] md:text-[46px] font-medium text-black font-roboto">
+                <h1 className="text-[23px] md:text-[46px] font-[600] text-black font-roboto leading-[32px] md:leading-[62px] tracking-normal">
                   Measure Twice.
                   <br />
                   Deliver Once.
                 </h1>
 
-                <p className="font-Roboto text-[#3B3B3B] text-[18px] font-[300] leading-[30px]leading-[30px]">
-                  We’re The Island Door Company, a women-owned, Hawaiʻi-based shop
+                <p className="font-roboto text-[#3B3B3B] text-[16px] md:text-[19.11px] font-[300] leading-[26px] md:leading-[31.86px] tracking-[-0.01em]">
+                  We're The Island Door Company, a women-owned, Hawaiʻi-based shop
                   delivering precision-machined wood and fiberglass doors across
                   every island. Each door is pre-hung, labeled, and ready to
                   install, cutting labor hours, preventing callbacks, and keeping
-                  your project on schedule. We partner with the industry’s top
+                  your project on schedule. We partner with the industry's top
                   vendors, Simpson Door, Alliance Door Products, and Plastpro, to
                   bring proven quality to island conditions.
                 </p>
@@ -82,6 +83,7 @@ const Measure = () => {
             </div>
 
           </div>
+        </div>
         </div>
       </div>
 

@@ -8,7 +8,7 @@ import Sclcimg from "../../../../public/assets/images/landing/sclc.png"
 import Vector5 from "../../../../public/assets/images/landing/vector5.png"
 import Vector6 from "../../../../public/assets/images/landing/vector6.png"
 import Headings from "../components/header"
-import { ProductFootericonDoor, ProductFootericonSettings } from "@/public/assets"
+import { ProductFootericonDoor, ProductFootericonSettings, ProductFootericonDoorGreen, ProductFootericonSettingsGreen } from "@/public/assets"
 // import Heading from "./Heading";
 const galleryItems = [
   {
@@ -50,8 +50,9 @@ const CONTENT_WIDTH = "max-w-7xl";
 
 const Gallerysection = () => {
   return (
-    <div className="w-full   py-[50px]  pb-5   font-inter ">
-<div className="max-w-7xl md:max-w-full  mx-auto px-4 sm:px-6 md:px-[60px] gap-[46px] flex flex-col">
+    <div className="w-full py-10 sm:py-12 md:py-[50px] font-inter">
+<div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+<div className="max-w-[1400px] 2xl:mx-auto gap-[46px] flex flex-col">
       {/* MAIN CONTENT */}
       <div  className="">
         <div className="mb-[60px]">
@@ -141,29 +142,22 @@ const Gallerysection = () => {
       {/* FULL WIDTH STRIP */}
    
       </div>
+      </div>
       <div className="w-full flex items-center justify-center bg-[#F6F5F1]">
-        <div className={`${CONTENT_WIDTH}  relative  flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-[25px] group cursor-pointer mt-0 `}>
+        <div className={`${CONTENT_WIDTH}  relative  flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 lg:gap-16 py-3 md:py-[25px] group cursor-pointer mt-0 transition-all duration-300`}>
 
-          {/* <div className="flex items-center gap-2">
-            <Image src={Vector5} alt="Use" className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 filter md:grayscale md:group-hover:grayscale-0 transition-all duration-500" />
-            <span className="text-[#585858] font-roboto text-sm md:text-lg">
-              Machined to Perfection
-            </span>
-          </div> */}
-
-          {/* <div className="flex items-center gap-2">
-            <Image src={Vector6} alt="Use" width={32} height={32} className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 filter md:grayscale md:group-hover:grayscale-0 transition-all duration-500" />
-            <span className="text-[#585858] font-roboto text-sm md:text-lg">
-              True Hawaii Spec
-            </span>
-          </div> */}
-
-<p className="flex items-center gap-[10px] items-center">      
-      <Image src={ProductFootericonDoor} className="size-[32px]  " alt="Door" width={100} height={100} />        
+<p className="flex items-center gap-3 md:gap-4 items-center">      
+      <div className="relative w-8 h-8">
+        <Image src={ProductFootericonDoor} className="size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Door" width={100} height={100} />
+        <Image src={ProductFootericonDoorGreen} className="size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Door" width={100} height={100} />
+      </div>
         Delivered Across Hawaii.        
       </p>
-      <p className="flex items-center gap-[10px] items-center">      
-      <Image src={ProductFootericonSettings} className="size-[32px]  " alt="Door" width={100} height={100} />        
+      <p className="flex items-center gap-3 md:gap-4 items-center">      
+      <div className="relative w-8 h-8">
+        <Image src={ProductFootericonSettings} className="size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Settings" width={100} height={100} />
+        <Image src={ProductFootericonSettingsGreen} className="size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Settings" width={100} height={100} />
+      </div>
       True Hawaii Spec    
       </p>
 

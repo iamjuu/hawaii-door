@@ -8,18 +8,18 @@ import Greenarrow from "../../../../public/assets/images/landing/greenarrow.png"
 import Downarrow from "../../../../public/assets/images/landing/downarrow.png";
 import Truck from "../../../../public/assets/images/landing/truck.png";
 import { MdOutlineArrowOutward } from "react-icons/md";
-import LinkButton from "../components/link-button";
 import Link from "next/link";
 import Heading from "./header";
-import { ProductFootericonTruck } from "@/public/assets";
+import { ProductFootericonTruck, ProductFootericonTruckGreen } from "@/public/assets";
 
 const stepBox =
   "flex flex-col items-center text-center px-2 pt-4 pb-6 md:pt-10 md:pb-10 w-full max-w-[260px] mx-auto";
 
 const StepsDoor = () => {
   return (
-    <section className="w-full py-[50px] pb-5 font-inter">
-      <div className="max-w-7xl md:max-w-full mx-auto px-4 sm:px-6 md:px-[60px] flex flex-col">
+    <section className="w-full py-10 sm:py-12 md:py-[50px] font-inter">
+      <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+      <div className="max-w-[1400px] 2xl:mx-auto flex flex-col">
 
         {/* Heading */}
         <div className="flex items-center justify-start">
@@ -148,25 +148,43 @@ const StepsDoor = () => {
           {/* CTA */}
           <div className="w-full flex  mb-[60px] justify-center items-center mt-4 md:mt-0">
             <Link href="/build">
-              <LinkButton
-                label="Start Building Your Door Now"
-                icon={<MdOutlineArrowOutward className="text-2xl py-[15px]" />}
-              />
+              <button className="group relative inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] text-[15px] md:text-lg font-roboto px-4 md:px-5 py-2 text-white">
+                {/* Hover overlay */}
+                <span className="absolute inset-0 bg-black origin-bottom scale-y-0 transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-y-100" />
+
+                {/* Button content */}
+                <span className="relative z-10 flex items-center gap-2 md:gap-3 font-roboto">
+                  Start Building Your Door Now
+                  <span className="inline-flex items-center justify-center w-6 h-6 md:w-7 md:h-7 shrink-0 transition-all duration-500 rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0">
+                    <MdOutlineArrowOutward className="text-white text-xl md:text-2xl" />
+                  </span>
+                </span>
+              </button>
             </Link>
           </div>
         </div>
       </div>
+      </div>
 
       {/* Bottom Bar */}
-      <div className="relative w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-6">
-        <div className="flex items-center gap-2">
-          <Image
-            src={ProductFootericonTruck}
-            alt="Delivered"
-            width={32}
-            height={32}
-            className="w-6 h-6 md:w-8 md:h-8 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
-          />
+      <div className="relative w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-6 transition-all duration-300">
+        <div className="flex items-center gap-3 md:gap-4">
+          <div className="relative w-6 h-6 md:w-8 md:h-8">
+            <Image
+              src={ProductFootericonTruck}
+              alt="Delivered"
+              width={32}
+              height={32}
+              className="w-6 h-6 md:w-8 md:h-8 group-hover:opacity-0 transition-opacity duration-300"
+            />
+            <Image
+              src={ProductFootericonTruckGreen}
+              alt="Delivered"
+              width={32}
+              height={32}
+              className="w-6 h-6 md:w-8 md:h-8 absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            />
+          </div>
           <span className="text-[#585858] font-roboto text-sm md:text-lg">
             Delivered Across Hawaii.
           </span>

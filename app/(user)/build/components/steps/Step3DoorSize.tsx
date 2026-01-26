@@ -109,7 +109,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
               <div className="relative">
                 {/* Height Arrow */}
                 <div className="absolute -left-4 md:-left-5 top-0 bottom-0 flex flex-col items-center justify-between">
-                  <div className="w-[2px] md:w-1 bg-orange-500 flex-1" />
+                  <div className="w-[2px] md:w-1 bg-[#FF6E4A] flex-1" />
                  
                   <div className="absolute top-1/2 -translate-y-1/2 -left-8 md:-left-12 -rotate-90 origin-center text-[#F97316] text-[12px] md:text-[15px] whitespace-nowrap font-roboto">
                     HEIGHT
@@ -125,7 +125,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
 
                 {/* Width Arrow */}
                 <div className="absolute -bottom-4 md:-bottom-5 left-0 right-0 flex items-center justify-between">
-                  <div className="h-[2px] md:h-1 bg-orange-500 flex-1" />
+                  <div className="h-[2px] md:h-1 bg-[#FF6E4A]-500 flex-1" />
                 
                   <div className="absolute left-1/2 -translate-x-1/2 -bottom-5 md:-bottom-6 text-[#F97316] text-[12px] md:text-[15px] font-roboto whitespace-nowrap">
                     WIDTH
@@ -199,7 +199,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
                       (quoteData.thickness || '1 3/8"') === '1 3/8"' ? "border-orange-500" : "border-gray-300"
                     }`}>
                       {(quoteData.thickness || '1 3/8"') === '1 3/8"' && (
-                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-orange-500"></div>
+                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#FF6E4A]-500"></div>
                       )}
                     </div>
                   </button>
@@ -214,7 +214,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
                       quoteData.thickness === '1 3/4"' ? "border-orange-500" : "border-gray-300"
                     }`}>
                       {quoteData.thickness === '1 3/4"' && (
-                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-orange-500"></div>
+                        <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#FF6E4A]-500"></div>
                       )}
                     </div>
                   </button>

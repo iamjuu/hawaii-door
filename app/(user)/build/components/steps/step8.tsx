@@ -225,7 +225,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               selectedLockType === "deadbolt" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedLockType === "deadbolt" && (
-                <div className="w-3 h-3  rounded-full bg-orange-500"></div>
+                <div className="w-3 h-3  rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
             
@@ -263,7 +263,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               selectedLockType === "door_knob" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedLockType === "door_knob" && (
-                <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+                <div className="w-3 h-3 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
             
@@ -308,7 +308,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedBoreDiameter === "1" ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedBoreDiameter === "1" && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>
@@ -326,7 +326,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedBoreDiameter === "7/8" ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedBoreDiameter === "7/8" && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>
@@ -344,7 +344,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedBoreDiameter === "other" ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedBoreDiameter === "other" && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>
@@ -402,7 +402,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               selectedLockType === "door_knob" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedLockType === "door_knob" && (
-                <div className="w-3 h-3  rounded-full bg-orange-500"></div>
+                <div className="w-3 h-3  rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
             
@@ -447,7 +447,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedBackset === "2_3/8" ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedBackset === "2_3/8" && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>
@@ -465,7 +465,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedBackset === "2_3/4" ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedBackset === "2_3/4" && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>
@@ -483,7 +483,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedBackset === "other" ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedBackset === "other" && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>
@@ -516,7 +516,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 selectedLatchBoreDiameter === "default" ? "border-orange-500" : "border-gray-300"
               }`}>
                 {selectedLatchBoreDiameter === "default" && (
-                  <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                  <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                 )}
               </div>
             </button>
@@ -550,7 +550,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedFaceplateDimension === '1" x 2 1/4" x 5/32"' ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedFaceplateDimension === '1" x 2 1/4" x 5/32"' && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>
@@ -570,7 +570,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedFaceplateDimension === '1 1/8" x 2 1/4" x 5/32"' ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedFaceplateDimension === '1 1/8" x 2 1/4" x 5/32"' && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>
@@ -588,7 +588,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedFaceplateDimension === "other" ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedFaceplateDimension === "other" && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>
@@ -624,7 +624,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedDriveInDiameter === '7/8"' ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedDriveInDiameter === '7/8"' && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>
@@ -642,7 +642,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedDriveInDiameter === '1"' ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedDriveInDiameter === '1"' && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>
@@ -660,7 +660,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedDriveInDiameter === "other" ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedDriveInDiameter === "other" && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>
@@ -709,7 +709,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedFaceplateRadius === '1/4" radius' ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedFaceplateRadius === '1/4" radius' && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>
@@ -737,7 +737,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   selectedFaceplateRadius === "square" ? "border-orange-500" : "border-gray-300"
                 }`}>
                   {selectedFaceplateRadius === "square" && (
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
                   )}
                 </div>
               </button>

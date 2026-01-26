@@ -117,7 +117,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedJambType === "interior_double_rabbet" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedJambType === "interior_double_rabbet" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -135,7 +135,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedJambType === "exterior_single_rabbet" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedJambType === "exterior_single_rabbet" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -153,7 +153,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedJambType === "exterior_single_rabbet_kerfed" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedJambType === "exterior_single_rabbet_kerfed" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -202,7 +202,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedDBStrikeType === "standard" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedDBStrikeType === "standard" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -220,7 +220,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedDBStrikeType === "radius_corner" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedDBStrikeType === "radius_corner" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -238,7 +238,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedDBStrikeType === "box_strike" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedDBStrikeType === "box_strike" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -263,7 +263,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedLockStrikeType === "standard" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedLockStrikeType === "standard" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -281,7 +281,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedLockStrikeType === "radius_corner" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedLockStrikeType === "radius_corner" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -299,7 +299,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedLockStrikeType === "t_strike" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedLockStrikeType === "t_strike" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -338,7 +338,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedWeatherstripping === "white" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedWeatherstripping === "white" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -356,7 +356,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedWeatherstripping === "brown" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedWeatherstripping === "brown" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -381,7 +381,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedThresholdType === "adjustable_in_swing" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedThresholdType === "adjustable_in_swing" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -399,7 +399,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedThresholdType === "out_swing" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedThresholdType === "out_swing" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -417,7 +417,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               selectedThresholdType === "flat_saddle" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedThresholdType === "flat_saddle" && (
-                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>

@@ -63,8 +63,9 @@ const Testimonial = () => {
   const loopTestimonials = [...testimonials, ...testimonials]
 
   return (
-    <div className="w-full px-5 md:px-15 pt-12 pb-12 md:py-16 lg:py-20 bg-white font-roboto">
-    <div className="max-w-[1400px] mx-auto">
+    <div className="w-full py-10 sm:py-12 md:py-[50px] bg-white font-roboto">
+    <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+    <div className="max-w-[1400px] 2xl:mx-auto">
       {/* Header Section */}
       <div className="mb-10 md:mb-12">
         <Heading  
@@ -73,14 +74,14 @@ const Testimonial = () => {
         />
       </div>
   
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden testimonial-group">
         {/* Left fade */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-[12%] bg-gradient-to-r from-white via-white/70 to-transparent z-10" />
         {/* Right fade */}
         <div className="pointer-events-none absolute inset-y-0 right-0 w-[12%] bg-gradient-to-l from-white via-white/70 to-transparent z-10" />
   
         {/* Carousel Container */}
-        <div className="flex gap-6 animate-scroll hover:pause">
+        <div className="flex gap-6 animate-scroll group-hover:pause">
           {loopTestimonials.map((testimonial, index) => (
      <div
      key={index}
@@ -117,6 +118,7 @@ const Testimonial = () => {
   
 
     </div>
+    </div>
   
     {/* Tailwind CSS keyframes */}
     <style jsx>{`
@@ -127,7 +129,7 @@ const Testimonial = () => {
       .animate-scroll {
         animation: scroll 20s linear infinite;
       }
-      .hover\\:pause:hover {
+      .testimonial-group:hover .animate-scroll {
         animation-play-state: paused;
       }
     `}</style>

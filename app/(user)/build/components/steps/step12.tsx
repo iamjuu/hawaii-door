@@ -56,7 +56,7 @@ const Step12 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
         >
           {selectedAddOnOption === "none" && (
             <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
                 <svg
                   className="w-5 h-5 text-white"
                   fill="none"
@@ -94,7 +94,7 @@ const Step12 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
         >
           {selectedAddOnOption === "viewer" && (
             <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
                 <svg
                   className="w-5 h-5 text-white"
                   fill="none"

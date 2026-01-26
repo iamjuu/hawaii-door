@@ -117,7 +117,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           {/* Selected Badge */}
           {selectedHandling === "LHRA" && (
             <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
                 <svg
                   className="w-5 h-5 text-white"
                   fill="none"
@@ -161,7 +161,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           {/* Selected Badge */}
           {selectedHandling === "LHA" && (
             <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
                 <svg
                   className="w-5 h-5 text-white"
                   fill="none"
@@ -204,7 +204,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           {/* Selected Badge */}
           {selectedHandling === "RHA" && (
             <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
                 <svg
                   className="w-5 h-5 text-white"
                   fill="none"
@@ -247,7 +247,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           {/* Selected Badge */}
           {selectedHandling === "RHRA" && (
             <div className="absolute top-3 right-3 z-10">
-              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
                 <svg
                   className="w-5 h-5 text-white"
                   fill="none"
@@ -306,7 +306,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               selectedRadius === "1/4" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedRadius === "1/4" && (
-                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-orange-500"></div>
+                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -332,7 +332,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               selectedRadius === "5/8" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedRadius === "5/8" && (
-                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-orange-500"></div>
+                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -358,7 +358,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               selectedRadius === "square" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedRadius === "square" && (
-                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-orange-500"></div>
+                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -391,7 +391,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               selectedType === "residential" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedType === "residential" && (
-                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-orange-500"></div>
+                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>
@@ -417,7 +417,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               selectedType === "commercial" ? "border-orange-500" : "border-gray-300"
             }`}>
               {selectedType === "commercial" && (
-                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-orange-500"></div>
+                <div className="w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-[#FF6E4A]-500"></div>
               )}
             </div>
           </button>

@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Heading from "./header";
-import { ProductFootericonDoor, ProductFootericonSettings, ProductFootericonTruck } from "@/public/assets";
+import { ProductFootericonDoor, ProductFootericonSettings, ProductFootericonTruck, ProductFootericonDoorGreen, ProductFootericonSettingsGreen, ProductFootericonTruckGreen } from "@/public/assets";
 
 // Using public paths - NO SPACES in filenames for production compatibility
 const Door1 = "/assets/images/landing/door22.png";
@@ -80,10 +80,11 @@ const DoorCategories = () => {
   };
 
   return (
-<div className="w-full py-8 sm:py-12 md:py-[50px] pb-5 font-inter">
+<div className="w-full py-10 sm:py-12 md:py-[50px] font-inter">
   
   {/* MAIN CONTENT – constrained */}
-  <div className="max-w-7xl md:max-w-full mx-auto px-4 sm:px-6 md:px-[60px] gap-6 sm:gap-8 md:gap-[46px] flex flex-col">
+  <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+  <div className="max-w-[1400px] 2xl:mx-auto gap-6 sm:gap-8 md:gap-[46px] flex flex-col">
     {/* Header */}
 <Heading heading="Door Categories" subheading="Explore our full line of pre-hung wood and fiberglass doors, organized by material and style." className="" />
 
@@ -133,7 +134,7 @@ const DoorCategories = () => {
                       {category.title}
                     </h3>
                     {isCurrent && (
-                      <Link href={"/gallery"}>
+                      <Link href={"/product"}>
                         <button
                           style={{ backgroundColor: "#B6D78A" }}
                           className="hover:bg-[#a3c677] text-gray-900 rounded-full px-3 py-1 sm:py-1.5 text-xs sm:text-sm transition-colors whitespace-nowrap"
@@ -168,7 +169,7 @@ const DoorCategories = () => {
           onClick={() => setCurrentIndex(idx)}
           className={`h-1.5 sm:h-2 rounded-full transition-all ${
             idx === currentIndex
-              ? "w-6 sm:w-8 bg-orange-500"
+              ? "w-6 sm:w-8 bg-[#FF6E4A]"
               : "w-1.5 sm:w-2 bg-gray-300 hover:bg-gray-400"
           }`}
           aria-label={`Go to slide ${idx + 1}`}
@@ -176,31 +177,41 @@ const DoorCategories = () => {
       ))}
     </div>
   </div>
+  </div>
 
   {/* FULL WIDTH FOOTER STRIP – Responsive */}
-  <div className="relative w-full flex flex-col md:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-8 lg:gap-16 py-4 sm:py-5 md:py-0 min-h-[60px] md:h-[68px] bg-[#F6F5F1] group cursor-pointer mt-8 sm:mt-10 md:mt-[50px] lg:mt-[75px] mb-0 md:mb-6">
-    <div className="py-3 sm:py-4 md:py-[25px] flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 lg:gap-[10px] items-center">
+  <div className="relative w-full flex flex-col md:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-8 lg:gap-16 py-4 sm:py-5 md:py-0 min-h-[60px] md:h-[68px] bg-[#F6F5F1] group cursor-pointer mt-8 sm:mt-10 md:mt-[50px] lg:mt-[75px] mb-0 md:mb-6 transition-all duration-300">
+    <div className="py-3 sm:py-4 md:py-[25px] flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 items-center">
 
-    <p className="flex items-center gap-2 sm:gap-2.5 md:gap-[10px] text-xs sm:text-sm md:text-base">
+    <p className="flex items-center gap-3 sm:gap-3.5 md:gap-4 text-xs sm:text-sm md:text-base">
       
-    <Image src={ProductFootericonDoor} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px]" alt="Door" width={100} height={100} />
+    <div className="relative w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">
+      <Image src={ProductFootericonDoor} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Door" width={100} height={100} />
+      <Image src={ProductFootericonDoorGreen} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Door" width={100} height={100} />
+    </div>
       
     <span className="whitespace-nowrap">Custom Doors</span>
 
       
     </p>
 
-    <p className="flex items-center gap-2 sm:gap-2.5 md:gap-[10px] text-xs sm:text-sm md:text-base">
+    <p className="flex items-center gap-3 sm:gap-3.5 md:gap-4 text-xs sm:text-sm md:text-base">
       
-      <Image src={ProductFootericonSettings} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px]" alt="Settings" width={100} height={100} />
+      <div className="relative w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">
+        <Image src={ProductFootericonSettings} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Settings" width={100} height={100} />
+        <Image src={ProductFootericonSettingsGreen} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Settings" width={100} height={100} />
+      </div>
       <span className="whitespace-nowrap">Custom Jambs</span>
   
         
       </p>
       
-      <p className="flex items-center gap-2 sm:gap-2.5 md:gap-[10px] text-xs sm:text-sm md:text-base">
+      <p className="flex items-center gap-3 sm:gap-3.5 md:gap-4 text-xs sm:text-sm md:text-base">
       
-      <Image src={ProductFootericonTruck} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px]" alt="Truck" width={100} height={100} />
+      <div className="relative w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">
+        <Image src={ProductFootericonTruck} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Truck" width={100} height={100} />
+        <Image src={ProductFootericonTruckGreen} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Truck" width={100} height={100} />
+      </div>
         
       <span className="whitespace-nowrap">Complete Precision</span>
         

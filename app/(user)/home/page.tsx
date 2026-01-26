@@ -11,7 +11,7 @@ import Prehung from "./components/Prehung";
 
 export default function Home() {
   return (
-    <>
+    <div className="bg-[#fdfffc]">
     {/* <Navbar /> */}
     <BannerSection />
     <Box />
@@ -22,7 +22,6 @@ export default function Home() {
     <Testimonial />
     <Prehung />
     <Footer />
-    
-    </>
+    </div>
   );
 }
