@@ -9,6 +9,8 @@ import Heading from "../home/components/header";
 export default function Contact() {
   const [openFAQ, setOpenFAQ] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error', message: string } | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -16,6 +18,7 @@ export default function Contact() {
     }, 500);
     return () => clearTimeout(timer);
   }, []);
+  
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -35,10 +38,48 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Add your form submission logic here
+    
+    // Validate form
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.message) {
+      setSubmitStatus({ type: 'error', message: 'Please fill in all fields' });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch('/api/contact/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitStatus({ type: 'success', message: 'Thank you for contacting us! We\'ll get back to you within 24 hours.' });
+        // Clear form
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          message: ""
+        });
+      } else {
+        setSubmitStatus({ type: 'error', message: data.error || 'Failed to submit form. Please try again.' });
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus({ type: 'error', message: 'Failed to submit form. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const faqs = [
@@ -74,9 +115,10 @@ export default function Contact() {
       <PageLoader isLoading={isLoading} />
       {/* Contact Section */}
       <Navbar />
-      <section className="bg-white py-12 lg:pt-20 px-6   md:px-15  mt-17 font-roboto">
-        <div className="container mx-auto ">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+      <section className="bg-[#fdfffc] w-full py-10 sm:py-12 md:py-[50px] font-roboto mt-[70px] md:mt-[80px]">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+          <div className="max-w-[1400px] 2xl:mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Left Side - Content */}
             <div className="space-y-6">
               <div className=" flex flex-col gap-[40px]">
@@ -276,6 +318,13 @@ We review every message personally, no bots, no scripts, just people who know do
                 hours.
               </h2>
 
+              {/* Status Message */}
+              {submitStatus && (
+                <div className={`mb-4 p-4 rounded-md ${submitStatus.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
+                  {submitStatus.message}
+                </div>
+              )}
+
               <div className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input
@@ -342,24 +391,27 @@ We review every message personally, no bots, no scripts, just people who know do
 
                 <button
                   onClick={handleSubmit}
-                  className="w-full bg-white border-2 border-orange-500 text-orange-500 hover:bg-[#FF6E4A]-500 hover:text-white font-semibold py-4 rounded-md transition-all text-base"
+                  disabled={isSubmitting}
+                  className="w-full bg-white border-2 border-[#FF6E4A] text-[#FF6E4A] hover:bg-[#FF6E4A] hover:text-white font-semibold py-4 rounded-md transition-all text-base disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Get In Touch
+                  {isSubmitting ? 'Sending...' : 'Get In Touch'}
                 </button>
               </div>
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="bg-white py-16 lg:py-24">
-        <div className="container mx-auto px-6 md:px-15">
-          <div className="max-w-4xl">
-            <h2 className="text-2xl lg:text-[46px] font-roboto font-[500] text-gray-900 mb-4">
+      <section className="bg-[#fdfffc] w-full py-10 sm:py-12 md:py-[50px]">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+          <div className="max-w-[1400px] 2xl:mx-auto">
+            <div className="max-w-4xl">
+            <h2 className="text-[23px] md:text-[46px] font-[500] text-black font-roboto leading-[32px] md:leading-[62px] tracking-normal mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-base text-gray-600 mb-8">
+            <p className="text-sm md:text-base font-[400] text-[#3B3B3B] font-roboto mb-8">
               Find answers to common questions about our services and process.
             </p>
 
@@ -398,6 +450,7 @@ We review every message personally, no bots, no scripts, just people who know do
                   )}
                 </div>
               ))}
+            </div>
             </div>
           </div>
         </div>

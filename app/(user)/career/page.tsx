@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Careerimg from "../../../public/assets/images/landing/career.png";
+import Careerimg from "@/public/assets/career/careerimage.png";
+
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
 import PageLoader from "@/components/user/PageLoader";
@@ -42,7 +43,7 @@ export default function CareerPage() {
                 team. Think you'd be a great addition?{" "}
                 <a 
                   href="#contact" 
-                  className="text-black font-semibold underline transition-colors"
+                  className="text-black font-semibold transition-colors"
                 >
                   Get in touch
                 </a>
@@ -51,14 +52,14 @@ export default function CareerPage() {
 
             {/* Right Image */}
             <div className="flex-1 w-full h-64 sm:h-80 lg:h-full lg:max-h-[450px] relative">
-              <div className="relative w-full h-full">
+              <div className="relative w-full h-full mt-[24px] ">
                 <Image
                   src={Careerimg}
                   alt="Happy team members collaborating"
                   fill
-                  className="object-cover "
+                  className="object-fill "
                   priority
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  sizes="(max-width: 768px) "
                 />
               </div>
             </div>
@@ -67,11 +68,11 @@ export default function CareerPage() {
       </section>
 
       {/* Second Section - White Background Contact */}
-      <section className="bg-white py-20">
+      <section className="bg-[#fdfffc] mt-[80px] mb-[80px]">
         <div className="container mx-auto px-6">
           <div className="flex  gap-3 flex-col justify-center items-center text-center ">
             <h2 className="text-[28px] sm:text-[32px] md:text-[38px] lg:text-[45px] font-[600] text-black font-roboto">
-              Ready for Joining?
+              Ready to Join our Team?
             </h2>
             
             <p className="text-[14px] sm:text-[16px] lg:text-[18px] font-[400] text-gray-700 max-w-2xl">

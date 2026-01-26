@@ -64,7 +64,7 @@ const page = () => {
       <PageLoader isLoading={isLoading} />
       <Navbar />
 
-      <main>
+      <main className="bg-[#fdfffc]">
         <HeroSection
           contant={contant}
           bgImage={bgImage}
@@ -73,11 +73,13 @@ const page = () => {
         />
 
         {/* Door Cards Section */}
-        <section className="px-6 md:px-12 lg:px-20 py-16 md:py-24 bg-white">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-0 justify-items-center lg:justify-items-start">
+        <section className="w-full  md:pt-[80px]  ">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+            <div className="max-w-[1400px] 2xl:mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 justify-items-center xl:justify-items-start">
             {doorCards.map((door, index) => (
               <React.Fragment key={index}>
-                <Link className="w-full" href={door.link}>
+                <Link className="w-full max-w-[407px]" href={door.link}>
               <div
                 style={{
                   backgroundImage: `url('${
@@ -89,7 +91,7 @@ const page = () => {
                   backgroundPosition: "left",
                   backgroundRepeat: "no-repeat"
                 }}
-                className="group rounded-lg w-full max-w-[407px] lg:w-[407px] overflow-hidden shadow-lg h-[280px] flex flex-col justify-end border border-white hover:border-[#FF6E4A]"
+                className="group rounded-lg w-full xl:w-[407px] overflow-hidden shadow-lg h-[265px] flex flex-col justify-end border border-white hover:border-[#FF6E4A]"
               >
                 <div className="w-full h-full flex justify-between">
                   <div className="w-[20%]" />
@@ -123,6 +125,8 @@ const page = () => {
               </Link>
               </React.Fragment>
             ))}
+              </div>
+            </div>
           </div>
         </section>
 

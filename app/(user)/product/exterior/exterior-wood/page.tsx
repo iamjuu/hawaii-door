@@ -123,20 +123,24 @@ const ExteriorWoodPage = () => {
         features={features}
       />
 
-      <main className="px-6 md:px-12 py-10 lg:px-20 bg-white">
-        <section className="space-y-6">
-          <h2 className="text-[28px] font-[500] text-black">
-            In-Stock at Hawaii Western Door Products
-          </h2>
+      <main className="w-full bg-white py-10 sm:py-12 md:py-[50px]">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+          <div className="max-w-[1400px] 2xl:mx-auto">
+            <section className="space-y-6">
+              <h2 className="text-[23px] md:text-[32px] font-roboto font-[500] text-black leading-tight">
+                In-Stock at Hawaii Western Door Products
+              </h2>
 
-          <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
-            The following product offering is part of our stocking program. We reserve the right to make changes without notice. Please contact your Hawaii Western Door Products representative to verify availability, lead time, and for more information.
-          </p>
+              <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B] leading-relaxed">
+                The following product offering is part of our stocking program. We reserve the right to make changes without notice. Please contact your Hawaii Western Door Products representative to verify availability, lead time, and for more information.
+              </p>
 
-          <p className="text-[16px] font-[300] text-gray-700 leading-relaxed">
-            Please note that our doors are delivered unfinished. The product images shown below depict finished doors. Due to the natural variations in wood, each door will have a unique appearance, and the stainability of wood species may differ. We recommend consulting with a coatings expert for recommended finishing options and instructions.
-          </p>
-        </section>
+              <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B] leading-relaxed">
+                Please note that our doors are delivered unfinished. The product images shown below depict finished doors. Due to the natural variations in wood, each door will have a unique appearance, and the stainability of wood species may differ. We recommend consulting with a coatings expert for recommended finishing options and instructions.
+              </p>
+            </section>
+          </div>
+        </div>
       </main>
 
       {/* MOBILE FILTER BUTTON - STICKY */}
@@ -156,34 +160,36 @@ const ExteriorWoodPage = () => {
         />
       )}
 
-      <main>
-        <div className="px-16 mx-auto">
-          <div className="flex flex-col lg:flex-row gap-12">
+      <main className="w-full bg-white py-10 sm:py-12 md:py-[50px]">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+          <div className="max-w-[1400px] 2xl:mx-auto">
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
 
             {/* LEFT SIDEBAR */}
             <aside
               className={`
-                fixed md:static top-0 left-0 h-full md:h-auto
-                w-[280px] bg-white z-50 md:z-auto
+                fixed lg:sticky top-0 lg:top-[100px] left-0 h-full lg:h-auto
+                w-[280px] bg-white z-50 lg:z-auto
                 transform transition-transform duration-300 ease-in-out
                 ${openFilter ? "translate-x-0" : "-translate-x-full"}
-                md:translate-x-0
+                lg:translate-x-0
+                lg:self-start lg:max-h-[calc(100vh-120px)]
               `}
             >
-              <div className="bg-white border border-gray-200 rounded-lg p-6 h-full md:sticky md:top-[100px] md:max-h-[calc(100vh-120px)] md:overflow-y-auto">
+              <div className="bg-white rounded-lg p-6 pl-2 lg:pl-0 h-full lg:h-auto lg:overflow-y-auto">
 
                 {/* MOBILE HEADER */}
-                <div className="flex  items-center justify-between mb-6 md:hidden">
-                  <h2 className="text-lg font-semibold text-black">
+                <div className="flex items-center justify-between mb-6 md:hidden">
+                  <h2 className="text-lg font-roboto font-[600] text-black">
                     Exterior Wood Doors
                   </h2>
-                  <button onClick={() => setOpenFilter(false)}>
-                    <FiX className="text-xl text-black" />
+                  <button onClick={() => setOpenFilter(false)} className="text-gray-600 hover:text-black">
+                    <FiX className="text-xl" />
                   </button>
                 </div>
 
                 {/* DESKTOP HEADER */}
-                <h2 className="text-xl font-semibold text-black mb-6 hidden md:block">
+                <h2 className="text-xl font-roboto font-[600] text-black mb-6 hidden md:block">
                   Exterior Wood Doors
                 </h2>
 
@@ -201,7 +207,7 @@ const ExteriorWoodPage = () => {
                       <a
                         href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
                         onClick={() => setOpenFilter(false)}
-                        className="block py-3 text-gray-700 hover:text-[#FF6E4A] transition-colors text-sm font-medium"
+                        className="block py-3 text-sm font-roboto font-[400] text-gray-700 hover:text-[#FF6E4A] transition-colors"
                       >
                         {item}
                       </a>
@@ -221,7 +227,7 @@ const ExteriorWoodPage = () => {
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF6E4A]"></div>
                 </div>
               )}
-              {error && <p className="text-red-600">{error}</p>}
+              {error && <p className="text-red-600 text-sm md:text-base font-roboto">{error}</p>}
               
               {!loading && !error && (
                 <>
@@ -242,12 +248,12 @@ const ExteriorWoodPage = () => {
                     
                     return (
                       <section key={doorType} id={sectionId} className="mb-16 scroll-mt-24">
-                        <h2 className="text-2xl font-semibold text-black mb-6">{doorType}</h2>
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <h2 className="text-[20px] md:text-[28px] font-roboto font-[500] text-black mb-6 leading-tight">{doorType}</h2>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-3">
                           {doorsInType.map((door) => (
                             <div key={door._id} className="relative group cursor-pointer" onClick={() => handleDoorClick(door, doorType)}>
                               {door.imageUrl && door.imageUrl[0] && (
-                                <div className="w-full h-48 rounded-lg  group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex items-center justify-center">
+                                <div className="w-full h-48 rounded-lg group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex items-center justify-center">
                                   <img
                                     src={door.imageUrl[0]}
                                     alt={door.name}
@@ -256,9 +262,9 @@ const ExteriorWoodPage = () => {
                                 </div>
                               )}
                               <div className="mt-2">
-                                <p className="text-sm font-medium text-black truncate text-center">{door.name}</p>
+                                <p className="text-sm font-roboto font-[500] text-black truncate text-center">{door.name}</p>
                                 {door.description && (
-                                  <p className="text-xs text-gray-600 line-clamp-2 mt-1">{door.description}</p>
+                                  <p className="text-xs font-roboto font-[400] text-[#3B3B3B] line-clamp-2 mt-1 text-center">{door.description}</p>
                                 )}
                               </div>
                             </div>
@@ -271,6 +277,7 @@ const ExteriorWoodPage = () => {
               )}
             </div>
 
+            </div>
           </div>
         </div>
       </main>
@@ -336,8 +343,8 @@ const ExteriorWoodPage = () => {
                   
                   {/* Door Info */}
                   <div className="mt-4 md:mt-6 text-center text-white">
-                    <p className="text-base md:text-lg lg:text-xl font-semibold">{currentDoorGroup[currentDoorIndex]?.name}</p>
-                    <p className="text-xs md:text-sm text-gray-300 mt-1 md:mt-2">
+                    <p className="text-base md:text-lg lg:text-xl font-roboto font-[600]">{currentDoorGroup[currentDoorIndex]?.name}</p>
+                    <p className="text-xs md:text-sm font-roboto font-[400] text-gray-300 mt-1 md:mt-2">
                       {currentDoorIndex + 1} / {currentDoorGroup.length}
                     </p>
                   </div>

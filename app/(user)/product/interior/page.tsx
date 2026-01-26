@@ -35,20 +35,22 @@ const InteriorPage = () => {
     <>
       <Navbar />
 
-      <HeroSection
-        contant={contant}
-        bgImage={bgImage}
-        para={para}
-        features={features}
-      />
+      <main className="bg-[#fdfffc]">
+        <HeroSection
+          contant={contant}
+          bgImage={bgImage}
+          para={para}
+          features={features}
+        />
 
-      <section className="w-full py-[50px] pb-5 font-inter">
-        <div className="max-w-7xl md:max-w-full mx-auto px-4 sm:px-6 md:px-[60px] gap-[46px] flex flex-col">
-          <div className="flex flex-col gap-24">
+        <section className="w-full py-10 sm:py-12 md:pt-[50px] md:py-[0px] font-inter ">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px] ">
+            <div className="max-w-[1400px] 2xl:mx-auto">
+              <div className="flex flex-col gap-16 md:gap-24">
 
             {/* ================= First Block ================= */}
-            <div className="flex flex-col gap-12">
-              <section className="px-6 md:px-12 lg:px-20">
+            <div className="flex flex-col gap-8 md:gap-12">
+              <section>
                 <div className="space-y-6">
                   <Heading heading="Molded & Flush Doors" />
 
@@ -62,21 +64,21 @@ const InteriorPage = () => {
                     />
                   </div>
 
-                  <h3 className="text-[18px] font-[500] text-black">
+                  <h3 className="text-base md:text-lg font-[500] text-black">
                     Let Lynden Door Guide You in Discovering Interior Doors as a Key Design Element
                   </h3>
 
                   <div className="space-y-4 leading-relaxed">
-                    <p className="text-sm md:text-[16px] font-[300] text-[#666666]">
+                    <p className="text-sm md:text-base font-[400] text-[#3B3B3B]">
                       Explore the transformative potential of interior doors with Lynden Door. With a passion for innovation and design excellence, we offer a wide range of interior doors that are not only environmentally intelligent but also surprisingly affordable.
                     </p>
-                    <p className="text-sm md:text-[16px] font-[300] text-[#666666]">
+                    <p className="text-sm md:text-base font-[400] text-[#3B3B3B]">
                       Experience the value that well-chosen interior doors can add to your home.
                     </p>
                   </div>
 
                   <Link href="/product/interior/Lynden-Door">
-                    <button className="bg-[#FF6E4A] hover:bg-[#FF5A3A] text-white px-[22px] py-[16px] rounded-lg font-[500] mt-6">
+                    <button className="bg-[#FF6E4A] hover:bg-black text-white px-6 py-3 rounded-lg font-[500] mt-6 transition-colors duration-300">
                       LEARN MORE
                     </button>
                   </Link>
@@ -84,14 +86,14 @@ const InteriorPage = () => {
               </section>
 
               {/* 🔥 Image with Right Fade (NO layout change) */}
-              <section className="px-6 md:px-16">
+              <section>
                 <div className="relative">
                   <Image
                     src={Interiorhero}
                     alt="Interior Hero"
                     width={100}
                     height={100}
-                    className="w-full"
+                    className="w-full rounded-lg"
                   />
                   <div className="absolute inset-0 " />
                 </div>
@@ -99,22 +101,22 @@ const InteriorPage = () => {
             </div>
 
             {/* ================= Second Block ================= */}
-            <div className="flex flex-col gap-12">
-              <section className="px-6 md:px-12 lg:px-20">
+            <div className="flex flex-col gap-8 md:gap-12">
+              <section>
                 <div className="space-y-6">
                   <Heading heading="Wood Stile & Rail Doors" />
 
                   <div className="space-y-4 leading-relaxed">
-                    <p className="text-base md:text-[18px] font-[500]">
+                    <p className="text-base md:text-lg font-[500] text-black">
                       Interior Wood Stile & Rail Door Collections - Timeless Elegance of Natural Wood
                     </p>
-                    <p className="text-sm md:text-[16px] font-[300]">
+                    <p className="text-sm md:text-base font-[400] text-[#3B3B3B]">
                       Experience the value that well-chosen interior doors can add to your home.
                     </p>
                   </div>
 
                   <Link href="/product/interior/interior-wood">
-                    <button className="bg-[#FF6E4A] hover:bg-[#FF5A3A] text-white px-[22px] py-[16px] rounded-sm font-[500] mt-6">
+                    <button className="bg-[#FF6E4A] hover:bg-black text-white px-6 py-3 rounded-lg font-[500] mt-6 transition-colors duration-300">
                       LEARN MORE
                     </button>
                   </Link>
@@ -122,25 +124,27 @@ const InteriorPage = () => {
               </section>
 
               {/* 🔥 Image with Right Fade (NO layout change) */}
-              <section className="px-6 md:px-12 lg:px-20">
+              <section>
                 <div className="relative">
                   <Image
                     src={Interiordoorlogo1}
                     alt="Interior Hero"
                     width={100}
                     height={100}
-                    className="w-full"
+                    className="w-full rounded-lg"
                   />
                   <div className="absolute inset-0 " />
                 </div>
               </section>
             </div>
 
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <FooterBanner />
+        <FooterBanner />
+      </main>
       <Footer />
     </>
   )

@@ -125,47 +125,99 @@ const InteriorWoodPage = () => {
       />
 
       {/* INTRO SECTION */}
-      <section className="flex flex-col md:flex-row gap-12 px-6 md:px-12 lg:px-20 py-16 md:py-24">
-        <div className="space-y-8 w-full md:w-1/2 pr-0 md:pr-8">
-          <Heading
-            heading="Unmatched Versatility with Interior Solid Wood Doors"
-            subheading="Interior Solid Wood Doors provide the ultimate versatility in design, style, and size. Wood doors are available in a variety of wood species and glass options, allowing you to find the perfect door for your needs, whether it's a standard design or a custom, one-of-a-kind creation."
-          />
+      <section className="w-full bg-white py-10 sm:py-12 md:py-[50px]">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+          <div className="max-w-[1400px] 2xl:mx-auto">
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+              {/* LEFT CONTENT */}
+              <div className="flex-1 space-y-8">
+                <div>
+                  <h1 className="text-[23px] md:text-[36px] font-roboto font-[500] text-black leading-[32px] md:leading-[48px] mb-4">
+                    Unmatched Versatility with Interior Solid Wood Doors
+                  </h1>
+                  <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B] leading-relaxed">
+                    Interior solid wood doors deliver unmatched flexibility in design, style, and size. These wood doors come in a wide range of species and glass options, helping you choose the ideal door for your space, whether you need a standard style or a fully custom, one-of-a-kind design.
+                  </p>
+                </div>
 
-          <div className="space-y-4">
-            <h3 className="text-[22px] font-[500] text-black uppercase">
-              KEY BENEFITS OF OUR WOOD DOORS:
-            </h3>
-            <ul className="space-y-3 text-gray-700">
-              <li><span className="font-bold">Diverse Styles:</span> Choose from a wide array of designs.</li>
-              <li><span className="font-bold">Customizable Options:</span> Create a door that is truly your own.</li>
-              <li><span className="font-bold">Quality Craftsmanship:</span> Superior durability and beauty.</li>
-            </ul>
+                <div className="space-y-4">
+                  <h3 className="text-[16px] md:text-[18px] font-roboto font-[600] text-black uppercase tracking-wide">
+                    KEY BENEFITS OF OUR WOOD DOORS:
+                  </h3>
+                  <ul className="space-y-3">
+                    <li className="text-sm md:text-base font-roboto text-[#3B3B3B]">
+                      <span className="font-[600] text-black">Diverse Styles:</span> Choose from a wide array of designs to match your interior decor.
+                    </li>
+                    <li className="text-sm md:text-base font-roboto text-[#3B3B3B]">
+                      <span className="font-[600] text-black">Customizable Options:</span> Consider unique customizations to create a door that is truly your own.
+                    </li>
+                    <li className="text-sm md:text-base font-roboto text-[#3B3B3B]">
+                      <span className="font-[600] text-black">Quality Craftsmanship:</span> Enjoy the superior craftsmanship that ensures durability and aesthetic appeal.
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="space-y-6">
+                  <h2 className="text-[20px] md:text-[28px] font-roboto font-[500] text-black leading-tight">
+                    Explore Our Door Collections
+                  </h2>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-[16px] md:text-[18px] font-roboto font-[600] text-black uppercase mb-2">
+                        PANEL DOORS
+                      </h3>
+                      <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B]">
+                        Our panel doors offer a timeless solution, featuring both classic and modern designs that suit a wide range of interior spaces.
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-[16px] md:text-[18px] font-roboto font-[600] text-black uppercase mb-2">
+                        DECORATIVE FRENCH DOORS
+                      </h3>
+                      <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B]">
+                        Add a sense of elegance to your home with our decorative French doors, designed with detailed styling and high-quality privacy and textured glass options.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* RIGHT IMAGE */}
+              <div className="flex-1 flex items-start justify-center lg:justify-end">
+                <div className="relative w-full max-w-[500px] h-[400px] md:h-[600px] lg:h-[700px]">
+                  <Image 
+                    src={interiorDoor1} 
+                    alt="Interior Solid Wood Door" 
+                    fill
+                    className="object-cover rounded-lg"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-
-          <Heading
-            heading="DECORATIVE FRENCH DOORS"
-            subheading="Add a touch of elegance to your home with decorative French doors, featuring premium glass options."
-          />
-        </div>
-
-        <div className="w-full md:w-1/2 flex items-center justify-center">
-          <Image   src={interiorDoor1} alt="Interior Door" className="w-full h-[600px] rounded-lg" />
         </div>
       </section>
 
       {/* STOCK INFO */}
-      <main className="px-6 md:px-12 lg:px-20 pb-16 bg-white">
-        <h2 className="text-[28px] font-[500] text-black mb-4">
-          In-Stock at Hawaii Western Door Products
-        </h2>
-        <p className="text-[16px] font-[300] text-gray-700 mb-4">
-          Product availability may change without notice. Contact your representative for details.
-        </p>
-        <p className="text-[16px] font-[300] text-gray-700">
-          Doors are delivered unfinished. Wood grain and stainability may vary.
-        </p>
-      </main>
+      <section className="w-full bg-white py-10 sm:py-12 md:py-[50px]">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+          <div className="max-w-[1400px] 2xl:mx-auto">
+            <h2 className="text-[23px] md:text-[32px] font-roboto font-[500] text-black mb-4 leading-tight">
+              In-Stock at Hawaii Western Door Products
+            </h2>
+            <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B] mb-4">
+              The product selections listed are included in our stocking program. Specifications are subject to change without prior notice. Please contact your Hawaii Western Door Products representative to confirm availability, lead times, and additional details.
+            </p>
+            <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B]">
+              Please be aware that all doors ship unfinished. The images below show doors after finishing. Natural wood variation means each door will look unique, and stain results vary by species. We suggest consulting a coatings professional for proper finishing options and application guidance.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* MOBILE FILTER BUTTON - STICKY */}
       <button
@@ -188,26 +240,28 @@ const InteriorWoodPage = () => {
       )}
 
       {/* MAIN CONTENT */}
-      <main className="px-6 md:px-12 lg:px-20 py-16 bg-white">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12">
+      <main className="w-full bg-white py-10 sm:py-12 md:py-[50px]">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+          <div className="max-w-[1400px] 2xl:mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
 
           {/* SIDEBAR */}
           <aside
             className={`
-              fixed lg:static top-0 left-0 h-full lg:h-auto
+              fixed lg:sticky top-0 lg:top-[100px] left-0 h-full lg:h-auto
               w-[280px] bg-white z-50 lg:z-auto
               transform transition-transform duration-300
               ${openFilter ? "translate-x-0" : "-translate-x-full"}
               lg:translate-x-0
+              lg:self-start lg:max-h-[calc(100vh-120px)]
             `}
           >
-            <div className="border border-gray-200 rounded-lg p-6 h-full lg:sticky lg:top-[100px] lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto">
+            <div className="rounded-lg p-6 pl-2 lg:pl-0 h-full lg:h-auto lg:overflow-y-auto">
               <div className="flex justify-between items-center mb-6 lg:hidden">
-                <h2 className="font-semibold text-black">Interior Wood Doors</h2>
-                <button onClick={() => setOpenFilter(false)}>✕</button>
+                <h2 className="font-roboto font-[600] text-black text-lg">Interior Wood Doors</h2>
+                <button onClick={() => setOpenFilter(false)} className="text-gray-600 hover:text-black text-xl">✕</button>
               </div>
 
-              <h2 className="text-xl font-semibold text-black mb-6 hidden lg:block">
+              <h2 className="text-xl font-roboto font-[600] text-black mb-6 hidden lg:block">
                 Interior Wood Doors
               </h2>
 
@@ -228,7 +282,7 @@ const InteriorWoodPage = () => {
                   key={item}
                   href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
                   onClick={() => setOpenFilter(false)}
-                  className="block py-3 text-gray-700 hover:text-[#FF6E4A] border-b border-gray-200 last:border-b-0"
+                  className="block py-3 text-sm font-roboto font-[400] text-gray-700 hover:text-[#FF6E4A] border-b border-gray-200 last:border-b-0 transition-colors"
                 >
                   {item}
                 </a>
@@ -243,14 +297,14 @@ const InteriorWoodPage = () => {
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF6E4A]"></div>
               </div>
             )}
-            {error && <p className="text-red-600">{error}</p>}
+            {error && <p className="text-red-600 text-sm md:text-base font-roboto">{error}</p>}
             
             {!loading && !error && (
               <>
                 {/* Overview Section */}
                 <section id="overview" className="mb-16 scroll-mt-24">
-                  <h2 className="text-2xl font-semibold text-black mb-6">Overview</h2>
-                  <p className="text-gray-700 mb-6">
+                  <h2 className="text-[23px] md:text-[32px] font-roboto font-[500] text-black mb-4 leading-tight">Overview</h2>
+                  <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B]">
                     Browse our collection of interior wood doors organized by type. Each door is crafted with precision and quality materials.
                   </p>
                 </section>
@@ -275,8 +329,8 @@ const InteriorWoodPage = () => {
                   
                   return (
                     <section key={doorType} id={sectionId} className="mb-16 scroll-mt-24">
-                      <h2 className="text-2xl font-semibold text-black mb-6">{doorType}</h2>
-                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                      <h2 className="text-[20px] md:text-[28px] font-roboto font-[500] text-black mb-6 leading-tight">{doorType}</h2>
+                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-3">
                         {doorsInType.map((door) => (
                           <div key={door._id} className="relative group cursor-pointer" onClick={() => handleDoorClick(door, doorType)}>
                             {door.imageUrl && door.imageUrl[0] && (
@@ -289,9 +343,9 @@ const InteriorWoodPage = () => {
                               </div>
                             )}
                             <div className="mt-2">
-                              <p className="text-sm font-medium text-black truncate text-center" >{door.name}</p>
+                              <p className="text-sm font-roboto font-[500] text-black truncate text-center">{door.name}</p>
                               {door.description && (
-                                <p className="text-xs text-gray-600 line-clamp-2 mt-1">{door.description}</p>
+                                <p className="text-xs font-roboto font-[400] text-[#3B3B3B] line-clamp-2 mt-1 text-center">{door.description}</p>
                               )}
                             </div>
                           </div>
@@ -303,7 +357,8 @@ const InteriorWoodPage = () => {
               </>
             )}
           </div>
-        </div>
+            </div>
+          </div>
       </main>
 
       {/* Door Preview Modal */}
@@ -367,8 +422,8 @@ const InteriorWoodPage = () => {
                   
                   {/* Door Info */}
                   <div className="mt-4 md:mt-6 text-center text-white">
-                    <p className="text-base md:text-lg lg:text-xl font-semibold">{currentDoorGroup[currentDoorIndex]?.name}</p>
-                    <p className="text-xs md:text-sm text-gray-300 mt-1 md:mt-2">
+                    <p className="text-base md:text-lg lg:text-xl font-roboto font-[600]">{currentDoorGroup[currentDoorIndex]?.name}</p>
+                    <p className="text-xs md:text-sm font-roboto font-[400] text-gray-300 mt-1 md:mt-2">
                       {currentDoorIndex + 1} / {currentDoorGroup.length}
                     </p>
                   </div>

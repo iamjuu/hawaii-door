@@ -594,4 +594,160 @@ export async function sendQuoteConfirmationToUser(
   }
 }
 
+// Send contact form submission email to admin
+export async function sendContactFormEmail(contactData: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  message: string;
+}) {
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
+  
+  if (!adminEmail) {
+    throw new Error("Admin email not configured");
+  }
+
+  const subject = `New Contact Form Submission - ${contactData.firstName} ${contactData.lastName}`;
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 700px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #FF6E4A; color: #fff; padding: 20px; text-align: center; }
+        .content { padding: 30px 20px; background-color: #f9f9f9; }
+        .info-table { width: 100%; border-collapse: collapse; margin: 20px 0; background-color: #fff; }
+        .info-table td { padding: 12px; border-bottom: 1px solid #e0e0e0; }
+        .info-table td:first-child { font-weight: bold; width: 150px; color: #FF6E4A; }
+        .message-box { background-color: #fff; border-left: 4px solid #FF6E4A; padding: 20px; margin: 20px 0; }
+        .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>🔔 New Contact Form Submission</h1>
+        </div>
+        <div class="content">
+          <h2>New message from ${contactData.firstName} ${contactData.lastName}</h2>
+          <p>A new contact form submission has been received. Here are the details:</p>
+          
+          <table class="info-table">
+            <tr>
+              <td>Name</td>
+              <td>${contactData.firstName} ${contactData.lastName}</td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td><a href="mailto:${contactData.email}">${contactData.email}</a></td>
+            </tr>
+            <tr>
+              <td>Phone</td>
+              <td><a href="tel:${contactData.phone}">${contactData.phone}</a></td>
+            </tr>
+            <tr>
+              <td>Submitted At</td>
+              <td>${new Date().toLocaleString()}</td>
+            </tr>
+          </table>
+          
+          <div class="message-box">
+            <h3 style="margin-top: 0;">💬 Message</h3>
+            <p style="white-space: pre-wrap;">${contactData.message}</p>
+          </div>
+          
+          <p style="margin-top: 30px;">
+            <strong>Action Required:</strong> Please respond to ${contactData.firstName} ${contactData.lastName} at ${contactData.email} or ${contactData.phone} within 24 hours.
+          </p>
+        </div>
+        <div class="footer">
+          <p>&copy; ${new Date().getFullYear()} Hawaii Doors. All rights reserved.</p>
+          <p>This is an automated notification from your website's contact form.</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  try {
+    const result = await sendEmail(adminEmail, subject, html);
+    console.log(`✅ Contact form email sent successfully to admin for ${contactData.firstName} ${contactData.lastName}`);
+    return result;
+  } catch (error) {
+    console.error(`❌ Failed to send contact form email for ${contactData.firstName} ${contactData.lastName}:`, error);
+    throw error;
+  }
+}
+
+// Send confirmation email to user after contact form submission
+export async function sendContactConfirmationToUser(contactData: {
+  firstName: string;
+  lastName: string;
+  email: string;
+}) {
+  const subject = "Thank You for Contacting Hawaii Doors";
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #FF6E4A; color: #fff; padding: 30px 20px; text-align: center; }
+        .content { padding: 30px 20px; background-color: #f9f9f9; }
+        .highlight-box { background-color: #fff; border-left: 4px solid #FF6E4A; padding: 20px; margin: 20px 0; }
+        .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>Hawaii Doors</h1>
+          <p style="margin: 0; font-size: 18px;">Thank You for Reaching Out!</p>
+        </div>
+        <div class="content">
+          <h2>Hello ${contactData.firstName}!</h2>
+          <p>Thank you for contacting Hawaii Doors. We have received your message and appreciate you taking the time to reach out to us.</p>
+          
+          <div class="highlight-box">
+            <h3 style="margin-top: 0;">📋 What's Next?</h3>
+            <p>Our team will review your inquiry and get back to you within 24 hours.</p>
+            <p>We're committed to providing you with the best service and look forward to discussing your door project with you.</p>
+          </div>
+          
+          <p style="margin-top: 30px;">
+            <strong>Need immediate assistance?</strong><br>
+            Feel free to reach out to us directly at:<br>
+            📧 <a href="mailto:sales@hawaiidoors.com">sales@hawaiidoors.com</a><br>
+            📞 <a href="tel:+18087782351">+1 (808) 778-2351</a>
+          </p>
+          
+          <p style="margin-top: 30px; font-style: italic; color: #666;">
+            Premium Custom Doors from Hawaii
+          </p>
+        </div>
+        <div class="footer">
+          <p><strong>Hawaii Doors</strong></p>
+          <p>99-1451 Koaha Pl, Aiea, HI 96701</p>
+          <p>&copy; ${new Date().getFullYear()} Hawaii Doors. All rights reserved.</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  try {
+    const result = await sendEmail(contactData.email, subject, html);
+    console.log(`✅ Confirmation email sent successfully to ${contactData.firstName} ${contactData.lastName} (${contactData.email})`);
+    return result;
+  } catch (error) {
+    console.error(`❌ Failed to send confirmation email to ${contactData.firstName} ${contactData.lastName} (${contactData.email}):`, error);
+    throw error;
+  }
+}
+
 

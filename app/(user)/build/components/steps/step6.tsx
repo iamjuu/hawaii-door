@@ -6,6 +6,8 @@ import lhra from "../../../../../public/assets/images/dummy/Lhra.png";
 import lha from "../../../../../public/assets/images/dummy/Lha.png";
 import rha from "../../../../../public/assets/images/dummy/rha.png";
 import rhra from "../../../../../public/assets/images/dummy/rhra.png";
+import lhImage from "../../../../../public/assets/door/LH.png";
+import rhImage from "../../../../../public/assets/door/RH.png";
 import rounded1 from "../../../../../public/assets/images/dummy/roundcorner11.png";
 import rounded2 from "../../../../../public/assets/images/dummy/roundcorner22.png";
 import square from "../../../../../public/assets/images/dummy/square2.png";
@@ -96,12 +98,108 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
     });
   };
 
+  // Check if it's a single door or double door
+  const isSingleDoor = quoteData.doorConfig === "Single Door";
+
   return (
     <div className="mt-[50px] mb-[50px] max-w-[900px]">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Door Handling & Hinges</h2>
 
-      <div className="max-w-[900px] w-full grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* 1: LHRA */}
+      {/* Single Door Options (LH and RH) */}
+      {isSingleDoor && (
+        <div className="max-w-[900px] w-full grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* LH - Left Hand */}
+          <div
+            onClick={() => handleHandlingSelect("LH")}
+            className={`
+              relative border-2 rounded-lg p-4 cursor-pointer transition-all
+              hover:shadow-lg
+              ${
+                selectedHandling === "LH"
+                  ? "shadow-lg border-gray-200 bg-white"
+                  : "border-gray-200 bg-white"
+              }
+            `}
+          >
+            {/* Selected Badge */}
+            {selectedHandling === "LH" && (
+              <div className="absolute top-3 right-3 z-10">
+                <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
+                  <svg
+                    className="w-5 h-5 text-white"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </div>
+              </div>
+            )}
+            <div className="relative w-full max-w-[320px] mx-auto aspect-[4/3] mb-4">
+              <Image
+                src={lhImage}
+                alt="LH"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">LH</p>
+            <p className="text-[11.96px] text-[#000000] font-light text-center">Left Hand (hinges on left, door swings in)</p>
+          </div>
+
+          {/* RH - Right Hand */}
+          <div
+            onClick={() => handleHandlingSelect("RH")}
+            className={`
+              relative border-2 rounded-lg p-4 cursor-pointer transition-all
+              hover:shadow-lg
+              ${
+                selectedHandling === "RH"
+                  ? "shadow-lg border-gray-200 bg-white"
+                  : "border-gray-200 bg-white"
+              }
+            `}
+          >
+            {/* Selected Badge */}
+            {selectedHandling === "RH" && (
+              <div className="absolute top-3 right-3 z-10">
+                <div className="w-8 h-8 bg-[#FF6E4A]-500 rounded-full flex items-center justify-center shadow-lg">
+                  <svg
+                    className="w-5 h-5 text-white"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </div>
+              </div>
+            )}
+            <div className="relative w-full max-w-[320px] mx-auto aspect-[4/3] mb-4">
+              <Image
+                src={rhImage}
+                alt="RH"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">RH</p>
+            <p className="text-[11.96px] text-[#000000] font-light text-center">Right Hand (hinges on right, door swings in)</p>
+          </div>
+        </div>
+      )}
+
+      {/* Double Door Options (LHRA, LHA, RHA, RHRA) */}
+      {!isSingleDoor && (
+        <div className="max-w-[900px] w-full grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* 1: LHRA */}
         <div
           onClick={() => handleHandlingSelect("LHRA")}
           className={`
@@ -273,7 +371,8 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           <p className="text-[16.6px] font-semibold text-black font-roboto mb-1 text-center">RHRA</p>
           <p className="text-[11.96px] text-[#000000] font-light text-center">Right Hand Reverse Active</p>
         </div>
-      </div>
+        </div>
+      )}
 
       {/* Hinge Radius */}
       <div className="mt-10">

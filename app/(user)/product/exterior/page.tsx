@@ -33,7 +33,7 @@ const ExteriorPage = () => {
         features={features}
       />
       {/* Fiberglass Doors Section */}
-      <section className="px-6 md:px-14 pt-5 pb-12 md:py-16 bg-white font-roboto">
+      <section className="px-6 md:px-14 pt-5 pb-12 md:py-16 bg-[#fdfffc] font-roboto ">
         <h2 className="text-[24px] md:text-[36px] font-[500] mb-5 md:mb-8 text-black">FIBERGLASS DOORS</h2>
 
         <div className="space-y-6  text-gray-600 ">
@@ -66,7 +66,7 @@ const ExteriorPage = () => {
         </div>
       </section>
 
-      <section className="w-full px-6 md:px-16">
+      <section className="w-full px-6 md:px-16 ">
         <img
           src={Houseimage.src}
           alt="Exterior House"
@@ -74,9 +74,9 @@ const ExteriorPage = () => {
         />
       </section>
 
-      <section className="bg-white pb-10 px-6 md:px-16 mt-[37px] font-roboto ">
-        <div className="w-full py-10  border-t border-[#CCCCCC]">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-14 items-start">
+      <section className="bg-[#fdfffc]  px-6 md:px-16 mt-[37px] font-roboto ">
+        <div className="w-full pt-10 py-0   border-t border-[#CCCCCC] ">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-14 items-start ">
 
             {/* LEFT IMAGE */}
             <div>
