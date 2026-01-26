@@ -58,15 +58,24 @@ const GalleryPage = () => {
         const params = new URLSearchParams();
         params.append("limit", "200");
         
+        // Product/Category filter
         if (selectedProduct !== "All") {
           params.append("category", selectedProduct.toLowerCase());
         }
         
-        // Note: API doesn't support multiple subCategories, so we'll filter client-side for types
-        // For glass, if only one option selected, filter server-side
-        if (selectedGlass.length === 1) {
-          const hasGlass = selectedGlass[0] === "With Glass";
-          params.append("hasGlass", hasGlass.toString());
+        // Type/SubCategory filter - send all selected types to backend
+        if (selectedTypes.length > 0) {
+          selectedTypes.forEach((type) => {
+            params.append("subCategory", type);
+          });
+        }
+        
+        // Glass filter - send all selected glass options to backend
+        if (selectedGlass.length > 0) {
+          selectedGlass.forEach((glass) => {
+            const hasGlass = glass === "With Glass";
+            params.append("hasGlass", hasGlass.toString());
+          });
         }
         
         const response = await fetch(`/api/gallery?${params.toString()}`);
@@ -95,22 +104,8 @@ const GalleryPage = () => {
                 item.image && item.image !== "data:image/jpeg;base64,"
             );
 
-          // Apply client-side filters for subCategory (since API doesn't support multiple)
-          let filtered = transformedItems;
-          
-          if (selectedTypes.length > 0) {
-            filtered = filtered.filter((item) => selectedTypes.includes(item.type));
-          }
-          
-          // If multiple glass options selected or none selected, filter client-side
-          if (selectedGlass.length > 1 || (selectedGlass.length === 0 && selectedProduct === "All")) {
-            // No additional filtering needed - already filtered by API if single glass option
-          } else if (selectedGlass.length === 0 && selectedProduct !== "All") {
-            // If no glass filter but product filter is active, show all
-            // (already handled by API)
-          }
-
-          setAllGalleryItems(filtered);
+          // No need for client-side filtering - backend handles all filters now
+          setAllGalleryItems(transformedItems);
         } else {
           setError("Failed to load gallery items");
         }
@@ -125,7 +120,7 @@ const GalleryPage = () => {
   }, [selectedProduct, selectedTypes, selectedGlass]);
 
   /* ---------------- FILTER LOGIC ---------------- */
-  // Filtering is now done in the fetch effect, but we keep this for consistency
+  // All filtering is handled server-side via API query params
   const filteredDoors = allGalleryItems;
 
   const handleTypeToggle = (type: string) => {
