@@ -7,7 +7,7 @@ interface Feature {
 
 interface HeroSectionProps {
   contant: string;
-  bgImage: string;
+  bgImage: string | StaticImageData;
   features: Feature[];
   para: string;
 }
@@ -21,20 +21,22 @@ export default function HeroSection({
   // duplicate features for seamless loop
   const loopFeatures = [...features, ...features];
 
+  // Use CSS background for string URLs (local /assets/ or remote); Image can fail for local public paths
+  const bgUrl =
+    typeof bgImage === "string"
+      ? bgImage
+      : (bgImage as StaticImageData).src;
+  // Encode so paths with spaces (e.g. "interior door hero image 3.svg") work in url()
+  const bgUrlEncoded = encodeURI(bgUrl);
+
   return (
     <section className="relative mt-5 md:mt-20 w-full h-[750px] font-roboto overflow-hidden">
-      {/* Optimized Background Image */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src={bgImage}
-          alt="Hero Background"
-          fill
-          priority
-          quality={85}
-          className="object-cover"
-          sizes="100vw"
-        />
-      </div>
+      {/* Background: div + CSS so /assets/... and any URL loads reliably */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url('${bgUrlEncoded}')` }}
+        aria-hidden
+      />
 
       {/* Overlay for better text readability */}
       <div className="absolute inset-0 bg-black/20 z-[1]" />

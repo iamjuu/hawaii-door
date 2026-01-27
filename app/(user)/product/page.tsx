@@ -26,7 +26,8 @@ const page = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const bgImage = "https://hawaai-doors-bucket.s3.us-west-2.amazonaws.com/uploads/1769351026932-hero_productmain.webp";
+  // Use public URL so the hero image loads reliably (same pattern as interior/exterior pages)
+  const heroBg = "/assets/product/productmain.webp";
   const contant = "Doors That Fit. Every Time.";
   const para =
     "Explore our full line of pre-hung wood and fiberglass doors, organized by material and style. All units are machined in-house to match your project's exact hinge, bore, and jamb specs.";
@@ -67,7 +68,7 @@ const page = () => {
       <main className="bg-[#fdfffc]">
         <HeroSection
           contant={contant}
-          bgImage={bgImage}
+          bgImage={heroBg}
           para={para}
           features={features}
         />

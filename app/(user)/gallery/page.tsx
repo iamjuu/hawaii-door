@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
 import PageLoader from "@/components/user/PageLoader";
@@ -26,6 +26,25 @@ type ApiGalleryItem = {
   name?: string;
 };
 
+/* ---------------- STATIC GALLERY (temporary until backend has images; uncomment API below when ready) ---------------- */
+const STATIC_GALLERY_ITEMS: GalleryItem[] = [
+  { id: "s1", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800", product: "Exterior", type: "Single", glass: "With Glass" },
+  { id: "s2", image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800", product: "Interior", type: "Single", glass: "Without Glass" },
+  { id: "s3", image: "https://images.unsplash.com/photo-1600566753086-00f18fb6d3ea?w=800", product: "Interior", type: "Single", glass: "With Glass" },
+  { id: "s4", image: "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800", product: "Exterior", type: "Double", glass: "With Glass" },
+  { id: "s5", image: "https://images.unsplash.com/photo-1600047509807-ba87494cfbce?w=800", product: "Exterior", type: "Double", glass: "Without Glass" },
+  { id: "s6", image: "https://images.unsplash.com/photo-1600585154520-5d63cc2118e0?w=800", product: "Exterior", type: "Single", glass: "With Glass" },
+  { id: "s7", image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800", product: "Interior", type: "Single", glass: "Without Glass" },
+  { id: "s8", image: "https://images.unsplash.com/photo-1558618666-fa25c5b8318d?w=800", product: "Interior", type: "Barn", glass: "Without Glass" },
+  { id: "s9", image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800", product: "Interior", type: "Dutch", glass: "With Glass" },
+  { id: "s10", image: "https://images.unsplash.com/photo-1600566752733-c8c8e2716c63?w=800", product: "Interior", type: "Single", glass: "With Glass" },
+  { id: "s11", image: "/assets/images/doorimage/Gallery%201.png", product: "Interior", type: "Single", glass: "With Glass" },
+  { id: "s12", image: "/assets/images/doorimage/Frame%20138.png", product: "Exterior", type: "Single", glass: "With Glass" },
+  { id: "s13", image: "/assets/images/doorimage/Frame%20150.png", product: "Interior", type: "Double", glass: "Without Glass" },
+  { id: "s14", image: "/assets/images/doorimage/Frame%20154.png", product: "Exterior", type: "Single", glass: "With Glass" },
+  { id: "s15", image: "https://images.unsplash.com/photo-1600573472692-25e63ee141f8?w=800", product: "Exterior", type: "Single", glass: "Without Glass" },
+];
+
 /* ---------------- COMPONENT ---------------- */
 const GalleryPage = () => {
   const [openFilter, setOpenFilter] = useState(false);
@@ -33,9 +52,10 @@ const GalleryPage = () => {
   const [selectedProduct, setSelectedProduct] = useState("All");
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedGlass, setSelectedGlass] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Static mode: no API, use STATIC_GALLERY_ITEMS. When using API, set loading true and use [].
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [allGalleryItems, setAllGalleryItems] = useState<GalleryItem[]>([]);
+  const [allGalleryItems, setAllGalleryItems] = useState<GalleryItem[]>(STATIC_GALLERY_ITEMS);
 
   /* ---------------- HELPERS ---------------- */
   const getImageUrl = (imageUrl: string): string => {
@@ -48,80 +68,41 @@ const GalleryPage = () => {
   const capitalize = (str: string): string =>
     str.charAt(0).toUpperCase() + str.slice(1);
 
-  /* ---------------- FETCH ---------------- */
-  useEffect(() => {
-    const fetchGalleryItems = async () => {
-      try {
-        setLoading(true);
-        
-        // Build query params based on filters
-        const params = new URLSearchParams();
-        params.append("limit", "200");
-        
-        // Product/Category filter
-        if (selectedProduct !== "All") {
-          params.append("category", selectedProduct.toLowerCase());
-        }
-        
-        // Type/SubCategory filter - send all selected types to backend
-        if (selectedTypes.length > 0) {
-          selectedTypes.forEach((type) => {
-            params.append("subCategory", type);
-          });
-        }
-        
-        // Glass filter - send all selected glass options to backend
-        if (selectedGlass.length > 0) {
-          selectedGlass.forEach((glass) => {
-            const hasGlass = glass === "With Glass";
-            params.append("hasGlass", hasGlass.toString());
-          });
-        }
-        
-        const response = await fetch(`/api/gallery?${params.toString()}`);
-        const result = await response.json();
+  /* ---------------- FETCH: commented out; using static gallery until backend has images ---------------- */
+  // When backend is ready: set initial loading=true, allGalleryItems=[], and uncomment below.
+  // useEffect(() => {
+  //   const fetchGalleryItems = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const params = new URLSearchParams();
+  //       params.append("limit", "200");
+  //       if (selectedProduct !== "All") params.append("category", selectedProduct.toLowerCase());
+  //       if (selectedTypes.length > 0) selectedTypes.forEach((t) => params.append("subCategory", t));
+  //       if (selectedGlass.length > 0) selectedGlass.forEach((g) => params.append("hasGlass", (g === "With Glass").toString()));
+  //       const response = await fetch(`/api/gallery?${params.toString()}`);
+  //       const result = await response.json();
+  //       if (result.success && result.data) {
+  //         const transformedItems: GalleryItem[] = result.data.map((item: ApiGalleryItem) => {
+  //           const firstImage = item.imageUrl?.[0]?.trim() || "";
+  //           const image = getImageUrl(firstImage);
+  //           const productCategory = item.category === "interior" ? "Interior" : item.category === "exterior" ? "Exterior" : "Other";
+  //           return { id: item._id || item.id || "", image, product: productCategory, type: item.subCategory || "", glass: item.hasGlass ? "With Glass" : "Without Glass" };
+  //         }).filter((item: GalleryItem) => item.image && item.image !== "data:image/jpeg;base64,");
+  //         setAllGalleryItems(transformedItems);
+  //       } else setError("Failed to load gallery items");
+  //     } catch { setError("Error loading gallery items"); }
+  //     finally { setLoading(false); }
+  //   };
+  //   fetchGalleryItems();
+  // }, [selectedProduct, selectedTypes, selectedGlass]);
 
-        if (result.success && result.data) {
-          const transformedItems: GalleryItem[] = result.data
-            .map((item: ApiGalleryItem) => {
-              const firstImage = item.imageUrl?.[0]?.trim() || "";
-              const image = getImageUrl(firstImage);
-
-              // Map category to display name
-              const productCategory = item.category === "interior" ? "Interior" : 
-                                     item.category === "exterior" ? "Exterior" : "Other";
-
-              return {
-                id: item._id || item.id || "",
-                image,
-                product: productCategory,
-                type: item.subCategory || "",
-                glass: item.hasGlass ? "With Glass" : "Without Glass",
-              };
-            })
-            .filter(
-              (item: GalleryItem) =>
-                item.image && item.image !== "data:image/jpeg;base64,"
-            );
-
-          // No need for client-side filtering - backend handles all filters now
-          setAllGalleryItems(transformedItems);
-        } else {
-          setError("Failed to load gallery items");
-        }
-      } catch {
-        setError("Error loading gallery items");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchGalleryItems();
-  }, [selectedProduct, selectedTypes, selectedGlass]);
-
-  /* ---------------- FILTER LOGIC ---------------- */
-  // All filtering is handled server-side via API query params
-  const filteredDoors = allGalleryItems;
+  /* ---------------- FILTER LOGIC (client-side when using static data) ---------------- */
+  const filteredDoors = allGalleryItems.filter((item) => {
+    if (selectedProduct !== "All" && item.product !== selectedProduct) return false;
+    if (selectedTypes.length > 0 && !selectedTypes.includes(item.type)) return false;
+    if (selectedGlass.length > 0 && !selectedGlass.includes(item.glass)) return false;
+    return true;
+  });
 
   const handleTypeToggle = (type: string) => {
     setSelectedTypes((prev) =>

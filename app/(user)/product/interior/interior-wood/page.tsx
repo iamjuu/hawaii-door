@@ -97,7 +97,8 @@ const InteriorWoodPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isModalOpen, currentDoorGroup.length]);
 
-  const bgImage = "https://hawaai-doors-bucket.s3.us-west-2.amazonaws.com/uploads/1769351030278-hero_wood-interior.webp";
+  // AWS hero (commented out): "https://hawaai-doors-bucket.s3.us-west-2.amazonaws.com/uploads/1769351030278-hero_wood-interior.webp"
+  const bgImage = "/assets/product/Interior Wood Stile & Rail.svg";
   const contant = "Interior Doors";
   const para =
     "Discover interior doors; we offer a variety of door types, designs and styles. You are sure to find the perfectdoor for your project.";

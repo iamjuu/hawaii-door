@@ -154,7 +154,8 @@ const LyndenDoorPage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const bgImage = "https://hawaai-doors-bucket.s3.us-west-2.amazonaws.com/uploads/1769351029217-hero_interior-door-hero.webp";
+  // AWS hero (commented out): "https://hawaai-doors-bucket.s3.us-west-2.amazonaws.com/uploads/1769351029217-hero_interior-door-hero.webp"
+  const bgImage = "/assets/product/lyndenproduct.svg";
   const contant = "Lynden Door";
   const para =
     "Discover premium Lynden Door interior solutions; we offer a variety of door types, designs and styles. Experience quality craftsmanship and design excellence.";
