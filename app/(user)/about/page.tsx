@@ -37,7 +37,7 @@ const page = () => {
           Crafted with Integrity.
         </h1>
 
-        <p className="text-sm md:text-[18px] font-[400] text-[#3B3B3B] font-montserrat w-full md:max-w-xl tracking-[-1%]">
+        <p className="text-sm md:text-[18px] text-justify font-[400] text-[#3B3B3B] font-montserrat w-full md:max-w-xl tracking-[-1%]">
         My father started this company with one rule: get it right the first time. Forty years later, we still measure twice, machine once, and deliver doors that fit. We're not a franchise. We're local, women-owned, and proud to serve the builders, architects, and homeowners who shape Hawaii.
         Every door is precision-machined and pre-hung in our shop, labeled for each opening, and backed by both vendor and shop warranties. Integrity means showing up, documenting specs clearly, and keeping promises. That's how Hawaiʻi Doors operates, from quote to delivery.
         </p>
@@ -50,7 +50,7 @@ const page = () => {
       </div>
 
       {/* Right Image */}
-      <div className="relative w-full md:w-[587px] h-[300px] md:h-[523px] rounded-[15px] overflow-hidden">
+      <div className="relative w-full h-[300px] md:h-[523px] rounded-[15px] overflow-hidden">
         <Image
           src={About2}
           alt="Craftsman working"
