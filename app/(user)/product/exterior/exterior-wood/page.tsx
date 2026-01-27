@@ -18,6 +18,87 @@ interface Door {
   inStock?: boolean;
 }
 
+// Normalize image URL: use base64 webp as data URL, otherwise use direct URL
+function getImageSrc(url: string | undefined): string {
+  if (!url || !String(url).trim()) return '';
+  const s = String(url).trim();
+  if (s.startsWith('data:image')) return s;
+  if (s.startsWith('http://') || s.startsWith('https://')) return s;
+  const base64Part = s.includes(',') ? (s.split(',')[1] ?? s) : s;
+  return `data:image/webp;base64,${base64Part}`;
+}
+
+// Normalize doorType for matching (DB may have different casing/spacing)
+function normalizeDoorType(t: string | undefined): string {
+  return (t || '').trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+// Use blob URL for long base64 data URLs so webp base64 actually displays (avoids browser/engine limits on data: URL length)
+const DATA_URL_LENGTH_THRESHOLD = 15_000;
+
+function useResolvedImageSrc(rawSrc: string | undefined): string {
+  const [src, setSrc] = React.useState<string>(() => {
+    if (!rawSrc || !rawSrc.trim()) return '';
+    const s = rawSrc.trim();
+    if (!s.startsWith('data:image')) return s;
+    if (s.length < DATA_URL_LENGTH_THRESHOLD) return s;
+    return '';
+  });
+
+  React.useEffect(() => {
+    if (!rawSrc || !rawSrc.trim()) {
+      setSrc('');
+      return;
+    }
+    const s = rawSrc.trim();
+    if (!s.startsWith('data:image')) {
+      setSrc(s);
+      return;
+    }
+    if (s.length < DATA_URL_LENGTH_THRESHOLD) {
+      setSrc(s);
+      return;
+    }
+    const m = s.match(/^data:([^;]+);base64,(.+)$/);
+    if (!m) {
+      setSrc(s);
+      return;
+    }
+    const mime = m[1];
+    const b64 = m[2];
+    try {
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      const blob = new Blob([bytes], { type: mime });
+      const objectUrl = URL.createObjectURL(blob);
+      setSrc(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    } catch {
+      setSrc(s);
+    }
+  }, [rawSrc]);
+
+  return src;
+}
+
+// Renders door image, resolving long base64 via blob URL so webp base64 actually shows
+function DoorImage({
+  rawSrc,
+  alt,
+  className,
+  onError,
+}: {
+  rawSrc: string | undefined;
+  alt: string;
+  className?: string;
+  onError?: (e: React.SyntheticEvent<HTMLImageElement, Event>) => void;
+}) {
+  const src = useResolvedImageSrc(rawSrc ? getImageSrc(rawSrc) : undefined);
+  if (!src) return null;
+  return <img src={src} alt={alt} className={className} onError={onError} decoding="async" />;
+}
+
 const ExteriorWoodPage = () => {
   const [doors, setDoors] = useState<Door[]>([]);
   const [loading, setLoading] = useState(true);
@@ -33,15 +114,31 @@ const ExteriorWoodPage = () => {
     const fetchDoors = async () => {
       try {
         setLoading(true);
-        // Reduced limit to 100 to avoid MongoDB memory issues
-        const response = await fetch('/api/products?category=exterior&limit=100');
-        const data = await response.json();
+        const limit = 100;
+        let allDoors: Door[] = [];
+        let page = 1;
+        let hasMore = true;
 
-        if (data.success) {
-          setDoors(data.data || []);
-        } else {
-          setError(data.message || 'Failed to fetch doors');
+        while (hasMore) {
+          const response = await fetch(
+            `/api/products?category=exterior&limit=${limit}&page=${page}`
+          );
+          const data = await response.json();
+
+          if (!data.success) {
+            setError(data.message || 'Failed to fetch doors');
+            break;
+          }
+
+          const batch: Door[] = data.data || [];
+          allDoors = allDoors.concat(batch);
+          hasMore = batch.length === limit && (data.pagination?.hasNext ?? false);
+          page += 1;
+
+          if (batch.length < limit || page > 20) break; // guard: max 20 pages
         }
+
+        setDoors(allDoors);
       } catch (err) {
         setError('Error loading doors');
         console.error('Error fetching doors:', err);
@@ -55,7 +152,7 @@ const ExteriorWoodPage = () => {
 
   // Handle door image click - open modal with that door's group
   const handleDoorClick = (door: Door, doorType: string) => {
-    const doorsInType = doors.filter((d) => d.doorType === doorType);
+    const doorsInType = doors.filter((d) => normalizeDoorType(d.doorType) === normalizeDoorType(doorType));
     const doorIndex = doorsInType.findIndex((d) => d._id === door._id);
     setCurrentDoorGroup(doorsInType);
     setCurrentDoorIndex(doorIndex >= 0 ? doorIndex : 0);
@@ -243,7 +340,7 @@ const ExteriorWoodPage = () => {
                     "Half Lite Doors",
                     "Exterior Panel Doors"
                   ].map((doorType) => {
-                    const doorsInType = doors.filter((door) => door.doorType === doorType);
+                    const doorsInType = doors.filter((door) => normalizeDoorType(door.doorType) === normalizeDoorType(doorType));
                     if (doorsInType.length === 0) return null;
 
                     const sectionId = doorType.toLowerCase().replace(/\s+/g, "-");
@@ -255,11 +352,12 @@ const ExteriorWoodPage = () => {
                           {doorsInType.map((door) => (
                             <div key={door._id} className="relative group cursor-pointer" onClick={() => handleDoorClick(door, doorType)}>
                               {door.imageUrl && door.imageUrl[0] && (
-                                <div className="w-full h-48 rounded-lg group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex items-center justify-center">
-                                  <img
-                                    src={door.imageUrl[0]}
+                                <div className="w-full h-48 rounded-lg group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex items-center justify-center ">
+                                  <DoorImage
+                                    rawSrc={door.imageUrl[0]}
                                     alt={door.name}
                                     className="w-full h-full object-contain transition-transform group-hover:scale-105"
+                                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                                   />
                                 </div>
                               )}
@@ -336,9 +434,9 @@ const ExteriorWoodPage = () => {
             <div className="flex flex-col items-center justify-center w-full h-full max-w-7xl">
               {currentDoorGroup[currentDoorIndex]?.imageUrl?.[0] && (
                 <>
-                  <img
+                  <DoorImage
                     key={currentDoorIndex}
-                    src={currentDoorGroup[currentDoorIndex].imageUrl[0]}
+                    rawSrc={currentDoorGroup[currentDoorIndex]?.imageUrl?.[0]}
                     alt={currentDoorGroup[currentDoorIndex].name}
                     className="w-auto h-auto max-w-[75%] max-h-[55vh] md:max-w-[70%] md:max-h-[65vh] lg:max-w-[65%] lg:max-h-[70vh] object-contain"
                   />

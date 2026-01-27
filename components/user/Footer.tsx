@@ -62,35 +62,34 @@ const Footer = () => {
               <h3 className="text-lg font-semibold mb-4">Products</h3>
               <ul className="space-y-3">
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                    Fibreglass Door (FG 1 3/4")
+                  <a href="/product/interior" className="text-gray-300 hover:text-white transition-colors text-sm">
+Interior Doors
+                  </a>
+                </li>
+              
+                <li>
+                  <a href="/product/interior/lynden-door" className="text-gray-300 hover:text-white transition-colors text-sm">
+Lynden Doors
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                    Hollow Core Doors (HC 1 3/8")
+                  <a href="/product/interior/interior-wood" className="text-gray-300 hover:text-white transition-colors text-sm">
+Interior wood 
                   </a>
                 </li>
+
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                    Hollow Core Doors (HC 1 3/8")
+                  <a href="/product/exterior" className="text-gray-300 hover:text-white transition-colors text-sm">
+Exterior Doors
                   </a>
                 </li>
+
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                    Particle Core Doors
+                  <a href="/product/exterior/exterior-wood" className="text-gray-300 hover:text-white transition-colors text-sm">
+Exterior wood
                   </a>
                 </li>
-                <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                    Solid Core Laminated Construction (SCLC)
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                    Wood Core Doors
-                  </a>
-                </li>
+               
               </ul>
             </div>
 
