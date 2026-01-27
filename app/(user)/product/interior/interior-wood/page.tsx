@@ -129,14 +129,14 @@ const InteriorWoodPage = () => {
       <section className="w-full bg-white py-10 sm:py-12 md:py-[50px]">
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
           <div className="max-w-[1400px] 2xl:mx-auto">
-            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:flex-row gap-8 lg:gap-12">
               {/* LEFT CONTENT */}
-              <div className="flex-1 space-y-8">
+              <div className="flex-1   space-y-8">
                 <div>
-                  <h1 className="text-[23px] md:text-[36px] font-roboto font-[500] text-black leading-[32px] md:leading-[48px] mb-4">
+                  <h1 className="text-[23px] md:text-[46px] font-roboto font-[500] text-black leading-[32px] md:leading-[58px] mb-10">
                     Unmatched Versatility with Interior Solid Wood Doors
                   </h1>
-                  <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B] leading-relaxed">
+                  <p className="text-sm md:text-[16px] font-roboto font-[300] text-[#666666] leading-relaxed">
                     Interior solid wood doors deliver unmatched flexibility in design, style, and size. These wood doors come in a wide range of species and glass options, helping you choose the ideal door for your space, whether you need a standard style or a fully custom, one-of-a-kind design.
                   </p>
                 </div>
@@ -186,14 +186,14 @@ const InteriorWoodPage = () => {
               </div>
 
               {/* RIGHT IMAGE */}
-              <div className="flex-1 flex items-start justify-center lg:justify-end">
-                <div className="relative w-full max-w-[500px] h-[400px] md:h-[600px] lg:h-[700px]">
+              <div className="flex-1 flex items-start justify-center lg:justify-end min-w-0">
+                <div className="relative w-full h-[400px] md:h-[600px] lg:h-[700px]">
                   <Image 
                     src={interiorDoor1} 
                     alt="Interior Solid Wood Door" 
                     fill
-                    className="object-cover rounded-lg"
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover "
+                    // sizes="(max-width: 768px) 100vw, 50vw"
                     priority
                   />
                 </div>

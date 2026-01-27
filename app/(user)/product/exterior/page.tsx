@@ -8,7 +8,7 @@ import Windowimage from '../../../../public/assets/product/exterior/window.jpg';
 import FooterBanner from '../components/footerbanner';
 import Link from "next/link";
 const ExteriorPage = () => {
-  const bgImage = "/assets/product/exterior hero 4.svg";
+  const bgImage = "/assets/product/Exterior Wood.svg";
   const contant = "Exterior Wood Stile & Rail";
   const para =
     "Wood doors offer unmatched customization, with flexible designs, sizes, wood species, and glass options to create standard or fully custom doors that fit your project.";

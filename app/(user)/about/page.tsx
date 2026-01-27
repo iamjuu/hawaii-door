@@ -133,14 +133,14 @@ const page = () => {
               <div className="flex items-center gap-2 cursor-pointer">
                 <div className="relative w-6 h-6 md:w-7 md:h-7">
                   <Image
-                    src={iconAbout3}
+                    src={iconAbout1}
                     alt="Machine"
                     width={28}
                     height={28}
                     className="w-6 h-6 md:w-7 md:h-7 group-hover/bar:opacity-0 transition-opacity duration-300"
                   />
                   <Image
-                    src={truckGreen}
+                    src={doorGreen}
                     alt="Machine"
                     width={28}
                     height={28}
@@ -156,14 +156,14 @@ const page = () => {
               <div className="flex items-center gap-2 cursor-pointer">
                 <div className="relative w-6 h-6 md:w-7 md:h-7">
                   <Image
-                    src={iconAbout1}
+                    src={iconAbout3}
                     alt="Deliver"
                     width={28}
                     height={28}
                     className="w-6 h-6 md:w-7 md:h-7 group-hover/bar:opacity-0 transition-opacity duration-300"
                   />
                   <Image
-                    src={doorGreen}
+                    src={truckGreen}
                     alt="Deliver"
                     width={28}
                     height={28}
