@@ -3,6 +3,7 @@ import connectDB from "@/lib/mongodb";
 import Order from "@/models/Order";
 import Door from "@/models/Door";
 import { requireAuth } from "@/lib/auth";
+import type { Product } from "@/types";
 
 // Instant buy - direct purchase without cart
 export async function POST(req: NextRequest) {
@@ -20,7 +21,7 @@ export async function POST(req: NextRequest) {
     await connectDB();
 
     // Get product (door)
-    const product = await Door.findById(productId).lean();
+    const product = await Door.findById(productId).lean() as Product | null;
     if (!product) {
       return NextResponse.json({ success: false, message: "Product not found" }, { status: 404 });
     }

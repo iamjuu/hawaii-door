@@ -33,7 +33,8 @@ const ExteriorWoodPage = () => {
     const fetchDoors = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/products?category=exterior&limit=200');
+        // Reduced limit to 100 to avoid MongoDB memory issues
+        const response = await fetch('/api/products?category=exterior&limit=100');
         const data = await response.json();
 
         if (data.success) {

@@ -7,7 +7,9 @@ export async function GET(req: NextRequest) {
     await connectDB();
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1", 10);
-    const limit = parseInt(searchParams.get("limit") || "100", 10);
+    // Cap limit at 100 to avoid memory issues on free MongoDB tier
+    const requestedLimit = parseInt(searchParams.get("limit") || "100", 10);
+    const limit = Math.min(requestedLimit, 100);
     const skip = (page - 1) * limit;
     
     // Filters - support multiple values
@@ -41,8 +43,19 @@ export async function GET(req: NextRequest) {
       }
     }
 
+    // Use _id for sorting to avoid memory issues (automatically indexed)
+    const queryBuilder = Gallery.find(query)
+      .sort({ _id: -1 })
+      .limit(limit)
+      .lean();
+    
+    // Only apply skip if not the first page
+    if (page > 1) {
+      queryBuilder.skip(skip);
+    }
+
     const [galleryItems, total] = await Promise.all([
-      Gallery.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+      queryBuilder,
       Gallery.countDocuments(query),
     ]);
 

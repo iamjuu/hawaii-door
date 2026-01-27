@@ -57,7 +57,8 @@ export function ParallaxScrollSecondDemo({ filteredItems }: ParallaxScrollSecond
   const fetchGalleryItems = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/gallery?limit=200')
+      // Reduced limit to 100 to avoid MongoDB memory issues
+      const response = await fetch('/api/gallery?limit=100')
       const result = await response.json()
       
       if (result.success && result.data) {

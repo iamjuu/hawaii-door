@@ -28,16 +28,16 @@ const page = () => {
     {/* Hero Section */}
     <section className="w-full py-16 md:py-4 md:mt-[120px]">
     <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
-    <div className="max-w-[1400px] 2xl:mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
+    <div className="max-w-[1400px] 2xl:mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-center">
       
       {/* Left Content */}
-      <div className="flex w-full gap-5 flex-col">
+      <div className="flex w-full  gap-5 flex-col">
         <h1 className="text-[23px] md:text-[46px] font-medium  leading-[56px] text-black font-roboto">
           Built for Hawaii.<br />
           Crafted with Integrity.
         </h1>
 
-        <p className="text-sm md:text-[18px] text-justify font-[400] text-[#3B3B3B] font-montserrat w-full md:max-w-xl tracking-[-1%]">
+        <p className="text-sm md:text-[18px]  text-justify font-[400] text-[#3B3B3B] font-montserrat w-full tracking-[-1%]">
         My father started this company with one rule: get it right the first time. Forty years later, we still measure twice, machine once, and deliver doors that fit. We're not a franchise. We're local, women-owned, and proud to serve the builders, architects, and homeowners who shape Hawaii.
         Every door is precision-machined and pre-hung in our shop, labeled for each opening, and backed by both vendor and shop warranties. Integrity means showing up, documenting specs clearly, and keeping promises. That's how Hawaiʻi Doors operates, from quote to delivery.
         </p>

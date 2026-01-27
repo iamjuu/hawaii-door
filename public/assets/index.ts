@@ -187,4 +187,8 @@ export {default as footermainaImage5} from './product/intertior/playwoord/LDI-Va
 
 export {default as Bathroom} from './product/intertior/bathroom.svg'
 
+// footer icon 
+
+export {default as Footericon1} from './icon/footerlogo.png'
+
 export {default as WhatsAppIconSvg} from './icon/whatsapp-svgrepo-com (1).svg'

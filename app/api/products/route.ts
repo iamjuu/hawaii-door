@@ -8,7 +8,9 @@ export async function GET(req: NextRequest) {
     await connectDB();
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1", 10);
-    const limit = parseInt(searchParams.get("limit") || "20", 10);
+    // Cap limit at 100 to avoid memory issues on free MongoDB tier
+    const requestedLimit = parseInt(searchParams.get("limit") || "20", 10);
+    const limit = Math.min(requestedLimit, 100);
     const skip = (page - 1) * limit;
     const excludeImages = searchParams.get("excludeImages") === "true";
     const category = searchParams.get("category"); // "interior" or "exterior"
@@ -19,8 +21,21 @@ export async function GET(req: NextRequest) {
     if (category) query.category = category;
     if (doorType) query.doorType = doorType;
 
+    // Use _id for sorting instead of createdAt to avoid memory issues
+    // _id contains timestamp and is automatically indexed
+    // For large datasets with skip, we avoid skip when page=1 to reduce memory usage
+    const queryBuilder = Door.find(query)
+      .sort({ _id: -1 })
+      .limit(limit)
+      .lean();
+    
+    // Only apply skip if not the first page
+    if (page > 1) {
+      queryBuilder.skip(skip);
+    }
+
     const [products, total] = await Promise.all([
-      Door.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+      queryBuilder,
       Door.countDocuments(query),
     ]);
 
@@ -44,8 +59,13 @@ export async function GET(req: NextRequest) {
         hasPrev: page > 1,
       },
     });
-  } catch {
-    return NextResponse.json({ success: false, message: "Server error" }, { status: 500 });
+  } catch (error: any) {
+    console.error("GET /api/products error:", error);
+    return NextResponse.json({ 
+      success: false, 
+      message: error?.message || "Server error",
+      error: process.env.NODE_ENV === 'development' ? error?.toString() : undefined
+    }, { status: 500 });
   }
 }
 

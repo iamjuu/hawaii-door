@@ -51,17 +51,12 @@ const DoorSchema = new Schema<ProductType>(
   }
 );
 
-// Add index for better query performance
+// Add indexes for better query performance
 DoorSchema.index({ category: 1, doorType: 1 });
 DoorSchema.index({ inStock: 1 });
-
-// Delete the model from cache to ensure fresh schema
-if (models.Door) {
-  delete models.Door;
-}
-if (models.Doors) {
-  delete models.Doors;
-}
+DoorSchema.index({ createdAt: -1 }); // Index for sorting by creation date
+DoorSchema.index({ category: 1, createdAt: -1 }); // Compound index for filtered + sorted queries
 
 // Model name "Doors" will create MongoDB collection "doors"
-export default model<ProductType>("Doors", DoorSchema);
+// Use models.Doors if it exists (prevents OverwriteModelError in development)
+export default models.Doors || model<ProductType>("Doors", DoorSchema);

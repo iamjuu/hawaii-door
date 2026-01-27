@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="flex flex-col space-y-4">
             <div className="relative w-48 h-24">
               <Image
-                src="/assets/images/landing/logo.png"
+                src="/assets/icon/hawaii-doors-horizontal-text-box-V2 1.svg"
                 alt="Hawaii Western Doors Logo"
                 fill
                 className="object-contain object-left"
@@ -35,7 +35,7 @@ const Footer = () => {
               <h3 className="text-lg font-semibold mb-4">Explore Doors</h3>
               <ul className="space-y-3">
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+                  <a href="/build" className="text-gray-300 hover:text-white transition-colors text-sm">
                     Find a Door
                   </a>
                 </li>
@@ -45,12 +45,12 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+                  <a href="/gallery" className="text-gray-300 hover:text-white transition-colors text-sm">
                     Gallery
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
+                  <a href="/contact#faq" className="text-gray-300 hover:text-white transition-colors text-sm">
                     FAQ
                   </a>
                 </li>

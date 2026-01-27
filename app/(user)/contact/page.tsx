@@ -404,7 +404,7 @@ We review every message personally, no bots, no scripts, just people who know do
       </section>
 
       {/* FAQ Section */}
-      <section className="bg-[#fdfffc] w-full py-10 sm:py-12 md:py-[50px]">
+      <section id="faq" className="bg-[#fdfffc] w-full py-10 sm:py-12 md:py-[50px]">
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
           <div className="max-w-[1400px] 2xl:mx-auto">
             <div className="max-w-4xl">
