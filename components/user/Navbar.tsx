@@ -43,7 +43,7 @@ export default function Navbar() {
             <Link
               key={item.label}
               href={item.path}
-              className="transition-colors duration-300 hover:text-[#FF6E4A]"
+              className="transition-colors duration-300 hover:text-[#B6D78A]"
             >
               {item.label}
             </Link>
@@ -82,7 +82,7 @@ export default function Navbar() {
               key={item.label}
               href={item.path}
               onClick={() => setOpen(false)}
-              className="transition-colors duration-300 hover:text-[#FF6E4A]"
+              className="transition-colors duration-300 hover:text-[#B6D78A]"
             >
               {item.label}
             </Link>
