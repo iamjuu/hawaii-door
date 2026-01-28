@@ -153,7 +153,7 @@ const Gallerysection = () => {
               <Image src={ProductFootericonDoor} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Door" width={100} height={100} />
               <Image src={ProductFootericonDoorGreen} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Door" width={100} height={100} />
             </div>
-            Delivered Across Hawaii.
+            Machined to Perfection
           </p>
           <p className="flex items-center gap-1 md:gap-4 items-center ">
             <div className="relative w-8 h-8">

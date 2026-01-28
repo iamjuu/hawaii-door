@@ -57,84 +57,84 @@ const Testimonial = () => {
       title: "Homeowner, Kauai"
     }
   ]
-  
+
 
   // Duplicate testimonials to create the infinite scroll illusion
   const loopTestimonials = [...testimonials, ...testimonials]
 
   return (
     <div className="w-full py-10 sm:py-12 md:pt-[50px] md:py-[0px] md:pb-[10px]  bg-[#fdfffc] font-roboto ">
-    <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
-    <div className="max-w-[1400px] 2xl:mx-auto">
-      {/* Header Section */}
-      <div className="mb-10 md:mb-12">
-        <Heading  
-          heading="Testimonial" 
-          subheading="Real feedback from the people who build, design, and live with our doors."
-        />
-      </div>
-  
-      <div className="relative overflow-hidden testimonial-group">
-        {/* Left fade */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-[12%] bg-gradient-to-r from-white via-white/70 to-transparent z-10" />
-        {/* Right fade */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-[12%] bg-gradient-to-l from-white via-white/70 to-transparent z-10" />
-  
-        {/* Carousel Container */}
-        <div className="flex gap-6 animate-scroll group-hover:pause">
-          {loopTestimonials.map((testimonial, index) => (
-     <div
-     key={index}
-     className="flex-shrink-0 w-[300px] md:w-[350px]  gap-5 lg:w-[400px] h-[400px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.10)] rounded-2xl p-6 md:p-8 flex flex-col"
-   >
-     {/* Top section */}
-     <div>
-       {/* Quote Icon */}
-       <div className="mb-6 w-12 h-12 relative">
-         <Image src={Comaimg} alt="Quote icon" fill className="object-contain" />
-       </div>
-   
-       {/* Testimonial Text */}
-       <p className="font-roboto font-[400] md:text-[20px] text-black leading-relaxed break-words">
-         {testimonial.quote}
-       </p>
-     </div>
-   
-     {/* Footer (Author Info) */}
-     <div className="mt-auto ">
-       <p className="font-roboto flex flex-col  font-light text-sm md:text-base text-[#3B3B3B]">
-         {testimonial.name} 
-         <p>
-          </p>
-          {testimonial.title}
-       </p>
-     </div>
-   </div>
-   
-         
-          ))}
+      <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+        <div className="max-w-[1400px] 2xl:mx-auto">
+          {/* Header Section */}
+          <div className="mb-10 md:mb-12">
+            <Heading
+              heading="Testimonial"
+              subheading="Real feedback from the people who build, design, and live with our doors."
+            />
+          </div>
+
+          <div className="relative overflow-hidden testimonial-group">
+            {/* Left fade */}
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-[12%] bg-gradient-to-r from-white via-white/70 to-transparent z-10" />
+            {/* Right fade */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-[12%] bg-gradient-to-l from-white via-white/70 to-transparent z-10" />
+
+            {/* Carousel Container */}
+            <div className="flex gap-6 animate-scroll group-hover:pause">
+              {loopTestimonials.map((testimonial, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 w-[300px] md:w-[350px]  gap-5 lg:w-[400px] h-[400px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.10)] rounded-2xl p-6 md:p-8 flex flex-col"
+                >
+                  {/* Top section */}
+                  <div>
+                    {/* Quote Icon */}
+                    <div className="mb-6 w-12 h-12 relative">
+                      <Image src={Comaimg} alt="Quote icon" fill className="object-contain" />
+                    </div>
+
+                    {/* Testimonial Text */}
+                    <p className="font-roboto font-[400] md:text-[20px] text-black leading-relaxed break-words">
+                      {testimonial.quote}
+                    </p>
+                  </div>
+
+                  {/* Footer (Author Info) */}
+                  <div className="mt-auto ">
+                    <p className="font-roboto flex flex-col  font-light text-sm md:text-base text-[#3B3B3B]">
+                      {testimonial.name}
+                      <p>
+                      </p>
+                      {testimonial.title}
+                    </p>
+                  </div>
+                </div>
+
+
+              ))}
+            </div>
+          </div>
+
+
         </div>
       </div>
-  
 
-    </div>
-    </div>
-  
-    {/* Tailwind CSS keyframes */}
-    <style jsx>{`
+      {/* Tailwind CSS keyframes */}
+      <style jsx>{`
       @keyframes scroll {
         0% { transform: translateX(0); }
         100% { transform: translateX(-50%); }
       }
       .animate-scroll {
-        animation: scroll 20s linear infinite;
+        animation: scroll 8s linear infinite;
       }
       .testimonial-group:hover .animate-scroll {
         animation-play-state: paused;
       }
     `}</style>
-  </div>
-  
+    </div>
+
   )
 }
 
