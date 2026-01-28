@@ -135,10 +135,13 @@ export { default as ProductFootericonTck } from './icon/tickicon.svg'
 export { default as ProductFootericonDoorGreen } from './icon/door-green.svg'
 export { default as ProductFootericonSettingsGreen } from './icon/settings-green.svg'
 export { default as ProductFootericonTruckGreen } from './icon/truck-green.svg'
-export { default as TickGreen } from './images/landing/TickGreen.png'
+export { default as TickGreen } from './icon/GreenTick.svg'
 export { default as ProductFootericonDoor1 } from './icon/tickicon.svg'
 export { default as ProductFootericonSettings2 } from './icon/tickicon.svg'
 export { default as ProductFootericonBlock } from './icon/tickicon.svg'
+export { default as DotDoor } from './icon/DotDoor.svg'
+export { default as DotDoorGreen } from './icon/DotdoorG.svg'
+export { default as StarcenterG } from './icon/starcenterG.svg'
 
 
 // palywood
@@ -161,8 +164,9 @@ export { default as playwood15 } from './product/intertior/playwoord/playwood15.
 
 
 export { default as Kitchenwoodveneer } from './product/intertior/morderkitch2.svg'
-export { default as TickGray } from './images/landing/Tickgray.png'
-
+export { default as TickGray } from './icon/tickicon.svg'
+export { default as DotDoorGray } from './icon/DotDoor.svg'
+export { default as Starcenter } from './icon/starcenter.svg'
 
 // prefinished
 export { default as PrefinishedRiftCut } from './product/intertior/prefinished/Prefinished Rift Cut.svg'

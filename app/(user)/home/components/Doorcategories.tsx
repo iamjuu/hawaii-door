@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Heading from "./header";
-import { ProductFootericonDoor, ProductFootericonSettings, ProductFootericonTruck, ProductFootericonDoorGreen, ProductFootericonSettingsGreen, ProductFootericonTruckGreen, TickGreen, TickGray } from "@/public/assets";
+import { ProductFootericonDoor, ProductFootericonSettings, ProductFootericonDoorGreen, ProductFootericonSettingsGreen, TickGreen, TickGray } from "@/public/assets";
 
 // Using public paths - NO SPACES in filenames for production compatibility
 const Door1 = "/assets/images/landing/door22.png";

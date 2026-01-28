@@ -9,7 +9,7 @@ import Sclcimg from "../../../../public/assets/images/landing/sclc.png"
 import Vector5 from "../../../../public/assets/images/landing/vector5.png"
 import Vector6 from "../../../../public/assets/images/landing/vector6.png"
 import Headings from "../components/header"
-import { ProductFootericonDoor, ProductFootericonSettings, ProductFootericonDoorGreen, ProductFootericonSettingsGreen } from "@/public/assets"
+import { ProductFootericonDoor, ProductFootericonDoorGreen, Starcenter, StarcenterG } from "@/public/assets"
 // import Heading from "./Heading";
 const galleryItems = [
   {
@@ -145,20 +145,20 @@ const Gallerysection = () => {
 
         </div>
       </div>
-      <div className="w-full flex items-center justify-center bg-[#F6F5F1] h-[68px] ">
-        <div className={`${CONTENT_WIDTH}  relative  flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 lg:gap-16 py-3 md:py-[25px] group cursor-pointer mt-0 transition-all duration-300`}>
+      <div className="w-full flex items-center justify-center bg-[#F6F5F1] h-[82px] md:h-[68px] ">
+        <div className={`${CONTENT_WIDTH}  relative  flex flex-col md:flex-row justify-center items-center gap-2 md:gap-12 lg:gap-16 py-3 md:py-[25px] group cursor-pointer mt-0 transition-all duration-300 text-xs sm:text-sm md:text-base`}>
 
-          <p className="flex items-center gap-3 md:gap-4 items-center">
+          <p className="flex items-center gap-1 md:gap-4 items-center">
             <div className="relative w-8 h-8">
-              <Image src={ProductFootericonDoor} className="size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Door" width={100} height={100} />
-              <Image src={ProductFootericonDoorGreen} className="size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Door" width={100} height={100} />
+              <Image src={ProductFootericonDoor} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Door" width={100} height={100} />
+              <Image src={ProductFootericonDoorGreen} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Door" width={100} height={100} />
             </div>
             Delivered Across Hawaii.
           </p>
-          <p className="flex items-center gap-3 md:gap-4 items-center">
+          <p className="flex items-center gap-1 md:gap-4 items-center ">
             <div className="relative w-8 h-8">
-              <Image src={ProductFootericonSettings} className="size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Settings" width={100} height={100} />
-              <Image src={ProductFootericonSettingsGreen} className="size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Settings" width={100} height={100} />
+              <Image src={Starcenter} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Settings" width={100} height={100} />
+              <Image src={StarcenterG} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Settings" width={100} height={100} />
             </div>
             True Hawaii Spec
           </p>
