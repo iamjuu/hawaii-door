@@ -104,8 +104,38 @@ const LyndenDoorPage = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [activeSection, setActiveSection] = useState("overview");
 
+  // Custom slow scroll to top
+  const slowScrollToTop = (duration = 2000) => {
+    const start = window.scrollY;
+    const startTime = performance.now();
+
+    const animateScroll = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Easing function (easeInOutQuad)
+      const ease = progress < 0.5
+        ? 2 * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+      window.scrollTo(0, start * (1 - ease));
+
+      if (elapsed < duration) {
+        requestAnimationFrame(animateScroll);
+      }
+    };
+
+    requestAnimationFrame(animateScroll);
+  };
+
   // Smooth scroll to section
   const scrollToSection = (sectionId: string) => {
+    if (sectionId === "overview") {
+      slowScrollToTop(2000); // 2 seconds duration for slower scroll
+      setOpenMenu(false);
+      return;
+    }
+
     const element = document.getElementById(sectionId);
     if (element) {
       const offset = 100; // Offset for fixed navbar
@@ -123,6 +153,11 @@ const LyndenDoorPage = () => {
   // Track active section on scroll
   useEffect(() => {
     const handleScroll = () => {
+      if (window.scrollY < 50) {
+        setActiveSection("overview");
+        return;
+      }
+
       const sections = [
         "overview",
         "new-products",
@@ -170,7 +205,7 @@ const LyndenDoorPage = () => {
     }
   ];
 
-  
+
 
   return (
     <>
@@ -204,8 +239,8 @@ const LyndenDoorPage = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row gap-12">
             {/* Left Sidebar - Navigation Menu */}
-          {/* LEFT SIDEBAR */}
-          <aside
+            {/* LEFT SIDEBAR */}
+            <aside
               className={`
                 fixed md:static top-0 left-0 h-full md:h-auto
                 w-[280px] bg-white flex-shrink-0
@@ -250,11 +285,10 @@ const LyndenDoorPage = () => {
                     <div key={item.id}>
                       <button
                         onClick={() => scrollToSection(item.id)}
-                        className={`block w-full text-left py-3 transition-colors text-sm font-medium ${
-                          activeSection === item.id
-                            ? "text-[#FF6E4A] font-semibold"
-                            : "text-gray-700 hover:text-[#FF6E4A]"
-                        }`}
+                        className={`block w-full text-left py-3 transition-colors text-sm font-medium ${activeSection === item.id
+                          ? "text-[#FF6E4A] font-semibold"
+                          : "text-gray-700 hover:text-[#FF6E4A]"
+                          }`}
                       >
                         {item.label}
                       </button>
@@ -270,148 +304,148 @@ const LyndenDoorPage = () => {
             <div className="flex-1 space-y-8 mt-2 md:mt-15">
               {/* Overview Section */}
               <div id="overview">
-              {/* Logo */}
-              <div className="flex items-center gap-3 mb-6">
-                <Image
-                  src={Interiordoorlogo}
-                  alt="Lynden Door"
-                  width={200}
-                  height={60}
-                  className="h-auto"
-                />
-              </div>
-
-              {/* Headline */}
-              <p className="text-lg text-gray-600 font-medium">
-                The Perfect Door for Any Project - Lynden Door
-              </p>
-
-              {/* Main Title */}
-              <h1 className="text-[24px] md:text-[28px] font-[500] text-black leading-tight">
-                Discover the Ideal Interior Doors for Residential, Light
-                Commercial, and Architectural/Commercial Spaces
-              </h1>
-
-              {/* Introductory Paragraph */}
-              <p className="text-[16px]  font-[300] text-gray-700 leading-relaxed">
-                Lynden Door provides a comprehensive range of high-quality
-                interior door products for various projects, including
-                residential, light commercial, and architectural/commercial
-                applications. Our doors are designed to meet the diverse needs
-                of different spaces while maintaining exceptional quality and
-                aesthetic appeal.
-              </p>
-
-              {/* Why Choose Lynden Door Section */}
-              <div className="space-y-4">
-                <h2 className="text-[24px] md:text-[28px] font-[500] text-black">
-                  Why Choose Lynden Door?
-                </h2>
-                <ul className="space-y-4">
-                  <li className="flex items-start gap-3">
-                    <span className="text-[#FF6E4A] text-xl font-bold mt-1">
-                      •
-                    </span>
-                    <div>
-                      <strong className="text-black font-semibold">
-                        Versatile Product Portfolio:
-                      </strong>
-                      <span className="text-gray-700 ml-2">
-                        Doors crafted to blend seamlessly with any environment,
-                        from residential to commercial and architectural
-                        designs.
-                      </span>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-[#FF6E4A] text-xl font-bold mt-1">
-                      •
-                    </span>
-                    <div>
-                      <strong className="text-black font-semibold">
-                        Quality and Durability:
-                      </strong>
-                      <span className="text-gray-700 ml-2">
-                        Doors built to last, offering a blend of aesthetics and
-                        functionality.
-                      </span>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-[#FF6E4A] text-xl font-bold mt-1">
-                      •
-                    </span>
-                    <div>
-                      <strong className="text-black font-semibold">
-                        Customization Options:
-                      </strong>
-                      <span className="text-gray-700 ml-2">
-                        A variety of styles, materials, and finishes to match
-                        project requirements.
-                      </span>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Explore Our Interior Door Collections Section */}
-              <div className="space-y-4">
-                <h2 className="text-[24px] md:text-[28px] font-[500] text-black">
-                  Explore Our Interior Door Collections
-                </h2>
-                <div className="space-y-3">
-                  <h3 className="text-[20px] md:text-[22px] font-[400] text-black uppercase tracking-wide">
-                    Residential Doors
-                  </h3>
-                  <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-                    Lynden Door&apos;s wide selection of residential interior
-                    doors, from classic to modern styles, can enhance a
-                    home&apos;s beauty and comfort. Our residential doors are
-                    designed to complement various architectural styles while
-                    providing durability and functionality for everyday use.
-                  </p>
+                {/* Logo */}
+                <div className="flex items-center gap-3 mb-6">
+                  <Image
+                    src={Interiordoorlogo}
+                    alt="Lynden Door"
+                    width={200}
+                    height={60}
+                    className="h-auto"
+                  />
                 </div>
-                <div>
-                  <p>
-                    Select doors (solid core, 1-3/4&quot; thick) may be ordered
-                    with a fire rating.
-                  </p>
+
+                {/* Headline */}
+                <p className="text-lg text-gray-600 font-medium">
+                  The Perfect Door for Any Project - Lynden Door
+                </p>
+
+                {/* Main Title */}
+                <h1 className="text-[24px] md:text-[28px] font-[500] text-black leading-tight">
+                  Discover the Ideal Interior Doors for Residential, Light
+                  Commercial, and Architectural/Commercial Spaces
+                </h1>
+
+                {/* Introductory Paragraph */}
+                <p className="text-[16px]  font-[300] text-gray-700 leading-relaxed">
+                  Lynden Door provides a comprehensive range of high-quality
+                  interior door products for various projects, including
+                  residential, light commercial, and architectural/commercial
+                  applications. Our doors are designed to meet the diverse needs
+                  of different spaces while maintaining exceptional quality and
+                  aesthetic appeal.
+                </p>
+
+                {/* Why Choose Lynden Door Section */}
+                <div className="space-y-4">
+                  <h2 className="text-[24px] md:text-[28px] font-[500] text-black">
+                    Why Choose Lynden Door?
+                  </h2>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#FF6E4A] text-xl font-bold mt-1">
+                        •
+                      </span>
+                      <div>
+                        <strong className="text-black font-semibold">
+                          Versatile Product Portfolio:
+                        </strong>
+                        <span className="text-gray-700 ml-2">
+                          Doors crafted to blend seamlessly with any environment,
+                          from residential to commercial and architectural
+                          designs.
+                        </span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#FF6E4A] text-xl font-bold mt-1">
+                        •
+                      </span>
+                      <div>
+                        <strong className="text-black font-semibold">
+                          Quality and Durability:
+                        </strong>
+                        <span className="text-gray-700 ml-2">
+                          Doors built to last, offering a blend of aesthetics and
+                          functionality.
+                        </span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-[#FF6E4A] text-xl font-bold mt-1">
+                        •
+                      </span>
+                      <div>
+                        <strong className="text-black font-semibold">
+                          Customization Options:
+                        </strong>
+                        <span className="text-gray-700 ml-2">
+                          A variety of styles, materials, and finishes to match
+                          project requirements.
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
-                <div className="space-y-6 mt-8">
-                  {/* Light Commercial Doors */}
+
+                {/* Explore Our Interior Door Collections Section */}
+                <div className="space-y-4">
+                  <h2 className="text-[24px] md:text-[28px] font-[500] text-black">
+                    Explore Our Interior Door Collections
+                  </h2>
                   <div className="space-y-3">
                     <h3 className="text-[20px] md:text-[22px] font-[400] text-black uppercase tracking-wide">
-                      Light Commercial Doors
+                      Residential Doors
                     </h3>
                     <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-                      Our light commercial doors are ideal for small businesses,
-                      offices, and other commercial spaces, providing durability
-                      and a professional look.
+                      Lynden Door&apos;s wide selection of residential interior
+                      doors, from classic to modern styles, can enhance a
+                      home&apos;s beauty and comfort. Our residential doors are
+                      designed to complement various architectural styles while
+                      providing durability and functionality for everyday use.
                     </p>
                   </div>
-
-                  {/* Architectural/Commercial Doors */}
-                  <div className="space-y-3">
-                    <h3 className="text-[20px] md:text-[22px] font-[400] text-black uppercase tracking-wide">
-                      Architectural/Commercial Doors
-                    </h3>
-                    <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-                      For larger commercial projects and architectural designs,
-                      our doors offer superior performance and elegant
-                      aesthetics, making them a perfect choice for high-traffic
-                      areas and sophisticated settings.
+                  <div>
+                    <p>
+                      Select doors (solid core, 1-3/4&quot; thick) may be ordered
+                      with a fire rating.
                     </p>
                   </div>
+                  <div className="space-y-6 mt-8">
+                    {/* Light Commercial Doors */}
+                    <div className="space-y-3">
+                      <h3 className="text-[20px] md:text-[22px] font-[400] text-black uppercase tracking-wide">
+                        Light Commercial Doors
+                      </h3>
+                      <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+                        Our light commercial doors are ideal for small businesses,
+                        offices, and other commercial spaces, providing durability
+                        and a professional look.
+                      </p>
+                    </div>
 
-                  {/* Warranty Information */}
-                  <p className="text-gray-400 text-base">
-                    Light Commercial <strong>CD Series</strong> doors come with
-                    a <strong>5-year limited warranty</strong>, and
-                    Architectural <strong>LD Series</strong> doors have a{" "}
-                    <strong>lifetime limited warranty</strong>.
-                  </p>
+                    {/* Architectural/Commercial Doors */}
+                    <div className="space-y-3">
+                      <h3 className="text-[20px] md:text-[22px] font-[400] text-black uppercase tracking-wide">
+                        Architectural/Commercial Doors
+                      </h3>
+                      <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+                        For larger commercial projects and architectural designs,
+                        our doors offer superior performance and elegant
+                        aesthetics, making them a perfect choice for high-traffic
+                        areas and sophisticated settings.
+                      </p>
+                    </div>
+
+                    {/* Warranty Information */}
+                    <p className="text-gray-400 text-base">
+                      Light Commercial <strong>CD Series</strong> doors come with
+                      a <strong>5-year limited warranty</strong>, and
+                      Architectural <strong>LD Series</strong> doors have a{" "}
+                      <strong>lifetime limited warranty</strong>.
+                    </p>
+                  </div>
                 </div>
-              </div>
               </div>
               {/* New Products Section */}
               <div id="new-products" className="mt-16 space-y-8">

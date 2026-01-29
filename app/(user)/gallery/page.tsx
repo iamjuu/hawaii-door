@@ -164,12 +164,12 @@ const GalleryPage = () => {
         {/* CONTENT */}
         <section className="w-full pb-16">
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
-          <div className="max-w-[1400px] 2xl:mx-auto">
-            <div className="flex flex-col lg:flex-row gap-8 items-start">
+            <div className="max-w-[1400px] 2xl:mx-auto">
+              <div className="flex flex-col lg:flex-row gap-8 items-start">
 
-              {/* FILTER SIDEBAR */}
-              <aside
-                className={`
+                {/* FILTER SIDEBAR */}
+                <aside
+                  className={`
                   fixed md:static top-0 left-0 h-full md:h-fit
                   w-[280px] bg-white border border-gray-200 rounded-lg p-6
                   z-50 md:z-auto
@@ -178,116 +178,116 @@ const GalleryPage = () => {
                   md:translate-x-0
                   lg:sticky lg:top-[100px] lg:self-start lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto
                 `}
-              >
-                {/* MOBILE HEADER */}
-                <div className="flex bg-[#b7d7a8] justify-between items-center mb-6 md:hidden">
-                  <h2 className="text-lg font-semibold text-black">Filters</h2>
-                  <button onClick={() => setOpenFilter(false)}>
-                    <FiX className="text-xl text-black" />
-                  </button>
-                </div>
-
-                {/* DESKTOP HEADER - Simple Title */}
-                <div className="hidden md:block">
-                  <div className="flex items-center gap-2">
-                    <FiFilter className="text-lg" />
-                    <h2 className="text-lg font-semibold">Filters</h2>
+                >
+                  {/* MOBILE HEADER */}
+                  <div className="flex bg-[#b7d7a8] justify-between items-center mb-6 md:hidden">
+                    <h2 className="text-lg font-semibold text-black">Filters</h2>
+                    <button onClick={() => setOpenFilter(false)}>
+                      <FiX className="text-xl text-black" />
+                    </button>
                   </div>
-                </div>
+
+                  {/* DESKTOP HEADER - Simple Title */}
+                  <div className="hidden md:block">
+                    <div className="flex items-center gap-2">
+                      <FiFilter className="text-lg" />
+                      <h2 className="text-lg font-semibold">Filters</h2>
+                    </div>
+                  </div>
 
 
-                {/* PRODUCT */}
-                <div className="mb-8 mt-6">
-                  <h3 className="text-sm font-semibold mb-4">Product</h3>
-                  <div className="flex gap-2">
-                    {["All", "Interior", "Exterior"].map((p) => (
-                      <button
-                        key={p}
-                        onClick={() => {
-                          setSelectedProduct(p);
-                          setOpenFilter(false);
-                        }}
-                        className={`px-3 py-2 rounded-md text-sm ${selectedProduct === p
+                  {/* PRODUCT */}
+                  <div className="mb-8 mt-6">
+                    <h3 className="text-sm font-semibold mb-4">Product</h3>
+                    <div className="flex gap-2">
+                      {["All", "Interior", "Exterior"].map((p) => (
+                        <button
+                          key={p}
+                          onClick={() => {
+                            setSelectedProduct(p);
+                            setOpenFilter(false);
+                          }}
+                          className={`px-3 py-2 rounded-md text-sm ${selectedProduct === p
                             ? "bg-[#FF6E4A] text-white"
                             : "hover:bg-gray-100"
-                          }`}
+                            }`}
+                        >
+                          {p}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* TYPE */}
+                  <div className="mb-8">
+                    <h3 className="text-sm font-semibold mb-4">Type</h3>
+                    {[{ label: "All", value: "All" }, { label: "Single", value: "Single" }, { label: "Double", value: "Double" }, { label: "Barn", value: "Barn" }, { label: "Dutch", value: "Dutch" }].map((type) => (
+                      <label
+                        key={type.value}
+                        className="flex justify-between items-center mb-3 cursor-pointer"
                       >
-                        {p}
-                      </button>
+                        <span className="text-sm">{type.label}</span>
+                        <input
+                          type="checkbox"
+                          checked={type.value === "All" ? selectedTypes.length === 0 : selectedTypes.includes(type.value)}
+                          onChange={() => {
+                            if (type.value === "All") {
+                              setSelectedTypes([]);
+                            } else {
+                              handleTypeToggle(type.value);
+                            }
+                          }}
+                          className="w-4 h-4 accent-[#FF6E4A]"
+                        />
+                      </label>
                     ))}
                   </div>
-                </div>
 
-                {/* TYPE */}
-                <div className="mb-8">
-                  <h3 className="text-sm font-semibold mb-4">Type</h3>
-                  {[{ label: "All", value: "All" }, { label: "Single", value: "Single" }, { label: "Double", value: "Double" }, { label: "Barn", value: "Barn" }, { label: "Dutch", value: "Dutch" }].map((type) => (
-                    <label
-                      key={type.value}
-                      className="flex justify-between items-center mb-3 cursor-pointer"
-                    >
-                      <span className="text-sm">{type.label}</span>
-                      <input
-                        type="checkbox"
-                        checked={type.value === "All" ? selectedTypes.length === 0 : selectedTypes.includes(type.value)}
-                        onChange={() => {
-                          if (type.value === "All") {
-                            setSelectedTypes([]);
-                          } else {
-                            handleTypeToggle(type.value);
-                          }
-                        }}
-                        className="w-4 h-4"
-                      />
-                    </label>
-                  ))}
-                </div>
+                  {/* GLASS */}
+                  <div className="mb-8">
+                    <h3 className="text-sm font-semibold mb-4">Glass</h3>
+                    {[{ label: "All", value: "All" }, { label: "With Glass", value: "With Glass" }, { label: "Without Glass", value: "Without Glass" }].map((g) => (
+                      <label
+                        key={g.value}
+                        className="flex justify-between items-center mb-3 cursor-pointer"
+                      >
+                        <span className="text-sm">{g.label}</span>
+                        <input
+                          type="checkbox"
+                          checked={g.value === "All" ? selectedGlass.length === 0 : selectedGlass.includes(g.value)}
+                          onChange={() => {
+                            if (g.value === "All") {
+                              setSelectedGlass([]);
+                            } else {
+                              handleGlassToggle(g.value);
+                            }
+                          }}
+                          className="w-4 h-4 accent-[#FF6E4A]"
+                        />
+                      </label>
+                    ))}
+                  </div>
 
-                {/* GLASS */}
-                <div className="mb-8">
-                  <h3 className="text-sm font-semibold mb-4">Glass</h3>
-                  {[{ label: "All", value: "All" }, { label: "With Glass", value: "With Glass" }, { label: "Without Glass", value: "Without Glass" }].map((g) => (
-                    <label
-                      key={g.value}
-                      className="flex justify-between items-center mb-3 cursor-pointer"
-                    >
-                      <span className="text-sm">{g.label}</span>
-                      <input
-                        type="checkbox"
-                        checked={g.value === "All" ? selectedGlass.length === 0 : selectedGlass.includes(g.value)}
-                        onChange={() => {
-                          if (g.value === "All") {
-                            setSelectedGlass([]);
-                          } else {
-                            handleGlassToggle(g.value);
-                          }
-                        }}
-                        className="w-4 h-4"
-                      />
-                    </label>
-                  ))}
-                </div>
+                  <button
+                    onClick={clearAllFilters}
+                    className="text-sm text-[#FF6E4A] hover:underline"
+                  >
+                    Clear All Filters
+                  </button>
+                </aside>
 
-                <button
-                  onClick={clearAllFilters}
-                  className="text-sm text-[#FF6E4A] hover:underline"
-                >
-                  Clear All Filters
-                </button>
-              </aside>
-
-              {/* RIGHT CONTENT */}
-              <div className="flex-1 overflow-x-hidden">
-                {/* Showing count */}
-                <div className="mb-3">
-                  <p className="text-sm font-[400] text-[#585858] font-roboto">
-                    Showing {filteredDoors.length} doors
-                  </p>
+                {/* RIGHT CONTENT */}
+                <div className="flex-1 overflow-x-hidden">
+                  {/* Showing count */}
+                  <div className="mb-3">
+                    <p className="text-sm font-[400] text-[#585858] font-roboto">
+                      Showing {filteredDoors.length} doors
+                    </p>
+                  </div>
+                  <ParallaxScrollSecondDemo filteredItems={filteredDoors} />
                 </div>
-                <ParallaxScrollSecondDemo filteredItems={filteredDoors} />
               </div>
             </div>
-          </div>
           </div>
         </section>
       </main>

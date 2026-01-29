@@ -81,7 +81,7 @@ const InteriorWoodPage = () => {
   // Handle keyboard navigation
   useEffect(() => {
     if (!isModalOpen) return;
-    
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
         setCurrentDoorIndex((prev) => (prev > 0 ? prev - 1 : currentDoorGroup.length - 1));
@@ -132,7 +132,7 @@ const InteriorWoodPage = () => {
           <div className="max-w-[1400px] 2xl:mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:flex-row gap-8 lg:gap-12">
               {/* LEFT CONTENT */}
-              <div className="flex-1   space-y-8">
+              <div className="flex-1   space-y-9 md:mt-[55px]">
                 <div>
                   <h1 className="text-[23px] md:text-[46px] font-roboto font-[500] text-black leading-[32px] md:leading-[58px] mb-10">
                     Unmatched Versatility with Interior Solid Wood Doors
@@ -143,10 +143,10 @@ const InteriorWoodPage = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-[16px] md:text-[18px] font-roboto font-[600] text-black uppercase tracking-wide">
+                  <h3 className="text-[16px] md:text-[18px] font-roboto font-[600] text-black uppercase tracking-wide md:mb-6">
                     KEY BENEFITS OF OUR WOOD DOORS:
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-5">
                     <li className="text-sm md:text-base font-roboto text-[#3B3B3B]">
                       <span className="font-[600] text-black">Diverse Styles:</span> Choose from a wide array of designs to match your interior decor.
                     </li>
@@ -163,10 +163,10 @@ const InteriorWoodPage = () => {
                   <h2 className="text-[20px] md:text-[28px] font-roboto font-[500] text-black leading-tight">
                     Explore Our Door Collections
                   </h2>
-                  
-                  <div className="space-y-4">
+
+                  <div className="space-y-6">
                     <div>
-                      <h3 className="text-[16px] md:text-[18px] font-roboto font-[600] text-black uppercase mb-2">
+                      <h3 className="text-[16px] md:text-[18px] font-roboto font-[600] text-black uppercase mb-2 md:mb-4">
                         PANEL DOORS
                       </h3>
                       <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B]">
@@ -175,7 +175,7 @@ const InteriorWoodPage = () => {
                     </div>
 
                     <div>
-                      <h3 className="text-[16px] md:text-[18px] font-roboto font-[600] text-black uppercase mb-2">
+                      <h3 className="text-[16px] md:text-[18px] font-roboto font-[600] text-black uppercase mb-2 md:mb-4">
                         DECORATIVE FRENCH DOORS
                       </h3>
                       <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B]">
@@ -188,10 +188,10 @@ const InteriorWoodPage = () => {
 
               {/* RIGHT IMAGE */}
               <div className="flex-1 flex items-start justify-center lg:justify-end min-w-0">
-                <div className="relative w-full h-[400px] md:h-[600px] lg:h-[700px]">
-                  <Image 
-                    src={interiorDoor1} 
-                    alt="Interior Solid Wood Door" 
+                <div className="relative w-full h-[400px] md:h-[600px] lg:h-[928.66px]">
+                  <Image
+                    src={interiorDoor1}
+                    alt="Interior Solid Wood Door"
                     fill
                     className="object-cover "
                     // sizes="(max-width: 768px) 100vw, 50vw"
@@ -246,9 +246,9 @@ const InteriorWoodPage = () => {
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
           <div className="max-w-[1400px] 2xl:mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
 
-          {/* SIDEBAR */}
-          <aside
-            className={`
+            {/* SIDEBAR */}
+            <aside
+              className={`
               fixed lg:sticky top-0 lg:top-[100px] left-0 h-full lg:h-auto
               w-[280px] bg-white z-50 lg:z-auto
               transform transition-transform duration-300
@@ -256,63 +256,19 @@ const InteriorWoodPage = () => {
               lg:translate-x-0
               lg:self-start lg:max-h-[calc(100vh-120px)]
             `}
-          >
-            <div className="rounded-lg p-6 pl-2 lg:pl-0 h-full lg:h-auto lg:overflow-y-auto">
-              <div className="flex justify-between items-center mb-6 lg:hidden">
-                <h2 className="font-roboto font-[600] text-black text-lg">Interior Wood Doors</h2>
-                <button onClick={() => setOpenFilter(false)} className="text-gray-600 hover:text-black text-xl">✕</button>
-              </div>
+            >
+              <div className="rounded-lg p-6 pl-2 lg:pl-0 h-full lg:h-auto lg:overflow-y-auto">
+                <div className="flex justify-between items-center mb-6 lg:hidden">
+                  <h2 className="font-roboto font-[600] text-black text-lg">Interior Wood Doors</h2>
+                  <button onClick={() => setOpenFilter(false)} className="text-gray-600 hover:text-black text-xl">✕</button>
+                </div>
 
-              <h2 className="text-xl font-roboto font-[600] text-black mb-6 hidden lg:block">
-                Interior Wood Doors
-              </h2>
+                <h2 className="text-xl font-roboto font-[600] text-black mb-6 hidden lg:block">
+                  Interior Wood Doors
+                </h2>
 
-              {[
-                "Overview",
-                "Interior Panel Doors",
-                "Bifold Doors",
-                "Primed Interior Panel Doors",
-                "Primed Bifold Doors",
-                "Louver Doors and Bifold Doors",
-                "Interior Barn Doors",
-                "Interior French Doors",
-                "Primed Interior French Doors",
-                "20-Minute Fire Doors",
-                "20-Minute Fire Doors Primed"
-              ].map((item, i) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                  onClick={() => setOpenFilter(false)}
-                  className="block py-3 text-sm font-roboto font-[400] text-gray-700 hover:text-[#FF6E4A] border-b border-gray-200 last:border-b-0 transition-colors"
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-          </aside>
-
-          {/* CONTENT */}
-          <div className="flex-1">
-            {loading && (
-              <div className="flex justify-center items-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF6E4A]"></div>
-              </div>
-            )}
-            {error && <p className="text-red-600 text-sm md:text-base font-roboto">{error}</p>}
-            
-            {!loading && !error && (
-              <>
-                {/* Overview Section */}
-                <section id="overview" className="mb-16 scroll-mt-24">
-                  <h2 className="text-[23px] md:text-[32px] font-roboto font-[500] text-black mb-4 leading-tight">Overview</h2>
-                  <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B]">
-                    Browse our collection of interior wood doors organized by type. Each door is crafted with precision and quality materials.
-                  </p>
-                </section>
-
-                {/* Group doors by doorType */}
                 {[
+                  "Overview",
                   "Interior Panel Doors",
                   "Bifold Doors",
                   "Primed Interior Panel Doors",
@@ -323,54 +279,98 @@ const InteriorWoodPage = () => {
                   "Primed Interior French Doors",
                   "20-Minute Fire Doors",
                   "20-Minute Fire Doors Primed"
-                ].map((doorType) => {
-                  const doorsInType = doors.filter((door) => door.doorType === doorType);
-                  if (doorsInType.length === 0) return null;
+                ].map((item, i) => (
+                  <a
+                    key={item}
+                    href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                    onClick={() => setOpenFilter(false)}
+                    className="block py-3 text-sm font-roboto font-[400] text-gray-700 hover:text-[#FF6E4A] border-b border-gray-200 last:border-b-0 transition-colors"
+                  >
+                    {item}
+                  </a>
+                ))}
+              </div>
+            </aside>
 
-                  const sectionId = doorType.toLowerCase().replace(/\s+/g, "-");
-                  
-                  return (
-                    <section key={doorType} id={sectionId} className="mb-16 scroll-mt-24">
-                      <h2 className="text-[20px] md:text-[28px] font-roboto font-[500] text-black mb-6 leading-tight">{doorType}</h2>
-                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-3">
-                        {doorsInType.map((door) => (
-                          <div key={door._id} className="relative group cursor-pointer" onClick={() => handleDoorClick(door, doorType)}>
-                            {door.imageUrl && door.imageUrl[0] && (
-                              <div className="w-full h-48 rounded-lg  border-gray-200 group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex items-center justify-center ">
-                                <img
-                                  src={door.imageUrl[0]}
-                                  alt={door.name}
-                                  className="w-full h-full object-contain transition-transform group-hover:scale-105"
-                                />
-                              </div>
-                            )}
-                            <div className="mt-2">
-                              <p className="text-sm font-roboto font-[500] text-black truncate text-center">{door.name}</p>
-                              {door.description && (
-                                <p className="text-xs font-roboto font-[400] text-[#3B3B3B] line-clamp-2 mt-1 text-center">{door.description}</p>
+            {/* CONTENT */}
+            <div className="flex-1">
+              {loading && (
+                <div className="flex justify-center items-center py-12">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF6E4A]"></div>
+                </div>
+              )}
+              {error && <p className="text-red-600 text-sm md:text-base font-roboto">{error}</p>}
+
+              {!loading && !error && (
+                <>
+                  {/* Overview Section */}
+                  <section id="overview" className="mb-16 scroll-mt-24">
+                    <h2 className="text-[23px] md:text-[32px] font-roboto font-[500] text-black mb-4 leading-tight">Overview</h2>
+                    <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B]">
+                      Browse our collection of interior wood doors organized by type. Each door is crafted with precision and quality materials.
+                    </p>
+                  </section>
+
+                  {/* Group doors by doorType */}
+                  {[
+                    "Interior Panel Doors",
+                    "Bifold Doors",
+                    "Primed Interior Panel Doors",
+                    "Primed Bifold Doors",
+                    "Louver Doors and Bifold Doors",
+                    "Interior Barn Doors",
+                    "Interior French Doors",
+                    "Primed Interior French Doors",
+                    "20-Minute Fire Doors",
+                    "20-Minute Fire Doors Primed"
+                  ].map((doorType) => {
+                    const doorsInType = doors.filter((door) => door.doorType === doorType);
+                    if (doorsInType.length === 0) return null;
+
+                    const sectionId = doorType.toLowerCase().replace(/\s+/g, "-");
+
+                    return (
+                      <section key={doorType} id={sectionId} className="mb-16 scroll-mt-24">
+                        <h2 className="text-[20px] md:text-[28px] font-roboto font-[500] text-black mb-6 leading-tight">{doorType}</h2>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-3">
+                          {doorsInType.map((door) => (
+                            <div key={door._id} className="relative group cursor-pointer" onClick={() => handleDoorClick(door, doorType)}>
+                              {door.imageUrl && door.imageUrl[0] && (
+                                <div className="w-full h-48 rounded-lg  border-gray-200 group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex items-center justify-center ">
+                                  <img
+                                    src={door.imageUrl[0]}
+                                    alt={door.name}
+                                    className="w-full h-full object-contain transition-transform group-hover:scale-105"
+                                  />
+                                </div>
                               )}
+                              <div className="mt-2">
+                                <p className="text-sm font-roboto font-[500] text-black truncate text-center">{door.name}</p>
+                                {door.description && (
+                                  <p className="text-xs font-roboto font-[400] text-[#3B3B3B] line-clamp-2 mt-1 text-center">{door.description}</p>
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                    </section>
-                  );
-                })}
-              </>
-            )}
-          </div>
+                          ))}
+                        </div>
+                      </section>
+                    );
+                  })}
+                </>
+              )}
             </div>
           </div>
+        </div>
       </main>
 
       {/* Door Preview Modal */}
       {isModalOpen && currentDoorGroup.length > 0 && (
-        <div 
+        <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
           onClick={handleCloseModal}
         >
           {/* Modal Container */}
-          <div 
+          <div
             className="relative w-full h-full flex items-center justify-center p-4 md:p-8"
             onClick={(e) => e.stopPropagation()}
           >
@@ -421,7 +421,7 @@ const InteriorWoodPage = () => {
                     alt={currentDoorGroup[currentDoorIndex].name}
                     className="w-auto h-auto max-w-[75%] max-h-[55vh] md:max-w-[70%] md:max-h-[65vh] lg:max-w-[65%] lg:max-h-[70vh] object-contain"
                   />
-                  
+
                   {/* Door Info */}
                   <div className="mt-4 md:mt-6 text-center text-white">
                     <p className="text-base md:text-lg lg:text-xl font-roboto font-[600]">{currentDoorGroup[currentDoorIndex]?.name}</p>
