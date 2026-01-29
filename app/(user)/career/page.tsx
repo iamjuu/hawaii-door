@@ -52,7 +52,7 @@ export default function CareerPage() {
 
             {/* Right Image */}
             <div className="flex-1 w-full h-64 sm:h-80 lg:h-full lg:max-h-[450px] relative">
-              <div className="relative w-full h-full mt-[49px] ">
+              <div className="relative w-full h-full mt-[491px] ">
                 <Image
                   src={Careerimg}
                   alt="Happy team members collaborating"

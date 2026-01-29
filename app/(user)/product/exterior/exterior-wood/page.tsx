@@ -347,7 +347,7 @@ const ExteriorWoodPage = () => {
                     
                     return (
                       <section key={doorType} id={sectionId} className="mb-16 scroll-mt-24">
-                        <h2 className="text-[20px] md:text-[28px] font-roboto font-[500] text-black mb-6 leading-tight">{doorType}</h2>
+                        <h2 className="text-[20px] md:text-[28px] font-roboto font-[500] text-[#FF6E4A] mb-6 leading-tight">{doorType}</h2>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-3">
                           {doorsInType.map((door) => (
                             <div key={door._id} className="relative group cursor-pointer" onClick={() => handleDoorClick(door, doorType)}>
@@ -362,7 +362,7 @@ const ExteriorWoodPage = () => {
                                 </div>
                               )}
                               <div className="mt-2">
-                                <p className="text-sm font-roboto font-[500] text-black truncate text-center">{door.name}</p>
+                                {/* <p className="text-sm font-roboto font-[500] text-black truncate text-center">{door.name}</p> */}
                                 {door.description && (
                                   <p className="text-xs font-roboto font-[400] text-[#3B3B3B] line-clamp-2 mt-1 text-center">{door.description}</p>
                                 )}

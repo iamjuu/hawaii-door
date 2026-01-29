@@ -28,21 +28,111 @@ type ApiGalleryItem = {
 
 /* ---------------- STATIC GALLERY (temporary until backend has images; uncomment API below when ready) ---------------- */
 const STATIC_GALLERY_ITEMS: GalleryItem[] = [
-  { id: "s1", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800", product: "Exterior", type: "Single", glass: "With Glass" },
-  { id: "s2", image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800", product: "Interior", type: "Single", glass: "Without Glass" },
-  { id: "s3", image: "https://images.unsplash.com/photo-1600566753086-00f18fb6d3ea?w=800", product: "Interior", type: "Single", glass: "With Glass" },
-  { id: "s4", image: "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800", product: "Exterior", type: "Double", glass: "With Glass" },
-  { id: "s5", image: "https://images.unsplash.com/photo-1600047509807-ba87494cfbce?w=800", product: "Exterior", type: "Double", glass: "Without Glass" },
-  { id: "s6", image: "https://images.unsplash.com/photo-1600585154520-5d63cc2118e0?w=800", product: "Exterior", type: "Single", glass: "With Glass" },
-  { id: "s7", image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800", product: "Interior", type: "Single", glass: "Without Glass" },
-  { id: "s8", image: "https://images.unsplash.com/photo-1558618666-fa25c5b8318d?w=800", product: "Interior", type: "Barn", glass: "Without Glass" },
-  { id: "s9", image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800", product: "Interior", type: "Dutch", glass: "With Glass" },
-  { id: "s10", image: "https://images.unsplash.com/photo-1600566752733-c8c8e2716c63?w=800", product: "Interior", type: "Single", glass: "With Glass" },
-  { id: "s11", image: "/assets/images/doorimage/Gallery%201.png", product: "Interior", type: "Single", glass: "With Glass" },
-  { id: "s12", image: "/assets/images/doorimage/Frame%20138.png", product: "Exterior", type: "Single", glass: "With Glass" },
-  { id: "s13", image: "/assets/images/doorimage/Frame%20150.png", product: "Interior", type: "Double", glass: "Without Glass" },
-  { id: "s14", image: "/assets/images/doorimage/Frame%20154.png", product: "Exterior", type: "Single", glass: "With Glass" },
-  { id: "s15", image: "https://images.unsplash.com/photo-1600573472692-25e63ee141f8?w=800", product: "Exterior", type: "Single", glass: "Without Glass" },
+  {
+    id: "s1",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
+    product: "Exterior",
+    type: "Single",
+    glass: "With Glass",
+  },
+  {
+    id: "s2",
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
+    product: "Interior",
+    type: "Single",
+    glass: "Without Glass",
+  },
+  {
+    id: "s3",
+    image: "https://images.unsplash.com/photo-1600566753086-00f18fb6d3ea?w=800",
+    product: "Interior",
+    type: "Single",
+    glass: "With Glass",
+  },
+  {
+    id: "s4",
+    image: "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800",
+    product: "Exterior",
+    type: "Double",
+    glass: "With Glass",
+  },
+  {
+    id: "s5",
+    image: "https://images.unsplash.com/photo-1600047509807-ba87494cfbce?w=800",
+    product: "Exterior",
+    type: "Double",
+    glass: "Without Glass",
+  },
+  {
+    id: "s6",
+    image: "https://images.unsplash.com/photo-1600585154520-5d63cc2118e0?w=800",
+    product: "Exterior",
+    type: "Single",
+    glass: "With Glass",
+  },
+  {
+    id: "s7",
+    image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800",
+    product: "Interior",
+    type: "Single",
+    glass: "Without Glass",
+  },
+  {
+    id: "s8",
+    image: "https://images.unsplash.com/photo-1558618666-fa25c5b8318d?w=800",
+    product: "Interior",
+    type: "Barn",
+    glass: "Without Glass",
+  },
+  {
+    id: "s9",
+    image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800",
+    product: "Interior",
+    type: "Dutch",
+    glass: "With Glass",
+  },
+  {
+    id: "s10",
+    image: "https://images.unsplash.com/photo-1600566752733-c8c8e2716c63?w=800",
+    product: "Interior",
+    type: "Single",
+    glass: "With Glass",
+  },
+  {
+    id: "s11",
+    image: "/assets/images/doorimage/Gallery%201.png",
+    product: "Interior",
+    type: "Single",
+    glass: "With Glass",
+  },
+  {
+    id: "s12",
+    image: "/assets/images/doorimage/Frame%20138.png",
+    product: "Exterior",
+    type: "Single",
+    glass: "With Glass",
+  },
+  {
+    id: "s13",
+    image: "/assets/images/doorimage/Frame%20150.png",
+    product: "Interior",
+    type: "Double",
+    glass: "Without Glass",
+  },
+  {
+    id: "s14",
+    image: "/assets/images/doorimage/Frame%20154.png",
+    product: "Exterior",
+    type: "Single",
+    glass: "With Glass",
+  },
+  {
+    id: "s15",
+    image: "https://images.unsplash.com/photo-1600573472692-25e63ee141f8?w=800",
+    product: "Exterior",
+    type: "Single",
+    glass: "Without Glass",
+  },
 ];
 
 /* ---------------- COMPONENT ---------------- */
@@ -55,7 +145,8 @@ const GalleryPage = () => {
   // Static mode: no API, use STATIC_GALLERY_ITEMS. When using API, set loading true and use [].
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [allGalleryItems, setAllGalleryItems] = useState<GalleryItem[]>(STATIC_GALLERY_ITEMS);
+  const [allGalleryItems, setAllGalleryItems] =
+    useState<GalleryItem[]>(STATIC_GALLERY_ITEMS);
 
   /* ---------------- HELPERS ---------------- */
   const getImageUrl = (imageUrl: string): string => {
@@ -98,21 +189,24 @@ const GalleryPage = () => {
 
   /* ---------------- FILTER LOGIC (client-side when using static data) ---------------- */
   const filteredDoors = allGalleryItems.filter((item) => {
-    if (selectedProduct !== "All" && item.product !== selectedProduct) return false;
-    if (selectedTypes.length > 0 && !selectedTypes.includes(item.type)) return false;
-    if (selectedGlass.length > 0 && !selectedGlass.includes(item.glass)) return false;
+    if (selectedProduct !== "All" && item.product !== selectedProduct)
+      return false;
+    if (selectedTypes.length > 0 && !selectedTypes.includes(item.type))
+      return false;
+    if (selectedGlass.length > 0 && !selectedGlass.includes(item.glass))
+      return false;
     return true;
   });
 
   const handleTypeToggle = (type: string) => {
     setSelectedTypes((prev) =>
-      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type],
     );
   };
 
   const handleGlassToggle = (glass: string) => {
     setSelectedGlass((prev) =>
-      prev.includes(glass) ? prev.filter((g) => g !== glass) : [...prev, glass]
+      prev.includes(glass) ? prev.filter((g) => g !== glass) : [...prev, glass],
     );
   };
 
@@ -152,10 +246,14 @@ const GalleryPage = () => {
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
             <div className="max-w-[1400px] 2xl:mx-auto">
               <h1 className="text-[23px] md:text-[46px] font-[600] text-black font-roboto leading-[32px] md:leading-[56px] tracking-normal mb-4">
-                Doors That Speak<br />for Themselves
+                Doors That Speak
+                <br />
+                for Themselves
               </h1>
               <p className="text-sm md:text-base font-[400] text-[#3B3B3B] font-roboto max-w-2xl">
-                See recent installs, machining projects, and custom builds across O'ahu, Maui, Kaua'i, and Hawai'i Island. Every project tells the same story: precision, fit, and finish done right.
+                See recent installs, machining projects, and custom builds
+                across O'ahu, Maui, Kaua'i, and Hawai'i Island. Every project
+                tells the same story: precision, fit, and finish done right.
               </p>
             </div>
           </div>
@@ -166,7 +264,6 @@ const GalleryPage = () => {
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
             <div className="max-w-[1400px] 2xl:mx-auto">
               <div className="flex flex-col lg:flex-row gap-8 items-start">
-
                 {/* FILTER SIDEBAR */}
                 <aside
                   className={`
@@ -181,7 +278,9 @@ const GalleryPage = () => {
                 >
                   {/* MOBILE HEADER */}
                   <div className="flex bg-[#b7d7a8] justify-between items-center mb-6 md:hidden">
-                    <h2 className="text-lg font-semibold text-black">Filters</h2>
+                    <h2 className="text-lg font-semibold text-black">
+                      Filters
+                    </h2>
                     <button onClick={() => setOpenFilter(false)}>
                       <FiX className="text-xl text-black" />
                     </button>
@@ -195,7 +294,6 @@ const GalleryPage = () => {
                     </div>
                   </div>
 
-
                   {/* PRODUCT */}
                   <div className="mb-8 mt-6">
                     <h3 className="text-sm font-semibold mb-4">Product</h3>
@@ -207,10 +305,11 @@ const GalleryPage = () => {
                             setSelectedProduct(p);
                             setOpenFilter(false);
                           }}
-                          className={`px-3 py-2 rounded-md text-sm ${selectedProduct === p
-                            ? "bg-[#FF6E4A] text-white"
-                            : "hover:bg-gray-100"
-                            }`}
+                          className={`px-3 py-2 rounded-md text-sm ${
+                            selectedProduct === p
+                              ? "bg-[#FF6E4A] text-white"
+                              : "hover:bg-gray-100"
+                          }`}
                         >
                           {p}
                         </button>
@@ -221,7 +320,13 @@ const GalleryPage = () => {
                   {/* TYPE */}
                   <div className="mb-8">
                     <h3 className="text-sm font-semibold mb-4">Type</h3>
-                    {[{ label: "All", value: "All" }, { label: "Single", value: "Single" }, { label: "Double", value: "Double" }, { label: "Barn", value: "Barn" }, { label: "Dutch", value: "Dutch" }].map((type) => (
+                    {[
+                      { label: "All", value: "All" },
+                      { label: "Single", value: "Single" },
+                      { label: "Double", value: "Double" },
+                      { label: "Barn", value: "Barn" },
+                      { label: "Dutch", value: "Dutch" },
+                    ].map((type) => (
                       <label
                         key={type.value}
                         className="flex justify-between items-center mb-3 cursor-pointer"
@@ -229,7 +334,11 @@ const GalleryPage = () => {
                         <span className="text-sm">{type.label}</span>
                         <input
                           type="checkbox"
-                          checked={type.value === "All" ? selectedTypes.length === 0 : selectedTypes.includes(type.value)}
+                          checked={
+                            type.value === "All"
+                              ? selectedTypes.length === 0
+                              : selectedTypes.includes(type.value)
+                          }
                           onChange={() => {
                             if (type.value === "All") {
                               setSelectedTypes([]);
@@ -237,7 +346,7 @@ const GalleryPage = () => {
                               handleTypeToggle(type.value);
                             }
                           }}
-                          className="w-4 h-4 accent-[#FF6E4A]"
+                          className="custom-checkbox"
                         />
                       </label>
                     ))}
@@ -246,7 +355,11 @@ const GalleryPage = () => {
                   {/* GLASS */}
                   <div className="mb-8">
                     <h3 className="text-sm font-semibold mb-4">Glass</h3>
-                    {[{ label: "All", value: "All" }, { label: "With Glass", value: "With Glass" }, { label: "Without Glass", value: "Without Glass" }].map((g) => (
+                    {[
+                      { label: "All", value: "All" },
+                      { label: "With Glass", value: "With Glass" },
+                      { label: "Without Glass", value: "Without Glass" },
+                    ].map((g) => (
                       <label
                         key={g.value}
                         className="flex justify-between items-center mb-3 cursor-pointer"
@@ -254,7 +367,11 @@ const GalleryPage = () => {
                         <span className="text-sm">{g.label}</span>
                         <input
                           type="checkbox"
-                          checked={g.value === "All" ? selectedGlass.length === 0 : selectedGlass.includes(g.value)}
+                          checked={
+                            g.value === "All"
+                              ? selectedGlass.length === 0
+                              : selectedGlass.includes(g.value)
+                          }
                           onChange={() => {
                             if (g.value === "All") {
                               setSelectedGlass([]);
@@ -262,7 +379,7 @@ const GalleryPage = () => {
                               handleGlassToggle(g.value);
                             }
                           }}
-                          className="w-4 h-4 accent-[#FF6E4A]"
+                          className="custom-checkbox"
                         />
                       </label>
                     ))}
