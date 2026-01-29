@@ -214,11 +214,10 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           <button
             type="button"
             onClick={() => handleLockTypeSelect("deadbolt")}
-            className={`relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${
-              selectedLockType === "deadbolt"
+            className={`relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${selectedLockType === "deadbolt"
                 ? "border-[#FF6E4A] bg-white shadow-lg"
                 : "border-gray-200 bg-white"
-            }`}
+              }`}
           >
             {/* Circle indicator top right */}
             {selectedLockType === "deadbolt" && (
@@ -228,7 +227,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 </svg>
               </div>
             )}
-            
+
             <div className="flex items-center gap-4">
               {/* Image before text */}
               <div className="relative w-11 h-11 flex-shrink-0">
@@ -239,7 +238,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   className="object-contain"
                 />
               </div>
-              
+
               {/* Text content */}
               <div>
                 <h3 className="text-[17px] md:text-[22px] font-roboto font-normal text-black">Deadbolt</h3>
@@ -252,11 +251,10 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           <button
             type="button"
             onClick={() => handleLockTypeSelect("door_knob")}
-            className={`md:hidden relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${
-              selectedLockType === "door_knob"
+            className={`md:hidden relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${selectedLockType === "door_knob"
                 ? "border-[#FF6E4A] bg-white shadow-lg"
                 : "border-gray-200 bg-white"
-            }`}
+              }`}
           >
             {/* Circle indicator top right */}
             {selectedLockType === "door_knob" && (
@@ -266,7 +264,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 </svg>
               </div>
             )}
-            
+
             <div className="flex items-center gap-4">
               {/* Image before text */}
               <div className="relative w-11 h-11 flex-shrink-0">
@@ -277,7 +275,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   className="object-contain"
                 />
               </div>
-              
+
               {/* Text content */}
               <div>
                 <h3 className="text-[17px] md:text-[22px] font-roboto font-normal text-black">Door Knob</h3>
@@ -297,11 +295,10 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleBoreDiameterSelect("1")}
-                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
-                  selectedBoreDiameter === "1"
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${selectedBoreDiameter === "1"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <span className="text-left text-black font-roboto">1&quot;</span>
                 {selectedBoreDiameter === "1" && (
@@ -315,11 +312,10 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleBoreDiameterSelect("7/8")}
-                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
-                  selectedBoreDiameter === "7/8"
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${selectedBoreDiameter === "7/8"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <span className="text-left text-black font-roboto">⅞&quot;</span>
                 {selectedBoreDiameter === "7/8" && (
@@ -333,11 +329,10 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleBoreDiameterSelect("other")}
-                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 font-roboto text-sm font-medium bg-white transition-colors flex items-center justify-between ${
-                  selectedBoreDiameter === "other"
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 font-roboto text-sm font-medium bg-white transition-colors flex items-center justify-between ${selectedBoreDiameter === "other"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <span className="text-left text-black font-roboto font-[400]">Other</span>
                 {selectedBoreDiameter === "other" && (
@@ -391,11 +386,10 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           <button
             type="button"
             onClick={() => handleLockTypeSelect("door_knob")}
-            className={`hidden md:block relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${
-              selectedLockType === "door_knob"
+            className={`hidden md:block relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${selectedLockType === "door_knob"
                 ? "border-[#FF6E4A] bg-white shadow-lg"
                 : "border-gray-200 bg-white"
-            }`}
+              }`}
           >
             {/* Circle indicator top right */}
             {selectedLockType === "door_knob" && (
@@ -405,7 +399,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 </svg>
               </div>
             )}
-            
+
             <div className="flex items-center gap-4">
               {/* Image before text */}
               <div className="relative w-11 h-11 flex-shrink-0">
@@ -416,7 +410,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                   className="object-contain"
                 />
               </div>
-              
+
               {/* Text content */}
               <div>
                 <h3 className="text-[17px] md:text-[22px] font-roboto font-normal text-black">Door Knob</h3>
@@ -436,56 +430,53 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleBacksetSelect("2_3/8")}
-                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
-                  selectedBackset === "2_3/8"
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${selectedBackset === "2_3/8"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <span className="text-left text-black text-[15px] font-roboto font-normal">2 ⅜&quot;</span>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedBackset === "2_3/8" ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedBackset === "2_3/8" && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedBackset === "2_3/8" && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
               <button
                 type="button"
                 onClick={() => handleBacksetSelect("2_3/4")}
-                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
-                  selectedBackset === "2_3/4"
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${selectedBackset === "2_3/4"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <span className="text-left text-black text-[15px] font-roboto font-normal">2 ¾&quot;</span>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedBackset === "2_3/4" ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedBackset === "2_3/4" && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedBackset === "2_3/4" && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
               <button
                 type="button"
                 onClick={() => handleBacksetSelect("other")}
-                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${
-                  selectedBackset === "other"
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${selectedBackset === "other"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <span className="text-left text-black font-roboto font-[400]">Other</span>
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                  selectedBackset === "other" ? "border-orange-500" : "border-gray-300"
-                }`}>
-                  {selectedBackset === "other" && (
-                    <div className="w-2 h-2 rounded-full bg-[#FF6E4A]-500"></div>
-                  )}
-                </div>
+                {selectedBackset === "other" && (
+                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </button>
             </div>
             {selectedBackset === "other" && (
@@ -505,11 +496,10 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             <button
               type="button"
               onClick={() => handleLatchBoreDiameterSelect("default")}
-              className={`w-full md:max-w-[140px] border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
-                selectedLatchBoreDiameter === "default"
+              className={`w-full md:max-w-[140px] border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${selectedLatchBoreDiameter === "default"
                   ? "border-orange-500 text-black"
                   : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-              }`}
+                }`}
             >
               <span className="text-left text-black font-roboto font-[400]">1 Default</span>
               {selectedLatchBoreDiameter === "default" && (
@@ -539,11 +529,10 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 onClick={() =>
                   handleFaceplateDimensionSelect('1" x 2 1/4" x 5/32"')
                 }
-                className={`w-full relative border-2 rounded-lg px-5 py-2.5 text-[11px] font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
-                  selectedFaceplateDimension === '1" x 2 1/4" x 5/32"'
+                className={`w-full relative border-2 rounded-lg px-5 py-2.5 text-[11px] font-medium bg-white transition-colors flex items-center justify-between font-roboto ${selectedFaceplateDimension === '1" x 2 1/4" x 5/32"'
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <span className="text-left text-black font-roboto">1&quot; x 2 ¼&quot; x 5/32&quot;</span>
                 {selectedFaceplateDimension === '1" x 2 1/4" x 5/32"' && (
@@ -559,11 +548,10 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 onClick={() =>
                   handleFaceplateDimensionSelect('1 1/8" x 2 1/4" x 5/32"')
                 }
-                className={`w-full relative border-2 rounded-lg px-5  py-2 text-[11px] font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
-                  selectedFaceplateDimension === '1 1/8" x 2 1/4" x 5/32"'
+                className={`w-full relative border-2 rounded-lg px-5  py-2 text-[11px] font-medium bg-white transition-colors flex items-center justify-between font-roboto ${selectedFaceplateDimension === '1 1/8" x 2 1/4" x 5/32"'
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <span className="text-left text-black font-roboto">1 ⅛&quot; x 2 ¼&quot; x 5/32&quot;</span>
                 {selectedFaceplateDimension === '1 1/8" x 2 1/4" x 5/32"' && (
@@ -577,11 +565,10 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleFaceplateDimensionSelect("other")}
-                className={`w-full relative border-2 rounded-lg px-5 py-2 text-xs font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
-                  selectedFaceplateDimension === "other"
+                className={`w-full relative border-2 rounded-lg px-5 py-2 text-xs font-medium bg-white transition-colors flex items-center justify-between font-roboto ${selectedFaceplateDimension === "other"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <span className="text-left text-black font-roboto text-[15px] font-[400]">Other</span>
                 {selectedFaceplateDimension === "other" && (
@@ -612,12 +599,11 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             <div className="flex flex-col md:grid md:grid-cols-3 gap-3 max-w-full md:max-w-[300px]">
               <button
                 type="button"
-                onClick={() => handleDriveInDiameterSelect('7/8"' )}
-                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
-                  selectedDriveInDiameter === '7/8"'
+                onClick={() => handleDriveInDiameterSelect('7/8"')}
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${selectedDriveInDiameter === '7/8"'
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <span className="text-left text-black font-roboto">⅞&quot;</span>
                 {selectedDriveInDiameter === '7/8"' && (
@@ -630,12 +616,11 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               </button>
               <button
                 type="button"
-                onClick={() => handleDriveInDiameterSelect('1"' )}
-                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
-                  selectedDriveInDiameter === '1"'
+                onClick={() => handleDriveInDiameterSelect('1"')}
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${selectedDriveInDiameter === '1"'
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <span className="text-left text-black font-roboto">1&quot;</span>
                 {selectedDriveInDiameter === '1"' && (
@@ -649,11 +634,10 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleDriveInDiameterSelect("other")}
-                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
-                  selectedDriveInDiameter === "other"
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${selectedDriveInDiameter === "other"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <span className="text-left text-black font-roboto font-[400]">Other</span>
                 {selectedDriveInDiameter === "other" && (
@@ -688,11 +672,10 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleFaceplateRadiusSelect('1/4" radius')}
-                className={`w-full relative border-2 rounded-lg px-5 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
-                  selectedFaceplateRadius === '1/4" radius'
+                className={`w-full relative border-2 rounded-lg px-5 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${selectedFaceplateRadius === '1/4" radius'
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <div className="flex items-center gap-3">
                   <div className="relative w-6 h-6 flex-shrink-0">
@@ -716,11 +699,10 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <button
                 type="button"
                 onClick={() => handleFaceplateRadiusSelect("square")}
-                className={`w-full relative border-2 rounded-lg px-5 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
-                  selectedFaceplateRadius === "square"
+                className={`w-full relative border-2 rounded-lg px-5 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${selectedFaceplateRadius === "square"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                }`}
+                  }`}
               >
                 <div className="flex items-center gap-3">
                   <div className="relative w-6 h-6 flex-shrink-0">

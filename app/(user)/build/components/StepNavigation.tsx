@@ -15,18 +15,18 @@ interface StepNavigationProps {
 const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = false, isNextDisabled = false, currentStep, isSubmitting = false }: StepNavigationProps) => {
   const isBackDisabled = isFirstStep;
   const isStep15 = currentStep === 14;
-  
+
   return (
-    <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-0 md:pt-[29px] md:pb-[25px] ${isStep15 ? 'max-w-[950px] mx-auto' : ''}`}>
+    <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-0 md:pt-[29px] md:pb-[25px] ${isStep15 ? 'max-w-[1100px] mx-auto' : ''}`}>
       {/* Mobile: Progress Bar (smaller height) at top */}
       <div className="flex md:hidden items-center justify-center w-full">
-        <div 
+        <div
           className="h-[28px] w-full rounded-[10px] relative overflow-hidden flex items-center justify-center shadow-inner"
           style={{ backgroundColor: '#F6F6F6' }}
         >
           <div
             className="h-full rounded-[10px] transition-all duration-300 absolute left-0 top-0"
-            style={{ 
+            style={{
               width: `${percentage}%`,
               background: `linear-gradient(to right, #B6D78A 0%, #CFEDA7 50%, #B6D78A 100%)`
             }}
@@ -47,8 +47,8 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
               disabled={isBackDisabled}
               className={`
                 flex items-center justify-center gap-[5px] px-4 h-[37px] w-[143.97px] bg-white border-2 border-[#EAEAEA] rounded-[10px] text-black hover:text-gray-900 transition-colors shadow-md font-roboto
-                ${isBackDisabled 
-                  ? 'hover:cursor-not-allowed cursor-not-allowed' 
+                ${isBackDisabled
+                  ? 'hover:cursor-not-allowed cursor-not-allowed'
                   : 'hover:cursor-pointer cursor-pointer'
                 }
               `}
@@ -60,14 +60,14 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
         </div>
 
         {/* Center: Progress */}
-        <div className={`flex items-center flex-1 justify-center gap-4 ${isStep15 ? 'mx-4' : 'mx-4 xl:mx-[29px]'}`}>
-          <div 
-            className={`h-[35px] w-full rounded-[12px] relative overflow-hidden flex items-center justify-center shadow-inner ${isStep15 ? 'max-w-[550px]' : 'max-w-[500px] xl:max-w-[700px]'}`}
+        <div className={`flex items-center flex-1 justify-center gap-4 ${isStep15 ? 'mx-[10px]' : 'mx-[10px]'}`}>
+          <div
+            className={`h-[35px] w-full rounded-[12px] relative overflow-hidden flex items-center justify-center shadow-inner ${isStep15 ? 'max-w-full ml-[30px]' : 'max-w-[500px] xl:max-w-[1000px]'}`}
             style={{ backgroundColor: '#F6F6F6' }}
           >
             <div
               className="h-full rounded-[12px] transition-all duration-300 absolute left-0 top-0"
-              style={{ 
+              style={{
                 width: `${percentage}%`,
                 background: `linear-gradient(to right, #B6D78A 0%, #CFEDA7 50%, #B6D78A 100%)`
               }}
@@ -86,7 +86,7 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
             className={`
               flex items-center justify-center gap-[5px] w-[110px] px-4 h-[37px] bg-[#FF6E4A] text-white ${isStep15 ? 'rounded-[10px]' : 'rounded-l-[10px]'} transition-opacity font-roboto
               ${isNextDisabled || isSubmitting
-                ? 'hover:cursor-not-allowed cursor-not-allowed opacity-70' 
+                ? 'hover:cursor-not-allowed cursor-not-allowed opacity-70'
                 : 'hover:opacity-90 hover:cursor-pointer cursor-pointer'
               }
             `}
@@ -118,8 +118,8 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
             disabled={isBackDisabled}
             className={`
               flex items-center justify-center gap-[3px] px-2 h-[32px] w-[100px] bg-white border-2 border-[#EAEAEA] rounded-[8px] text-black hover:text-gray-900 transition-colors shadow-md font-roboto
-              ${isBackDisabled 
-                ? 'hover:cursor-not-allowed cursor-not-allowed' 
+              ${isBackDisabled
+                ? 'hover:cursor-not-allowed cursor-not-allowed'
                 : 'hover:cursor-pointer cursor-pointer'
               }
             `}
@@ -136,7 +136,7 @@ const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = fa
           className={`
             flex items-center justify-center gap-[3px] w-[90px] px-2 h-[32px] bg-[#FF6E4A] text-white rounded-[8px] transition-opacity font-roboto
             ${isNextDisabled || isSubmitting
-              ? 'hover:cursor-not-allowed cursor-not-allowed opacity-70' 
+              ? 'hover:cursor-not-allowed cursor-not-allowed opacity-70'
               : 'hover:opacity-90 hover:cursor-pointer cursor-pointer'
             }
           `}
