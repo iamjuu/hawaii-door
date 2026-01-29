@@ -133,7 +133,7 @@ export default function PillCTAButton({
           scale-0
           origin-bottom
           transition-transform
-          duration-[700ms]
+          duration-[650ms]
           ease-[cubic-bezier(0.65,0,0.35,1)]
           group-hover:scale-102
           group-hover:translate-y-[-10%]
@@ -146,7 +146,7 @@ export default function PillCTAButton({
           flex items-center gap-2 sm:gap-3
           text-white
           group-hover:text-black
-          transition-colors duration-[700ms]
+          transition-colors duration-[650ms]
           ease-[cubic-bezier(0.65,0,0.35,1)]
         "
       >
