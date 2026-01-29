@@ -19,151 +19,168 @@ const StepsDoor = () => {
   return (
     <section className="w-full py-10 sm:py-12 md:py-[0px] md:pt-[50px] font-inter ">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
-      <div className="max-w-[1400px] 2xl:mx-auto flex flex-col">
+        <div className="max-w-[1400px] 2xl:mx-auto flex flex-col">
 
-        {/* Heading */}
-        <div className="flex items-center justify-start">
-          <Heading
-            heading="How To Order Doors"
-            subheading="Four easy steps to get your perfect premium door delivered"
-          />
-        </div>
-
-        {/* Steps */}
-        <div className="flex flex-col gap-10 md:gap-[20px]  ">
-          <div className="group w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 items-start font-roboto ">
-
-            {/* STEP 1 */}
-            <div className="relative flex flex-col justify-center items-center  ">
-              <div className={stepBox} >
-                <Image
-                  src={Buildit}
-                  alt="Build It"
-                  width={170}
-                  height={170}
-                  className="w-[140px] md:w-[170px] h-auto mb-5 md:mb-6 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
-                />
-                <h4 className="text-xl font-medium text-black">Build It</h4>
-                <p className="mt-2 text-[#3B3B3B] text-sm md:text-base">
-                  Build your perfect door with our easy, interactive builder.
-                </p>
-              </div>
-
-              <div className="flex md:hidden justify-center my-4 ">
-                <Image src={Downarrow} alt="Down Arrow" width={20} height={20} />
-              </div>
-
-              <div className="hidden md:flex absolute right-[-60px] top-1/3 -translate-y-1/2">
-                <Image
-                  src={Greenarrow}
-                  alt="Arrow"
-                  width={60}
-                  height={60}
-                  className="md:grayscale md:group-hover:grayscale-0 transition-transform duration-300 ease-out md:group-hover:translate-y-1"
-                />
-              </div>
-            </div>
-
-            {/* STEP 2 */}
-            <div className="relative flex flex-col justify-center items-center">
-              <div className={stepBox}>
-                <Image
-                  src={Review}
-                  alt="Review"
-                  width={100}
-                  height={100}
-                  className="w-[80px] md:w-[100px] h-auto mb-5 md:mb-6 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
-                />
-                <h4 className="text-xl font-medium text-black">Review</h4>
-                <p className="mt-2 text-[#3B3B3B] text-sm md:text-base">
-                  Add your details and review your quote.
-                </p>
-              </div>
-
-              <div className="flex md:hidden justify-center my-4">
-                <Image src={Downarrow} alt="Down Arrow" width={20} height={20} />
-              </div>
-
-              <div className="hidden md:flex absolute right-[-10px] top-1/3 -translate-y-1/2">
-                <Image
-                  src={Greenarrow}
-                  alt="Arrow"
-                  width={60}
-                  height={60}
-                  className="md:grayscale md:group-hover:grayscale-0 transition-transform duration-300 ease-out md:group-hover:translate-y-1"
-                />
-              </div>
-            </div>
-
-            {/* STEP 3 */}
-            <div className="relative flex flex-col justify-center items-center">
-              <div className={stepBox}>
-                <Image
-                  src={Submit}
-                  alt="Submit"
-                  width={210}
-                  height={210}
-                  className="w-[160px] md:w-[210px] h-auto mb-5 md:mb-6 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
-                />
-                <h4 className="text-xl font-medium text-black">Submit</h4>
-                <p className="mt-2 text-[#3B3B3B] text-sm md:text-base">
-                  Confirm your specs and submit your quote.
-                </p>
-              </div>
-
-              <div className="flex md:hidden justify-center my-4">
-                <Image src={Downarrow} alt="Down Arrow" width={20} height={20} />
-              </div>
-
-              <div className="hidden md:flex absolute right-[-60px] top-1/3 -translate-y-1/2">
-                <Image
-                  src={Greenarrow}
-                  alt="Arrow"
-                  width={60}
-                  height={60}
-                  className="md:grayscale md:group-hover:grayscale-0 transition-transform duration-300 ease-out md:group-hover:translate-y-1"
-                />
-              </div>
-            </div>
-
-            {/* STEP 4 */}
-            <div className="flex justify-center">
-              <div className={stepBox}>
-                <Image
-                  src={Yourdoor}
-                  alt="Your Door"
-                  width={120}
-                  height={120}
-                  className="w-[90px] md:w-[120px] h-auto mb-5 md:mb-6 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
-                />
-                <h4 className="text-xl font-medium text-black">Get Your Door</h4>
-                <p className="mt-2 text-[#3B3B3B] text-sm md:text-base">
-                  We price it, prep it, and get it ready.
-                </p>
-              </div>
-            </div>
-
+          {/* Heading */}
+          <div className="flex items-center justify-start">
+            <Heading
+              heading="How To Order Doors"
+              subheading="Four easy steps to get your perfect premium door delivered"
+            />
           </div>
 
-          {/* CTA */}
-          <div className="w-full flex  mb-[0px] justify-center items-center mt-4 md:mt-0 ">
-            <Link href="/build">
-              <button className="group relative inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] text-[15px] md:text-lg font-roboto px-4 md:px-5 py-2 text-white">
-                {/* Hover overlay */}
-                <span className="absolute inset-0 bg-black origin-bottom scale-y-0 transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-y-100" />
+          {/* Steps */}
+          <div className="flex flex-col gap-10 md:gap-[20px]  ">
+            <div className="group w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 items-start font-roboto ">
 
-                {/* Button content */}
-                <span className="relative z-10 flex items-center gap-2 md:gap-3 font-roboto">
-                  Start Building Your Door Now
-                  <span className="inline-flex items-center justify-center w-6 h-6 md:w-7 md:h-7 shrink-0 transition-all duration-500 rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0">
-                    <MdOutlineArrowOutward className="text-white text-xl md:text-2xl" />
+              {/* STEP 1 */}
+              <div className="relative flex flex-col justify-center items-center  ">
+                <div className={stepBox} >
+                  <Image
+                    src={Buildit}
+                    alt="Build It"
+                    width={170}
+                    height={170}
+                    className="w-[140px] md:w-[170px] h-auto mb-5 md:mb-6 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
+                  />
+                  <h4 className="text-xl font-medium text-black">Build It</h4>
+                  <p className="mt-2 text-[#3B3B3B] text-sm md:text-base">
+                    Build your perfect door with our easy, interactive builder.
+                  </p>
+                </div>
+
+                <div className="flex md:hidden justify-center my-4 ">
+                  <Image src={Downarrow} alt="Down Arrow" width={20} height={20} />
+                </div>
+
+                <div className="hidden md:flex absolute right-[-60px] top-1/3 -translate-y-1/2">
+                  <Image
+                    src={Greenarrow}
+                    alt="Arrow"
+                    width={60}
+                    height={60}
+                    className="md:grayscale md:group-hover:grayscale-0 transition-transform duration-300 ease-out md:group-hover:translate-y-1"
+                  />
+                </div>
+              </div>
+
+              {/* STEP 2 */}
+              <div className="relative flex flex-col justify-center items-center">
+                <div className={stepBox}>
+                  <Image
+                    src={Review}
+                    alt="Review"
+                    width={100}
+                    height={100}
+                    className="w-[80px] md:w-[100px] h-auto mb-5 md:mb-6 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
+                  />
+                  <h4 className="text-xl font-medium text-black">Review</h4>
+                  <p className="mt-2 text-[#3B3B3B] text-sm md:text-base">
+                    Add your details and review your quote.
+                  </p>
+                </div>
+
+                <div className="flex md:hidden justify-center my-4">
+                  <Image src={Downarrow} alt="Down Arrow" width={20} height={20} />
+                </div>
+
+                <div className="hidden md:flex absolute right-[-10px] top-1/3 -translate-y-1/2">
+                  <Image
+                    src={Greenarrow}
+                    alt="Arrow"
+                    width={60}
+                    height={60}
+                    className="md:grayscale md:group-hover:grayscale-0 transition-transform duration-300 ease-out md:group-hover:translate-y-1"
+                  />
+                </div>
+              </div>
+
+              {/* STEP 3 */}
+              <div className="relative flex flex-col justify-center items-center">
+                <div className={stepBox}>
+                  <Image
+                    src={Submit}
+                    alt="Submit"
+                    width={210}
+                    height={210}
+                    className="w-[160px] md:w-[210px] h-auto mb-5 md:mb-6 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
+                  />
+                  <h4 className="text-xl font-medium text-black">Submit</h4>
+                  <p className="mt-2 text-[#3B3B3B] text-sm md:text-base">
+                    Confirm your specs and submit your quote.
+                  </p>
+                </div>
+
+                <div className="flex md:hidden justify-center my-4">
+                  <Image src={Downarrow} alt="Down Arrow" width={20} height={20} />
+                </div>
+
+                <div className="hidden md:flex absolute right-[-60px] top-1/3 -translate-y-1/2">
+                  <Image
+                    src={Greenarrow}
+                    alt="Arrow"
+                    width={60}
+                    height={60}
+                    className="md:grayscale md:group-hover:grayscale-0 transition-transform duration-300 ease-out md:group-hover:translate-y-1"
+                  />
+                </div>
+              </div>
+
+              {/* STEP 4 */}
+              <div className="flex justify-center">
+                <div className={stepBox}>
+                  <Image
+                    src={Yourdoor}
+                    alt="Your Door"
+                    width={120}
+                    height={120}
+                    className="w-[90px] md:w-[120px] h-auto mb-5 md:mb-6 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
+                  />
+                  <h4 className="text-xl font-medium text-black">Get Your Door</h4>
+                  <p className="mt-2 text-[#3B3B3B] text-sm md:text-base">
+                    We price it, prep it, and get it ready.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            {/* CTA */}
+            <div className="w-full flex  mb-[0px] justify-center items-center mt-4 md:mt-0 ">
+              <Link href="/build">
+                <button className="group relative inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] text-[15px] md:text-lg font-roboto px-4 md:px-5 py-2 text-white">
+                  {/* Hover overlay */}
+                  <span
+                    className="
+          absolute inset-0
+          bg-black
+          rounded-full
+          w-[140%]
+          aspect-square
+          left-1/2 -translate-x-1/2
+          translate-y-[60%]
+          scale-0
+          origin-bottom
+          transition-transform
+          duration-[650ms]
+          ease-[cubic-bezier(0.65,0,0.35,1)]
+          group-hover:scale-102
+          group-hover:translate-y-[-10%]
+        "
+                  />
+
+                  {/* Button content */}
+                  <span className="relative z-10 flex items-center gap-2 md:gap-3 font-roboto">
+                    Start Building Your Door Now
+                    <span className="inline-flex items-center justify-center w-6 h-6 md:w-7 md:h-7 shrink-0 transition-all duration-900 rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0">
+                      <MdOutlineArrowOutward className="text-white text-xl md:text-2xl" />
+                    </span>
                   </span>
-                </span>
-              </button>
-            </Link>
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
       </div>
 
       {/* Bottom Bar */}

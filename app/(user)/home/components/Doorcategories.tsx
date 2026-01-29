@@ -94,7 +94,7 @@ const DoorCategories = () => {
             {/* Previous Button */}
             <button
               onClick={prevSlide}
-              className="absolute left-0 sm:left-2 md:left-4 lg:left-0 z-20 w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 ml-2 sm:ml-3 md:ml-4 rounded-full bg-gray-400 hover:bg-gray-500 text-white hover:text-[#B6D78A] flex items-center justify-center transition-all shadow-lg"
+              className="absolute left-0 sm:left-2 md:left-4 lg:left-0 z-20 w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 ml-2 sm:ml-3 md:ml-4 rounded-full shadow-[0px_9.04px_11.31px_-6.78px_rgba(0,0,0,0.1),0px_22.61px_28.26px_-5.65px_rgba(0,0,0,0.1)] bg-gray-300 hover:bg-gray-200  text-white hover:text-[#B6D78A] flex items-center justify-center transition-all shadow-lg"
               aria-label="Previous slide"
             >
               <ChevronLeft className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
@@ -135,17 +135,25 @@ const DoorCategories = () => {
                           </h3>
                           {isCurrent && (
                             <Link href={"/product"}>
-                              <button className="group relative inline-flex items-center overflow-hidden rounded-full bg-[#B6D78A] px-3 py-1 sm:py-1.5 text-xs sm:text-sm text-[#000000] whitespace-nowrap">
+                              <button className="group relative inline-flex items-center overflow-hidden rounded-full bg-[#B6D78A] px-3 py-1 sm:py-1.5  text-xs sm:text-sm text-[#000000] whitespace-nowrap">
                                 {/* Hover overlay */}
                                 <span
                                   className="
-                              absolute inset-0
-                              bg-black
-                              origin-bottom
-                              scale-y-0
-                              transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-                              group-hover:scale-y-100
-                            "
+          absolute inset-0
+          bg-black
+          rounded-full
+          w-[125%]
+          aspect-square
+          left-1/2 -translate-x-1/2
+          translate-y-[60%]
+          scale-0
+          origin-bottom
+          transition-transform
+          duration-[650ms]
+          ease-[cubic-bezier(0.65,0,0.35,1)]
+          group-hover:scale-102
+          group-hover:translate-y-[-10%]
+        "
                                 />
                                 {/* Content */}
                                 <span className="relative z-10 group-hover:text-white transition-colors duration-500">
@@ -165,7 +173,7 @@ const DoorCategories = () => {
             {/* Next Button */}
             <button
               onClick={nextSlide}
-              className="absolute right-0 sm:right-2 md:right-4 lg:right-0 z-20 w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 mr-2 sm:mr-3 md:mr-4 rounded-full bg-gray-400 hover:bg-gray-500 text-white hover:text-[#B6D78A] flex items-center justify-center transition-all shadow-lg"
+              className="absolute right-0 sm:right-2 md:right-4 lg:right-0 z-20 w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 mr-2 sm:mr-3 md:mr-4 rounded-full shadow-[0px_9.04px_11.31px_-6.78px_rgba(0,0,0,0.1),0px_22.61px_28.26px_-5.65px_rgba(0,0,0,0.1)] bg-gray-300 hover:bg-gray-200 text-white hover:text-[#B6D78A] flex items-center justify-center transition-all shadow-lg"
               aria-label="Next slide"
             >
               <ChevronRight className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
