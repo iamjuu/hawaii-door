@@ -146,15 +146,15 @@ const InteriorWoodPage = () => {
                   <h3 className="text-[16px] md:text-[18px] font-roboto font-[600] text-black uppercase tracking-wide md:mb-6">
                     KEY BENEFITS OF OUR WOOD DOORS:
                   </h3>
-                  <ul className="space-y-5">
-                    <li className="text-sm md:text-base font-roboto text-[#3B3B3B]">
-                      <span className="font-[600] text-black">Diverse Styles:</span> Choose from a wide array of designs to match your interior decor.
+                  <ul className="space-y-5 list-disc pl-5">
+                    <li className="text-[#666666]  text-[16px] leading-[26px]  font-light">
+                      <span className="font-semibold">Diverse Styles:</span> Choose from a wide array of designs to match your interior decor.
                     </li>
-                    <li className="text-sm md:text-base font-roboto text-[#3B3B3B]">
-                      <span className="font-[600] text-black">Customizable Options:</span> Consider unique customizations to create a door that is truly your own.
+                    <li className="text-[#666666]  text-[16px] leading-[26px]  font-light">
+                      <span className="font-semibold">Customizable Options:</span> Consider unique customizations to create a door that is truly your own.
                     </li>
-                    <li className="text-sm md:text-base font-roboto text-[#3B3B3B]">
-                      <span className="font-[600] text-black">Quality Craftsmanship:</span> Enjoy the superior craftsmanship that ensures durability and aesthetic appeal.
+                    <li className="text-[#666666]  text-[16px] leading-[26px]  font-light">
+                      <span className="font-semibold">Quality Craftsmanship:</span> Enjoy the superior craftsmanship that ensures durability and aesthetic appeal.
                     </li>
                   </ul>
                 </div>
@@ -169,7 +169,7 @@ const InteriorWoodPage = () => {
                       <h3 className="text-[16px] md:text-[18px] font-roboto font-[600] text-black uppercase mb-2 md:mb-4">
                         PANEL DOORS
                       </h3>
-                      <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B]">
+                      <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                         Our panel doors offer a timeless solution, featuring both classic and modern designs that suit a wide range of interior spaces.
                       </p>
                     </div>
@@ -178,7 +178,7 @@ const InteriorWoodPage = () => {
                       <h3 className="text-[16px] md:text-[18px] font-roboto font-[600] text-black uppercase mb-2 md:mb-4">
                         DECORATIVE FRENCH DOORS
                       </h3>
-                      <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B]">
+                      <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                         Add a sense of elegance to your home with our decorative French doors, designed with detailed styling and high-quality privacy and textured glass options.
                       </p>
                     </div>
@@ -211,10 +211,10 @@ const InteriorWoodPage = () => {
             <h2 className="text-[23px] md:text-[32px] font-roboto font-[500] text-black mb-4 leading-tight">
               In-Stock at Hawaii Western Door Products
             </h2>
-            <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B] mb-4">
+            <p className="text-[#666666]  text-[16px] leading-[26px]  font-light mb-4">
               The product selections listed are included in our stocking program. Specifications are subject to change without prior notice. Please contact your Hawaii Western Door Products representative to confirm availability, lead times, and additional details.
             </p>
-            <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B]">
+            <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
               Please be aware that all doors ship unfinished. The images below show doors after finishing. Natural wood variation means each door will look unique, and stain results vary by species. We suggest consulting a coatings professional for proper finishing options and application guidance.
             </p>
           </div>

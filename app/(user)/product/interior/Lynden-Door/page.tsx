@@ -411,7 +411,7 @@ const LyndenDoorPage = () => {
                   <div className="space-y-6 mt-8">
                     {/* Light Commercial Doors */}
                     <div className="space-y-3">
-                      <h3 className="text-[20px] md:text-[22px] font-[400] text-black uppercase tracking-wide">
+                      <h3 className="text-[18px] md:text-[22px] font-[400] text-black uppercase tracking-wide">
                         Light Commercial Doors
                       </h3>
                       <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
@@ -422,8 +422,8 @@ const LyndenDoorPage = () => {
                     </div>
 
                     {/* Architectural/Commercial Doors */}
-                    <div className="space-y-3">
-                      <h3 className="text-[20px] md:text-[22px] font-[400] text-black uppercase tracking-wide">
+                    <div className="space-y-3 ">
+                      <h3 className="text-[18px] md:text-[22px] font-[400] text-black uppercase tracking-wide">
                         Architectural/Commercial Doors
                       </h3>
                       <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
