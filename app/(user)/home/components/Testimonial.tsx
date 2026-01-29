@@ -81,11 +81,11 @@ const Testimonial = () => {
             <div className="pointer-events-none absolute inset-y-0 right-0 w-[8%] bg-gradient-to-l from-white via-white/70 to-transparent z-10" />
 
             {/* Carousel Container */}
-            <div className="flex gap-6 animate-scroll group-hover:pause">
+            <div className="flex w-max animate-scroll will-change-transform group-hover:pause">
               {loopTestimonials.map((testimonial, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 w-[300px] md:w-[350px]  gap-5 lg:w-[400px] h-[400px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.10)] rounded-2xl p-6 md:p-8 flex flex-col"
+                  className="flex-shrink-0 w-[300px] md:w-[350px]  gap-5 lg:w-[400px] h-[400px] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.10)] rounded-2xl p-6 md:p-8 flex flex-col mr-6"
                 >
                   {/* Top section */}
                   <div>
@@ -127,7 +127,7 @@ const Testimonial = () => {
         100% { transform: translateX(-50%); }
       }
       .animate-scroll {
-        animation: scroll 8s linear infinite;
+        animation: scroll 40s linear infinite;
       }
       .testimonial-group:hover .animate-scroll {
         animation-play-state: paused;

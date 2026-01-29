@@ -133,7 +133,7 @@ body {
 .carousel-track {
   display: flex;
   width: max-content;
-  animation: featureCarousel 18s linear infinite;
+  animation: featureCarousel 90s linear infinite;
 }
 
 .carousel-wrapper {

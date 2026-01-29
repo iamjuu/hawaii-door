@@ -19,7 +19,7 @@ export default function HeroSection({
   features,
 }: HeroSectionProps) {
   // duplicate features for seamless loop
-  const loopFeatures = [...features, ...features];
+  const loopFeatures = Array(10).fill(features).flat();
 
   // Use CSS background for string URLs (local /assets/ or remote); Image can fail for local public paths
   const bgUrl =
@@ -55,11 +55,11 @@ export default function HeroSection({
       {/* FEATURE CAROUSEL */}
       <div className="absolute bottom-3 md:bottom-8 left-0 right-0 z-20 px-6 md:px-1">
         <div className="carousel-wrapper">
-          <div className="carousel-track gap-6 md:gap-12">
+          <div className="carousel-track">
             {loopFeatures.map((feature, index) => (
               <div
                 key={index}
-                className="flex items-center gap-3 text-gray-200 flex-shrink-0"
+                className="flex items-center gap-3 text-gray-200 flex-shrink-0 pr-6 md:pr-12"
               >
                 {feature.iconType && (
                   <div className="relative w-6 h-6">
