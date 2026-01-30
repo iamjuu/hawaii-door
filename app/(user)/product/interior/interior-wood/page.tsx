@@ -157,15 +157,16 @@ const InteriorWoodPage = () => {
           bgImage={bgImage}
           para={para}
           features={features}
-      />  </section>
+        />{" "}
+      </section>
 
       {/* INTRO SECTION */}
       <section className="w-full bg-white py-10 sm:py-12 md:py-[50px]">
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
           <div className="max-w-[1400px] 2xl:mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:flex-row gap-8 lg:gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-stretch">
               {/* LEFT CONTENT */}
-              <div className="flex-1   space-y-9 md:mt-[55px]">
+              <div className="flex-1 space-y-9">
                 <div>
                   <h1 className="text-[23px] md:text-[46px] font-roboto font-[500] text-black leading-[32px] md:leading-[58px] mb-10">
                     Unmatched Versatility with Interior Solid Wood Doors
@@ -180,8 +181,8 @@ const InteriorWoodPage = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-[16px] md:text-[18px] font-roboto font-[600] text-black uppercase tracking-wide md:mb-6">
-                    KEY BENEFITS OF OUR WOOD DOORS:
+                  <h3 className="text-[16px] md:text-[28px] font-roboto font-[500] text-black tracking-wide md:mb-6">
+                    Key Benefits of Our Wood Doors:
                   </h3>
                   <ul className="space-y-5 list-disc pl-5">
                     <li className="text-[#666666]  text-[16px] leading-[26px]  font-light">
@@ -238,14 +239,13 @@ const InteriorWoodPage = () => {
               </div>
 
               {/* RIGHT IMAGE */}
-              <div className="flex-1 flex items-start justify-center lg:justify-end min-w-0">
-                <div className="relative w-full h-[400px] md:h-[600px] lg:h-[928.66px]">
+              <div className="flex-1 flex items-stretch justify-center lg:justify-end min-w-0">
+                <div className="relative w-full min-h-[400px] md:min-h-[600px] h-full">
                   <Image
                     src={interiorDoor1}
                     alt="Interior Solid Wood Door"
                     fill
-                    className="object-cover "
-                    // sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
                     priority
                   />
                 </div>

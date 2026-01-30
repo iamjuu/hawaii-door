@@ -21,22 +21,24 @@ const Step14 = ({ quoteData, setQuoteData }: StepProps) => {
     setFormData({
       firstName: quoteData.firstName || "",
       companyName: quoteData.companyName || "",
-      phone: quoteData.phone || "", // Store with +91 prefix if present
+      phone: quoteData.phone || "", // Store full international number
       email: quoteData.email || "",
       poNumber: quoteData.poNumber || "",
     });
-  }, [quoteData.firstName, quoteData.companyName, quoteData.phone, quoteData.email, quoteData.poNumber]);
+  }, [
+    quoteData.firstName,
+    quoteData.companyName,
+    quoteData.phone,
+    quoteData.email,
+    quoteData.poNumber,
+  ]);
 
   const handleInputChange = (field: string, value: string) => {
-    // For phone field, automatically prepend +91 if not already present and value is not empty
+    // For phone field, allow only digits and + for international support
     if (field === "phone") {
-      // Remove any existing +91 prefix first to avoid duplicates
-      value = value.replace(/^\+91\s*/, '');
-      // Remove non-numeric characters and limit to 10 digits
-      value = value.replace(/\D/g, '').slice(0, 10);
-      // Add +91 prefix if user has entered a value
-      if (value) {
-        value = "+91" + value;
+      value = value.replace(/[^\d+]/g, "");
+      if (value && !value.startsWith("+")) {
+        value = "+" + value;
       }
     }
     const updatedData = { ...formData, [field]: value };
@@ -45,12 +47,6 @@ const Step14 = ({ quoteData, setQuoteData }: StepProps) => {
       ...quoteData,
       ...updatedData,
     });
-  };
-
-  // Get phone number without +91 prefix for display in input
-  const getPhoneDisplayValue = (phone: string) => {
-    if (!phone) return "";
-    return phone.startsWith("+91") ? phone.substring(3) : phone;
   };
 
   return (
@@ -98,17 +94,14 @@ const Step14 = ({ quoteData, setQuoteData }: StepProps) => {
             <label className="block text-[14px] font-medium text-[#0A0A0A] mb-2">
               Phone
             </label>
-            <div className="relative flex items-center">
-              <span className="absolute left-3 text-[14px] text-[#0A0A0A] font-medium z-10">+91</span>
-              <input
-                type="tel"
-                value={getPhoneDisplayValue(formData.phone)}
-                onChange={(e) => handleInputChange("phone", e.target.value)}
-                placeholder="1234567890"
-                maxLength={10}
-                className="w-full h-[50px] border-2 border-[#E9EAEE] rounded-[10px] pl-12 pr-3 py-1 text-[14px] placeholder:text-[14px] placeholder:text-[#717182] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-              />
-            </div>
+            <input
+              type="tel"
+              value={formData.phone}
+              onChange={(e) => handleInputChange("phone", e.target.value)}
+              placeholder="+1 123 456 7890"
+              maxLength={20}
+              className="w-full h-[50px] border-2 border-[#E9EAEE] rounded-[10px] px-3 py-1 text-[14px] placeholder:text-[14px] placeholder:text-[#717182] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+            />
           </div>
 
           {/* Email */}
@@ -121,15 +114,26 @@ const Step14 = ({ quoteData, setQuoteData }: StepProps) => {
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
               placeholder="email@example.com"
-              className="w-full h-[50px] border-2 border-[#E9EAEE] rounded-[10px] px-3 py-1 text-[14px] placeholder:text-[14px] placeholder:text-[#717182] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              className={`w-full h-[50px] border-2 rounded-[10px] px-3 py-1 text-[14px] placeholder:text-[14px] placeholder:text-[#717182] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
+                formData.email &&
+                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+                  ? "border-red-500"
+                  : "border-[#E9EAEE]"
+              }`}
             />
+            {formData.email &&
+              !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && (
+                <p className="text-red-500 text-[12px] mt-1">
+                  Please enter a valid email address.
+                </p>
+              )}
           </div>
         </div>
 
         {/* PO Number - Full Width */}
         <div>
           <label className="block text-[14px] font-medium text-[#0A0A0A] mb-2">
-            PO Number
+            PO Number (Optional)
           </label>
           <input
             type="text"

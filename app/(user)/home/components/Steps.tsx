@@ -42,7 +42,7 @@ const StepsDoor = () => {
                     alt="Build It"
                     width={170}
                     height={170}
-                    className="w-[140px] md:w-[170px] h-auto mb-5 md:mb-6 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
+                    className="w-[140px] md:w-[170px] h-auto mb-5 md:mb-6 md:grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1"
                   />
                   <h4 className="text-xl font-medium text-black">Build It</h4>
                   <p className="mt-2 text-[#3B3B3B] text-sm md:text-base">
@@ -65,7 +65,7 @@ const StepsDoor = () => {
                     alt="Arrow"
                     width={60}
                     height={60}
-                    className="md:grayscale md:group-hover:grayscale-0 transition-transform duration-300 ease-out md:group-hover:translate-y-1"
+                    className="md:grayscale group-hover:grayscale-0 transition-transform duration-300 ease-out group-hover:translate-y-1 group-hover:scale-110"
                   />
                 </div>
               </div>
@@ -78,7 +78,7 @@ const StepsDoor = () => {
                     alt="Review"
                     width={100}
                     height={100}
-                    className="w-[80px] md:w-[100px] h-auto mb-5 md:mb-6 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
+                    className="w-[80px] md:w-[100px] h-auto mb-5 md:mb-6 md:grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2"
                   />
                   <h4 className="text-xl font-medium text-black">Review</h4>
                   <p className="mt-2 text-[#3B3B3B] text-sm md:text-base">
@@ -101,7 +101,7 @@ const StepsDoor = () => {
                     alt="Arrow"
                     width={60}
                     height={60}
-                    className="md:grayscale md:group-hover:grayscale-0 transition-transform duration-300 ease-out md:group-hover:translate-y-1"
+                    className="md:grayscale group-hover:grayscale-0 transition-transform duration-300 ease-out group-hover:translate-y-1 group-hover:scale-110"
                   />
                 </div>
               </div>
@@ -114,7 +114,7 @@ const StepsDoor = () => {
                     alt="Submit"
                     width={210}
                     height={210}
-                    className="w-[160px] md:w-[210px] h-auto mb-5 md:mb-6 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
+                    className="w-[160px] md:w-[210px] h-auto mb-5 md:mb-6 md:grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2"
                   />
                   <h4 className="text-xl font-medium text-black">Submit</h4>
                   <p className="mt-2 text-[#3B3B3B] text-sm md:text-base">
@@ -137,7 +137,7 @@ const StepsDoor = () => {
                     alt="Arrow"
                     width={60}
                     height={60}
-                    className="md:grayscale md:group-hover:grayscale-0 transition-transform duration-300 ease-out md:group-hover:translate-y-1"
+                    className="md:grayscale group-hover:grayscale-0 transition-transform duration-300 ease-out group-hover:translate-y-1 group-hover:scale-110"
                   />
                 </div>
               </div>
@@ -150,7 +150,7 @@ const StepsDoor = () => {
                     alt="Your Door"
                     width={120}
                     height={120}
-                    className="w-[90px] md:w-[120px] h-auto mb-5 md:mb-6 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
+                    className="w-[90px] md:w-[120px] h-auto mb-5 md:mb-6 md:grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2"
                   />
                   <h4 className="text-xl font-medium text-black">
                     Get Your Door

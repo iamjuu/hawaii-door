@@ -7,40 +7,45 @@ import { message } from "antd";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
 import PageLoader from "@/components/user/PageLoader";
-import StepContainer from "./components/StepContainer"
-import StepNavigation from "./components/StepNavigation"
+import StepContainer from "./components/StepContainer";
+import StepNavigation from "./components/StepNavigation";
 import InfoBanner from "./components/InfoBanner";
 import QuoteSummary from "./components/QuoteSummary";
-import usaimg from "../../../public/assets/images/landing/usa.png"
-import vector56 from "../../../public/assets/images/dummy/vector56.png"
-import vector57 from "../../../public/assets/images/dummy/vector57.png"
-import vector99 from "../../../public/assets/images/dummy/vector99.png"
-import vector98 from "../../../public/assets/images/dummy/vector98.png"
-import vector44 from "../../../public/assets/images/dummy/vector44.png"
-import vector88 from "../../../public/assets/images/dummy/vector88.png"
-import lock from "../../../public/assets/images/dummy/lockk.png"
-import vector33 from "../../../public/assets/images/dummy/vector33.png"
-import vector20 from "../../../public/assets/images/dummy/vector20.png"
-import vector21 from "../../../public/assets/images/dummy/vector21.png"
-import vector22 from "../../../public/assets/images/dummy/vector22.png"
-import vector23 from "../../../public/assets/images/dummy/vector23.png"
-import vector24 from "../../../public/assets/images/dummy/vector24.png"
+import usaimg from "../../../public/assets/images/landing/usa.png";
+import vector56 from "../../../public/assets/images/dummy/vector56.png";
+import vector57 from "../../../public/assets/images/dummy/vector57.png";
+import vector99 from "../../../public/assets/images/dummy/vector99.png";
+import vector98 from "../../../public/assets/images/dummy/vector98.png";
+import vector44 from "../../../public/assets/images/dummy/vector44.png";
+import vector88 from "../../../public/assets/images/dummy/vector88.png";
+import lock from "../../../public/assets/images/dummy/lockk.png";
+import vector33 from "../../../public/assets/images/dummy/vector33.png";
+import vector20 from "../../../public/assets/images/dummy/vector20.png";
+import vector21 from "../../../public/assets/images/dummy/vector21.png";
+import vector22 from "../../../public/assets/images/dummy/vector22.png";
+import vector23 from "../../../public/assets/images/dummy/vector23.png";
+import vector24 from "../../../public/assets/images/dummy/vector24.png";
 // Import all step components
 import Step1SelectCategory from "./components/steps/Step1SelectCategory";
 import Step2SingleOrDouble from "./components/steps/Step2SingleOrDouble";
 import Step3DoorSize from "./components/steps/Step3DoorSize";
-import Step4 from "./components/steps/step4"
-import Step5 from "./components/steps/step5"
-import Step6 from "./components/steps/step6"
-import Step7 from "./components/steps/step7"
-import Step8 from "./components/steps/step8"
-import Step9 from "./components/steps/step9"
-import Step10 from "./components/steps/step10"
-import Step11 from "./components/steps/step11"
-import Step12 from "./components/steps/step12"
-import Step13 from "./components/steps/step13"
-import Step14 from "./components/steps/step14"
-import Step15 from "./components/steps/step15"
+import Step4 from "./components/steps/step4";
+import Step5 from "./components/steps/step5";
+import Step6 from "./components/steps/step6";
+import Step7 from "./components/steps/step7";
+import Step8 from "./components/steps/step8";
+import Step9 from "./components/steps/step9";
+import Step10 from "./components/steps/step10";
+import Step11 from "./components/steps/step11";
+import Step12 from "./components/steps/step12";
+import Step13 from "./components/steps/step13";
+import Step14 from "./components/steps/step14";
+import Step15 from "./components/steps/step15";
+// Helper to validate email format
+const isValidEmail = (email: string) => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+};
+
 const BuildDoor = () => {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
@@ -95,7 +100,7 @@ const BuildDoor = () => {
     uploadedFiles: [],
     firstName: "",
     companyName: "",
-    phone: "",
+    phone: "+1",
     email: "",
     poNumber: "",
   });
@@ -162,7 +167,7 @@ const BuildDoor = () => {
       },
       percentage: 35,
     },
-    
+
     {
       component: Step7,
       infoBanner: {
@@ -251,7 +256,7 @@ const BuildDoor = () => {
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
       },
-      percentage:100,
+      percentage: 100,
     },
   ];
 
@@ -259,27 +264,33 @@ const BuildDoor = () => {
 
   const handleNext = async (doorType?: string, doorConfig?: string) => {
     // If doorType is provided (and it's actually a string, not an event), update the quoteData first
-    if (doorType !== undefined && typeof doorType === 'string') {
+    if (doorType !== undefined && typeof doorType === "string") {
       setQuoteData((prev) => ({ ...prev, doorType }));
     }
-    
+
     // If doorConfig is provided (and it's actually a string, not an event), update the quoteData first
-    if (doorConfig !== undefined && typeof doorConfig === 'string') {
+    if (doorConfig !== undefined && typeof doorConfig === "string") {
       setQuoteData((prev) => ({ ...prev, doorConfig, category: doorConfig }));
     }
-    
+
     // Prevent moving to next step if on step 1 and no door is selected
-    const currentDoorType = (doorType !== undefined && typeof doorType === 'string') ? doorType : quoteData.doorType;
+    const currentDoorType =
+      doorType !== undefined && typeof doorType === "string"
+        ? doorType
+        : quoteData.doorType;
     if (currentStep === 0 && !currentDoorType) {
       return;
     }
-    
+
     // Prevent moving to next step if on step 2 and no door config is selected
-    const currentDoorConfig = (doorConfig !== undefined && typeof doorConfig === 'string') ? doorConfig : quoteData.doorConfig;
+    const currentDoorConfig =
+      doorConfig !== undefined && typeof doorConfig === "string"
+        ? doorConfig
+        : quoteData.doorConfig;
     if (currentStep === 1 && !currentDoorConfig) {
       return;
     }
-    
+
     // Prevent moving to next step if on step 3 (index 2) and width or height is not selected
     if (currentStep === 2 && (!quoteData.width || !quoteData.height)) {
       return;
@@ -291,12 +302,21 @@ const BuildDoor = () => {
     }
 
     // Prevent moving to next step if on step 5 (index 4) and neither preset option nor custom diameter is selected
-    if (currentStep === 4 && !quoteData.wallThickness && !quoteData.customDiameter) {
+    if (
+      currentStep === 4 &&
+      !quoteData.wallThickness &&
+      !quoteData.customDiameter
+    ) {
       return;
     }
 
     // Prevent moving to next step if on step 6 (index 5) and doorHandling, hingeRadius, or hingeType is not selected
-    if (currentStep === 5 && (!quoteData.doorHandling || !quoteData.hingeRadius || !quoteData.hingeType)) {
+    if (
+      currentStep === 5 &&
+      (!quoteData.doorHandling ||
+        !quoteData.hingeRadius ||
+        !quoteData.hingeType)
+    ) {
       return;
     }
 
@@ -306,28 +326,30 @@ const BuildDoor = () => {
     }
 
     // Prevent moving to next step if on step 8 (index 7) and required fields are not selected
-    if (currentStep === 7 && (
-      !quoteData.lockType ||
-      !quoteData.lockBoreDiameter ||
-      !quoteData.lockBackset ||
-      !quoteData.lockCenterline ||
-      !quoteData.faceplateDimension ||
-      !quoteData.faceplateRadius ||
-      !quoteData.driveInDiameter ||
-      !quoteData.latchBoreDiameter
-    )) {
+    if (
+      currentStep === 7 &&
+      (!quoteData.lockType ||
+        !quoteData.lockBoreDiameter ||
+        !quoteData.lockBackset ||
+        !quoteData.lockCenterline ||
+        !quoteData.faceplateDimension ||
+        !quoteData.faceplateRadius ||
+        !quoteData.driveInDiameter ||
+        !quoteData.latchBoreDiameter)
+    ) {
       return;
     }
 
     // Prevent moving to next step if on step 9 (index 8) and required fields are not selected (Undercut Measurement is optional)
-    if (currentStep === 8 && (
-      !quoteData.jambType ||
-      !quoteData.jambSize ||
-      !quoteData.dbStrikeType ||
-      !quoteData.lockStrikeType ||
-      !quoteData.weatherstripping ||
-      !quoteData.thresholdType
-    )) {
+    if (
+      currentStep === 8 &&
+      (!quoteData.jambType ||
+        !quoteData.jambSize ||
+        !quoteData.dbStrikeType ||
+        !quoteData.lockStrikeType ||
+        !quoteData.weatherstripping ||
+        !quoteData.thresholdType)
+    ) {
       return;
     }
 
@@ -352,26 +374,29 @@ const BuildDoor = () => {
     }
 
     // Prevent moving to next step if on step 14 (index 13) and any required field is not filled
-    if (currentStep === 13 && (
-      !quoteData.firstName ||
-      !quoteData.companyName ||
-      !quoteData.phone ||
-      !quoteData.email ||
-      !quoteData.poNumber
-    )) {
+    if (
+      currentStep === 13 &&
+      (!quoteData.firstName ||
+        !quoteData.companyName ||
+        !quoteData.phone ||
+        !quoteData.email ||
+        !isValidEmail(quoteData.email))
+    ) {
       return;
     }
-    
+
     // Handle submit on step 15 (index 14)
     if (currentStep === 14) {
       setIsSubmitting(true);
-      
+
       // Convert uploaded files to base64 if they are File objects
-      const convertFileToBase64 = (file: File): Promise<{ name: string; base64: string; type: string }> => {
+      const convertFileToBase64 = (
+        file: File,
+      ): Promise<{ name: string; base64: string; type: string }> => {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => {
-            const base64String = (reader.result as string).split(',')[1]; // Remove data:type;base64, prefix
+            const base64String = (reader.result as string).split(",")[1]; // Remove data:type;base64, prefix
             resolve({
               name: file.name,
               base64: base64String,
@@ -386,19 +411,29 @@ const BuildDoor = () => {
       // Send quote submission email
       try {
         // Prepare uploaded files as base64
-        let uploadedFilesBase64: { name: string; base64: string; type: string }[] = [];
-        if (quoteData.uploadedFiles && Array.isArray(quoteData.uploadedFiles) && quoteData.uploadedFiles.length > 0) {
+        let uploadedFilesBase64: {
+          name: string;
+          base64: string;
+          type: string;
+        }[] = [];
+        if (
+          quoteData.uploadedFiles &&
+          Array.isArray(quoteData.uploadedFiles) &&
+          quoteData.uploadedFiles.length > 0
+        ) {
           // Check if files are File objects or already base64
-          const filePromises = quoteData.uploadedFiles.map((file: any) => {
-            if (file instanceof File) {
-              return convertFileToBase64(file);
-            } else if (file && typeof file === 'object' && file.base64) {
-              // Already converted to base64 format
-              return Promise.resolve(file);
-            }
-            return null;
-          }).filter(Boolean);
-          
+          const filePromises = quoteData.uploadedFiles
+            .map((file: any) => {
+              if (file instanceof File) {
+                return convertFileToBase64(file);
+              } else if (file && typeof file === "object" && file.base64) {
+                // Already converted to base64 format
+                return Promise.resolve(file);
+              }
+              return null;
+            })
+            .filter(Boolean);
+
           uploadedFilesBase64 = await Promise.all(filePromises);
         }
 
@@ -420,26 +455,30 @@ const BuildDoor = () => {
         });
 
         const result = await response.json();
-        
+
         if (result.success) {
           message.success("Successfully submitted your quote! ");
         } else {
-          message.warning("Quote submitted, but email could not be sent. Please contact us directly.");
+          message.warning(
+            "Quote submitted, but email could not be sent. Please contact us directly.",
+          );
         }
       } catch (error) {
         console.error("Error submitting quote:", error);
-        message.warning("Quote submitted, but email could not be sent. Please contact us directly.");
+        message.warning(
+          "Quote submitted, but email could not be sent. Please contact us directly.",
+        );
       } finally {
         setIsSubmitting(false);
       }
-      
+
       // Navigate to home page after showing success message
       setTimeout(() => {
         router.push("/build");
       }, 1500);
       return;
     }
-    
+
     if (currentStep < steps.length - 1) {
       // When leaving Step 3 (index 2), ensure a default thickness is saved
       if (currentStep === 2) {
@@ -458,7 +497,7 @@ const BuildDoor = () => {
     if (currentStep === 0) {
       return;
     }
-    
+
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
@@ -508,7 +547,7 @@ const BuildDoor = () => {
       uploadedFiles: [],
       firstName: "",
       companyName: "",
-      phone: "",
+      phone: "+1",
       email: "",
       poNumber: "",
     });
@@ -518,7 +557,7 @@ const BuildDoor = () => {
     <>
       <PageLoader isLoading={isLoading} />
       <Navbar />
-      
+
       <InfoBanner
         icon={steps[currentStep].infoBanner.icon}
         text={steps[currentStep].infoBanner.text}
@@ -530,101 +569,154 @@ const BuildDoor = () => {
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-6 xl:px-12 2xl:px-[60px] py-8">
           <div className="max-w-[1400px] 2xl:mx-auto">
             <div className="flex flex-col lg:flex-row gap-0">
-            {/* Main Content Area */}
-            <div className="flex-1">
-              <StepContainer>                
-                <StepNavigation
-                  onBack={handleBack}
-                  onNext={() => handleNext()}
-                  showBack={true}
-                  percentage={steps[currentStep].percentage}
-                  isFirstStep={currentStep === 0}
-                  currentStep={currentStep}
-                  isSubmitting={isSubmitting}
-                  isNextDisabled={
-                    (currentStep === 0 && !quoteData.doorType) ||
-                    (currentStep === 1 && !quoteData.doorConfig) ||
-                    (currentStep === 2 && (!quoteData.width || !quoteData.height)) ||
-                    (currentStep === 3 && !quoteData.wallBuilt) ||
-                    (currentStep === 4 && !quoteData.wallThickness && !quoteData.customDiameter) ||
-                    (currentStep === 5 && (!quoteData.doorHandling || !quoteData.hingeRadius || !quoteData.hingeType)) ||
-                    (currentStep === 6 && !quoteData.louver) ||
-                    (currentStep === 7 && (
-                      !quoteData.lockType ||
-                      !quoteData.lockBoreDiameter ||
-                      !quoteData.lockBackset ||
-                      !quoteData.lockCenterline ||
-                      !quoteData.faceplateDimension ||
-                      !quoteData.faceplateRadius ||
-                      !quoteData.driveInDiameter ||
-                      !quoteData.latchBoreDiameter
-                    )) ||
-                    (currentStep === 8 && (
-                      !quoteData.jambType ||
-                      !quoteData.jambSize ||
-                      !quoteData.dbStrikeType ||
-                      !quoteData.lockStrikeType ||
-                      !quoteData.weatherstripping ||
-                      !quoteData.thresholdType
-                    )) ||
-                    (currentStep === 9 && !quoteData.hangDoorOption) ||
-                    (currentStep === 10 && !quoteData.protectDoorOption) ||
-                    (currentStep === 11 && !quoteData.addOnOption) ||
-                    (currentStep === 12 && !quoteData.doorFinishOption) ||
-                    (currentStep === 13 && (
-                      !quoteData.firstName ||
-                      !quoteData.companyName ||
-                      !quoteData.phone ||
-                      !quoteData.email ||
-                      !quoteData.poNumber
-                    ))
-                  }
-                />
+              {/* Main Content Area */}
+              <div className="flex-1">
+                <StepContainer>
+                  <StepNavigation
+                    onBack={handleBack}
+                    onNext={() => handleNext()}
+                    showBack={true}
+                    percentage={steps[currentStep].percentage}
+                    isFirstStep={currentStep === 0}
+                    currentStep={currentStep}
+                    isSubmitting={isSubmitting}
+                    isNextDisabled={
+                      (currentStep === 0 && !quoteData.doorType) ||
+                      (currentStep === 1 && !quoteData.doorConfig) ||
+                      (currentStep === 2 &&
+                        (!quoteData.width || !quoteData.height)) ||
+                      (currentStep === 3 && !quoteData.wallBuilt) ||
+                      (currentStep === 4 &&
+                        !quoteData.wallThickness &&
+                        !quoteData.customDiameter) ||
+                      (currentStep === 5 &&
+                        (!quoteData.doorHandling ||
+                          !quoteData.hingeRadius ||
+                          !quoteData.hingeType)) ||
+                      (currentStep === 6 && !quoteData.louver) ||
+                      (currentStep === 7 &&
+                        (!quoteData.lockType ||
+                          !quoteData.lockBoreDiameter ||
+                          !quoteData.lockBackset ||
+                          !quoteData.lockCenterline ||
+                          !quoteData.faceplateDimension ||
+                          !quoteData.faceplateRadius ||
+                          !quoteData.driveInDiameter ||
+                          !quoteData.latchBoreDiameter)) ||
+                      (currentStep === 8 &&
+                        (!quoteData.jambType ||
+                          !quoteData.jambSize ||
+                          !quoteData.dbStrikeType ||
+                          !quoteData.lockStrikeType ||
+                          !quoteData.weatherstripping ||
+                          !quoteData.thresholdType)) ||
+                      (currentStep === 9 && !quoteData.hangDoorOption) ||
+                      (currentStep === 10 && !quoteData.protectDoorOption) ||
+                      (currentStep === 11 && !quoteData.addOnOption) ||
+                      (currentStep === 12 && !quoteData.doorFinishOption) ||
+                      (currentStep === 13 &&
+                        (!quoteData.firstName ||
+                          !quoteData.companyName ||
+                          !quoteData.phone ||
+                          !quoteData.email ||
+                          !isValidEmail(quoteData.email)))
+                    }
+                  />
 
-                <CurrentStepComponent
+                  <CurrentStepComponent
+                    quoteData={quoteData}
+                    setQuoteData={setQuoteData}
+                    onNext={
+                      currentStep === 0
+                        ? (doorType?: string) => handleNext(doorType)
+                        : currentStep === 1
+                          ? (doorConfig?: string) =>
+                              handleNext(undefined, doorConfig)
+                          : currentStep === 3
+                            ? () =>
+                                setCurrentStep((prev) =>
+                                  prev < steps.length - 1 ? prev + 1 : prev,
+                                )
+                            : currentStep === 4
+                              ? () =>
+                                  setCurrentStep((prev) =>
+                                    prev < steps.length - 1 ? prev + 1 : prev,
+                                  )
+                              : currentStep === 5
+                                ? () =>
+                                    setCurrentStep((prev) =>
+                                      prev < steps.length - 1 ? prev + 1 : prev,
+                                    )
+                                : currentStep === 6
+                                  ? () =>
+                                      setCurrentStep((prev) =>
+                                        prev < steps.length - 1
+                                          ? prev + 1
+                                          : prev,
+                                      )
+                                  : currentStep === 7
+                                    ? () =>
+                                        setCurrentStep((prev) =>
+                                          prev < steps.length - 1
+                                            ? prev + 1
+                                            : prev,
+                                        )
+                                    : currentStep === 8
+                                      ? () =>
+                                          setCurrentStep((prev) =>
+                                            prev < steps.length - 1
+                                              ? prev + 1
+                                              : prev,
+                                          )
+                                      : currentStep === 9
+                                        ? () =>
+                                            setCurrentStep((prev) =>
+                                              prev < steps.length - 1
+                                                ? prev + 1
+                                                : prev,
+                                            )
+                                        : currentStep === 10
+                                          ? () =>
+                                              setCurrentStep((prev) =>
+                                                prev < steps.length - 1
+                                                  ? prev + 1
+                                                  : prev,
+                                              )
+                                          : currentStep === 11
+                                            ? () =>
+                                                setCurrentStep((prev) =>
+                                                  prev < steps.length - 1
+                                                    ? prev + 1
+                                                    : prev,
+                                                )
+                                            : currentStep === 12
+                                              ? () =>
+                                                  setCurrentStep((prev) =>
+                                                    prev < steps.length - 1
+                                                      ? prev + 1
+                                                      : prev,
+                                                  )
+                                              : currentStep === 13
+                                                ? () =>
+                                                    setCurrentStep((prev) =>
+                                                      prev < steps.length - 1
+                                                        ? prev + 1
+                                                        : prev,
+                                                    )
+                                                : undefined
+                    }
+                  />
+                </StepContainer>
+              </div>
+
+              {/* Quote Summary Sidebar - Hidden on Step 15 */}
+              {currentStep !== 14 && (
+                <QuoteSummary
                   quoteData={quoteData}
-                  setQuoteData={setQuoteData}
-                  onNext={
-                    currentStep === 0
-                      ? (doorType?: string) => handleNext(doorType)
-                      : currentStep === 1
-                      ? (doorConfig?: string) => handleNext(undefined, doorConfig)
-                      : currentStep === 3
-                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
-                      : currentStep === 4
-                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
-                      : currentStep === 5
-                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
-                      : currentStep === 6
-                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
-                      : currentStep === 7
-                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
-                      : currentStep === 8
-                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
-                      : currentStep === 9
-                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
-                      : currentStep === 10
-                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
-                      : currentStep === 11
-                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
-                      : currentStep === 12
-                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
-                      : currentStep === 13
-                      ? () => setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
-                      : undefined
-                  }
+                  currentStep={currentStep}
+                  onRestart={handleRestart}
                 />
-              </StepContainer>
-            </div>
-
-            {/* Quote Summary Sidebar - Hidden on Step 15 */}
-            {currentStep !== 14 && (
-              <QuoteSummary
-                quoteData={quoteData}
-                currentStep={currentStep}
-                onRestart={handleRestart}
-              />
-            )}
+              )}
             </div>
           </div>
         </div>

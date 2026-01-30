@@ -23,11 +23,11 @@ export default function CareerPage() {
       <PageLoader isLoading={isLoading} />
       <Navbar />
       {/* First Section - Hero with Gradient */}
-      <section className="relative w-full h-auto lg:h-[500px] bg-[#efede9] mt-8">
-        <div className="container mx-auto px-6 lg:px-12 h-full">
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 items-center h-full py-8 lg:py-0">
+      <section className="relative w-full h-auto lg:h-[470px] bg-[#efede9] ">
+        <div className="container mx-auto px-6 lg:px-12 h-full ">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 items-center h-full md:py-4 lg:py-0">
             {/* Left Content */}
-            <div className="flex-1 space-y-4 lg:space-y-6">
+            <div className="flex-1 space-y-4 lg:space-y-6 mt-16 ">
               <h1 className="text-[28px] sm:text-[32px] md:text-[38px] lg:text-[45px] font-roboto font-[600] text-gray-900 ">
                 Join The Island Door Company
               </h1>
@@ -51,8 +51,8 @@ export default function CareerPage() {
             </div>
 
             {/* Right Image */}
-            <div className="flex-1 w-full h-64 sm:h-80 lg:h-full lg:max-h-[450px] relative">
-              <div className="relative w-full h-full mt-[491px] ">
+            <div className="flex-1 w-full h-64 sm:h-80 lg:h-full lg:max-h-[420px] relative ">
+              <div className="relative w-full h-full mt-8">
                 <Image
                   src={Careerimg}
                   alt="Happy team members collaborating"
@@ -68,7 +68,7 @@ export default function CareerPage() {
       </section>
 
       {/* Second Section - White Background Contact */}
-      <section className="bg-[#fdfffc] py-[70px]">
+      <section className="bg-[#fdfffc] py-[60px]">
         <div className="container mx-auto px-6">
           <div className="flex  gap-4 flex-col justify-center items-center text-center ">
             <h2 className="text-[24px]  md:text-[38px] lg:text-[45px] font-[600] text-black font-roboto">
