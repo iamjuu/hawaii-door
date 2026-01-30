@@ -7,6 +7,14 @@ import {
   interiorDoor1,
   ProductFootericoncheck,
   ProductFootericonstar,
+  StartGray,
+  StartColor,
+  ComfortGray,
+  ComfortColor,
+  DoorGray,
+  DoorColor,
+  SettingGray,
+  SettingColor,
 } from "@/public/assets";
 import HeroSection from "../../components/herosection";
 import Image from "next/image";
@@ -114,31 +122,42 @@ const InteriorWoodPage = () => {
 
   // AWS hero (commented out): "https://hawaai-doors-bucket.s3.us-west-2.amazonaws.com/uploads/1769351030278-hero_wood-interior.webp"
   const bgImage = "/assets/product/Interior Wood Stile & Rail.svg";
-  const contant = "Interior Doors";
+  const contant = "Interior Wood Stile & Rail";
   const para =
-    "Discover interior doors; we offer a variety of door types, designs and styles. You are sure to find the perfectdoor for your project.";
-
+    "Interior Solid Wood Doors provide the ultimate versatility in design, style, and size. Wood doors are available in a variety of wood species and glass options,allowing you to find the perfect door for your needs.";
   const features = [
     {
-      text: "Interior doors as design features",
-      iconType: ProductFootericoncheck,
+      text: "Crafted with precision",
+      iconGray: StartGray,
+      iconColor: StartColor,
     },
     {
-      text: "Styles that align with your space",
-      iconType: ProductFootericonstar,
+      text: "Beauty that lasts",
+      iconGray: ComfortGray,
+      iconColor: ComfortColor,
+    },
+    {
+      text: "Wide design selection",
+      iconGray: DoorGray,
+      iconColor: DoorColor,
+    },
+    {
+      text: "Personalised detailing",
+      iconGray: SettingGray,
+      iconColor: SettingColor,
     },
   ];
 
   return (
     <>
       <Navbar />
-
-      <HeroSection
-        contant={contant}
-        bgImage={bgImage}
-        para={para}
-        features={features}
-      />
+      <section id="overview">
+        <HeroSection
+          contant={contant}
+          bgImage={bgImage}
+          para={para}
+          features={features}
+      />  </section>
 
       {/* INTRO SECTION */}
       <section className="w-full bg-white py-10 sm:py-12 md:py-[50px]">
@@ -288,7 +307,7 @@ const InteriorWoodPage = () => {
       )}
 
       {/* MAIN CONTENT */}
-      <main className="w-full bg-white py-10 sm:py-12 md:py-[50px]">
+      <main className="w-full bg-white py-10 sm:py-12 md:py-[50px] ">
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
           <div className="max-w-[1400px] 2xl:mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
             {/* SIDEBAR */}
@@ -360,8 +379,8 @@ const InteriorWoodPage = () => {
               {!loading && !error && (
                 <>
                   {/* Overview Section */}
-                  <section id="overview" className="mb-16 scroll-mt-24">
-                    <h2 className="text-[23px] md:text-[32px] font-roboto font-[500] text-[#FF6E4A] mb-4 leading-tight">
+                  {/* <section i className="mb-16 scroll-mt-24">
+                    <h2 className="text-[23px] md:text-[32px] font-roboto font-[500] text-black mb-4 leading-tight">
                       Overview
                     </h2>
                     <p className="text-sm md:text-base font-roboto font-[400] text-[#3B3B3B]">
@@ -369,7 +388,7 @@ const InteriorWoodPage = () => {
                       type. Each door is crafted with precision and quality
                       materials.
                     </p>
-                  </section>
+                  </section> */}
 
                   {/* Group doors by doorType */}
                   {[
@@ -397,7 +416,7 @@ const InteriorWoodPage = () => {
                       <section
                         key={doorType}
                         id={sectionId}
-                        className="mb-16 scroll-mt-24"
+                        className="mb-16 scroll-mt-24 pt-22"
                       >
                         <h2 className="text-[20px] md:text-[28px] font-roboto font-[500]  mb-6 leading-tight text-[#ff6e4a]">
                           {doorType}

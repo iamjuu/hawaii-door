@@ -10,7 +10,10 @@ import Truck from "../../../../public/assets/images/landing/truck.png";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import Link from "next/link";
 import Heading from "./header";
-import { ProductFootericonTruck, ProductFootericonTruckGreen } from "@/public/assets";
+import {
+  ProductFootericonTruck,
+  ProductFootericonTruckGreen,
+} from "@/public/assets";
 
 const stepBox =
   "flex flex-col items-center text-center px-2 pt-4 pb-6 md:pt-10 md:pb-10 w-full max-w-[260px] mx-auto";
@@ -20,7 +23,6 @@ const StepsDoor = () => {
     <section className="w-full py-10 sm:py-12 md:py-[0px] md:pt-[50px] font-inter ">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
         <div className="max-w-[1400px] 2xl:mx-auto flex flex-col">
-
           {/* Heading */}
           <div className="flex items-center justify-start">
             <Heading
@@ -32,10 +34,9 @@ const StepsDoor = () => {
           {/* Steps */}
           <div className="flex flex-col gap-10 md:gap-[20px]  ">
             <div className="group w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 items-start font-roboto ">
-
               {/* STEP 1 */}
               <div className="relative flex flex-col justify-center items-center  ">
-                <div className={stepBox} >
+                <div className={stepBox}>
                   <Image
                     src={Buildit}
                     alt="Build It"
@@ -50,7 +51,12 @@ const StepsDoor = () => {
                 </div>
 
                 <div className="flex md:hidden justify-center my-4 ">
-                  <Image src={Downarrow} alt="Down Arrow" width={20} height={20} />
+                  <Image
+                    src={Downarrow}
+                    alt="Down Arrow"
+                    width={20}
+                    height={20}
+                  />
                 </div>
 
                 <div className="hidden md:flex absolute right-[-60px] top-1/3 -translate-y-1/2">
@@ -81,7 +87,12 @@ const StepsDoor = () => {
                 </div>
 
                 <div className="flex md:hidden justify-center my-4">
-                  <Image src={Downarrow} alt="Down Arrow" width={20} height={20} />
+                  <Image
+                    src={Downarrow}
+                    alt="Down Arrow"
+                    width={20}
+                    height={20}
+                  />
                 </div>
 
                 <div className="hidden md:flex absolute right-[-10px] top-1/3 -translate-y-1/2">
@@ -112,7 +123,12 @@ const StepsDoor = () => {
                 </div>
 
                 <div className="flex md:hidden justify-center my-4">
-                  <Image src={Downarrow} alt="Down Arrow" width={20} height={20} />
+                  <Image
+                    src={Downarrow}
+                    alt="Down Arrow"
+                    width={20}
+                    height={20}
+                  />
                 </div>
 
                 <div className="hidden md:flex absolute right-[-60px] top-1/3 -translate-y-1/2">
@@ -136,13 +152,14 @@ const StepsDoor = () => {
                     height={120}
                     className="w-[90px] md:w-[120px] h-auto mb-5 md:mb-6 md:grayscale md:group-hover:grayscale-0 transition-all duration-500"
                   />
-                  <h4 className="text-xl font-medium text-black">Get Your Door</h4>
+                  <h4 className="text-xl font-medium text-black">
+                    Get Your Door
+                  </h4>
                   <p className="mt-2 text-[#3B3B3B] text-sm md:text-base">
                     We price it, prep it, and get it ready.
                   </p>
                 </div>
               </div>
-
             </div>
 
             {/* CTA */}
@@ -170,9 +187,9 @@ const StepsDoor = () => {
                   />
 
                   {/* Button content */}
-                  <span className="relative z-10 flex items-center gap-2 md:gap-3 font-roboto">
+                  <span className="relative z-10 flex items-center gap-2 md:gap-3 font-roboto transition-colors duration-500 group-hover:duration-200 group-hover:delay-[500ms]">
                     Start Building Your Door Now
-                    <span className="inline-flex items-center justify-center w-6 h-6 md:w-7 md:h-7 shrink-0 transition-all duration-900 rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0">
+                    <span className="inline-flex items-center justify-center w-6 h-6 md:w-7 md:h-7 shrink-0 transition-all duration-900 group-hover:duration-200 group-hover:delay-[500ms] rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0">
                       <MdOutlineArrowOutward className="text-white text-xl md:text-2xl" />
                     </span>
                   </span>

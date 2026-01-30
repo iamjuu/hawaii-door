@@ -1,22 +1,21 @@
 "use client";
-import { MdOutlineArrowOutward } from "react-icons/md"
-import Image from "next/image"
-import Doors from "../../../../public/assets/images/landing/door22.png"
-import Link from "next/link"
+import { MdOutlineArrowOutward } from "react-icons/md";
+import Image from "next/image";
+import Doors from "../../../../public/assets/images/landing/door22.png";
+import Link from "next/link";
 
 const Prehung = () => {
-
   return (
     <div className="w-full py-10 sm:py-12 md:py-[50px] mb-[5px] bg-[#fdfffc]">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
         <div className="max-w-[1400px] 2xl:mx-auto">
           <div className="relative w-full min-h-[400px] md:min-h-[420px] bg-[#84684C] rounded-lg overflow-hidden">
-
             {/* ================= LEFT CONTENT ================= */}
             <div className="relative z-10 flex flex-col justify-center h-full px-4 sm:px-8 md:px-12 lg:px-16 pt-8 pt-12 md:py-16">
               <div className="max-w-xl">
                 <h2 className="font-roboto font-[500] text-[23px] md:text-[46px] text-white leading-[32px] md:leading-[62px] tracking-normal mb-4 md:mb-6">
-                  Pre-Hung. Pre-Bored.<br />
+                  Pre-Hung. Pre-Bored.
+                  <br />
                   Problem-Solved.
                 </h2>
 
@@ -27,7 +26,7 @@ const Prehung = () => {
                 </p>
 
                 {/* Button */}
-                <Link href={'/build'}>
+                <Link href={"/build"}>
                   <button className="group relative inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] text-[15px] md:text-lg font-roboto px-4 md:px-5 py-2 text-white">
                     {/* Hover overlay */}
                     <span
@@ -50,14 +49,12 @@ const Prehung = () => {
                     />
 
                     {/* Button content */}
-                    <span className="relative z-10 flex items-center gap-2 md:gap-3 font-roboto">
+                    <span className="relative z-10 flex items-center gap-2 md:gap-3 font-roboto transition-colors duration-500 group-hover:duration-200 group-hover:delay-[500ms]">
                       Get a Quote
-                      <span className="inline-flex items-center justify-center w-6 h-6 md:w-7 md:h-7 shrink-0 transition-all duration-800 rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0">
+                      <span className="inline-flex items-center justify-center w-6 h-6 md:w-7 md:h-7 shrink-0 transition-all duration-800 group-hover:duration-200 group-hover:delay-[500ms] rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0">
                         <MdOutlineArrowOutward className="text-white text-xl md:text-2xl" />
                       </span>
-
                     </span>
-
                   </button>
                 </Link>
               </div>
@@ -89,12 +86,11 @@ const Prehung = () => {
                 />
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Prehung
+export default Prehung;

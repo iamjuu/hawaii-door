@@ -2,7 +2,8 @@ import Image, { StaticImageData } from "next/image";
 
 interface Feature {
   text?: string;
-  iconType?: string | StaticImageData;
+  iconGray?: string | StaticImageData;
+  iconColor?: string | StaticImageData;
 }
 
 interface HeroSectionProps {
@@ -18,14 +19,20 @@ export default function HeroSection({
   bgImage,
   features,
 }: HeroSectionProps) {
+  // Calculate dynamic duration based on content length to maintain consistent speed
+  const totalChars = features.reduce(
+    (acc, f) => acc + (f.text?.length || 0),
+    0,
+  );
+  // Factor 0.44 selected to match the main product page's 90s speed for ~205 chars
+  const duration = Math.max(totalChars * 0.44, 30); // Minimum 30s to avoid ultra-fast small sets
+
   // duplicate features for seamless loop
   const loopFeatures = Array(10).fill(features).flat();
 
   // Use CSS background for string URLs (local /assets/ or remote); Image can fail for local public paths
   const bgUrl =
-    typeof bgImage === "string"
-      ? bgImage
-      : (bgImage as StaticImageData).src;
+    typeof bgImage === "string" ? bgImage : (bgImage as StaticImageData).src;
   // Encode so paths with spaces (e.g. "interior door hero image 3.svg") work in url()
   const bgUrlEncoded = encodeURI(bgUrl);
 
@@ -53,27 +60,44 @@ export default function HeroSection({
       </div>
 
       {/* FEATURE CAROUSEL */}
-      <div className="absolute bottom-3 md:bottom-8 left-0 right-0 z-20 px-6 md:px-1">
-        <div className="carousel-wrapper">
-          <div className="carousel-track">
+      <div className="absolute bottom-3 md:bottom-8 left-0 right-0 z-30 px-6 md:px-1 group/bar">
+        <div className="carousel-wrapper py-2">
+          <div
+            className="carousel-track"
+            style={{
+              // @ts-ignore - custom CSS property
+              "--carousel-duration": `${duration}s`,
+            }}
+          >
             {loopFeatures.map((feature, index) => (
               <div
                 key={index}
                 className="flex items-center gap-3 text-gray-200 flex-shrink-0 pr-6 md:pr-12"
               >
-                {feature.iconType && (
-                  <div className="relative w-6 h-6">
-                    <Image
-                      src={feature.iconType}
-                      alt={feature.text || "Feature"}
-                      width={24}
-                      height={24}
-                      className="object-contain"
-                    />
+                {(feature.iconGray || feature.iconColor) && (
+                  <div className="relative w-6 h-6 md:w-8 md:h-8">
+                    {feature.iconGray && (
+                      <Image
+                        src={feature.iconGray}
+                        alt={feature.text || "Feature"}
+                        width={32}
+                        height={32}
+                        className="object-contain group-hover/bar:opacity-0 transition-opacity duration-300"
+                      />
+                    )}
+                    {feature.iconColor && (
+                      <Image
+                        src={feature.iconColor}
+                        alt={feature.text || "Feature"}
+                        width={32}
+                        height={32}
+                        className="absolute top-0 left-0 object-contain opacity-0 group-hover/bar:opacity-100 transition-opacity duration-300"
+                      />
+                    )}
                   </div>
                 )}
 
-                <span className="text-sm md:text-[24px] font-roboto font-[400] whitespace-nowrap">
+                <span className="text-sm md:text-[20px] font-roboto font-[400] whitespace-nowrap">
                   {feature.text || "Feature"}
                 </span>
               </div>

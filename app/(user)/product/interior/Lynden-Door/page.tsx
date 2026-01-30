@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -90,7 +89,15 @@ import {
   footermainaImage2,
   footermainaImage3,
   footermainaImage4,
-  footermainaImage5
+  footermainaImage5,
+  SettingGray,
+  SettingColor,
+  StartGray,
+  StartColor,
+  ComfortGray,
+  ComfortColor,
+  TickGrayPng,
+  TickColorPng,
 } from "@/public/assets";
 import HeroSection from "../../components/herosection";
 import Image from "next/image";
@@ -100,7 +107,6 @@ import { FiX } from "react-icons/fi";
 import { HiMenu } from "react-icons/hi";
 
 const LyndenDoorPage = () => {
-
   const [openMenu, setOpenMenu] = useState(false);
   const [activeSection, setActiveSection] = useState("overview");
 
@@ -114,9 +120,10 @@ const LyndenDoorPage = () => {
       const progress = Math.min(elapsed / duration, 1);
 
       // Easing function (easeInOutQuad)
-      const ease = progress < 0.5
-        ? 2 * progress * progress
-        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+      const ease =
+        progress < 0.5
+          ? 2 * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
       window.scrollTo(0, start * (1 - ease));
 
@@ -139,12 +146,13 @@ const LyndenDoorPage = () => {
     const element = document.getElementById(sectionId);
     if (element) {
       const offset = 100; // Offset for fixed navbar
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition - offset;
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
       setOpenMenu(false); // Close mobile menu
     }
@@ -168,7 +176,7 @@ const LyndenDoorPage = () => {
         "molded",
         "wood-veneer",
         "prefinished",
-        "lynden-ventilated-door"
+        "lynden-ventilated-door",
       ];
 
       const scrollPosition = window.scrollY + 150;
@@ -177,7 +185,10 @@ const LyndenDoorPage = () => {
         const element = document.getElementById(sectionId);
         if (element) {
           const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
             setActiveSection(sectionId);
             break;
           }
@@ -185,8 +196,8 @@ const LyndenDoorPage = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // AWS hero (commented out): "https://hawaai-doors-bucket.s3.us-west-2.amazonaws.com/uploads/1769351029217-hero_interior-door-hero.webp"
@@ -196,16 +207,26 @@ const LyndenDoorPage = () => {
     "Discover premium Lynden Door interior solutions; we offer a variety of door types, designs and styles. Experience quality craftsmanship and design excellence.";
   const features = [
     {
-      text: "Premium interior doors as design features",
-      iconType: ProductFootericoncheck
+      text: "Versatile for every project",
+      iconGray: SettingGray,
+      iconColor: SettingColor,
     },
     {
-      text: "Styles that align with your space",
-      iconType: ProductFootericonstar
-    }
+      text: "Built for long-term use",
+      iconGray: StartGray,
+      iconColor: StartColor,
+    },
+    {
+      text: "Designed with purpose",
+      iconGray: ComfortGray,
+      iconColor: ComfortColor,
+    },
+    {
+      text: "Made to match your vision",
+      iconGray: TickGrayPng,
+      iconColor: TickColorPng,
+    },
   ];
-
-
 
   return (
     <>
@@ -251,7 +272,6 @@ const LyndenDoorPage = () => {
               `}
             >
               <div className="bg-white border border-gray-200 rounded-lg p-6 h-full lg:sticky lg:top-[100px] lg:max-h-[calc(100vh-120px)] overflow-y-auto">
-
                 {/* MOBILE HEADER */}
                 <div className="flex bg-[#b7d7a8] justify-between items-center mb-6 md:hidden">
                   <h2 className="text-lg font-semibold text-black">
@@ -264,9 +284,7 @@ const LyndenDoorPage = () => {
 
                 {/* DESKTOP HEADER - Simple Title */}
                 <div className="hidden md:block mb-6">
-                  <h2 className="text-lg font-semibold">
-                    Lynden Door
-                  </h2>
+                  <h2 className="text-lg font-semibold">Lynden Door</h2>
                 </div>
 
                 <nav className="space-y-0">
@@ -280,15 +298,19 @@ const LyndenDoorPage = () => {
                     { label: "Molded", id: "molded" },
                     { label: "Wood Veneer", id: "wood-veneer" },
                     { label: "Prefinished", id: "prefinished" },
-                    { label: "Lynden Ventilated Door", id: "lynden-ventilated-door" }
+                    {
+                      label: "Lynden Ventilated Door",
+                      id: "lynden-ventilated-door",
+                    },
                   ].map((item, index) => (
                     <div key={item.id}>
                       <button
                         onClick={() => scrollToSection(item.id)}
-                        className={`block w-full text-left py-3 transition-colors text-sm font-medium ${activeSection === item.id
-                          ? "text-[#FF6E4A] font-semibold"
-                          : "text-gray-700 hover:text-[#FF6E4A]"
-                          }`}
+                        className={`block w-full text-left py-3 transition-colors text-sm font-medium ${
+                          activeSection === item.id
+                            ? "text-[#FF6E4A] font-semibold"
+                            : "text-gray-700 hover:text-[#FF6E4A]"
+                        }`}
                       >
                         {item.label}
                       </button>
@@ -351,9 +373,9 @@ const LyndenDoorPage = () => {
                           Versatile Product Portfolio:
                         </strong>
                         <span className="text-[#666666]  text-[16px] leading-[26px] font-light ml-2">
-                          Doors crafted to blend seamlessly with any environment,
-                          from residential to commercial and architectural
-                          designs.
+                          Doors crafted to blend seamlessly with any
+                          environment, from residential to commercial and
+                          architectural designs.
                         </span>
                       </div>
                     </li>
@@ -366,8 +388,8 @@ const LyndenDoorPage = () => {
                           Quality and Durability:
                         </strong>
                         <span className="text-[#666666]  text-[16px] leading-[26px] font-light ml-2">
-                          Doors built to last, offering a blend of aesthetics and
-                          functionality.
+                          Doors built to last, offering a blend of aesthetics
+                          and functionality.
                         </span>
                       </div>
                     </li>
@@ -398,14 +420,22 @@ const LyndenDoorPage = () => {
                       Residential Doors
                     </h3>
                     <p className="text-[16px] leading-[26px] text-[#666666]  font-light">
-                      Improve the look and comfort of your home with our broad range of residential interior doors. From timeless designs to contemporary styles, you will find doors that fit your décor perfectly
+                      Improve the look and comfort of your home with our broad
+                      range of residential interior doors. From timeless designs
+                      to contemporary styles, you will find doors that fit your
+                      décor perfectly
                     </p>
                   </div>
                   <div>
                     <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                      All Lynden Door Residential products <strong className="font-semibold">(SD Series)</strong> all available with either
-                      a hollow or solid core and carry a <strong className="font-semibold">1-year limited warranty.</strong>
-                      Select doors (solid core, 1-3/4" thick) may be ordered with a fire rating.
+                      All Lynden Door Residential products{" "}
+                      <strong className="font-semibold">(SD Series)</strong> all
+                      available with either a hollow or solid core and carry a{" "}
+                      <strong className="font-semibold">
+                        1-year limited warranty.
+                      </strong>
+                      Select doors (solid core, 1-3/4" thick) may be ordered
+                      with a fire rating.
                     </p>
                   </div>
                   <div className="space-y-6 mt-8">
@@ -415,9 +445,9 @@ const LyndenDoorPage = () => {
                         Light Commercial Doors
                       </h3>
                       <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                        Our light commercial doors are ideal for small businesses,
-                        offices, and other commercial spaces, providing durability
-                        and a professional look.
+                        Our light commercial doors are ideal for small
+                        businesses, offices, and other commercial spaces,
+                        providing durability and a professional look.
                       </p>
                     </div>
 
@@ -427,19 +457,28 @@ const LyndenDoorPage = () => {
                         Architectural/Commercial Doors
                       </h3>
                       <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                        For larger commercial projects and architectural designs,
-                        our doors offer superior performance and elegant
-                        aesthetics, making them a perfect choice for high-traffic
-                        areas and sophisticated settings.
+                        For larger commercial projects and architectural
+                        designs, our doors offer superior performance and
+                        elegant aesthetics, making them a perfect choice for
+                        high-traffic areas and sophisticated settings.
                       </p>
                     </div>
 
                     {/* Warranty Information */}
                     <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                      Light Commercial <strong className="font-semibold">CD Series</strong> doors come with
-                      a <strong className="font-semibold">5-year limited warranty</strong>, and
-                      Architectural <strong className="font-semibold">LD Series</strong> doors have a{" "}
-                      <strong className="font-semibold">lifetime limited warranty</strong>.
+                      Light Commercial{" "}
+                      <strong className="font-semibold">CD Series</strong> doors
+                      come with a{" "}
+                      <strong className="font-semibold">
+                        5-year limited warranty
+                      </strong>
+                      , and Architectural{" "}
+                      <strong className="font-semibold">LD Series</strong> doors
+                      have a{" "}
+                      <strong className="font-semibold">
+                        lifetime limited warranty
+                      </strong>
+                      .
                     </p>
                   </div>
                 </div>
@@ -498,7 +537,7 @@ const LyndenDoorPage = () => {
                     { image: white1, name: "Ballard" },
                     { image: white2, name: "Fairview" },
                     { image: white3, name: "Granville" },
-                    { image: white4, name: "Ravenna" }
+                    { image: white4, name: "Ravenna" },
                   ].map((item, index) => (
                     <div key={index} className=" rounded-lg overflow-hidden">
                       {/* Image Container */}
@@ -548,9 +587,10 @@ const LyndenDoorPage = () => {
 
                   {/* Paragraph 1 */}
                   <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                    <strong className="font-semibold">FineLine</strong> designs introduce understated, sleek profiles that
-                    bring a fresh, refined aesthetic to any space. Where less is
-                    more, these doors make minimalism magnificent.
+                    <strong className="font-semibold">FineLine</strong> designs
+                    introduce understated, sleek profiles that bring a fresh,
+                    refined aesthetic to any space. Where less is more, these
+                    doors make minimalism magnificent.
                   </p>
 
                   {/* Paragraph 2 */}
@@ -691,10 +731,6 @@ const LyndenDoorPage = () => {
                 </div>
               </div>
 
-
-
-
-
               <div className="mt-16 bg-[#444237BA]">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2">
                   {[
@@ -707,7 +743,7 @@ const LyndenDoorPage = () => {
                     { image: white7, name: "Granville" },
                     { image: white8, name: "Ravenna" },
                     { image: white9, name: "Ballard" },
-                    { image: white10, name: "Ballard" }
+                    { image: white10, name: "Ballard" },
                   ].map((item, index) => (
                     <div key={index} className=" rounded-lg overflow-hidden">
                       {/* Image Container */}
@@ -730,7 +766,6 @@ const LyndenDoorPage = () => {
                   ))}
                 </div>
               </div>
-
 
               <div id="elemental" className="mt-16 space-y-6 scroll-mt-24">
                 <h2 className="text-[28px] font-[500] text-black">
@@ -747,24 +782,30 @@ const LyndenDoorPage = () => {
                 </div>
               </div>
 
-
-
               {/* ELEMENTAL Door Collection Content */}
               <div className="mt-16 space-y-6">
                 <div className="space-y-6">
                   {/* Main Description */}
                   <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                    The <strong className="font-semibold">ELEMENTAL</strong> Door Collection of bevel grooved door designs is modern in style and construction.ELEMENTAL door designs are characterized by clean, simple lines. Offering a modern take on traditional wood and molded doors, the 1- and 2-Panel door designs allow room for interpretation in any architectural and interior design environment.
+                    The <strong className="font-semibold">ELEMENTAL</strong>{" "}
+                    Door Collection of bevel grooved door designs is modern in
+                    style and construction.ELEMENTAL door designs are
+                    characterized by clean, simple lines. Offering a modern take
+                    on traditional wood and molded doors, the 1- and 2-Panel
+                    door designs allow room for interpretation in any
+                    architectural and interior design environment.
                   </p>
 
                   {/* Availability Statement */}
                   <p className="text-[#666666]  text-[16px] leading-[26px]  font-semibold">
-                    All door designs are now available with single or double route lines.
+                    All door designs are now available with single or double
+                    route lines.
                   </p>
 
                   {/* General Application */}
                   <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                    Designed, engineered and fabricated for today&apos;s building needs, these doors are at home in any application.
+                    Designed, engineered and fabricated for today&apos;s
+                    building needs, these doors are at home in any application.
                   </p>
 
                   {/* Key Features */}
@@ -774,55 +815,78 @@ const LyndenDoorPage = () => {
                     </h3>
                     <ul className="space-y-2">
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Smooth, bevel grooved MDF surface, ready for paint
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          6&apos; stile width easily accommodates door hardware (doors 2&apos;0&apos; and up to 4&apos;0&quot; [greater widths available special order])
+                          6&apos; stile width easily accommodates door hardware
+                          (doors 2&apos;0&apos; and up to 4&apos;0&quot;
+                          [greater widths available special order])
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          10&quot; bottom rail meets most disability access requirements
+                          10&quot; bottom rail meets most disability access
+                          requirements
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Up to 90-minute fire rating available*
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Optional exit device blocking
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          6&apos;8&quot;, 7&apos;0&quot; and 8&apos;0&quot; heights
+                          6&apos;8&quot;, 7&apos;0&quot; and 8&apos;0&quot;
+                          heights
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          1-3/8&quot; and 1-3/4&quot; thickness, hollow and solid core
+                          1-3/8&quot; and 1-3/4&quot; thickness, hollow and
+                          solid core
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Ventilated door options
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Bifold doors available*
                         </span>
@@ -832,11 +896,11 @@ const LyndenDoorPage = () => {
 
                   {/* Footnote */}
                   <p className="text-sm text-gray-600 italic mt-4">
-                    *Contact your Lynden Door representative for more information
+                    *Contact your Lynden Door representative for more
+                    information
                   </p>
                 </div>
               </div>
-
 
               <div className="mt-16 bg-[#444237BA]">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2">
@@ -850,7 +914,7 @@ const LyndenDoorPage = () => {
                     { image: white17, name: "Granville" },
                     { image: white18, name: "Ravenna" },
                     { image: white19, name: "Ballard" },
-                    { image: white20, name: "Ballard" }
+                    { image: white20, name: "Ballard" },
                   ].map((item, index) => (
                     <div key={index} className=" rounded-lg overflow-hidden">
                       {/* Image Container */}
@@ -873,7 +937,6 @@ const LyndenDoorPage = () => {
                   ))}
                 </div>
               </div>
-
 
               {/* StileLine Door Collection Image Section */}
               <div id="stileline" className="mt-16 space-y-6 scroll-mt-24">
@@ -892,17 +955,20 @@ const LyndenDoorPage = () => {
 
                 {/* Descriptive Text */}
                 <p className="text-[#666666]  text-[16px] leading-[26px]  font-light italic">
-                  The natural beauty of wood veneer sketch face designs that showcase the beauty of wood and create a bold, modern look.
+                  The natural beauty of wood veneer sketch face designs that
+                  showcase the beauty of wood and create a bold, modern look.
                 </p>
               </div>
-
 
               {/* StileLine Door Collection Content */}
               <div className="mt-10 space-y-6">
                 <div className="space-y-6">
                   {/* Introductory Paragraphs */}
                   <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                    These premium natural wood veneer doors are at home in spaces ranging from high-end commercial projects to luxury spas and custom homes. If you are looking for elegant designs, StileLine is the perfect solution.
+                    These premium natural wood veneer doors are at home in
+                    spaces ranging from high-end commercial projects to luxury
+                    spas and custom homes. If you are looking for elegant
+                    designs, StileLine is the perfect solution.
                   </p>
 
                   {/* Key Features */}
@@ -912,67 +978,99 @@ const LyndenDoorPage = () => {
                     </h3>
                     <ul className="space-y-2">
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          European styling with an opposing grain in Quarter Sawn African Mahogany, Plain Sliced White Maple, Rift White Oak and Quarter Sawn Black Walnut
+                          European styling with an opposing grain in Quarter
+                          Sawn African Mahogany, Plain Sliced White Maple, Rift
+                          White Oak and Quarter Sawn Black Walnut
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          High quality wood veneer door provide the warmth and beauty of natural wood
+                          High quality wood veneer door provide the warmth and
+                          beauty of natural wood
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Solid or hollow core options
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Wide top and bottom rails allow trimming of up to 1&quot; on each end
+                          Wide top and bottom rails allow trimming of up to
+                          1&quot; on each end
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Custom factory machining
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Available 1-3/8&quot; and 1-3/4&quot; thick and 6&apos;8&quot;, 7&apos;0&quot; &amp; 8&apos;0&quot; heights in passage and bifold door sizes
+                          Available 1-3/8&quot; and 1-3/4&quot; thick and
+                          6&apos;8&quot;, 7&apos;0&quot; &amp; 8&apos;0&quot;
+                          heights in passage and bifold door sizes
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Custom sizes available
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Optional ClearLine Factory Finish is an affordable, state of the art, ultra-violet cured clear coat finish (no VOCs released in the home)
+                          Optional ClearLine Factory Finish is an affordable,
+                          state of the art, ultra-violet cured clear coat finish
+                          (no VOCs released in the home)
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Due to the nature of real wood, each door surface will vary in woodgrain patterns, color and appearance, showcasing the beauty of real wood
+                          Due to the nature of real wood, each door surface will
+                          vary in woodgrain patterns, color and appearance,
+                          showcasing the beauty of real wood
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Fire ratings available
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           STC sound rated doors
                         </span>
@@ -982,13 +1080,16 @@ const LyndenDoorPage = () => {
                 </div>
               </div>
 
-
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
                 {[
                   { image: wood1, name: "StileLine", sub: "African-Mahogany" },
                   { image: wood2, name: "StileLine", sub: "Maple" },
-                  { image: wood3, name: "StileLine", sub: "Rift Cut White Oak" },
-                  { image: wood4, name: "StileLine", sub: "Walnut" }
+                  {
+                    image: wood3,
+                    name: "StileLine",
+                    sub: "Rift Cut White Oak",
+                  },
+                  { image: wood4, name: "StileLine", sub: "Walnut" },
                 ].map((item, index) => (
                   <div key={index} className=" rounded-lg overflow-hidden">
                     {/* Image Container */}
@@ -1011,7 +1112,6 @@ const LyndenDoorPage = () => {
                 ))}
               </div>
 
-
               {/* ReDiscovery Door Collection Image Section */}
               <div id="rediscovery" className="mt-16 space-y-6 scroll-mt-24">
                 <h2 className="text-[28px] font-[500] text-black">
@@ -1027,12 +1127,13 @@ const LyndenDoorPage = () => {
                   />
                 </div>
 
-
                 {/* ReDiscovery Door Collection Content */}
                 <div className="mt-8 space-y-6">
                   {/* Introductory Paragraph */}
                   <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                    The luxury of stunning wood grain with custom-order veneers, exotic wood and boutique-style design. These door designs are show stoppers.
+                    The luxury of stunning wood grain with custom-order veneers,
+                    exotic wood and boutique-style design. These door designs
+                    are show stoppers.
                   </p>
 
                   {/* Key Features */}
@@ -1042,73 +1143,108 @@ const LyndenDoorPage = () => {
                     </h3>
                     <ul className="space-y-2">
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Contemporary look and custom opportunities for horizontal grain or sketchface designs.
+                          Contemporary look and custom opportunities for
+                          horizontal grain or sketchface designs.
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Rediscover doors by employing one of our existing custom designs or exploring other species, configurations &amp; finishes
+                          Rediscover doors by employing one of our existing
+                          custom designs or exploring other species,
+                          configurations &amp; finishes
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          High quality wood veneer door provide the warmth and beauty of natural wood
+                          High quality wood veneer door provide the warmth and
+                          beauty of natural wood
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Solid or hollow core options
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Wide top and bottom rails allow trimming of up to 1&quot; on each end
+                          Wide top and bottom rails allow trimming of up to
+                          1&quot; on each end
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Custom factory machining
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Available 1-3/8&quot; and 1-3/4&quot; thick and 6&apos;8&quot;, 7&apos;0&quot; &amp; 8&apos;0&quot; heights in passage and bifold door sizes
+                          Available 1-3/8&quot; and 1-3/4&quot; thick and
+                          6&apos;8&quot;, 7&apos;0&quot; &amp; 8&apos;0&quot;
+                          heights in passage and bifold door sizes
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Custom sizes available
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Optional ClearLine Factory Finish is an affordable, state of the art, ultra-violet cured clear coat finish (no VOCs released in the home)
+                          Optional ClearLine Factory Finish is an affordable,
+                          state of the art, ultra-violet cured clear coat finish
+                          (no VOCs released in the home)
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Due to the nature of real wood, each door surface will vary in woodgrain patterns, color and appearance, showcasing the beauty of real wood.
+                          Due to the nature of real wood, each door surface will
+                          vary in woodgrain patterns, color and appearance,
+                          showcasing the beauty of real wood.
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Fire ratings available
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           STC sound rated doors
                         </span>
@@ -1117,14 +1253,19 @@ const LyndenDoorPage = () => {
                   </div>
                 </div>
 
-
-
-
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
                   {[
-                    { image: wood5, name: "StileLine", sub: "African-Mahogany" },
+                    {
+                      image: wood5,
+                      name: "StileLine",
+                      sub: "African-Mahogany",
+                    },
                     { image: wood6, name: "StileLine", sub: "Maple" },
-                    { image: wood7, name: "StileLine", sub: "Rift Cut White Oak" },
+                    {
+                      image: wood7,
+                      name: "StileLine",
+                      sub: "Rift Cut White Oak",
+                    },
                   ].map((item, index) => (
                     <div key={index} className=" rounded-lg overflow-hidden">
                       {/* Image Container */}
@@ -1166,7 +1307,10 @@ const LyndenDoorPage = () => {
                 <div className="mt-8 space-y-6">
                   {/* Introductory Paragraph */}
                   <p className="text-[#666666]  text-[16px] leading-[26px]  font-light ">
-                    Versatile designs for a range of interior needs, these fiberboard doors offer style &amp; character in a range of designs, including flat recessed panels and traditional smooth raised panel designs.
+                    Versatile designs for a range of interior needs, these
+                    fiberboard doors offer style &amp; character in a range of
+                    designs, including flat recessed panels and traditional
+                    smooth raised panel designs.
                   </p>
 
                   {/* Key Features */}
@@ -1176,73 +1320,106 @@ const LyndenDoorPage = () => {
                     </h3>
                     <ul className="space-y-2">
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Contemporary panel designs in all popular panel layouts
+                          Contemporary panel designs in all popular panel
+                          layouts
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Smooth and woodgrain textured molded designs with flat or raised panels
+                          Smooth and woodgrain textured molded designs with flat
+                          or raised panels
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Molded high-density fiberboard facings resist shrinking, swelling, cracking and joint separation
+                          Molded high-density fiberboard facings resist
+                          shrinking, swelling, cracking and joint separation
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Available with matching bifolds
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Hollow and solid core choices
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Engineered wood construction outperforms wood doors while offering superior value
+                          Engineered wood construction outperforms wood doors
+                          while offering superior value
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Wide top and bottom rails allow trimming of up to 1&quot; on each end
+                          Wide top and bottom rails allow trimming of up to
+                          1&quot; on each end
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Custom factory machining
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Available 1-3/8&quot; and 1-3/4&quot; thick and 6&apos;8&quot;, 7&apos;0&quot; &amp; 8&apos;0&quot; heights in passage and bifold door sizes
+                          Available 1-3/8&quot; and 1-3/4&quot; thick and
+                          6&apos;8&quot;, 7&apos;0&quot; &amp; 8&apos;0&quot;
+                          heights in passage and bifold door sizes
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Door facings contain recycled wood fibers and No Added Urea Formaldehyde (please ask your sales representative for more information)
+                          Door facings contain recycled wood fibers and No Added
+                          Urea Formaldehyde (please ask your sales
+                          representative for more information)
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Fire ratings available
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           STC sound rated doors
                         </span>
@@ -1251,23 +1428,81 @@ const LyndenDoorPage = () => {
                   </div>
                 </div>
 
-
                 <div className="mt-16 ">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2">
                     {[
-                      { image: modern1, name: "Mercer", sub: 'Flat Panel', type: 'Smooth' },
-                      { image: modern2, name: "Whitman", sub: 'Flat Panel', type: 'Smooth' },
-                      { image: modern3, name: "Aberdeen", sub: 'Flat Panel', type: 'Smooth' },
-                      { image: modern4, name: "Yarrow", sub: 'Flat Panel', type: 'Smooth' },
-                      { image: modern5, name: "Winthrop", sub: 'Flat Panel', type: 'Smooth' },
-                      { image: modern6, name: "Kingston", sub: 'Raised Panel', type: 'Smooth' },
-                      { image: modern7, name: "Rosario", sub: 'Raised Panel', type: 'Smooth' },
-                      { image: modern8, name: "Lopez", sub: 'Raised Panel', type: 'Smooth' },
-                      { image: modern9, name: "Benton", sub: 'Raised Panel', type: 'Smooth' },
-                      { image: modern10, name: "Columbia", sub: 'Raised Panel', type: 'Smooth' },
-                      { image: modern11, name: "Blakely", sub: 'Raised Panel', type: 'Textured' },
-                      { image: modern12, name: "Bonneville", sub: 'Raised Panel', type: 'Textured' },
-
+                      {
+                        image: modern1,
+                        name: "Mercer",
+                        sub: "Flat Panel",
+                        type: "Smooth",
+                      },
+                      {
+                        image: modern2,
+                        name: "Whitman",
+                        sub: "Flat Panel",
+                        type: "Smooth",
+                      },
+                      {
+                        image: modern3,
+                        name: "Aberdeen",
+                        sub: "Flat Panel",
+                        type: "Smooth",
+                      },
+                      {
+                        image: modern4,
+                        name: "Yarrow",
+                        sub: "Flat Panel",
+                        type: "Smooth",
+                      },
+                      {
+                        image: modern5,
+                        name: "Winthrop",
+                        sub: "Flat Panel",
+                        type: "Smooth",
+                      },
+                      {
+                        image: modern6,
+                        name: "Kingston",
+                        sub: "Raised Panel",
+                        type: "Smooth",
+                      },
+                      {
+                        image: modern7,
+                        name: "Rosario",
+                        sub: "Raised Panel",
+                        type: "Smooth",
+                      },
+                      {
+                        image: modern8,
+                        name: "Lopez",
+                        sub: "Raised Panel",
+                        type: "Smooth",
+                      },
+                      {
+                        image: modern9,
+                        name: "Benton",
+                        sub: "Raised Panel",
+                        type: "Smooth",
+                      },
+                      {
+                        image: modern10,
+                        name: "Columbia",
+                        sub: "Raised Panel",
+                        type: "Smooth",
+                      },
+                      {
+                        image: modern11,
+                        name: "Blakely",
+                        sub: "Raised Panel",
+                        type: "Textured",
+                      },
+                      {
+                        image: modern12,
+                        name: "Bonneville",
+                        sub: "Raised Panel",
+                        type: "Textured",
+                      },
                     ].map((item, index) => (
                       <div key={index} className=" rounded-lg overflow-hidden">
                         {/* Image Container */}
@@ -1285,18 +1520,13 @@ const LyndenDoorPage = () => {
                           <p className="text-black text-sm font-medium text-center">
                             New 2025 {item.name}
                           </p>
-                          <p>
-                            {item.sub}
-                          </p>
-                          <p>
-                            {item.type}
-                          </p>
+                          <p>{item.sub}</p>
+                          <p>{item.type}</p>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-
 
                 {/* Wood Veneer Door Collection Image Section */}
                 <div id="wood-veneer" className="mt-16 space-y-6 scroll-mt-24">
@@ -1318,7 +1548,11 @@ const LyndenDoorPage = () => {
                 <div className="mt-8 space-y-6">
                   {/* Introductory Paragraph */}
                   <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                    The natural wood grain patterns in wood veneer doors create unique, one-of-a-kind designs at a value price point. Wood veneer flush doors offer exceptional versatility for any project—commercial, hospitality, institutional, or residential.
+                    The natural wood grain patterns in wood veneer doors create
+                    unique, one-of-a-kind designs at a value price point. Wood
+                    veneer flush doors offer exceptional versatility for any
+                    project—commercial, hospitality, institutional, or
+                    residential.
                   </p>
 
                   {/* Key Features */}
@@ -1328,73 +1562,112 @@ const LyndenDoorPage = () => {
                     </h3>
                     <ul className="space-y-2">
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          <strong>Residential and Architectural Grade Hardwood veneers:</strong> Indicates the quality and application of the veneers.
+                          <strong>
+                            Residential and Architectural Grade Hardwood
+                            veneers:
+                          </strong>{" "}
+                          Indicates the quality and application of the veneers.
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          High quality wood veneer doors provide the warmth and beauty of natural wood
+                          High quality wood veneer doors provide the warmth and
+                          beauty of natural wood
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Plain Sliced, Quarter or Rift cut, producing a narrow stripped pattern or natural Rotary-cut showcasing the unique grain patterns of natural wood
+                          Plain Sliced, Quarter or Rift cut, producing a narrow
+                          stripped pattern or natural Rotary-cut showcasing the
+                          unique grain patterns of natural wood
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Popular species for both, commercial and residential applications
+                          Popular species for both, commercial and residential
+                          applications
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Wide top and bottom rails allow trimming of up to 1&quot; on each end
+                          Wide top and bottom rails allow trimming of up to
+                          1&quot; on each end
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Available 1-3/8&quot; and 1-3/4&quot; thick and 6&apos;8&quot;, 7&apos;0&quot; &amp; 8&apos;0&quot; in passage and bifold door sizes
+                          Available 1-3/8&quot; and 1-3/4&quot; thick and
+                          6&apos;8&quot;, 7&apos;0&quot; &amp; 8&apos;0&quot; in
+                          passage and bifold door sizes
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Custom sizes available
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Custom factory machining
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Optional ClearLine Factory Finish is an affordable, state of the art, ultra-violet cured clear coat finish (no VOCs released in the home)
+                          Optional ClearLine Factory Finish is an affordable,
+                          state of the art, ultra-violet cured clear coat finish
+                          (no VOCs released in the home)
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                          Due to the nature of real wood, each door surface will vary in woodgrain patterns, color and appearance, showcasing the beauty of real wood.
+                          Due to the nature of real wood, each door surface will
+                          vary in woodgrain patterns, color and appearance,
+                          showcasing the beauty of real wood.
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           20-minute fire ratings available
                         </span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <span className="text-gray-500 text-xl font-bold ">•</span>
+                        <span className="text-gray-500 text-xl font-bold ">
+                          •
+                        </span>
                         <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           STC sound rated doors
                         </span>
@@ -1403,13 +1676,19 @@ const LyndenDoorPage = () => {
                   </div>
                 </div>
 
-
-
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
                   {[
-                    { image: wood1, name: "StileLine", sub: "African-Mahogany" },
+                    {
+                      image: wood1,
+                      name: "StileLine",
+                      sub: "African-Mahogany",
+                    },
                     { image: wood2, name: "StileLine", sub: "Maple" },
-                    { image: wood3, name: "StileLine", sub: "Rift Cut White Oak" },
+                    {
+                      image: wood3,
+                      name: "StileLine",
+                      sub: "Rift Cut White Oak",
+                    },
                     { image: wood4, name: "StileLine", sub: "Walnut" },
                     { image: playwood1, name: "Wood Veneer", sub: "" },
                     { image: playwood2, name: "Wood Veneer", sub: "" },
@@ -1425,7 +1704,7 @@ const LyndenDoorPage = () => {
                     { image: playwood12, name: "Wood Veneer", sub: "" },
                     { image: playwood13, name: "Wood Veneer", sub: "" },
                     { image: playwood14, name: "Wood Veneer", sub: "" },
-                    { image: playwood15, name: "Wood Veneer", sub: "" }
+                    { image: playwood15, name: "Wood Veneer", sub: "" },
                   ].map((item, index) => (
                     <div key={index} className=" rounded-lg overflow-hidden">
                       {/* Image Container */}
@@ -1447,7 +1726,6 @@ const LyndenDoorPage = () => {
                     </div>
                   ))}
                 </div>
-
 
                 {/* Prefinished Door Collection Image Section */}
                 <div id="prefinished" className="mt-16 space-y-6 scroll-mt-24">
@@ -1475,13 +1753,18 @@ const LyndenDoorPage = () => {
 
                     {/* Introductory Paragraphs */}
                     <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                      Prefinished flush doors are ready to install with a factory applied, uniform finish that makes them easy to maintain.
+                      Prefinished flush doors are ready to install with a
+                      factory applied, uniform finish that makes them easy to
+                      maintain.
                     </p>
                     <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                      A variety of textures and finishes cover the color spectrum and offer options from light to dark in smooth, textured and traditional embossed surfaces.
+                      A variety of textures and finishes cover the color
+                      spectrum and offer options from light to dark in smooth,
+                      textured and traditional embossed surfaces.
                     </p>
                     <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                      Unfinished and primed doors are also available (not shown).
+                      Unfinished and primed doors are also available (not
+                      shown).
                     </p>
 
                     {/* Key Features */}
@@ -1491,79 +1774,109 @@ const LyndenDoorPage = () => {
                       </h3>
                       <ul className="space-y-2">
                         <li className="flex items-start gap-3">
-                          <span className="text-gray-500 text-xl font-bold ">•</span>
+                          <span className="text-gray-500 text-xl font-bold ">
+                            •
+                          </span>
                           <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                            Prefinished doors offer great value at an affordable price.
+                            Prefinished doors offer great value at an affordable
+                            price.
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <span className="text-gray-500 text-xl font-bold ">•</span>
+                          <span className="text-gray-500 text-xl font-bold ">
+                            •
+                          </span>
                           <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                             Durable and stable
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <span className="text-gray-500 text-xl font-bold ">•</span>
+                          <span className="text-gray-500 text-xl font-bold ">
+                            •
+                          </span>
                           <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                             Arrive ready to install
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <span className="text-gray-500 text-xl font-bold ">•</span>
+                          <span className="text-gray-500 text-xl font-bold ">
+                            •
+                          </span>
                           <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                             Professionally applied, uniform finish
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <span className="text-gray-500 text-xl font-bold ">•</span>
+                          <span className="text-gray-500 text-xl font-bold ">
+                            •
+                          </span>
                           <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                             No maintenance
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <span className="text-gray-500 text-xl font-bold ">•</span>
+                          <span className="text-gray-500 text-xl font-bold ">
+                            •
+                          </span>
                           <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                             A variety of finishes
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <span className="text-gray-500 text-xl font-bold ">•</span>
+                          <span className="text-gray-500 text-xl font-bold ">
+                            •
+                          </span>
                           <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                            Available in smooth and traditional embossed and textured surfaces
+                            Available in smooth and traditional embossed and
+                            textured surfaces
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <span className="text-gray-500 text-xl font-bold ">•</span>
+                          <span className="text-gray-500 text-xl font-bold ">
+                            •
+                          </span>
                           <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                            Rift Cut textures in Coffee, Slate, Medium Walnut, and Teak
+                            Rift Cut textures in Coffee, Slate, Medium Walnut,
+                            and Teak
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <span className="text-gray-500 text-xl font-bold ">•</span>
+                          <span className="text-gray-500 text-xl font-bold ">
+                            •
+                          </span>
                           <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                             Unfinished and prime coated also available
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <span className="text-gray-500 text-xl font-bold ">•</span>
+                          <span className="text-gray-500 text-xl font-bold ">
+                            •
+                          </span>
                           <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                            All doors are available with hollow or solid core construction and matching bifolds
+                            All doors are available with hollow or solid core
+                            construction and matching bifolds
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <span className="text-gray-500 text-xl font-bold ">•</span>
+                          <span className="text-gray-500 text-xl font-bold ">
+                            •
+                          </span>
                           <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                             1-3/8&quot; and 1-3/4&quot; thick
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <span className="text-gray-500 text-xl font-bold ">•</span>
+                          <span className="text-gray-500 text-xl font-bold ">
+                            •
+                          </span>
                           <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                             Fire ratings available
                           </span>
                         </li>
                         <li className="flex items-start gap-3">
-                          <span className="text-gray-500 text-xl font-bold ">•</span>
+                          <span className="text-gray-500 text-xl font-bold ">
+                            •
+                          </span>
                           <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                             STC sound rated doors
                           </span>
@@ -1573,23 +1886,74 @@ const LyndenDoorPage = () => {
                   </div>
                 </div>
 
-
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 ">
                   {[
-                    { image: PrefinishedRiftCut, name: "Prefinished", sub: "Rift Cut" },
-                    { image: PrefinishedRiftCut1, name: "Prefinished", sub: "Rift Cut (1)" },
-                    { image: PrefinishedRiftCut2, name: "Prefinished", sub: "Rift Cut (2)" },
-                    { image: PrefinishedRiftCutTeak, name: "Prefinished", sub: "Rift Cut Teak" },
-                    { image: PrefinishedEmbossed, name: "Prefinished", sub: "Embossed" },
-                    { image: PrefinishedEmbossed1, name: "Prefinished", sub: "Embossed (1)" },
-                    { image: PrefinishedEmbossed2, name: "Prefinished", sub: "Embossed (2)" },
-                    { image: PrefinishedSmooth, name: "Prefinished", sub: "Smooth" },
-                    { image: PrefinishedSmooth1, name: "Prefinished", sub: "Smooth (1)" },
-                    { image: PrefinishedSmooth2, name: "Prefinished", sub: "Smooth (2)" },
-                    { image: PrefinishedSmooth3, name: "Prefinished", sub: "Smooth (3)" },
-                    { image: PrefinishedSmooth4, name: "Prefinished", sub: "Smooth (4)" },
+                    {
+                      image: PrefinishedRiftCut,
+                      name: "Prefinished",
+                      sub: "Rift Cut",
+                    },
+                    {
+                      image: PrefinishedRiftCut1,
+                      name: "Prefinished",
+                      sub: "Rift Cut (1)",
+                    },
+                    {
+                      image: PrefinishedRiftCut2,
+                      name: "Prefinished",
+                      sub: "Rift Cut (2)",
+                    },
+                    {
+                      image: PrefinishedRiftCutTeak,
+                      name: "Prefinished",
+                      sub: "Rift Cut Teak",
+                    },
+                    {
+                      image: PrefinishedEmbossed,
+                      name: "Prefinished",
+                      sub: "Embossed",
+                    },
+                    {
+                      image: PrefinishedEmbossed1,
+                      name: "Prefinished",
+                      sub: "Embossed (1)",
+                    },
+                    {
+                      image: PrefinishedEmbossed2,
+                      name: "Prefinished",
+                      sub: "Embossed (2)",
+                    },
+                    {
+                      image: PrefinishedSmooth,
+                      name: "Prefinished",
+                      sub: "Smooth",
+                    },
+                    {
+                      image: PrefinishedSmooth1,
+                      name: "Prefinished",
+                      sub: "Smooth (1)",
+                    },
+                    {
+                      image: PrefinishedSmooth2,
+                      name: "Prefinished",
+                      sub: "Smooth (2)",
+                    },
+                    {
+                      image: PrefinishedSmooth3,
+                      name: "Prefinished",
+                      sub: "Smooth (3)",
+                    },
+                    {
+                      image: PrefinishedSmooth4,
+                      name: "Prefinished",
+                      sub: "Smooth (4)",
+                    },
                     { image: PrimedSmooth, name: "Primed", sub: "Smooth" },
-                    { image: PrimedTexturedHardboardSlab, name: "Primed", sub: "Textured Hardboard Slab" }
+                    {
+                      image: PrimedTexturedHardboardSlab,
+                      name: "Primed",
+                      sub: "Textured Hardboard Slab",
+                    },
                   ].map((item, index) => (
                     <div key={index} className=" rounded-lg overflow-hidden">
                       {/* Image Container */}
@@ -1612,9 +1976,11 @@ const LyndenDoorPage = () => {
                   ))}
                 </div>
 
-
                 {/* Lynden Ventilated Doors Image Section */}
-                <div id="lynden-ventilated-door" className="mt-16 space-y-6 scroll-mt-24">
+                <div
+                  id="lynden-ventilated-door"
+                  className="mt-16 space-y-6 scroll-mt-24"
+                >
                   <h2 className="text-[36px] font-[500] text-black">
                     Lynden Ventilated Doors
                   </h2>
@@ -1629,7 +1995,6 @@ const LyndenDoorPage = () => {
                   </div>
                 </div>
 
-
                 {/* Lynden Ventilated Doors Content */}
                 <div className="mt-8 space-y-8">
                   <div className="space-y-6">
@@ -1639,13 +2004,18 @@ const LyndenDoorPage = () => {
                         CREATE A HEALTHY HOME
                       </h3>
                       <p className="text-[24px] md:text-[28px] font-bold text-black leading-tight">
-                        Air quality is an important component of healthy living and essential to a comfortable home environment.
+                        Air quality is an important component of healthy living
+                        and essential to a comfortable home environment.
                       </p>
                     </div>
 
                     {/* Introductory Paragraph */}
                     <p className="text-[#666666]  text-[16px] leading-[26px]  font-light ">
-                      Air circulation in living spaces helps reduce pollutants like carbon dioxide (CO2) and volatile organic compounds (VOCs), which can lead to respiratory issues, poor sleep, and breathing disorders. Promoting air circulation helps create healthier spaces with Lynden Ventilated Doors.
+                      Air circulation in living spaces helps reduce pollutants
+                      like carbon dioxide (CO2) and volatile organic compounds
+                      (VOCs), which can lead to respiratory issues, poor sleep,
+                      and breathing disorders. Promoting air circulation helps
+                      create healthier spaces with Lynden Ventilated Doors.
                     </p>
 
                     {/* Sound Privacy Section */}
@@ -1654,7 +2024,9 @@ const LyndenDoorPage = () => {
                         Sound Privacy
                       </h3>
                       <p className="text-[#666666]  text-[16px] leading-[26px]  font-light ">
-                        Integrated resort construction, acoustic baffles and a tighter undercut provide the sound privacy of a solid core door.
+                        Integrated resort construction, acoustic baffles and a
+                        tighter undercut provide the sound privacy of a solid
+                        core door.
                       </p>
                     </div>
 
@@ -1664,7 +2036,9 @@ const LyndenDoorPage = () => {
                         Design Flexibility
                       </h3>
                       <p className="text-[#666666]  text-[16px] leading-[26px]  font-light ">
-                        Create airflow pathways without the complexity of modifying ceilings and walls to accept ducting, vents and grilles. Save installation and material cost.
+                        Create airflow pathways without the complexity of
+                        modifying ceilings and walls to accept ducting, vents
+                        and grilles. Save installation and material cost.
                       </p>
                     </div>
 
@@ -1674,7 +2048,9 @@ const LyndenDoorPage = () => {
                         Avoid undercutting doors to provide airflow
                       </h3>
                       <p className="text-[#666666]  text-[16px] leading-[26px]  font-light ">
-                        Undercutting doors for airflow is unsightly, negatively impacts sound privacy, and may not even provide sufficient airflow.
+                        Undercutting doors for airflow is unsightly, negatively
+                        impacts sound privacy, and may not even provide
+                        sufficient airflow.
                       </p>
 
                       {/* Key Features */}
@@ -1684,45 +2060,69 @@ const LyndenDoorPage = () => {
                         </h4>
                         <ul className="space-y-2">
                           <li className="flex items-start gap-3">
-                            <span className="text-gray-500 text-xl font-bold ">•</span>
+                            <span className="text-gray-500 text-xl font-bold ">
+                              •
+                            </span>
                             <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                              Ventilated doors are suitable for commercial spaces, single and multifamily residential, hospitality, schools and healthcare facilities.
+                              Ventilated doors are suitable for commercial
+                              spaces, single and multifamily residential,
+                              hospitality, schools and healthcare facilities.
                             </span>
                           </li>
                           <li className="flex items-start gap-3">
-                            <span className="text-gray-500 text-xl font-bold ">•</span>
+                            <span className="text-gray-500 text-xl font-bold ">
+                              •
+                            </span>
                             <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                              The Lynden Ventilated door reduces the need for ducting, vents and grilles for today&apos;s demanding building designs.
+                              The Lynden Ventilated door reduces the need for
+                              ducting, vents and grilles for today&apos;s
+                              demanding building designs.
                             </span>
                           </li>
                           <li className="flex items-start gap-3">
-                            <span className="text-gray-500 text-xl font-bold ">•</span>
+                            <span className="text-gray-500 text-xl font-bold ">
+                              •
+                            </span>
                             <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                               Attractive, modern design.
                             </span>
                           </li>
                           <li className="flex items-start gap-3">
-                            <span className="text-gray-500 text-xl font-bold ">•</span>
+                            <span className="text-gray-500 text-xl font-bold ">
+                              •
+                            </span>
                             <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                              Provides ventilation across enclosed spaces to balance and alleviate temperature and pressure buildup.
+                              Provides ventilation across enclosed spaces to
+                              balance and alleviate temperature and pressure
+                              buildup.
                             </span>
                           </li>
                           <li className="flex items-start gap-3">
-                            <span className="text-gray-500 text-xl font-bold ">•</span>
+                            <span className="text-gray-500 text-xl font-bold ">
+                              •
+                            </span>
                             <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                              Creates airflow pathways without the complexity of modifying doors, ceilings and walls to accept ducting, vents and grilles.
+                              Creates airflow pathways without the complexity of
+                              modifying doors, ceilings and walls to accept
+                              ducting, vents and grilles.
                             </span>
                           </li>
                           <li className="flex items-start gap-3">
-                            <span className="text-gray-500 text-xl font-bold ">•</span>
+                            <span className="text-gray-500 text-xl font-bold ">
+                              •
+                            </span>
                             <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                              Available up to 4&apos;0&quot; in width and 8&apos;0&quot; in height.
+                              Available up to 4&apos;0&quot; in width and
+                              8&apos;0&quot; in height.
                             </span>
                           </li>
                           <li className="flex items-start gap-3">
-                            <span className="text-gray-500 text-xl font-bold ">•</span>
+                            <span className="text-gray-500 text-xl font-bold ">
+                              •
+                            </span>
                             <span className="text-[#666666]  text-[16px] leading-[26px]  font-light">
-                              Lynden Ventilated is available in a variety of paint grade options, factory finish and veneer.
+                              Lynden Ventilated is available in a variety of
+                              paint grade options, factory finish and veneer.
                             </span>
                           </li>
                         </ul>
@@ -1730,7 +2130,6 @@ const LyndenDoorPage = () => {
                     </div>
                   </div>
                 </div>
-
 
                 {/* Applications Section */}
                 <div className="mt-12 space-y-6">
@@ -1815,17 +2214,11 @@ const LyndenDoorPage = () => {
                       </div>
                     </div>
                   </div>
-
                 </div>
-
               </div>
             </div>
           </div>
-
         </div>
-
-
-
       </section>
       <FooterBanner />
 

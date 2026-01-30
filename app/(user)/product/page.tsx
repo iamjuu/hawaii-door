@@ -9,7 +9,15 @@ import {
   ProductFootericondoor,
   ProductFooterflag,
   intiordooricon,
-  extiordoor
+  extiordoor,
+  DoorGray,
+  DoorColor,
+  SettingGray,
+  SettingColor,
+  StartGray,
+  StartColor,
+  UsaGray,
+  UsaColor,
 } from "@/public/assets";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
@@ -35,12 +43,24 @@ const page = () => {
   const features = [
     {
       text: "Proudly manufactured in the USA for superior quality",
-      iconType: ProductFooterflag
+      iconGray: UsaGray,
+      iconColor: UsaColor,
     },
     {
       text: "Custom-crafted doors tailored to your exact specifications",
-      iconType: ProductFootericondoor
-    }
+      iconGray: DoorGray,
+      iconColor: DoorColor,
+    },
+    {
+      text: "Custom jambs available for a precise, seamless fit",
+      iconGray: SettingGray,
+      iconColor: SettingColor,
+    },
+    {
+      text: "Hawaii Spec! Built for island durability and performance",
+      iconGray: StartGray,
+      iconColor: StartColor,
+    },
   ];
 
   const doorCards = [
@@ -49,15 +69,15 @@ const page = () => {
       description:
         "Interior doors define privacy and movement inside your space. They connect rooms, control noise, and support daily use. Clean design, precise fit, and smooth finishes keep every interior refined.",
       image: intiordooricon,
-      link: "/product/interior"
+      link: "/product/interior",
     },
     {
       title: "Exterior Door",
       description:
         "Exterior doors protect your space from weather and wear. They improve security while holding their shape in heat and rain. Built to perform daily and look solid from the street.",
       image: extiordoor,
-      link: "/product/exterior"
-    }
+      link: "/product/exterior",
+    },
   ];
 
   return (
@@ -78,54 +98,52 @@ const page = () => {
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
             <div className="max-w-[1400px] 2xl:mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 justify-items-center xl:justify-items-start">
-            {doorCards.map((door, index) => (
-              <React.Fragment key={index}>
-                <Link className="w-full max-w-[407px]" href={door.link}>
-              <div
-                style={{
-                  backgroundImage: `url('${
-                    typeof door.image === "string"
-                      ? door.image
-                      : door.image.src
-                  }')`,
-                  backgroundSize: "fit",
-                  backgroundPosition: "left",
-                  backgroundRepeat: "no-repeat"
-                }}
-                className="group rounded-lg w-full xl:w-[407px] overflow-hidden shadow-lg h-[265px] flex flex-col justify-end border border-white hover:border-[#FF6E4A]"
-              >
-                <div className="w-full h-full flex justify-between">
-                  <div className="w-[20%]" />
+                {doorCards.map((door, index) => (
+                  <React.Fragment key={index}>
+                    <Link className="w-full max-w-[407px]" href={door.link}>
+                      <div
+                        style={{
+                          backgroundImage: `url('${
+                            typeof door.image === "string"
+                              ? door.image
+                              : door.image.src
+                          }')`,
+                          backgroundSize: "fit",
+                          backgroundPosition: "left",
+                          backgroundRepeat: "no-repeat",
+                        }}
+                        className="group rounded-lg w-full xl:w-[407px] overflow-hidden shadow-lg h-[265px] flex flex-col justify-end border border-white hover:border-[#FF6E4A]"
+                      >
+                        <div className="w-full h-full flex justify-between">
+                          <div className="w-[20%]" />
 
-                  <div
-                    className="w-[80%] flex flex-col justify-around items-end pr-3"
-                    style={{
-                      background:
-                        "linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%)"
-                    }}
-                  >
-                    <div className="w-[193px] pt-8">
-                      <h1 className="text-[20px] font-[500] font-roboto mb-2">
-                        {door.title}
-                      </h1>
-                      <p className="text-[14px] font-[300] font-roboto text-black md:text-[#616161]">
-                        {door.description}
-                      </p>
-                    </div>
+                          <div
+                            className="w-[80%] flex flex-col justify-around items-end pr-3"
+                            style={{
+                              background:
+                                "linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%)",
+                            }}
+                          >
+                            <div className="w-[193px] pt-8">
+                              <h1 className="text-[20px] font-[500] font-roboto mb-2">
+                                {door.title}
+                              </h1>
+                              <p className="text-[14px] font-[300] font-roboto text-black md:text-[#616161]">
+                                {door.description}
+                              </p>
+                            </div>
 
-                    <div className="flex w-full justify-end px-3 mb-2">
-                    
-                        <div className="w-5 h-5 border border-black rounded-full flex items-center justify-center cursor-pointer group-hover:border-[#FF6E4A] group-hover:text-[#FF6E4A] transition-colors">
-                          <ChevronRight className="w-3 h-3" />
+                            <div className="flex w-full justify-end px-3 mb-2">
+                              <div className="w-5 h-5 border border-black rounded-full flex items-center justify-center cursor-pointer group-hover:border-[#FF6E4A] group-hover:text-[#FF6E4A] transition-colors">
+                                <ChevronRight className="w-3 h-3" />
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                  
-                    </div>
-                  </div>
-                </div>
-              </div>
-              </Link>
-              </React.Fragment>
-            ))}
+                      </div>
+                    </Link>
+                  </React.Fragment>
+                ))}
               </div>
             </div>
           </div>

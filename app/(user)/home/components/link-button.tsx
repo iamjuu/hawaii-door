@@ -30,7 +30,7 @@
 //         /* Responsive padding (safe) */
 //         px-6 sm:px-8 md:px-[40px]
 //         py-3
-//         text-[22px]      
+//         text-[22px]
 //         font-normal
 //         leading-none
 //         whitespace-nowrap
@@ -146,7 +146,9 @@ export default function PillCTAButton({
           flex items-center gap-2 sm:gap-3
           text-white
           group-hover:text-black
-          transition-colors duration-[650ms]
+          transition-colors duration-500
+          group-hover:duration-200
+          group-hover:delay-[500ms]
           ease-[cubic-bezier(0.65,0,0.35,1)]
         "
       >
@@ -158,7 +160,9 @@ export default function PillCTAButton({
               pl-1
               text-[22px] sm:text-[26px] md:text-[28px]
               shrink-0
-              transition-transform duration-800 ease-in-out
+              transition-all duration-800 ease-in-out
+              group-hover:duration-200
+              group-hover:delay-[500ms]
               rotate-0 translate-x-1.5
               group-hover:rotate-45 group-hover:translate-x-0
             "
