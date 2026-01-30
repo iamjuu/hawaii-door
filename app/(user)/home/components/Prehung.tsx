@@ -3,6 +3,7 @@ import { MdOutlineArrowOutward } from "react-icons/md";
 import Image from "next/image";
 import Doors from "../../../../public/assets/images/landing/door22.png";
 import Link from "next/link";
+import PillCTAButton from "./link-button";
 
 const Prehung = () => {
   return (
@@ -27,35 +28,12 @@ const Prehung = () => {
 
                 {/* Button */}
                 <Link href={"/build"}>
-                  <button className="group relative inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] text-[15px] md:text-lg font-roboto px-4 md:px-5 py-2 text-white">
-                    {/* Hover overlay */}
-                    <span
-                      className="
-          absolute inset-0
-          bg-black
-          rounded-full
-          w-[130%]
-          aspect-square
-          left-1/2 -translate-x-1/2
-          translate-y-[60%]
-          scale-0
-          origin-bottom
-          transition-transform
-          duration-[650ms]
-          ease-[cubic-bezier(0.65,0,0.35,1)]
-          group-hover:scale-102
-          group-hover:translate-y-[-10%]
-        "
-                    />
-
-                    {/* Button content */}
-                    <span className="relative z-10 flex items-center gap-2 md:gap-3 font-roboto transition-colors duration-500 group-hover:duration-200 group-hover:delay-[500ms]">
-                      Get a Quote
-                      <span className="inline-flex items-center justify-center w-6 h-6 md:w-7 md:h-7 shrink-0 transition-all duration-800 group-hover:duration-200 group-hover:delay-[500ms] rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0">
-                        <MdOutlineArrowOutward className="text-white text-xl md:text-2xl" />
-                      </span>
-                    </span>
-                  </button>
+                  <PillCTAButton
+                    label="Get a Quote"
+                    icon={
+                      <MdOutlineArrowOutward className="text-white text-xl md:text-2xl" />
+                    }
+                  />
                 </Link>
               </div>
             </div>

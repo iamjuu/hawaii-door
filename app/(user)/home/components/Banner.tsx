@@ -58,7 +58,6 @@ export default function BannerSection() {
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
             <div className="max-w-[1400px] 2xl:mx-auto">
               <div className="text-white max-w-[95%] sm:max-w-[90%]">
-
                 {/* Heading */}
                 <h1
                   className="
@@ -76,7 +75,6 @@ export default function BannerSection() {
 
                 {/* Description + CTA */}
                 <div className="flex flex-col gap-8 mt-5">
-
                   <h1
                     className="
                       text-sm md:text-xl
@@ -97,12 +95,11 @@ export default function BannerSection() {
                   <div className="w-fit">
                     <Link href="/build">
                       <PillCTAButton
-                        label=" Build Your Door "
-                        icon={<MdOutlineArrowOutward className="text-2xl py-[15px]" />}
+                        label="Start Building Your Door Now"
+                        icon={<MdOutlineArrowOutward className="text-2xl" />}
                       />
                     </Link>
                   </div>
-
                 </div>
               </div>
             </div>

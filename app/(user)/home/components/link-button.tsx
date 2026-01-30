@@ -108,9 +108,10 @@ export default function PillCTAButton({
         rounded-full
         bg-[#FF6E4A]
         overflow-hidden
-        px-6 sm:px-8 md:px-[40px]
-        py-3
-        text-[22px]
+        /* Fixed dimensions on desktop, responsive on mobile */
+        w-full sm:w-[320px] md:w-[420px]
+        h-[50px]
+        text-[18px] md:text-[22px]
         font-normal
         leading-none
         whitespace-nowrap
@@ -124,7 +125,7 @@ export default function PillCTAButton({
       <span
         className="
           absolute inset-0
-          bg-white
+          bg-black
           rounded-full
           w-[140%]
           aspect-square
@@ -145,7 +146,6 @@ export default function PillCTAButton({
           relative z-10
           flex items-center gap-2 sm:gap-3
           text-white
-          group-hover:text-black
           transition-colors duration-500
           group-hover:duration-200
           group-hover:delay-[500ms]
@@ -167,7 +167,7 @@ export default function PillCTAButton({
               group-hover:rotate-45 group-hover:translate-x-0
             "
           >
-            <MdOutlineArrowOutward />
+            {icon}
           </span>
         )}
       </span>
