@@ -25,6 +25,21 @@ import vector21 from "../../../public/assets/images/dummy/vector21.png";
 import vector22 from "../../../public/assets/images/dummy/vector22.png";
 import vector23 from "../../../public/assets/images/dummy/vector23.png";
 import vector24 from "../../../public/assets/images/dummy/vector24.png";
+// Import all builder hover icons
+import doorHalf from "../../../public/assets/builder/door half.png";
+import holeBigDoor from "../../../public/assets/builder/hole big door.png";
+import buildDoorHalf from "../../../public/assets/builder/build a door half.png";
+import brick from "../../../public/assets/builder/brick.png";
+import seetings from "../../../public/assets/builder/seetings.png";
+import zzaaa from "../../../public/assets/builder/zzaaa.png";
+import builderLock from "../../../public/assets/builder/lock.png";
+import builderVector5 from "../../../public/assets/builder/Vector-5.png";
+import doorPwoli from "../../../public/assets/builder/door pwoli.png";
+import shields from "../../../public/assets/builder/shields.png";
+import builderPaint from "../../../public/assets/builder/paint.png";
+import builderDocument from "../../../public/assets/builder/document.png";
+import builderTick from "../../../public/assets/builder/tick.png";
+
 // Import all step components
 import Step1SelectCategory from "./components/steps/Step1SelectCategory";
 import Step2SingleOrDouble from "./components/steps/Step2SingleOrDouble";
@@ -121,6 +136,7 @@ const BuildDoor = () => {
       component: Step2SingleOrDouble,
       infoBanner: {
         icon: vector57,
+        hoverIcon: doorHalf,
         text: "Choose the right opening for a clean, balanced entry",
         width: { mobile: 24, desktop: 28 },
         height: { mobile: 24, desktop: 28 },
@@ -131,6 +147,7 @@ const BuildDoor = () => {
       component: Step3DoorSize,
       infoBanner: {
         icon: vector56,
+        hoverIcon: holeBigDoor,
         text: "Built to fit: fully custom door sizes",
         width: { mobile: 24, desktop: 25 },
         height: { mobile: 24, desktop: 25 },
@@ -141,6 +158,7 @@ const BuildDoor = () => {
       component: Step4,
       infoBanner: {
         icon: vector99,
+        hoverIcon: buildDoorHalf,
         text: "Confirm wall status to lock accurate sizing",
         width: { mobile: 24, desktop: 26 },
         height: { mobile: 24, desktop: 26 },
@@ -151,6 +169,7 @@ const BuildDoor = () => {
       component: Step5,
       infoBanner: {
         icon: vector98,
+        hoverIcon: brick,
         text: "Select wall thickness to ensure a precise fit and clean installation.",
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
@@ -161,17 +180,18 @@ const BuildDoor = () => {
       component: Step6,
       infoBanner: {
         icon: vector44,
+        hoverIcon: seetings,
         text: "Perfect swing: choose your handing and hinges",
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
       },
       percentage: 35,
     },
-
     {
       component: Step7,
       infoBanner: {
         icon: vector88,
+        hoverIcon: zzaaa,
         text: "Choose louver option to control airflow",
         width: { mobile: 24, desktop: 25 },
         height: { mobile: 24, desktop: 25 },
@@ -182,6 +202,7 @@ const BuildDoor = () => {
       component: Step8,
       infoBanner: {
         icon: lock,
+        hoverIcon: builderLock,
         text: "Lock-ready doors for your preferred hardware",
         width: { mobile: 23, desktop: 25 },
         height: { mobile: 23, desktop: 25 },
@@ -192,6 +213,7 @@ const BuildDoor = () => {
       component: Step9,
       infoBanner: {
         icon: vector33,
+        hoverIcon: builderVector5,
         text: "Custom jambs for a ready-to-install package",
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
@@ -202,6 +224,7 @@ const BuildDoor = () => {
       component: Step10,
       infoBanner: {
         icon: vector20,
+        hoverIcon: doorPwoli,
         text: "Select door handing to ensure correct swing and smooth daily use",
         width: { mobile: 24, desktop: 27 },
         height: { mobile: 24, desktop: 27 },
@@ -212,6 +235,7 @@ const BuildDoor = () => {
       component: Step11,
       infoBanner: {
         icon: vector21,
+        hoverIcon: shields,
         text: "Choose protection options to keep the door safe",
         width: { mobile: 24, desktop: 26 },
         height: { mobile: 24, desktop: 26 },
@@ -222,6 +246,7 @@ const BuildDoor = () => {
       component: Step12,
       infoBanner: {
         icon: vector33,
+        hoverIcon: builderVector5,
         text: "Add upgrades to match perfomance, hardware",
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
@@ -232,6 +257,7 @@ const BuildDoor = () => {
       component: Step13,
       infoBanner: {
         icon: vector22,
+        hoverIcon: builderPaint,
         text: "Tell us your finish, we'll handle the rest",
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
@@ -242,6 +268,7 @@ const BuildDoor = () => {
       component: Step14,
       infoBanner: {
         icon: vector23,
+        hoverIcon: builderDocument,
         text: "One last step: add your deatils",
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
@@ -252,6 +279,7 @@ const BuildDoor = () => {
       component: Step15,
       infoBanner: {
         icon: vector24,
+        hoverIcon: builderTick,
         text: "Review, submit, and download your specs",
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
@@ -560,6 +588,7 @@ const BuildDoor = () => {
 
       <InfoBanner
         icon={steps[currentStep].infoBanner.icon}
+        hoverIcon={steps[currentStep].infoBanner.hoverIcon}
         text={steps[currentStep].infoBanner.text}
         width={steps[currentStep].infoBanner.width}
         height={steps[currentStep].infoBanner.height}
