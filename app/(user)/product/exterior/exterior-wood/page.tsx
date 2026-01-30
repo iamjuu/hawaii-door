@@ -196,9 +196,9 @@ const ExteriorWoodPage = () => {
 
   // AWS hero (removed): "https://hawaai-doors-bucket.s3.us-west-2.amazonaws.com/uploads/1769351030278-hero_wood-interior.webp"
   const bgImage = "/assets/product/exterior hero 4.svg"
-  const contant = "Exterior Doors"
-  const para =
-    "Discover exterior doors; we offer a variety of door types, designs and styles. You are sure to find the perfect door for your project."
+  const contant = "Exterior Wood Stile & Rail"
+  const para ="Wood doors offer unmatched customization, with flexible designs, sizes, wood species, and glass options to create standard or fully custom doors that fit your project."
+  
 
   const features = [
     {

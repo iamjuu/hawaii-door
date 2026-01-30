@@ -17,9 +17,8 @@ import FooterBanner from "../components/footerbanner";
 import Link from "next/link";
 const ExteriorPage = () => {
   const bgImage = "/assets/product/Exterior Wood.svg";
-  const contant = "Exterior Wood Stile & Rail";
-  const para =
-    "Wood doors offer unmatched customization, with flexible designs, sizes, wood species, and glass options to create standard or fully custom doors that fit your project.";
+  const contant = "Exterior Doors";
+  const para ="Choose from our beautiful, low maintenance woodgrain textured and smooth Fiberglass Doors or create a stunning entrance with our unsurpassed Wood Stile & RailDoors."
   const features = [
     {
       text: "High-definition panel detailing",
