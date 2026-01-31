@@ -104,8 +104,8 @@ const Testimonial = () => {
                   <div className="mt-auto ">
                     <p className="font-roboto flex flex-col  font-light text-sm md:text-base text-[#3B3B3B]">
                       {testimonial.name}
-                      <p>
                       </p>
+                      <p>
                       {testimonial.title}
                     </p>
                   </div>
