@@ -96,7 +96,7 @@ const Measure = () => {
       </div>
 
       {/* Bottom Info Bar */}
-      <div className="relative px-5 md:px-0 w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-4 md:mt-9 h-[68px] ">
+      <div className="relative px-5 md:px-0 w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group  mt-4 md:mt-9 h-[68px] ">
         <div className="flex items-center gap-2">
           <Image
             src={Vector7}

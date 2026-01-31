@@ -45,7 +45,7 @@ const FooterBanner = () => {
                     />
 
                     {/* Button content */}
-                    <span className="relative z-10 flex items-center gap-3 font-roboto">
+                    <span className="relative z-10 flex items-center gap-3 font-roboto cursor-pointer">
                       Start Building Your Perfect Custom Door Now
                       <MdOutlineArrowOutward className="text-white text-2xl transition-all duration-900 rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0" />
                     </span>

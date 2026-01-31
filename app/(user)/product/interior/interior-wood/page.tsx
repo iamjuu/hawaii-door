@@ -31,6 +31,84 @@ interface Door {
   inStock?: boolean;
 }
 
+// Normalize doorType for matching (DB may have different casing/spacing)
+function normalizeDoorType(t: string | undefined): string {
+  return (t || "").trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+// Normalize image URL: use base64 webp as data URL, otherwise use direct URL
+function getImageSrc(url: string | undefined): string {
+  if (!url || !String(url).trim()) return "";
+  const s = String(url).trim();
+  if (s.startsWith("data:image")) return s;
+  if (s.startsWith("http://") || s.startsWith("https://")) return s;
+  const base64Part = s.includes(",") ? (s.split(",")[1] ?? s) : s;
+  return `data:image/webp;base64,${base64Part}`;
+}
+
+// Use blob URL for long base64 data URLs to avoid browser limits
+const DATA_URL_LENGTH_THRESHOLD = 15_000;
+
+function useResolvedImageSrc(rawSrc: string | undefined): string {
+  const [src, setSrc] = React.useState<string>(() => {
+    if (!rawSrc || !rawSrc.trim()) return "";
+    const s = rawSrc.trim();
+    if (!s.startsWith("data:image")) return s;
+    if (s.length < DATA_URL_LENGTH_THRESHOLD) return s;
+    return "";
+  });
+
+  React.useEffect(() => {
+    if (!rawSrc || !rawSrc.trim()) {
+      setSrc("");
+      return;
+    }
+    const s = rawSrc.trim();
+    if (!s.startsWith("data:image")) {
+      setSrc(s);
+      return;
+    }
+    if (s.length < DATA_URL_LENGTH_THRESHOLD) {
+      setSrc(s);
+      return;
+    }
+    const m = s.match(/^data:([^;]+);base64,(.+)$/);
+    if (!m) {
+      setSrc(s);
+      return;
+    }
+    const mime = m[1];
+    const b64 = m[2];
+    try {
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      const blob = new Blob([bytes], { type: mime });
+      const objectUrl = URL.createObjectURL(blob);
+      setSrc(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    } catch {
+      setSrc(s);
+    }
+  }, [rawSrc]);
+
+  return src;
+}
+
+function DoorImage({
+  rawSrc,
+  alt,
+  className,
+}: {
+  rawSrc: string | undefined;
+  alt: string;
+  className?: string;
+}) {
+  const src = useResolvedImageSrc(rawSrc ? getImageSrc(rawSrc) : undefined);
+  if (!src) return null;
+  return <img src={src} alt={alt} className={className} decoding="async" />;
+}
+
 const InteriorWoodPage = () => {
   const [doors, setDoors] = useState<Door[]>([]);
   const [loading, setLoading] = useState(true);
@@ -46,17 +124,29 @@ const InteriorWoodPage = () => {
     const fetchDoors = async () => {
       try {
         setLoading(true);
-        // Reduced limit to 100 to avoid MongoDB memory issues
-        const response = await fetch(
-          "/api/products?category=interior&limit=100",
-        );
-        const data = await response.json();
+        let allDoors: Door[] = [];
+        let page = 1;
+        let hasMore = true;
 
-        if (data.success) {
-          setDoors(data.data || []);
-        } else {
-          setError(data.message || "Failed to fetch doors");
+        while (hasMore) {
+          const response = await fetch(
+            `/api/products?category=interior&limit=100&page=${page}`,
+          );
+          const data = await response.json();
+
+          if (data.success) {
+            allDoors = [...allDoors, ...(data.data || [])];
+            hasMore = data.pagination?.hasNext || false;
+            page++;
+          } else {
+            setError(data.message || "Failed to fetch doors");
+            hasMore = false;
+          }
+
+          // Safety break
+          if (page > 20) break;
         }
+        setDoors(allDoors);
       } catch (err) {
         setError("Error loading doors");
         console.error("Error fetching doors:", err);
@@ -70,11 +160,30 @@ const InteriorWoodPage = () => {
 
   // Handle door image click - open modal with that door's group
   const handleDoorClick = (door: Door, doorType: string) => {
-    const doorsInType = doors.filter((d) => d.doorType === doorType);
+    const doorsInType = doors.filter(
+      (d) => normalizeDoorType(d.doorType) === normalizeDoorType(doorType),
+    );
     const doorIndex = doorsInType.findIndex((d) => d._id === door._id);
     setCurrentDoorGroup(doorsInType);
     setCurrentDoorIndex(doorIndex >= 0 ? doorIndex : 0);
     setIsModalOpen(true);
+  };
+
+  // Smooth scroll to section
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 100;
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+    setOpenFilter(false);
   };
 
   // Navigate to previous door in the same group
@@ -151,7 +260,7 @@ const InteriorWoodPage = () => {
   return (
     <>
       <Navbar />
-      <section id="overview">
+      <section>
         <HeroSection
           contant={contant}
           bgImage={bgImage}
@@ -161,6 +270,7 @@ const InteriorWoodPage = () => {
       </section>
 
       {/* INTRO SECTION */}
+
       <section className="w-full bg-white py-10 sm:py-12 md:py-[50px]">
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
           <div className="max-w-[1400px] 2xl:mx-auto">
@@ -168,7 +278,10 @@ const InteriorWoodPage = () => {
               {/* LEFT CONTENT */}
               <div className="flex-1 space-y-9">
                 <div>
-                  <h1 className="text-[23px] md:text-[46px] font-roboto font-[500] text-black leading-[32px] md:leading-[58px] mb-10">
+                  <h1
+                    id="overview"
+                    className="text-[23px] md:text-[46px] font-roboto font-[500] text-black leading-[32px] md:leading-[58px] mb-10 scroll-mt-[150px]"
+                  >
                     Unmatched Versatility with Interior Solid Wood Doors
                   </h1>
                   <p className="text-sm md:text-[16px] font-roboto font-[300] text-[#666666] leading-relaxed">
@@ -351,14 +464,15 @@ const InteriorWoodPage = () => {
                   "20-Minute Fire Doors",
                   "20-Minute Fire Doors Primed",
                 ].map((item, i) => (
-                  <a
+                  <button
                     key={item}
-                    href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                    onClick={() => setOpenFilter(false)}
-                    className="block py-3 text-sm font-roboto font-[400] text-gray-700 hover:text-[#FF6E4A] border-b border-gray-200 last:border-b-0 transition-colors"
+                    onClick={() =>
+                      scrollToSection(item.toLowerCase().replace(/\s+/g, "-"))
+                    }
+                    className="w-full text-left block py-3 text-sm font-roboto font-[400] text-gray-700 hover:text-[#FF6E4A] border-b border-gray-200 last:border-b-0 transition-colors"
                   >
                     {item}
-                  </a>
+                  </button>
                 ))}
               </div>
             </aside>
@@ -404,7 +518,9 @@ const InteriorWoodPage = () => {
                     "20-Minute Fire Doors Primed",
                   ].map((doorType) => {
                     const doorsInType = doors.filter(
-                      (door) => door.doorType === doorType,
+                      (door) =>
+                        normalizeDoorType(door.doorType) ===
+                        normalizeDoorType(doorType),
                     );
                     if (doorsInType.length === 0) return null;
 
@@ -416,7 +532,7 @@ const InteriorWoodPage = () => {
                       <section
                         key={doorType}
                         id={sectionId}
-                        className="mb-16 scroll-mt-24 pt-22"
+                        className="mb-16 scroll-mt-[150px] pt-8"
                       >
                         <h2 className="text-[20px] md:text-[28px] font-roboto font-[500]  mb-6 leading-tight text-[#ff6e4a]">
                           {doorType}
@@ -430,8 +546,8 @@ const InteriorWoodPage = () => {
                             >
                               {door.imageUrl && door.imageUrl[0] && (
                                 <div className="w-full h-48 rounded-lg  border-gray-200 group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex items-center justify-center ">
-                                  <img
-                                    src={door.imageUrl[0]}
+                                  <DoorImage
+                                    rawSrc={door.imageUrl[0]}
                                     alt={door.name}
                                     className="w-full h-full object-contain transition-transform group-hover:scale-105"
                                   />
@@ -540,9 +656,9 @@ const InteriorWoodPage = () => {
             <div className="flex flex-col items-center justify-center w-full h-full max-w-7xl">
               {currentDoorGroup[currentDoorIndex]?.imageUrl?.[0] && (
                 <>
-                  <img
+                  <DoorImage
                     key={currentDoorIndex}
-                    src={currentDoorGroup[currentDoorIndex].imageUrl[0]}
+                    rawSrc={currentDoorGroup[currentDoorIndex].imageUrl[0]}
                     alt={currentDoorGroup[currentDoorIndex].name}
                     className="w-auto h-auto max-w-[75%] max-h-[55vh] md:max-w-[70%] md:max-h-[65vh] lg:max-w-[65%] lg:max-h-[70vh] object-contain"
                   />

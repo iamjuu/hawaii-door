@@ -117,6 +117,7 @@ export default function PillCTAButton({
         whitespace-nowrap
         transition-none
         active:scale-[0.98]
+        cursor-pointer
         ${className}
       `}
       style={{ fontFamily: "'Roboto', sans-serif" }}

@@ -179,7 +179,7 @@ const StepsDoor = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="  relative w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group cursor-pointer mt-[55px] transition-all duration-300">
+      <div className="  relative w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group  mt-[55px] transition-all duration-300">
         <div className="flex items-center gap-3 md:gap-4">
           <div className="relative w-6 h-6 md:w-8 md:h-8">
             <Image

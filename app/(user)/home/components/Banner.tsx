@@ -92,7 +92,7 @@ export default function BannerSection() {
                   </h1>
 
                   {/* CTA */}
-                  <div className="w-fit">
+                  <div className="w-fit cursor-pointer">
                     <Link href="/build">
                       <PillCTAButton
                         label="Start Building Your Door Now"

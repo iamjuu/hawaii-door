@@ -138,7 +138,18 @@ const LyndenDoorPage = () => {
   // Smooth scroll to section
   const scrollToSection = (sectionId: string) => {
     if (sectionId === "overview") {
-      slowScrollToTop(2000); // 2 seconds duration for slower scroll
+      const element = document.getElementById("overview");
+      if (element) {
+        const offset = 100;
+        const elementPosition =
+          element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
       setOpenMenu(false);
       return;
     }
@@ -179,21 +190,19 @@ const LyndenDoorPage = () => {
         "lynden-ventilated-door",
       ];
 
+      let current = "overview";
       const scrollPosition = window.scrollY + 150;
 
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
         if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (
-            scrollPosition >= offsetTop &&
-            scrollPosition < offsetTop + offsetHeight
-          ) {
-            setActiveSection(sectionId);
-            break;
+          // If we've scrolled past the top of the section, it's a candidate
+          if (element.offsetTop <= scrollPosition) {
+            current = sectionId;
           }
         }
       }
+      setActiveSection(current);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -283,7 +292,7 @@ const LyndenDoorPage = () => {
                 </div>
 
                 {/* DESKTOP HEADER - Simple Title */}
-                <div className="hidden md:block mb-6">
+                <div className="hidden md:block mb-6 ">
                   <h2 className="text-lg font-semibold">Lynden Door</h2>
                 </div>
 
@@ -325,7 +334,7 @@ const LyndenDoorPage = () => {
             {/* Right Side - Main Content */}
             <div className="flex-1 space-y-8 mt-2 md:mt-8 mb-3 md:mb-[20px]">
               {/* Overview Section */}
-              <div id="overview">
+              <div id="overview" className="scroll-mt-[150px]">
                 {/* Logo */}
                 <div className="flex items-center gap-3 mb-6">
                   <Image
@@ -484,7 +493,10 @@ const LyndenDoorPage = () => {
                 </div>
               </div>
               {/* New Products Section */}
-              <div id="new-products" className="mt-16 space-y-8">
+              <div
+                id="new-products"
+                className="mt-16 space-y-8 scroll-mt-[150px]"
+              >
                 {/* Section Heading */}
                 <h2 className="text-[28px] font-[500] text-black">
                   New Designs - FineLine Collection
@@ -562,7 +574,7 @@ const LyndenDoorPage = () => {
               </div>
 
               {/* FineLine Door Collection Image Section */}
-              <div id="fineline" className="mt-16 space-y-6 scroll-mt-24">
+              <div id="fineline" className="mt-16 space-y-6 scroll-mt-[150px]">
                 <h2 className="text-[28px] font-[500] text-black">
                   FineLine Door Collection
                 </h2>
@@ -1113,7 +1125,10 @@ const LyndenDoorPage = () => {
               </div>
 
               {/* ReDiscovery Door Collection Image Section */}
-              <div id="rediscovery" className="mt-16 space-y-6 scroll-mt-24">
+              <div
+                id="rediscovery"
+                className="mt-16 space-y-6 scroll-mt-[150px]"
+              >
                 <h2 className="text-[28px] font-[500] text-black">
                   ReDiscovery Door Collection
                 </h2>
@@ -1288,7 +1303,7 @@ const LyndenDoorPage = () => {
                   ))}
                 </div>
                 {/* Molded Door Collection Image Section */}
-                <div id="molded" className="mt-16 space-y-6 scroll-mt-24">
+                <div id="molded" className="mt-16 space-y-6 scroll-mt-[150px]">
                   <h2 className="text-[28px] font-[500] text-black">
                     Molded Door Collection
                   </h2>

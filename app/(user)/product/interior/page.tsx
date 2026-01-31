@@ -107,7 +107,7 @@ const InteriorPage = () => {
                       </div>
 
                       <Link href="/product/interior/Lynden-Door">
-                        <button className="bg-[#FF6E4A] hover:bg-black text-white px-6 py-3 rounded-lg font-[500] mt-6 transition-colors duration-300">
+                        <button className="bg-[#FF6E4A] hover:bg-black text-white px-6 py-3 rounded-lg font-[500] mt-6 transition-colors duration-300 cursor-pointer">
                           LEARN MORE
                         </button>
                       </Link>
@@ -151,7 +151,7 @@ const InteriorPage = () => {
                       </div>
 
                       <Link href="/product/interior/interior-wood">
-                        <button className="bg-[#FF6E4A] hover:bg-black text-white px-6 py-3 rounded-lg font-[500] mt-6 transition-colors duration-300">
+                        <button className="bg-[#FF6E4A] hover:bg-black text-white px-6 py-3 rounded-lg font-[500] mt-6 transition-colors duration-300 cursor-pointer">
                           LEARN MORE
                         </button>
                       </Link>

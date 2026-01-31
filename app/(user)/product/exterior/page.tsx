@@ -18,7 +18,8 @@ import Link from "next/link";
 const ExteriorPage = () => {
   const bgImage = "/assets/product/Exterior Wood.svg";
   const contant = "Exterior Doors";
-  const para ="Choose from our beautiful, low maintenance woodgrain textured and smooth Fiberglass Doors or create a stunning entrance with our unsurpassed Wood Stile & RailDoors."
+  const para =
+    "Choose from our beautiful, low maintenance woodgrain textured and smooth Fiberglass Doors or create a stunning entrance with our unsurpassed Wood Stile & RailDoors.";
   const features = [
     {
       text: "High-definition panel detailing",
@@ -160,7 +161,7 @@ const ExteriorPage = () => {
                 <li>Variety of wood species and glass options</li>
               </ul>
               <Link href="/product/exterior/exterior-wood">
-                <button className="w-fit px-8 py-3 bg-[#FF6E4A] text-white rounded-md hover:bg-black transition">
+                <button className="w-fit px-8 py-3 bg-[#FF6E4A] text-white rounded-md hover:bg-black transition cursor-pointer">
                   LEARN MORE
                 </button>
               </Link>
