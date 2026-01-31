@@ -97,7 +97,7 @@ export default function BannerSection() {
                       <PillCTAButton
                         label="Build Your Door"
                         icon={<MdOutlineArrowOutward className="text-2xl" />}
-                        className=" "
+                        className="!w-auto sm:!w-auto md:!w-auto !px-4 sm:!px-6 group-hover:!text-white"
                       />
                     </Link>
                   </div>
