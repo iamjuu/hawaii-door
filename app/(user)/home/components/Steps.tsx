@@ -165,12 +165,13 @@ const StepsDoor = () => {
 
             {/* CTA */}
             <div className="w-full flex  mb-[0px] justify-center items-center mt-4 md:mt-0 ">
-              <Link href="/build">
+              <Link href="/build" className="">
                 <PillCTAButton
                   label="Start Building Your Door Now"
                   icon={
                     <MdOutlineArrowOutward className="text-white text-xl md:text-2xl" />
                   }
+                  className="!cursor-pointer"
                 />
               </Link>
             </div>

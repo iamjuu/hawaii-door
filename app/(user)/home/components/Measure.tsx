@@ -59,7 +59,7 @@ const Measure = () => {
                     />
 
                     {/* Content */}
-                    <span className="relative z-10 flex items-center gap-3 text-[15px] md:text-lg whitespace-nowrap text-[#000000] group-hover:text-white transition-colors duration-500 group-hover:duration-200 group-hover:delay-[500ms]">
+                    <span className="relative z-10 flex items-center gap-3 text-[15px] md:text-lg whitespace-nowrap text-[#000000] group-hover:text-white transition-colors duration-500 group-hover:duration-200 group-hover:delay-[500ms] cursor-pointer">
                       Explore Now
                       <span
                         className="

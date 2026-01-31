@@ -33,7 +33,7 @@ const Prehung = () => {
                     icon={
                       <MdOutlineArrowOutward className="text-white text-xl md:text-2xl" />
                     }
-                    className="!w-[172.48px] !h-[44px] !rounded-[35.2px] !px-2 !text-[19.36px] !leading-none !font-normal"
+                    className="!w-[172.48px] !h-[44px] !rounded-[35.2px] !px-2 !text-[19.36px] !leading-none !font-normal !cursor-pointer"
                   />
                 </Link>
               </div>
