@@ -6,11 +6,15 @@ import { useState, useEffect } from "react";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import Link from "next/link";
 import Heading from "../home/components/header";
+import PillCTAButton from "../home/components/link-button";
 export default function Contact() {
   const [openFAQ, setOpenFAQ] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error', message: string } | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -24,7 +28,7 @@ export default function Contact() {
     lastName: "",
     email: "",
     phone: "",
-    message: ""
+    message: "",
   });
 
   const toggleFAQ = (index: any) => {
@@ -34,7 +38,7 @@ export default function Contact() {
   const handleInputChange = (e: any) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -42,8 +46,14 @@ export default function Contact() {
     e.preventDefault();
 
     // Validate form
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.message) {
-      setSubmitStatus({ type: 'error', message: 'Please fill in all fields' });
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.message
+    ) {
+      setSubmitStatus({ type: "error", message: "Please fill in all fields" });
       return;
     }
 
@@ -51,10 +61,10 @@ export default function Contact() {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch('/api/contact/submit', {
-        method: 'POST',
+      const response = await fetch("/api/contact/submit", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -62,21 +72,31 @@ export default function Contact() {
       const data = await response.json();
 
       if (data.success) {
-        setSubmitStatus({ type: 'success', message: 'Thank you for contacting us! We\'ll get back to you within 24 hours.' });
+        setSubmitStatus({
+          type: "success",
+          message:
+            "Thank you for contacting us! We'll get back to you within 24 hours.",
+        });
         // Clear form
         setFormData({
           firstName: "",
           lastName: "",
           email: "",
           phone: "",
-          message: ""
+          message: "",
         });
       } else {
-        setSubmitStatus({ type: 'error', message: data.error || 'Failed to submit form. Please try again.' });
+        setSubmitStatus({
+          type: "error",
+          message: data.error || "Failed to submit form. Please try again.",
+        });
       }
     } catch (error) {
-      console.error('Form submission error:', error);
-      setSubmitStatus({ type: 'error', message: 'Failed to submit form. Please try again.' });
+      console.error("Form submission error:", error);
+      setSubmitStatus({
+        type: "error",
+        message: "Failed to submit form. Please try again.",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -86,28 +106,28 @@ export default function Contact() {
     {
       question: "What types of doors do you manufacture?",
       answer:
-        "We specialize in custom interior and exterior doors, including solid wood doors, French doors, sliding doors, and specialty designs. Each door is crafted to your exact specifications."
+        "We specialize in custom interior and exterior doors, including solid wood doors, French doors, sliding doors, and specialty designs. Each door is crafted to your exact specifications.",
     },
     {
       question: "How long does it take to complete a custom door order?",
       answer:
-        "Typically, custom door orders take 4-6 weeks from design approval to delivery. Timeline may vary based on complexity and current order volume. Rush orders can be accommodated for an additional fee."
+        "Typically, custom door orders take 4-6 weeks from design approval to delivery. Timeline may vary based on complexity and current order volume. Rush orders can be accommodated for an additional fee.",
     },
     {
       question: "Do you offer installation services?",
       answer:
-        "Yes, we provide professional installation services throughout Hawaii. Our experienced installers ensure perfect fit and finish. Installation can be scheduled after your door is ready."
+        "Yes, we provide professional installation services throughout Hawaii. Our experienced installers ensure perfect fit and finish. Installation can be scheduled after your door is ready.",
     },
     {
       question: "What is your warranty policy?",
       answer:
-        "We offer a 5-year warranty on all craftsmanship and materials. This covers manufacturing defects and structural issues. Normal wear and tear is not covered under warranty."
+        "We offer a 5-year warranty on all craftsmanship and materials. This covers manufacturing defects and structural issues. Normal wear and tear is not covered under warranty.",
     },
     {
       question: "Can I get a quote before visiting your showroom?",
       answer:
-        "Absolutely! Fill out our contact form with your project details, or call us directly. We can provide preliminary quotes over the phone or email, and schedule a consultation to finalize details."
-    }
+        "Absolutely! Fill out our contact form with your project details, or call us directly. We can provide preliminary quotes over the phone or email, and schedule a consultation to finalize details.",
+    },
   ];
 
   return (
@@ -131,41 +151,20 @@ export default function Contact() {
                   scripts, just people who know doors
                 </p> */}
 
-
-                  <Heading heading="Let’s Get Your Door Right" subheading="
+                  <Heading
+                    heading="Let’s Get Your Door Right"
+                    subheading="
                 Reach out for quotes, project coordination, or vendor inquiries.
-We review every message personally, no bots, no scripts, just people who know doors"/>
+We review every message personally, no bots, no scripts, just people who know doors"
+                  />
                   <Link href="/build">
-                    <button className="group relative inline-flex items-center gap-2 md:gap-3 overflow-hidden rounded-full bg-[#FF6E4A] px-6 py-3 font-roboto text-base md:text-lg text-white">
-                      {/* WhatsApp-style black reveal */}
-                      <span
-                        className="
-                      absolute inset-0
-                      bg-black
-                      origin-bottom
-                      scale-y-0
-                      transition-transform duration-900 ease-[cubic-bezier(0.4,0,0.2,1)]
-                      group-hover:scale-y-100
-                    "
-                      />
-
-                      {/* Content */}
-                      <span className="relative z-10 flex items-center gap-3">
-                        Build Your Door Now
-                        {/* Arrow */}
-                        <span
-                          className="
-                        inline-flex items-center justify-center w-6 h-6
-                        transform
-                        transition-all duration-500 ease-in-out
-                        rotate-0 translate-x-1
-                        group-hover:rotate-45 group-hover:translate-x-0
-                      "
-                        >
-                          <MdOutlineArrowOutward className="text-white text-xl" />
-                        </span>
-                      </span>
-                    </button>
+                    <PillCTAButton
+                      label="Build Your Door Now"
+                      icon={
+                        <MdOutlineArrowOutward className="text-white text-xl" />
+                      }
+                      className="!w-fit !h-auto !px-6 !py-3 !text-base md:!text-lg"
+                    />
                   </Link>
                 </div>
 
@@ -320,7 +319,9 @@ We review every message personally, no bots, no scripts, just people who know do
 
                 {/* Status Message */}
                 {submitStatus && (
-                  <div className={`mb-4 p-4 rounded-md ${submitStatus.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
+                  <div
+                    className={`mb-4 p-4 rounded-md ${submitStatus.type === "success" ? "bg-green-50 text-green-700 border border-green-200" : "bg-red-50 text-red-700 border border-red-200"}`}
+                  >
                     {submitStatus.message}
                   </div>
                 )}
@@ -392,9 +393,9 @@ We review every message personally, no bots, no scripts, just people who know do
                   <button
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className="w-full bg-white border-2 border-[#FF6E4A] text-[#FF6E4A] hover:bg-[#FF6E4A] hover:text-white font-semibold py-4 rounded-md transition-all text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-white border-2 border-[#FF6E4A] text-[#FF6E4A] hover:bg-[#FF6E4A] hover:text-white font-semibold py-4 rounded-md transition-all text-base disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
-                    {isSubmitting ? 'Sending...' : 'Get In Touch'}
+                    {isSubmitting ? "Sending..." : "Get In Touch"}
                   </button>
                 </div>
               </div>
@@ -404,7 +405,10 @@ We review every message personally, no bots, no scripts, just people who know do
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="bg-[#fdfffc] w-full py-10 sm:py-12 md:py-[50px]">
+      <section
+        id="faq"
+        className="bg-[#fdfffc] w-full py-10 sm:py-12 md:py-[50px]"
+      >
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
           <div className="max-w-[1400px] 2xl:mx-auto">
             <div className="max-w-4xl">
@@ -429,8 +433,9 @@ We review every message personally, no bots, no scripts, just people who know do
                         {faq.question}
                       </span>
                       <svg
-                        className={`w-6 h-6 text-black flex-shrink-0 transition-transform ${openFAQ === index ? "rotate-180" : ""
-                          }`}
+                        className={`w-6 h-6 text-black flex-shrink-0 transition-transform ${
+                          openFAQ === index ? "rotate-180" : ""
+                        }`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"

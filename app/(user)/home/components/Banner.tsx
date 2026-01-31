@@ -92,11 +92,12 @@ export default function BannerSection() {
                   </h1>
 
                   {/* CTA */}
-                  <div className="w-fit cursor-pointer">
+                  <div className="w-fit cursor-pointer ">
                     <Link href="/build">
                       <PillCTAButton
-                        label="Start Building Your Door Now"
+                        label="Build Your Door"
                         icon={<MdOutlineArrowOutward className="text-2xl" />}
+                        className="!w-[200px] !h-[46px] !px-10 !text-[20px]  !font-normal "
                       />
                     </Link>
                   </div>

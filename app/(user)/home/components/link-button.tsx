@@ -106,7 +106,7 @@ export default function PillCTAButton({
         inline-flex items-center justify-center
         gap-2 sm:gap-3
         rounded-full
-        bg-[#FF6E4A]
+
         overflow-hidden
         /* Fixed dimensions on desktop, responsive on mobile */
         w-full sm:w-[320px] md:w-[420px]
@@ -122,16 +122,22 @@ export default function PillCTAButton({
       `}
       style={{ fontFamily: "'Roboto', sans-serif" }}
     >
-      {/* Hover overlay */}
+      {/* 1. Base Orange Background Layer */}
+      <span className="absolute inset-0 bg-[#FF6E4A] rounded-[inherit] transform origin-center transition-all duration-300 ease-in-out hover:opacity-0 group-hover:scale-[0.96] group-hover:delay-[300ms] delay-0" />
+
+      {/* 2. Hover Black Overlay Layer */}
       <span
         className="
           absolute inset-0
           bg-black
+          border-black
           rounded-full
-          w-[140%]
+          w-[160%]
           aspect-square
           left-1/2 -translate-x-1/2
-          translate-y-[60%]
+          translate-y-[80%]
+          border-2
+          border-white
           scale-0
           origin-bottom
           transition-transform

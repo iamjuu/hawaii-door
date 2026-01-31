@@ -146,7 +146,7 @@ const Gallerysection = () => {
         </div>
       </div>
       <div className="w-full flex items-center justify-center bg-[#F6F5F1] h-[82px] md:h-[68px] ">
-        <div className={`${CONTENT_WIDTH}  relative  flex flex-col md:flex-row justify-center items-center gap-2 md:gap-12 lg:gap-16 py-3 md:py-[25px] group cursor-pointer mt-0 transition-all duration-300 text-xs sm:text-sm md:text-base`}>
+        <div className={`${CONTENT_WIDTH}  relative  flex flex-col md:flex-row justify-center items-center gap-2 md:gap-12 lg:gap-16 py-3 md:py-[25px] group  mt-0 transition-all duration-300 text-xs sm:text-sm md:text-base`}>
 
           <p className="flex items-center gap-1 md:gap-4 items-center">
             <div className="relative w-8 h-8">
