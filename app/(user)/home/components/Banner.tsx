@@ -98,7 +98,7 @@ export default function BannerSection() {
   label="Build Your Door"
   icon={<MdOutlineArrowOutward className="text-2xl" />}
   hoverVariant="white"
-  className="cursor-pointer"
+  className="cursor-pointer !w-fit !h-auto !px-6 !py-3 !text-base md:!text-lg"
 />
                     </Link>
                   </div>
