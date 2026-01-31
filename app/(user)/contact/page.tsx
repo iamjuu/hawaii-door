@@ -163,7 +163,7 @@ We review every message personally, no bots, no scripts, just people who know do
                       icon={
                         <MdOutlineArrowOutward className="text-white text-xl" />
                       }
-                      className="!w-fit !h-auto !px-6 !py-3 !text-base md:!text-lg"
+                      className="!w-fit !h-auto !px-6 !py-3 !text-base md:!text-lg !cursor-pointer"
                     />
                   </Link>
                 </div>
