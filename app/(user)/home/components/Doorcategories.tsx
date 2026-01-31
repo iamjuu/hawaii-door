@@ -211,7 +211,7 @@ const DoorCategories = () => {
       {/* FULL WIDTH FOOTER STRIP – Responsive */}
       <div className="relative w-full flex flex-col md:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-8 lg:gap-16 py-4 sm:py-5 md:py-0 min-h-[60px] md:h-[68px] bg-[#F6F5F1] group  mt-8 sm:mt-10 md:mt-[50px] lg:mt-[50px] mb-0  transition-all duration-300 ">
         <div className="py-3 sm:py-4 md:py-[25px] flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 items-center">
-          <p className="flex items-center gap-3 sm:gap-3.5 md:gap-4 text-xs sm:text-sm md:text-base">
+          <div className="flex items-center gap-3 sm:gap-3.5 md:gap-4 text-xs sm:text-sm md:text-base">
             <div className="relative w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">
               <Image
                 src={ProductFootericonDoor}
@@ -230,7 +230,7 @@ const DoorCategories = () => {
             </div>
 
             <span className="whitespace-nowrap">Custom Doors</span>
-          </p>
+          </div>
 
           <p className="flex items-center gap-3 sm:gap-3.5 md:gap-4 text-xs sm:text-sm md:text-base">
             <div className="relative w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">
