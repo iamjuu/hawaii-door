@@ -1,5 +1,5 @@
 "use client";
-import { MdOutlineArrowOutward } from "react-icons/md";
+import { MdOutlineArrowOutward, MdFileDownload } from "react-icons/md";
 import Image from "next/image";
 import Doors from "../../../../public/assets/images/landing/door22.png";
 import Link from "next/link";
@@ -27,15 +27,24 @@ const Prehung = () => {
                 </p>
 
                 {/* Button */}
-                <Link href={"/build"}>
+                <a
+                  href={
+                    process.env.NEXT_PUBLIC_PRODUCTION === "true"
+                      ? "/files/public_html/uploads/brochure/Hawaii_Door_Brochure.pdf"
+                      : "https://srv1473-files.hstgr.io/656ecabae3aaad0f/files/public_html/uploads/brochure/Hawaii_Door_Brochure.pdf"
+                  }
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <PillCTAButton
-                    label="Get a Quote"
+                    label="Download our Brochure"
                     icon={
-                      <MdOutlineArrowOutward className="text-white text-xl md:text-2xl" />
+                      <MdFileDownload className="text-white text-xl md:text-2xl" />
                     }
-                    className="!w-[172.48px] !h-[44px] !rounded-[35.2px] !px-2 !text-[19.36px] !leading-none !font-normal !cursor-pointer"
+                    className="!w-auto !min-w-[172px] !h-[44px] !rounded-[35.2px] !px-4 !text-[19.36px] !leading-none !font-normal !cursor-pointer"
                   />
-                </Link>
+                </a>
               </div>
             </div>
 

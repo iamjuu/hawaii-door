@@ -78,7 +78,7 @@ const Gallerysection = () => {
                   <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-black/70 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <h3 className="text-white text-3xl font-medium opacity-100 transition-opacity duration-300 group-hover:opacity-0">
-                      {galleryItems[0].title}helloo
+                      {galleryItems[0].title}
                     </h3>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 h-1/2 p-8 flex items-center justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
@@ -98,7 +98,7 @@ const Gallerysection = () => {
                   <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-black/70 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <h3 className="text-white text-3xl font-medium opacity-100 transition-opacity duration-300 group-hover:opacity-0">
-                      {galleryItems[1].title} helloo
+                      {galleryItems[1].title} 
                     </h3>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 h-1/2 p-8 flex items-center justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">

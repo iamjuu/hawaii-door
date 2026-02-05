@@ -17,7 +17,7 @@ const Footer = () => {
                 fill
                 className="object-contain object-left"
                 priority
-                quality={90}
+                // quality={90}
               />
             </div>
 

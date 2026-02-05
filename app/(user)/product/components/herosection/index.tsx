@@ -1,4 +1,6 @@
 import Image, { StaticImageData } from "next/image";
+import PillCTAButton from "../../../home/components/link-button";
+import { MdFileDownload } from "react-icons/md";
 
 interface Feature {
   text?: string;
@@ -57,6 +59,27 @@ export default function HeroSection({
         <p className="text-[#C6C6C6] text-base md:text-[18px] font-[400]">
           {para}
         </p>
+
+        {/* CTA Button */}
+        <div className="mt-8">
+          <a
+            href={
+              process.env.NEXT_PUBLIC_PRODUCTION === "true"
+                ? "/files/public_html/uploads/brochure/Hawaii_Door_Brochure.pdf"
+                : "https://srv1473-files.hstgr.io/656ecabae3aaad0f/files/public_html/uploads/brochure/Hawaii_Door_Brochure.pdf"
+            }
+            download
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <PillCTAButton
+              label="Download our Brochure"
+              icon={<MdFileDownload className="text-2xl" />}
+              hoverVariant="white"
+              className="cursor-pointer !w-fit !h-auto !px-6 !py-3"
+            />
+          </a>
+        </div>
       </div>
 
       {/* FEATURE CAROUSEL */}
