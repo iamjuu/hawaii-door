@@ -28,27 +28,27 @@ const DoorSchema = new Schema<ProductType>(
   {
     name: { type: String, required: true },
     description: { type: String, required: false },
-    category: { 
-      type: String, 
-      required: true, 
-      enum: ["interior", "exterior"] 
-    },
-    doorType: { 
-      type: String, 
+    category: {
+      type: String,
       required: true,
-      enum: [...interiorDoorTypes, ...exteriorDoorTypes]
+      enum: ["interior", "exterior"],
+    },
+    doorType: {
+      type: String,
+      required: true,
+      enum: [...interiorDoorTypes, ...exteriorDoorTypes],
     },
     material: { type: String, required: false },
     dimensions: { type: String, required: false },
     color: { type: String, required: false },
     inStock: { type: Boolean, required: false, default: true },
-    imageUrl: { type: [String], required: true }, // Array of image URLs (S3 URLs)
+    imageUrl: { type: String, required: true }, // Single image URL (relative path)
   },
-  { 
+  {
     timestamps: true,
     strict: true,
-    strictQuery: true
-  }
+    strictQuery: true,
+  },
 );
 
 // Add indexes for better query performance

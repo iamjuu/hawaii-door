@@ -10,7 +10,7 @@ interface GalleryItem {
   category: "interior" | "exterior";
   subCategory: "Single" | "Double" | "Barn" | "Dutch";
   hasGlass: boolean;
-  imageUrl: string[];
+  imageUrl: string; // Single string
   createdAt: string;
   updatedAt: string;
 }
@@ -22,10 +22,10 @@ export default function GalleryManagementPage() {
     category: "" as "interior" | "exterior" | "",
     subCategory: "" as "Single" | "Double" | "Barn" | "Dutch" | "",
     hasGlass: false,
-    imageUrl: [] as string[],
+    imageUrl: "", // Single string
   });
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   // Gallery items listing state
   const [viewTab, setViewTab] = useState<"interior" | "exterior">("interior");
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
@@ -49,7 +49,7 @@ export default function GalleryManagementPage() {
     setLoading(true);
     try {
       const response = await fetch(
-        `/api/admin/doors?category=${viewTab}&page=${currentPage}&limit=${itemsPerPage}`
+        `/api/admin/doors?category=${viewTab}&page=${currentPage}&limit=${itemsPerPage}`,
       );
       const result = await response.json();
       if (result.success) {
@@ -96,6 +96,19 @@ export default function GalleryManagementPage() {
     fetchGalleryItems();
   }, [fetchGalleryItems, refreshTrigger]);
 
+  // Helper to resolve image URL
+  const resolveImageUrl = (url: string | undefined | null) => {
+    if (!url || typeof url !== "string") return "/placeholder-image.jpg"; // Fallback
+    if (url.startsWith("http") || url.startsWith("data:")) return url;
+    if (url.startsWith("/")) {
+      const baseUrl =
+        process.env.NEXT_PUBLIC_URL ||
+        "https://navajowhite-ostrich-413154.hostingersite.com";
+      return `${baseUrl.replace(/\/$/, "")}${url}`;
+    }
+    return url;
+  };
+
   const handleDeleteItem = async (itemId: string) => {
     if (!confirm("Are you sure you want to delete this gallery item?")) return;
 
@@ -121,44 +134,34 @@ export default function GalleryManagementPage() {
   };
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    if (files.length === 0) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
-    const newFiles: File[] = [];
-    const newPreviews: string[] = [];
-
-    files.forEach((file) => {
-      if (file.type.startsWith("image/")) {
-        newFiles.push(file);
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const result = e.target?.result as string;
-          newPreviews.push(result);
-          if (newPreviews.length === files.length) {
-            setFormData((prev) => ({
-              ...prev,
-              imageUrl: [...prev.imageUrl, ...newPreviews],
-            }));
-          }
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
-    setSelectedFiles((prev) => [...prev, ...newFiles]);
+    const file = files[0];
+    if (file.type.startsWith("image/")) {
+      setSelectedFile(file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setFormData((prev) => ({
+          ...prev,
+          imageUrl: e.target?.result as string,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const removeImage = (index: number) => {
+  const removeImage = () => {
     setFormData((prev) => ({
       ...prev,
-      imageUrl: prev.imageUrl.filter((_, i) => i !== index),
+      imageUrl: "",
     }));
-    setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
+    setSelectedFile(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate required fields
     if (!formData.name || !formData.category || !formData.subCategory) {
       alert("Please fill in all required fields");
@@ -166,8 +169,8 @@ export default function GalleryManagementPage() {
     }
 
     // Validate image is required
-    if (selectedFiles.length === 0 && formData.imageUrl.length === 0) {
-      alert("Please select at least one image");
+    if (!selectedFile && !formData.imageUrl) {
+      alert("Please select an image");
       return;
     }
 
@@ -175,16 +178,21 @@ export default function GalleryManagementPage() {
 
     try {
       // Upload images to S3 only when Create button is clicked
-      let s3ImageUrls: string[] = [];
-      
-      if (selectedFiles.length > 0) {
-        const uploadFormData = new FormData();
-        selectedFiles.forEach((file) => {
-          uploadFormData.append("files", file);
-        });
+      let s3ImageUrl = "";
 
-        const token = typeof window !== "undefined" ? document.cookie.split("; ").find(row => row.startsWith("adminToken="))?.split("=")[1] : null;
-        
+      if (selectedFile) {
+        const uploadFormData = new FormData();
+        uploadFormData.append("folder", "gallery");
+        uploadFormData.append("files", selectedFile);
+
+        const token =
+          typeof window !== "undefined"
+            ? document.cookie
+                .split("; ")
+                .find((row) => row.startsWith("adminToken="))
+                ?.split("=")[1]
+            : null;
+
         const uploadResponse = await fetch("/api/upload/image", {
           method: "POST",
           headers: {
@@ -195,14 +203,24 @@ export default function GalleryManagementPage() {
 
         const uploadData = await uploadResponse.json();
 
-        if (uploadData.success && uploadData.data && Array.isArray(uploadData.data)) {
-          s3ImageUrls = uploadData.data.map((item: { url: string }) => item.url);
+        if (
+          uploadData.success &&
+          uploadData.data &&
+          Array.isArray(uploadData.data) &&
+          uploadData.data.length > 0
+        ) {
+          s3ImageUrl = uploadData.data[0].url;
         } else {
           throw new Error(uploadData.message || "Failed to upload images");
         }
       } else {
-        // If no new files, use existing S3 URLs (if any)
-        s3ImageUrls = formData.imageUrl.filter((url) => url.startsWith("https://"));
+        // Use existing URL if valid
+        if (
+          formData.imageUrl.startsWith("http") ||
+          formData.imageUrl.startsWith("/")
+        ) {
+          s3ImageUrl = formData.imageUrl;
+        }
       }
 
       const galleryData = {
@@ -210,7 +228,7 @@ export default function GalleryManagementPage() {
         category: formData.category,
         subCategory: formData.subCategory,
         hasGlass: formData.hasGlass,
-        imageUrl: s3ImageUrls,
+        imageUrl: s3ImageUrl,
       };
 
       const response = await fetch("/api/admin/doors", {
@@ -230,9 +248,9 @@ export default function GalleryManagementPage() {
           category: "",
           subCategory: "",
           hasGlass: false,
-          imageUrl: [],
+          imageUrl: "",
         });
-        setSelectedFiles([]);
+        setSelectedFile(null);
         setRefreshTrigger((prev) => prev + 1);
         alert("Gallery item created successfully!");
       } else {
@@ -249,7 +267,9 @@ export default function GalleryManagementPage() {
   return (
     <div className="min-h-screen bg-zinc-900 p-6 sm:p-8">
       <div className="mx-auto max-w-7xl">
-        <h1 className="text-3xl font-bold text-white mb-8">Gallery Management</h1>
+        <h1 className="text-3xl font-bold text-white mb-8">
+          Gallery Management
+        </h1>
 
         {/* Tabs for Interior/Exterior */}
         <div className="mb-6 border-b border-zinc-700">
@@ -281,8 +301,10 @@ export default function GalleryManagementPage() {
           {/* Add Gallery Item Form */}
           <div className="lg:col-span-1">
             <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-6 sticky top-4">
-              <h2 className="text-xl font-semibold text-white mb-4">Add Gallery Item</h2>
-              
+              <h2 className="text-xl font-semibold text-white mb-4">
+                Add Gallery Item
+              </h2>
+
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Name */}
                 <div>
@@ -292,7 +314,9 @@ export default function GalleryManagementPage() {
                   <input
                     type="text"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-blue-500"
                     required
                   />
@@ -305,7 +329,15 @@ export default function GalleryManagementPage() {
                   </label>
                   <select
                     value={formData.category}
-                    onChange={(e) => setFormData({ ...formData, category: e.target.value as "interior" | "exterior" | "" })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        category: e.target.value as
+                          | "interior"
+                          | "exterior"
+                          | "",
+                      })
+                    }
                     className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-blue-500"
                     required
                   >
@@ -322,7 +354,17 @@ export default function GalleryManagementPage() {
                   </label>
                   <select
                     value={formData.subCategory}
-                    onChange={(e) => setFormData({ ...formData, subCategory: e.target.value as "Single" | "Double" | "Barn" | "Dutch" | "" })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        subCategory: e.target.value as
+                          | "Single"
+                          | "Double"
+                          | "Barn"
+                          | "Dutch"
+                          | "",
+                      })
+                    }
                     className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-blue-500"
                     required
                   >
@@ -340,43 +382,43 @@ export default function GalleryManagementPage() {
                     <input
                       type="checkbox"
                       checked={formData.hasGlass}
-                      onChange={(e) => setFormData({ ...formData, hasGlass: e.target.checked })}
+                      onChange={(e) =>
+                        setFormData({ ...formData, hasGlass: e.target.checked })
+                      }
                       className="w-5 h-5 rounded border-zinc-700 bg-zinc-900 text-blue-500 focus:ring-blue-500"
                     />
-                    <span className="text-sm font-medium text-zinc-300">With Glass</span>
+                    <span className="text-sm font-medium text-zinc-300">
+                      With Glass
+                    </span>
                   </label>
                 </div>
 
                 {/* Image Upload */}
                 <div>
                   <label className="block text-sm font-medium text-zinc-300 mb-2">
-                    Images <span className="text-red-500">*</span>
+                    Image <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="file"
                     accept="image/*"
-                    multiple
                     onChange={handleImageSelect}
                     className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-blue-500"
                   />
-                  {formData.imageUrl.length > 0 && (
-                    <div className="mt-4 grid grid-cols-2 gap-2">
-                      {formData.imageUrl.map((url, index) => (
-                        <div key={index} className="relative">
-                          <img
-                            src={url}
-                            alt={`Preview ${index + 1}`}
-                            className="w-full h-24 object-cover rounded border border-zinc-700"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => removeImage(index)}
-                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
-                          >
-                            ×
-                          </button>
-                        </div>
-                      ))}
+                  {/* Preview */}
+                  {formData.imageUrl && (
+                    <div className="mt-4 relative w-full sm:w-1/2">
+                      <img
+                        src={resolveImageUrl(formData.imageUrl)}
+                        alt="Preview"
+                        className="w-full h-48 object-cover rounded border border-zinc-700"
+                      />
+                      <button
+                        type="button"
+                        onClick={removeImage}
+                        className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+                      >
+                        ×
+                      </button>
                     </div>
                   )}
                 </div>
@@ -396,9 +438,13 @@ export default function GalleryManagementPage() {
           {/* Gallery Items List */}
           <div className="lg:col-span-2">
             {loading ? (
-              <div className="text-zinc-400 text-center py-12">Loading gallery items...</div>
+              <div className="text-zinc-400 text-center py-12">
+                Loading gallery items...
+              </div>
             ) : galleryItems.length === 0 ? (
-              <div className="text-zinc-400 text-center py-12">No gallery items found</div>
+              <div className="text-zinc-400 text-center py-12">
+                No gallery items found
+              </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {galleryItems.map((item) => (
@@ -408,9 +454,9 @@ export default function GalleryManagementPage() {
                   >
                     {/* Item Image */}
                     <div className="relative h-48 bg-zinc-900">
-                      {item.imageUrl && item.imageUrl.length > 0 ? (
+                      {item.imageUrl ? (
                         <img
-                          src={item.imageUrl[0]}
+                          src={resolveImageUrl(item.imageUrl)}
                           alt={item.name}
                           className="w-full h-full object-cover"
                         />
@@ -419,22 +465,32 @@ export default function GalleryManagementPage() {
                           <div className="text-6xl">🖼️</div>
                         </div>
                       )}
-                      {item.imageUrl && item.imageUrl.length > 1 && (
-                        <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                          +{item.imageUrl.length - 1} more
-                        </div>
-                      )}
                     </div>
 
                     {/* Item Info */}
                     <div className="p-4">
-                      <h3 className="text-lg font-semibold text-white mb-2">{item.name}</h3>
+                      <h3 className="text-lg font-semibold text-white mb-2">
+                        {item.name}
+                      </h3>
                       <div className="space-y-1 text-sm text-zinc-400">
-                        <p>Type: <span className="text-white capitalize">{item.category}</span></p>
-                        <p>Sub Category: <span className="text-white">{item.subCategory}</span></p>
-                        <p>Glass: <span className="text-white">{item.hasGlass ? "With Glass" : "Without Glass"}</span></p>
+                        <p>
+                          Type:{" "}
+                          <span className="text-white capitalize">
+                            {item.category}
+                          </span>
+                        </p>
+                        <p>
+                          Sub Category:{" "}
+                          <span className="text-white">{item.subCategory}</span>
+                        </p>
+                        <p>
+                          Glass:{" "}
+                          <span className="text-white">
+                            {item.hasGlass ? "With Glass" : "Without Glass"}
+                          </span>
+                        </p>
                       </div>
-                      
+
                       {/* Actions */}
                       <div className="mt-4 flex gap-2">
                         <Link
@@ -448,7 +504,9 @@ export default function GalleryManagementPage() {
                           disabled={deletingItemId === item._id}
                           className="flex-1 px-3 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition-colors disabled:opacity-50"
                         >
-                          {deletingItemId === item._id ? "Deleting..." : "Delete"}
+                          {deletingItemId === item._id
+                            ? "Deleting..."
+                            : "Delete"}
                         </button>
                       </div>
                     </div>
@@ -461,7 +519,9 @@ export default function GalleryManagementPage() {
             {totalPages > 1 && (
               <div className="mt-6 flex justify-center gap-2">
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(1, prev - 1))
+                  }
                   disabled={currentPage === 1}
                   className="px-4 py-2 bg-zinc-800 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -471,7 +531,9 @@ export default function GalleryManagementPage() {
                   Page {currentPage} of {totalPages}
                 </span>
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                  }
                   disabled={currentPage === totalPages}
                   className="px-4 py-2 bg-zinc-800 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed"
                 >

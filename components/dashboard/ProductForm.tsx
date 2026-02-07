@@ -15,17 +15,22 @@ type ProductFormProps = {
   onCancel?: () => void;
 };
 
-export default function ProductForm({ productId, initialData, onComplete, onCancel }: ProductFormProps) {
+export default function ProductForm({
+  productId,
+  initialData,
+  onComplete,
+  onCancel,
+}: ProductFormProps) {
   const isEdit = !!productId;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  
+
   const [formData, setFormData] = useState({
     name: initialData?.name || "",
     type: initialData?.type || "",
     category: initialData?.category || "",
-    images: initialData?.imageUrl || [] as string[],
+    images: initialData?.imageUrl || ([] as string[]),
   });
 
   // Helper to convert base64 string to data URL if needed
@@ -43,7 +48,6 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
 
   // Store the selected file temporarily (not uploaded until form submit)
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
 
   // Helper function to compress and convert image to base64
   const compressImageToBase64 = (file: File): Promise<string> => {
@@ -97,7 +101,7 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
               reader2.readAsDataURL(blob);
             },
             "image/webp",
-            0.8
+            0.8,
           );
         };
         img.onerror = () => reject(new Error("Failed to load image"));
@@ -130,7 +134,9 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
       setFormData({ ...formData, images: [] });
     } catch (error) {
       console.error("Error processing image:", error);
-      setError(error instanceof Error ? error.message : "Failed to process image");
+      setError(
+        error instanceof Error ? error.message : "Failed to process image",
+      );
       setUploadedImages([]);
       setSelectedFile(null);
     }
@@ -150,7 +156,10 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
     }
 
     // Category is only required for normal and glass types
-    if (!formData.category && (formData.type === "normal" || formData.type === "glass")) {
+    if (
+      !formData.category &&
+      (formData.type === "normal" || formData.type === "glass")
+    ) {
       setError("Product category is required");
       setLoading(false);
       return;
@@ -170,9 +179,16 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
       if (selectedFile) {
         const uploadFormData = new FormData();
         uploadFormData.append("file", selectedFile);
+        uploadFormData.append("folder", "products");
 
-        const token = typeof window !== "undefined" ? document.cookie.split("; ").find(row => row.startsWith("adminToken="))?.split("=")[1] : null;
-        
+        const token =
+          typeof window !== "undefined"
+            ? document.cookie
+                .split("; ")
+                .find((row) => row.startsWith("adminToken="))
+                ?.split("=")[1]
+            : null;
+
         const uploadResponse = await fetch("/api/upload/image", {
           method: "POST",
           headers: {
@@ -191,10 +207,10 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
       }
 
       // Now save the product with the S3 URL
-      const url = isEdit 
+      const url = isEdit
         ? `/api/admin/products/${productId}`
         : `/api/admin/products`;
-      
+
       const method = isEdit ? "PATCH" : "POST";
 
       const response = await fetch(url, {
@@ -216,8 +232,12 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
         throw new Error(data.message || "Failed to save product");
       }
 
-      setSuccess(isEdit ? "Product updated successfully!" : "Product created successfully!");
-      
+      setSuccess(
+        isEdit
+          ? "Product updated successfully!"
+          : "Product created successfully!",
+      );
+
       setTimeout(() => {
         if (onComplete) {
           onComplete();
@@ -230,9 +250,15 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-zinc-700 bg-zinc-800 p-6 shadow-sm">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4 rounded-lg border border-zinc-700 bg-zinc-800 p-6 shadow-sm"
+    >
       <div className="space-y-1">
-        <label htmlFor="product-name" className="text-sm font-medium text-white">
+        <label
+          htmlFor="product-name"
+          className="text-sm font-medium text-white"
+        >
           Product name
         </label>
         <input
@@ -246,7 +272,10 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
       </div>
 
       <div className="space-y-1">
-        <label htmlFor="product-type" className="text-sm font-medium text-white">
+        <label
+          htmlFor="product-type"
+          className="text-sm font-medium text-white"
+        >
           Product Type <span className="text-red-500">*</span>
         </label>
         <select
@@ -266,44 +295,48 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
         </select>
       </div>
 
-      {formData.type && (formData.type === "normal" || formData.type === "glass") && (
-        <div className="space-y-1">
-          <label htmlFor="product-category" className="text-sm font-medium text-white">
-            Category <span className="text-red-500">*</span>
-          </label>
-          <select
-            id="product-category"
-            required
-            value={formData.category}
-            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-            className="w-full rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-white focus:outline-none"
-          >
-            <option value="">Select category</option>
-            {formData.type === "normal" && (
-              <>
-                <option value="single">Single</option>
-                <option value="double">Double</option>
-                <option value="barn">Barn</option>
-                <option value="dutch">Dutch</option>
-              </>
-            )}
-            {formData.type === "glass" && (
-              <>
-                <option value="with-glass">With Glass</option>
-                <option value="without-glass">Without Glass</option>
-              </>
-            )}
-          </select>
-        </div>
-      )}
+      {formData.type &&
+        (formData.type === "normal" || formData.type === "glass") && (
+          <div className="space-y-1">
+            <label
+              htmlFor="product-category"
+              className="text-sm font-medium text-white"
+            >
+              Category <span className="text-red-500">*</span>
+            </label>
+            <select
+              id="product-category"
+              required
+              value={formData.category}
+              onChange={(e) =>
+                setFormData({ ...formData, category: e.target.value })
+              }
+              className="w-full rounded-md border border-zinc-600 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-white focus:outline-none"
+            >
+              <option value="">Select category</option>
+              {formData.type === "normal" && (
+                <>
+                  <option value="single">Single</option>
+                  <option value="double">Double</option>
+                  <option value="barn">Barn</option>
+                  <option value="dutch">Dutch</option>
+                </>
+              )}
+              {formData.type === "glass" && (
+                <>
+                  <option value="with-glass">With Glass</option>
+                  <option value="without-glass">Without Glass</option>
+                </>
+              )}
+            </select>
+          </div>
+        )}
 
       <div className="space-y-1">
         <label className="text-sm font-medium text-white">
           Product Image <span className="text-red-500">*</span>
         </label>
-        <p className="text-xs text-zinc-400 mb-2">
-          One image is required.
-        </p>
+        <p className="text-xs text-zinc-400 mb-2">One image is required.</p>
         <div className="space-y-2">
           <input
             id="product-image-file"
@@ -358,7 +391,13 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
           disabled={loading}
           className="inline-flex items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {loading ? (isEdit ? "Updating..." : "Creating...") : isEdit ? "Update Product" : "Create Product"}
+          {loading
+            ? isEdit
+              ? "Updating..."
+              : "Creating..."
+            : isEdit
+              ? "Update Product"
+              : "Create Product"}
         </button>
         {onCancel && (
           <button
@@ -373,4 +412,3 @@ export default function ProductForm({ productId, initialData, onComplete, onCanc
     </form>
   );
 }
-

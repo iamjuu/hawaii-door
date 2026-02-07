@@ -13,7 +13,7 @@ interface Door {
   price: number;
   category: string;
   doorType: string;
-  imageUrl?: string[];
+  imageUrl?: string;
   description?: string;
   inStock?: boolean;
 }
@@ -24,6 +24,12 @@ function getImageSrc(url: string | undefined): string {
   const s = String(url).trim();
   if (s.startsWith("data:image")) return s;
   if (s.startsWith("http://") || s.startsWith("https://")) return s;
+  if (s.startsWith("/")) {
+    const baseUrl =
+      process.env.NEXT_PUBLIC_URL ||
+      "https://navajowhite-ostrich-413154.hostingersite.com";
+    return `${baseUrl.replace(/\/$/, "")}${s}`;
+  }
   const base64Part = s.includes(",") ? (s.split(",")[1] ?? s) : s;
   return `data:image/webp;base64,${base64Part}`;
 }
@@ -402,10 +408,10 @@ const ExteriorWoodPage = () => {
                                 className="relative group cursor-pointer"
                                 onClick={() => handleDoorClick(door, doorType)}
                               >
-                                {door.imageUrl && door.imageUrl[0] && (
+                                {door.imageUrl && (
                                   <div className="w-full h-48 rounded-lg group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex items-center justify-center ">
                                     <DoorImage
-                                      rawSrc={door.imageUrl[0]}
+                                      rawSrc={door.imageUrl}
                                       alt={door.name}
                                       className="w-full h-full object-contain transition-transform group-hover:scale-105"
                                       onError={(e) => {
@@ -420,7 +426,7 @@ const ExteriorWoodPage = () => {
                                   {/* <p className="text-sm font-roboto font-[500] text-black truncate text-center">{door.name}</p> */}
                                   {door.description && (
                                     <p className="text-xs font-roboto font-[400] text-[#3B3B3B] line-clamp-2 mt-1 text-center">
-                                      {door.description}
+                                      {/* {door.description} */}
                                     </p>
                                   )}
                                 </div>
@@ -518,11 +524,11 @@ const ExteriorWoodPage = () => {
 
             {/* Image Container */}
             <div className="flex flex-col items-center justify-center w-full h-full max-w-7xl">
-              {currentDoorGroup[currentDoorIndex]?.imageUrl?.[0] && (
+              {currentDoorGroup[currentDoorIndex]?.imageUrl && (
                 <>
                   <DoorImage
                     key={currentDoorIndex}
-                    rawSrc={currentDoorGroup[currentDoorIndex]?.imageUrl?.[0]}
+                    rawSrc={currentDoorGroup[currentDoorIndex]?.imageUrl}
                     alt={currentDoorGroup[currentDoorIndex].name}
                     className="w-auto h-auto max-w-[75%] max-h-[55vh] md:max-w-[70%] md:max-h-[65vh] lg:max-w-[65%] lg:max-h-[70vh] object-contain"
                   />

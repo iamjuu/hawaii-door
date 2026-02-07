@@ -2,14 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Gallery from "@/models/Gallery";
 import { requireAdmin } from "@/lib/auth";
-import { deleteFromS3 } from "@/lib/s3";
+import { deleteFile } from "@/lib/storage";
 import mongoose from "mongoose";
-
 
 // GET - Fetch a single gallery item by ID
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await requireAdmin(req);
@@ -20,7 +19,7 @@ export async function GET(
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
         { success: false, message: "Invalid gallery item ID" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -29,7 +28,7 @@ export async function GET(
     if (!galleryItem) {
       return NextResponse.json(
         { success: false, message: "Gallery item not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -39,10 +38,13 @@ export async function GET(
     });
   } catch (e: unknown) {
     const error = e as { message?: string };
-    const status = error?.message === "FORBIDDEN" || error?.message === "UNAUTHORIZED" ? 403 : 500;
+    const status =
+      error?.message === "FORBIDDEN" || error?.message === "UNAUTHORIZED"
+        ? 403
+        : 500;
     return NextResponse.json(
       { success: false, message: error?.message || "Server error" },
-      { status }
+      { status },
     );
   }
 }
@@ -50,7 +52,7 @@ export async function GET(
 // PUT - Update a gallery item by ID
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await requireAdmin(req);
@@ -61,7 +63,7 @@ export async function PUT(
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
         { success: false, message: "Invalid gallery item ID" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -73,31 +75,24 @@ export async function PUT(
     if (!existingItem) {
       return NextResponse.json(
         { success: false, message: "Gallery item not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
-    // If images are being updated, delete old images from S3
-    if (imageUrl !== undefined && existingItem.imageUrl && Array.isArray(existingItem.imageUrl)) {
-      const oldImages = existingItem.imageUrl;
-      const newImages = Array.isArray(imageUrl) ? imageUrl : [imageUrl];
-      
-      // Find images that are being removed
-      const imagesToDelete = oldImages.filter((oldImg: string) => !newImages.includes(oldImg));
-      
-      // Delete removed images from S3
-      const deletePromises = imagesToDelete.map(async (imageUrlToDelete: string) => {
+    // If images are being updated, delete old images from S3/FTP/Local
+    if (imageUrl !== undefined && existingItem.imageUrl) {
+      const oldImage = existingItem.imageUrl;
+      const newImage = imageUrl;
+
+      // If image changed, delete old one
+      if (oldImage !== newImage && typeof oldImage === "string") {
         try {
-          // Only delete if it's an S3 URL
-          if (imageUrlToDelete && (imageUrlToDelete.includes("s3.amazonaws.com") || imageUrlToDelete.includes("s3."))) {
-            await deleteFromS3(imageUrlToDelete);
-          }
+          await deleteFile(oldImage);
         } catch (error) {
-          console.error(`Failed to delete old image from S3: ${imageUrlToDelete}`, error);
-          // Continue with update even if S3 deletion fails
+          console.error(`Failed to delete old image: ${oldImage}`, error);
+          // Continue with update
         }
-      });
-      await Promise.all(deletePromises);
+      }
     }
 
     // Prepare update data - Gallery model has: name, category, subCategory, hasGlass, imageUrl
@@ -112,8 +107,11 @@ export async function PUT(
     if (category !== undefined) {
       if (!["interior", "exterior"].includes(category)) {
         return NextResponse.json(
-          { success: false, message: "Invalid category. Must be 'interior' or 'exterior'" },
-          { status: 400 }
+          {
+            success: false,
+            message: "Invalid category. Must be 'interior' or 'exterior'",
+          },
+          { status: 400 },
         );
       }
       updateData.category = category;
@@ -123,8 +121,12 @@ export async function PUT(
     if (subCategory !== undefined) {
       if (!["Single", "Double", "Barn", "Dutch"].includes(subCategory)) {
         return NextResponse.json(
-          { success: false, message: "Invalid subCategory. Must be 'Single', 'Double', 'Barn', or 'Dutch'" },
-          { status: 400 }
+          {
+            success: false,
+            message:
+              "Invalid subCategory. Must be 'Single', 'Double', 'Barn', or 'Dutch'",
+          },
+          { status: 400 },
         );
       }
       updateData.subCategory = subCategory;
@@ -137,12 +139,12 @@ export async function PUT(
 
     // Update imageUrl if provided
     if (imageUrl !== undefined) {
-      if (Array.isArray(imageUrl)) {
+      if (typeof imageUrl === "string") {
         updateData.imageUrl = imageUrl;
       } else {
         return NextResponse.json(
-          { success: false, message: "imageUrl must be an array" },
-          { status: 400 }
+          { success: false, message: "imageUrl must be a string" },
+          { status: 400 },
         );
       }
     }
@@ -150,7 +152,7 @@ export async function PUT(
     const updatedItem = await Gallery.findByIdAndUpdate(
       id,
       { $set: updateData },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     ).lean();
 
     return NextResponse.json({
@@ -160,10 +162,13 @@ export async function PUT(
     });
   } catch (e: unknown) {
     const error = e as { message?: string };
-    const status = error?.message === "FORBIDDEN" || error?.message === "UNAUTHORIZED" ? 403 : 500;
+    const status =
+      error?.message === "FORBIDDEN" || error?.message === "UNAUTHORIZED"
+        ? 403
+        : 500;
     return NextResponse.json(
       { success: false, message: error?.message || "Server error" },
-      { status }
+      { status },
     );
   }
 }
@@ -171,7 +176,7 @@ export async function PUT(
 // DELETE - Delete a gallery item by ID
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await requireAdmin(req);
@@ -182,34 +187,29 @@ export async function DELETE(
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
         { success: false, message: "Invalid gallery item ID" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     // Get gallery item before deleting to access image URLs
     const galleryItem = await Gallery.findById(id);
-    
+
     if (!galleryItem) {
       return NextResponse.json(
         { success: false, message: "Gallery item not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
-    // Delete images from S3 before deleting the gallery item
-    if (galleryItem.imageUrl && Array.isArray(galleryItem.imageUrl)) {
-      const deletePromises = galleryItem.imageUrl.map(async (imageUrl: string) => {
-        try {
-          // Only delete if it's an S3 URL
-          if (imageUrl && (imageUrl.includes("s3.amazonaws.com") || imageUrl.includes("s3."))) {
-            await deleteFromS3(imageUrl);
-          }
-        } catch (error) {
-          console.error(`Failed to delete image from S3: ${imageUrl}`, error);
-          // Continue with deletion even if S3 deletion fails
-        }
-      });
-      await Promise.all(deletePromises);
+    // Delete images before deleting the gallery item
+    if (galleryItem.imageUrl && typeof galleryItem.imageUrl === "string") {
+      try {
+        console.log(`Deleting image: ${galleryItem.imageUrl}`);
+        await deleteFile(galleryItem.imageUrl);
+      } catch (error) {
+        console.error(`Failed to delete image: ${galleryItem.imageUrl}`, error);
+        // Continue with deletion
+      }
     }
 
     // Delete the gallery item from database
@@ -222,11 +222,13 @@ export async function DELETE(
     });
   } catch (e: unknown) {
     const error = e as { message?: string };
-    const status = error?.message === "FORBIDDEN" || error?.message === "UNAUTHORIZED" ? 403 : 500;
+    const status =
+      error?.message === "FORBIDDEN" || error?.message === "UNAUTHORIZED"
+        ? 403
+        : 500;
     return NextResponse.json(
       { success: false, message: error?.message || "Server error" },
-      { status }
+      { status },
     );
   }
 }
-

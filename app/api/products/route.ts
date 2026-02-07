@@ -24,11 +24,8 @@ export async function GET(req: NextRequest) {
     // Use _id for sorting instead of createdAt to avoid memory issues
     // _id contains timestamp and is automatically indexed
     // For large datasets with skip, we avoid skip when page=1 to reduce memory usage
-    const queryBuilder = Door.find(query)
-      .sort({ _id: -1 })
-      .limit(limit)
-      .lean();
-    
+    const queryBuilder = Door.find(query).sort({ _id: -1 }).limit(limit).lean();
+
     // Only apply skip if not the first page
     if (page > 1) {
       queryBuilder.skip(skip);
@@ -43,7 +40,7 @@ export async function GET(req: NextRequest) {
     const productsData = excludeImages
       ? products.map(({ imageUrl, ...product }) => ({
           ...product,
-          hasImage: Array.isArray(imageUrl) && imageUrl.length > 0,
+          hasImage: !!imageUrl,
         }))
       : products;
 
@@ -61,11 +58,17 @@ export async function GET(req: NextRequest) {
     });
   } catch (error: any) {
     console.error("GET /api/products error:", error);
-    return NextResponse.json({ 
-      success: false, 
-      message: error?.message || "Server error",
-      error: process.env.NODE_ENV === 'development' ? error?.toString() : undefined
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: error?.message || "Server error",
+        error:
+          process.env.NODE_ENV === "development"
+            ? error?.toString()
+            : undefined,
+      },
+      { status: 500 },
+    );
   }
 }
 
@@ -77,10 +80,11 @@ export async function POST(req: NextRequest) {
     const created = await Door.create(body);
     return NextResponse.json({ success: true, data: created }, { status: 201 });
   } catch (e: any) {
-    const status = e?.message === "FORBIDDEN" || e?.message === "UNAUTHORIZED" ? 403 : 500;
-    return NextResponse.json({ success: false, message: e?.message || "Server error" }, { status });
+    const status =
+      e?.message === "FORBIDDEN" || e?.message === "UNAUTHORIZED" ? 403 : 500;
+    return NextResponse.json(
+      { success: false, message: e?.message || "Server error" },
+      { status },
+    );
   }
 }
-
-
-

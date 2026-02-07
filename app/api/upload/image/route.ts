@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { uploadToS3 } from "@/lib/s3";
+import { uploadFile } from "@/lib/storage";
 import { requireAdmin } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
@@ -11,6 +11,9 @@ export async function POST(req: NextRequest) {
     const file = formData.get("file") as File | null;
     const base64Data = formData.get("base64") as string | null;
     const base64Array = formData.getAll("base64Array") as string[];
+
+    // Read folder from request, default to 'products'
+    const folder = (formData.get("folder") as string) || "products";
 
     // Handle multiple files
     if (files.length > 0) {
@@ -25,8 +28,13 @@ export async function POST(req: NextRequest) {
           throw new Error(`File ${fileName} exceeds 10MB limit`);
         }
 
-        // Upload to S3 (converts to WebP automatically)
-        const imageUrl = await uploadToS3(fileBuffer, fileName, contentType, true);
+        // Upload to Storage (automatically converts to WebP)
+        const imageUrl = await uploadFile(
+          fileBuffer,
+          fileName,
+          contentType,
+          folder,
+        );
         return {
           url: imageUrl,
           fileName,
@@ -52,12 +60,17 @@ export async function POST(req: NextRequest) {
       if (fileBuffer.length > 10 * 1024 * 1024) {
         return NextResponse.json(
           { success: false, message: "File size exceeds 10MB limit" },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
-      // Upload to S3 (converts to WebP automatically)
-      const imageUrl = await uploadToS3(fileBuffer, fileName, contentType, true);
+      // Upload to Storage
+      const imageUrl = await uploadFile(
+        fileBuffer,
+        fileName,
+        contentType,
+        folder,
+      );
 
       return NextResponse.json({
         success: true,
@@ -90,8 +103,13 @@ export async function POST(req: NextRequest) {
           throw new Error(`Image ${index + 1} exceeds 10MB limit`);
         }
 
-        // Upload to S3 (converts to WebP automatically)
-        const imageUrl = await uploadToS3(fileBuffer, fileName, contentType, true);
+        // Upload to Storage
+        const imageUrl = await uploadFile(
+          fileBuffer,
+          fileName,
+          contentType,
+          folder,
+        );
         return {
           url: imageUrl,
           fileName,
@@ -125,12 +143,17 @@ export async function POST(req: NextRequest) {
       if (fileBuffer.length > 10 * 1024 * 1024) {
         return NextResponse.json(
           { success: false, message: "File size exceeds 10MB limit" },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
-      // Upload to S3 (converts to WebP automatically)
-      const imageUrl = await uploadToS3(fileBuffer, fileName, contentType, true);
+      // Upload to Storage
+      const imageUrl = await uploadFile(
+        fileBuffer,
+        fileName,
+        contentType,
+        folder,
+      );
 
       return NextResponse.json({
         success: true,
@@ -144,15 +167,20 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { success: false, message: "No file or base64 data provided" },
-      { status: 400 }
+      { status: 400 },
     );
   } catch (error) {
     console.error("Image upload error:", error);
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    const status = errorMessage.includes("FORBIDDEN") || errorMessage.includes("UNAUTHORIZED") ? 403 : 500;
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+    const status =
+      errorMessage.includes("FORBIDDEN") ||
+      errorMessage.includes("UNAUTHORIZED")
+        ? 403
+        : 500;
     return NextResponse.json(
       { success: false, message: errorMessage },
-      { status }
+      { status },
     );
   }
 }

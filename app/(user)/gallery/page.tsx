@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
 import PageLoader from "@/components/user/PageLoader";
 import { FiFilter, FiX } from "react-icons/fi";
-import { ParallaxScrollSecondDemo } from "../components/card/card";
+import { ParallaxScroll } from "../components/ui/parallax-scroll";
 
 /* ---------------- TYPES ---------------- */
 type GalleryItem = {
@@ -19,185 +19,144 @@ type GalleryItem = {
 type ApiGalleryItem = {
   _id?: string;
   id?: string;
-  imageUrl?: string[];
+  imageUrl?: string;
   category?: "interior" | "exterior";
   subCategory?: "Single" | "Double" | "Barn" | "Dutch";
   hasGlass?: boolean;
   name?: string;
 };
 
-/* ---------------- STATIC GALLERY (temporary until backend has images; uncomment API below when ready) ---------------- */
-const STATIC_GALLERY_ITEMS: GalleryItem[] = [
-  {
-    id: "s1",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
-    product: "Exterior",
-    type: "Single",
-    glass: "With Glass",
-  },
-  {
-    id: "s2",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800",
-    product: "Interior",
-    type: "Single",
-    glass: "Without Glass",
-  },
-  {
-    id: "s3",
-    image: "https://images.unsplash.com/photo-1600566753086-00f18fb6d3ea?w=800",
-    product: "Interior",
-    type: "Single",
-    glass: "With Glass",
-  },
-  {
-    id: "s4",
-    image: "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800",
-    product: "Exterior",
-    type: "Double",
-    glass: "With Glass",
-  },
-  {
-    id: "s5",
-    image: "https://images.unsplash.com/photo-1600047509807-ba87494cfbce?w=800",
-    product: "Exterior",
-    type: "Double",
-    glass: "Without Glass",
-  },
-  {
-    id: "s6",
-    image: "https://images.unsplash.com/photo-1600585154520-5d63cc2118e0?w=800",
-    product: "Exterior",
-    type: "Single",
-    glass: "With Glass",
-  },
-  {
-    id: "s7",
-    image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800",
-    product: "Interior",
-    type: "Single",
-    glass: "Without Glass",
-  },
-  {
-    id: "s8",
-    image: "https://images.unsplash.com/photo-1558618666-fa25c5b8318d?w=800",
-    product: "Interior",
-    type: "Barn",
-    glass: "Without Glass",
-  },
-  {
-    id: "s9",
-    image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800",
-    product: "Interior",
-    type: "Dutch",
-    glass: "With Glass",
-  },
-  {
-    id: "s10",
-    image: "https://images.unsplash.com/photo-1600566752733-c8c8e2716c63?w=800",
-    product: "Interior",
-    type: "Single",
-    glass: "With Glass",
-  },
-  {
-    id: "s11",
-    image: "/assets/images/doorimage/Gallery%201.png",
-    product: "Interior",
-    type: "Single",
-    glass: "With Glass",
-  },
-  {
-    id: "s12",
-    image: "/assets/images/doorimage/Frame%20138.png",
-    product: "Exterior",
-    type: "Single",
-    glass: "With Glass",
-  },
-  {
-    id: "s13",
-    image: "/assets/images/doorimage/Frame%20150.png",
-    product: "Interior",
-    type: "Double",
-    glass: "Without Glass",
-  },
-  {
-    id: "s14",
-    image: "/assets/images/doorimage/Frame%20154.png",
-    product: "Exterior",
-    type: "Single",
-    glass: "With Glass",
-  },
-  {
-    id: "s15",
-    image: "https://images.unsplash.com/photo-1600573472692-25e63ee141f8?w=800",
-    product: "Exterior",
-    type: "Single",
-    glass: "Without Glass",
-  },
-];
-
 /* ---------------- COMPONENT ---------------- */
+
 const GalleryPage = () => {
   const [openFilter, setOpenFilter] = useState(false);
 
+  // Filters
   const [selectedProduct, setSelectedProduct] = useState("All");
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedGlass, setSelectedGlass] = useState<string[]>([]);
-  // Static mode: no API, use STATIC_GALLERY_ITEMS. When using API, set loading true and use [].
+
+  // Data State
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [allGalleryItems, setAllGalleryItems] =
-    useState<GalleryItem[]>(STATIC_GALLERY_ITEMS);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [initialLoaded, setInitialLoaded] = useState(false);
+
+  // Constants
+  const LIMIT = 100;
 
   /* ---------------- HELPERS ---------------- */
   const getImageUrl = (imageUrl: string): string => {
     if (!imageUrl) return "";
     if (imageUrl.startsWith("data:image")) return imageUrl;
     if (imageUrl.startsWith("http")) return imageUrl;
+    // Ensure properly formed path if starts with /
+    if (imageUrl.startsWith("/")) {
+      const baseUrl =
+        process.env.NEXT_PUBLIC_URL ||
+        "https://navajowhite-ostrich-413154.hostingersite.com";
+      return `${baseUrl.replace(/\/$/, "")}${imageUrl}`;
+    }
     return `data:image/jpeg;base64,${imageUrl}`;
   };
 
-  const capitalize = (str: string): string =>
-    str.charAt(0).toUpperCase() + str.slice(1);
+  /* ---------------- FETCH DATA ---------------- */
+  const fetchGalleryItems = useCallback(
+    async (pageNum: number, isNewFilter: boolean = false) => {
+      if (loading) return;
 
-  /* ---------------- FETCH: commented out; using static gallery until backend has images ---------------- */
-  // When backend is ready: set initial loading=true, allGalleryItems=[], and uncomment below.
-  // useEffect(() => {
-  //   const fetchGalleryItems = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const params = new URLSearchParams();
-  //       params.append("limit", "200");
-  //       if (selectedProduct !== "All") params.append("category", selectedProduct.toLowerCase());
-  //       if (selectedTypes.length > 0) selectedTypes.forEach((t) => params.append("subCategory", t));
-  //       if (selectedGlass.length > 0) selectedGlass.forEach((g) => params.append("hasGlass", (g === "With Glass").toString()));
-  //       const response = await fetch(`/api/gallery?${params.toString()}`);
-  //       const result = await response.json();
-  //       if (result.success && result.data) {
-  //         const transformedItems: GalleryItem[] = result.data.map((item: ApiGalleryItem) => {
-  //           const firstImage = item.imageUrl?.[0]?.trim() || "";
-  //           const image = getImageUrl(firstImage);
-  //           const productCategory = item.category === "interior" ? "Interior" : item.category === "exterior" ? "Exterior" : "Other";
-  //           return { id: item._id || item.id || "", image, product: productCategory, type: item.subCategory || "", glass: item.hasGlass ? "With Glass" : "Without Glass" };
-  //         }).filter((item: GalleryItem) => item.image && item.image !== "data:image/jpeg;base64,");
-  //         setAllGalleryItems(transformedItems);
-  //       } else setError("Failed to load gallery items");
-  //     } catch { setError("Error loading gallery items"); }
-  //     finally { setLoading(false); }
-  //   };
-  //   fetchGalleryItems();
-  // }, [selectedProduct, selectedTypes, selectedGlass]);
+      try {
+        setLoading(true);
+        const params = new URLSearchParams();
+        params.append("limit", LIMIT.toString());
+        params.append("page", pageNum.toString());
 
-  /* ---------------- FILTER LOGIC (client-side when using static data) ---------------- */
-  const filteredDoors = allGalleryItems.filter((item) => {
-    if (selectedProduct !== "All" && item.product !== selectedProduct)
-      return false;
-    if (selectedTypes.length > 0 && !selectedTypes.includes(item.type))
-      return false;
-    if (selectedGlass.length > 0 && !selectedGlass.includes(item.glass))
-      return false;
-    return true;
-  });
+        if (selectedProduct !== "All")
+          params.append("category", selectedProduct.toLowerCase());
+        if (selectedTypes.length > 0)
+          selectedTypes.forEach((t) => params.append("subCategory", t));
+        if (selectedGlass.length > 0)
+          selectedGlass.forEach((g) =>
+            params.append("hasGlass", (g === "With Glass").toString()),
+          );
 
+        const response = await fetch(`/api/gallery?${params.toString()}`);
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          const transformedItems: GalleryItem[] = result.data
+            .map((item: ApiGalleryItem) => {
+              const imagePath = item.imageUrl || "";
+              const image = getImageUrl(imagePath);
+              const productCategory =
+                item.category === "interior"
+                  ? "Interior"
+                  : item.category === "exterior"
+                    ? "Exterior"
+                    : "Other";
+              return {
+                id: item._id || item.id || "",
+                image,
+                product: productCategory,
+                type: item.subCategory || "",
+                glass: item.hasGlass ? "With Glass" : "Without Glass",
+              };
+            })
+            .filter(
+              (item: GalleryItem) =>
+                item.image && item.image !== "data:image/jpeg;base64,",
+            );
+
+          if (isNewFilter) {
+            setGalleryItems(transformedItems);
+          } else {
+            setGalleryItems((prev) => [...prev, ...transformedItems]);
+          }
+
+          setHasMore(result.pagination.hasNext);
+        }
+      } catch (error) {
+        console.error("Error fetching gallery items:", error);
+      } finally {
+        setLoading(false);
+        setInitialLoaded(true);
+      }
+    },
+    [selectedProduct, selectedTypes, selectedGlass],
+  );
+
+  // Initial fetch or filter change
+  useEffect(() => {
+    setPage(1);
+    setHasMore(true);
+    setGalleryItems([]);
+    fetchGalleryItems(1, true);
+  }, [selectedProduct, selectedTypes, selectedGlass]);
+
+  // Infinite Scroll Handler
+  useEffect(() => {
+    const handleScroll = () => {
+      if (loading || !hasMore) return;
+
+      const scrolled = window.innerHeight + document.documentElement.scrollTop;
+      const total = document.documentElement.offsetHeight;
+      const threshold = 100; // Trigger when 100px from bottom
+
+      if (scrolled >= total - threshold) {
+        setPage((prev) => {
+          const nextPage = prev + 1;
+          fetchGalleryItems(nextPage, false);
+          return nextPage;
+        });
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loading, hasMore, fetchGalleryItems]);
+
+  /* ---------------- FILTER LOGIC (Toggle Handlers) ---------------- */
   const handleTypeToggle = (type: string) => {
     setSelectedTypes((prev) =>
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type],
@@ -220,7 +179,7 @@ const GalleryPage = () => {
   /* ---------------- RENDER ---------------- */
   return (
     <>
-      <PageLoader isLoading={loading} />
+      <PageLoader isLoading={!initialLoaded} />
       <Navbar />
 
       {/* MOBILE FILTER BUTTON - STICKY */}
@@ -286,7 +245,7 @@ const GalleryPage = () => {
                     </button>
                   </div>
 
-                  {/* DESKTOP HEADER - Simple Title */}
+                  {/* DESKTOP HEADER */}
                   <div className="hidden md:block">
                     <div className="flex items-center gap-2">
                       <FiFilter className="text-lg" />
@@ -398,10 +357,24 @@ const GalleryPage = () => {
                   {/* Showing count */}
                   <div className="mb-3">
                     <p className="text-sm font-[400] text-[#585858] font-roboto">
-                      Showing {filteredDoors.length} doors
+                      Showing {galleryItems.length} {hasMore ? "+" : ""} doors
                     </p>
                   </div>
-                  <ParallaxScrollSecondDemo filteredItems={filteredDoors} />
+
+                  {initialLoaded && galleryItems.length === 0 ? (
+                    <div className="text-center py-20 text-gray-500">
+                      No gallery items found. Please check back later or try
+                      different filters.
+                    </div>
+                  ) : (
+                    <ParallaxScroll images={galleryItems} />
+                  )}
+
+                  {loading && galleryItems.length > 0 && (
+                    <div className="flex justify-center py-8">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#FF6E4A]"></div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

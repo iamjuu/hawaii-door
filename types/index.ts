@@ -58,7 +58,7 @@ export interface Product extends WithTimestamps {
   dimensions?: string;
   color?: string;
   inStock?: boolean;
-  imageUrl: string[]; // Array of image URLs (S3 URLs)
+  imageUrl: string; // Single image URL (relative path)
 }
 
 export interface OrderItem {
@@ -68,7 +68,13 @@ export interface OrderItem {
   quantity: number;
 }
 
-export type OrderStatus = "pending" | "paid" | "shipped" | "delivered" | "cancelled" | "refunded";
+export type OrderStatus =
+  | "pending"
+  | "paid"
+  | "shipped"
+  | "delivered"
+  | "cancelled"
+  | "refunded";
 
 export interface Order extends WithTimestamps {
   _id: string;
@@ -81,13 +87,9 @@ export interface Order extends WithTimestamps {
   paymentRef?: string;
 }
 
-
-
-
-
 export type DoorCategory = "interior" | "exterior";
 
-export type InteriorDoorType = 
+export type InteriorDoorType =
   | "Interior Panel Doors"
   | "Bifold Doors"
   | "Primed Interior Panel Doors"
@@ -99,7 +101,7 @@ export type InteriorDoorType =
   | "20-Minute Fire Doors"
   | "20-Minute Fire Doors Primed";
 
-export type ExteriorDoorType = 
+export type ExteriorDoorType =
   | "Contemporary Collection"
   | "Craftsman Collection"
   | "Exterior French Doors"
@@ -115,7 +117,7 @@ export interface GalleryItem extends WithTimestamps {
   category: "interior" | "exterior"; // Product Type
   subCategory: "Single" | "Double" | "Barn" | "Dutch"; // Main Category
   hasGlass: boolean; // With Glass (true) or Without Glass (false)
-  imageUrl: string[]; // Array of image URLs (S3 URLs)
+  imageUrl: string; // Single image URL (S3 URL)
 }
 
 // Door model for gallery collection - simpler schema (deprecated, kept for backward compatibility)
@@ -124,8 +126,5 @@ export interface Door extends WithTimestamps {
   name?: string;
   type: "normal" | "glass" | "interior" | "exterior";
   category?: string;
-  imageUrl: string[]; // Array of image URLs (S3 URLs)
+  imageUrl: string; // Single image URL (relative path)
 }
-
-
-

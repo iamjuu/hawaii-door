@@ -26,7 +26,7 @@ interface Door {
   price: number;
   category: string;
   doorType: string;
-  imageUrl?: string[];
+  imageUrl?: string;
   description?: string;
   inStock?: boolean;
 }
@@ -42,6 +42,12 @@ function getImageSrc(url: string | undefined): string {
   const s = String(url).trim();
   if (s.startsWith("data:image")) return s;
   if (s.startsWith("http://") || s.startsWith("https://")) return s;
+  if (s.startsWith("/")) {
+    const baseUrl =
+      process.env.NEXT_PUBLIC_URL ||
+      "https://navajowhite-ostrich-413154.hostingersite.com";
+    return `${baseUrl.replace(/\/$/, "")}${s}`;
+  }
   const base64Part = s.includes(",") ? (s.split(",")[1] ?? s) : s;
   return `data:image/webp;base64,${base64Part}`;
 }
@@ -420,7 +426,7 @@ const InteriorWoodPage = () => {
       )}
 
       {/* MAIN CONTENT */}
-      <main className="w-full bg-white py-10 sm:py-12 md:py-[50px] ">
+      <main className="w-full bg-white py-10 sm:py-12 md:py-[50px]  bg-[#fdfffc]">
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
           <div className="max-w-[1400px] 2xl:mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
             {/* SIDEBAR */}
@@ -544,20 +550,22 @@ const InteriorWoodPage = () => {
                               className="relative group cursor-pointer"
                               onClick={() => handleDoorClick(door, doorType)}
                             >
-                              {door.imageUrl && door.imageUrl[0] && (
+                              {door.imageUrl && (
                                 <div className="w-full h-48 rounded-lg  border-gray-200 group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex items-center justify-center ">
                                   <DoorImage
-                                    rawSrc={door.imageUrl[0]}
+                                    rawSrc={door.imageUrl}
                                     alt={door.name}
                                     className="w-full h-full object-contain transition-transform group-hover:scale-105"
                                   />
+                                  {/* {console.log(door, "helllooo")}
+                                  <p>{door.name}</p> */}
                                 </div>
                               )}
                               <div className="mt-2">
                                 {/* <p className="text-sm font-roboto font-[500] text-black truncate text-center ">{door.name}</p> */}
                                 {door.description && (
                                   <p className="text-xs font-roboto font-[400] text-[#3B3B3B] line-clamp-2 mt-1 text-center">
-                                    {door.description}
+                                    {/* {door.description} */}
                                   </p>
                                 )}
                               </div>
@@ -654,16 +662,15 @@ const InteriorWoodPage = () => {
 
             {/* Image Container */}
             <div className="flex flex-col items-center justify-center w-full h-full max-w-7xl">
-              {currentDoorGroup[currentDoorIndex]?.imageUrl?.[0] && (
+              {currentDoorGroup[currentDoorIndex]?.imageUrl && (
                 <>
                   <DoorImage
                     key={currentDoorIndex}
-                    rawSrc={currentDoorGroup[currentDoorIndex].imageUrl[0]}
+                    rawSrc={currentDoorGroup[currentDoorIndex].imageUrl}
                     alt={currentDoorGroup[currentDoorIndex].name}
                     className="w-auto h-auto max-w-[75%] max-h-[55vh] md:max-w-[70%] md:max-h-[65vh] lg:max-w-[65%] lg:max-h-[70vh] object-contain"
                   />
-
-                  {/* Door Info */}
+                  x{/* Door Info */}
                   <div className="mt-4 md:mt-6 text-center text-white">
                     <p className="text-base md:text-lg lg:text-xl font-roboto font-[600]">
                       {currentDoorGroup[currentDoorIndex]?.name}

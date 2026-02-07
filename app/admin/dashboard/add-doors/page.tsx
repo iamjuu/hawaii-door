@@ -32,21 +32,23 @@ interface Door {
   name: string;
   category: "interior" | "exterior";
   doorType: string;
-  imageUrl: string[];
+  imageUrl: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export default function AddDoorsPage() {
   const router = useRouter();
-  const [doorCategory, setDoorCategory] = useState<"interior" | "exterior" | "">("");
+  const [doorCategory, setDoorCategory] = useState<
+    "interior" | "exterior" | ""
+  >("");
   const [selectedDoorType, setSelectedDoorType] = useState("");
   const [formData, setFormData] = useState({
     name: "",
-    imageUrl: [] as string[],
+    imageUrl: "",
   });
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   // Products listing state
   const [viewTab, setViewTab] = useState<"interior" | "exterior">("interior");
   const [doors, setDoors] = useState<Door[]>([]);
@@ -59,7 +61,12 @@ export default function AddDoorsPage() {
   const [totalDoors, setTotalDoors] = useState(0);
   const itemsPerPage = 12;
 
-  const doorTypes = doorCategory === "interior" ? interiorDoorTypes : doorCategory === "exterior" ? exteriorDoorTypes : [];
+  const doorTypes =
+    doorCategory === "interior"
+      ? interiorDoorTypes
+      : doorCategory === "exterior"
+        ? exteriorDoorTypes
+        : [];
 
   // Reset to page 1 when changing tabs
   useEffect(() => {
@@ -70,7 +77,7 @@ export default function AddDoorsPage() {
     setLoading(true);
     try {
       const response = await fetch(
-        `/api/admin/products?category=${viewTab}&page=${currentPage}&limit=${itemsPerPage}`
+        `/api/admin/products?category=${viewTab}&page=${currentPage}&limit=${itemsPerPage}`,
       );
       const result = await response.json();
       if (result.success) {
@@ -106,7 +113,7 @@ export default function AddDoorsPage() {
         if (doors.length === 1 && currentPage > 1) {
           setCurrentPage(currentPage - 1);
         }
-        
+
         setRefreshTrigger((prev) => prev + 1); // Refresh the list
       } else {
         alert(result.message || "Failed to delete door");
@@ -124,7 +131,11 @@ export default function AddDoorsPage() {
     setSelectedDoorType(""); // Reset door type when category changes
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -133,68 +144,63 @@ export default function AddDoorsPage() {
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-    const fileArray = Array.from(files);
-    
     try {
-      // Create preview URLs for immediate display (base64)
-      const previewPromises = fileArray.map((file) => {
-        return new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result as string);
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-      });
+      // Create preview URL for immediate display (base64)
+      const reader = new FileReader();
+      reader.onload = () => {
+        setFormData((prev) => ({
+          ...prev,
+          imageUrl: reader.result as string,
+        }));
+      };
+      reader.readAsDataURL(file);
 
-      const previewUrls = await Promise.all(previewPromises);
-      
-      // Store File objects for later upload
-      setSelectedFiles((prev) => [...prev, ...fileArray]);
-      
-      // Set preview URLs immediately (base64, not S3 URLs)
-      setFormData((prev) => ({
-        ...prev,
-        imageUrl: [...prev.imageUrl, ...previewUrls],
-      }));
+      // Store File object for later upload
+      setSelectedFile(file);
     } catch (error) {
       console.error("Error creating image preview:", error);
     }
   };
 
-  const removeImage = (index: number) => {
+  const removeImage = () => {
     setFormData((prev) => ({
       ...prev,
-      imageUrl: prev.imageUrl.filter((_, i) => i !== index),
+      imageUrl: "",
     }));
     // Also remove the corresponding file
-    setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
+    setSelectedFile(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate image is required
-    if (!formData.imageUrl || formData.imageUrl.length === 0) {
+    if (!formData.imageUrl) {
       return;
     }
 
     setSubmitting(true);
 
     try {
-      // Upload images to S3 only when Create button is clicked
-      let s3ImageUrls: string[] = [];
-      
-      if (selectedFiles.length > 0) {
-        const uploadFormData = new FormData();
-        selectedFiles.forEach((file) => {
-          uploadFormData.append("files", file);
-        });
+      // Upload image to FTP only when Create button is clicked
+      let s3ImageUrl = "";
 
-        const token = typeof window !== "undefined" ? document.cookie.split("; ").find(row => row.startsWith("adminToken="))?.split("=")[1] : null;
-        
+      if (selectedFile) {
+        const uploadFormData = new FormData();
+        uploadFormData.append("file", selectedFile);
+        uploadFormData.append("folder", "products");
+
+        const token =
+          typeof window !== "undefined"
+            ? document.cookie
+                .split("; ")
+                .find((row) => row.startsWith("adminToken="))
+                ?.split("=")[1]
+            : null;
+
         const uploadResponse = await fetch("/api/upload/image", {
           method: "POST",
           headers: {
@@ -205,21 +211,21 @@ export default function AddDoorsPage() {
 
         const uploadData = await uploadResponse.json();
 
-        if (uploadData.success && uploadData.data && Array.isArray(uploadData.data)) {
-          s3ImageUrls = uploadData.data.map((item: { url: string }) => item.url);
+        if (uploadData.success && uploadData.data && uploadData.data.url) {
+          s3ImageUrl = uploadData.data.url;
         } else {
-          throw new Error(uploadData.message || "Failed to upload images");
+          throw new Error(uploadData.message || "Failed to upload image");
         }
       } else {
-        // If no new files, use existing S3 URLs (if any)
-        s3ImageUrls = formData.imageUrl.filter((url) => url.startsWith("https://"));
+        // If no new file, use existing URL (if any)
+        s3ImageUrl = formData.imageUrl;
       }
 
       const doorData = {
         name: formData.name,
         category: doorCategory,
         doorType: selectedDoorType,
-        imageUrl: s3ImageUrls,
+        imageUrl: s3ImageUrl,
       };
 
       const response = await fetch("/api/admin/products", {
@@ -238,10 +244,10 @@ export default function AddDoorsPage() {
         setSelectedDoorType("");
         setFormData({
           name: "",
-          imageUrl: [],
+          imageUrl: "",
         });
-        setSelectedFiles([]);
-        
+        setSelectedFile(null);
+
         // Refresh the product list
         setRefreshTrigger((prev) => prev + 1);
       } else {
@@ -249,10 +255,26 @@ export default function AddDoorsPage() {
       }
     } catch (error) {
       console.error("Error adding door:", error);
-      alert(error instanceof Error ? error.message : "An error occurred while adding the door");
+      alert(
+        error instanceof Error
+          ? error.message
+          : "An error occurred while adding the door",
+      );
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const resolveImageUrl = (url: any) => {
+    if (!url || typeof url !== "string") return "";
+    if (url.startsWith("http") || url.startsWith("data:")) return url;
+    if (url.startsWith("/")) {
+      const baseUrl =
+        process.env.NEXT_PUBLIC_URL ||
+        "https://navajowhite-ostrich-413154.hostingersite.com";
+      return `${baseUrl.replace(/\/$/, "")}${url}`;
+    }
+    return url;
   };
 
   return (
@@ -263,7 +285,9 @@ export default function AddDoorsPage() {
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Step 1: Select Door Category */}
           <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-white mb-4">Step 1: Select Door Category</h2>
+            <h2 className="text-xl font-semibold text-white mb-4">
+              Step 1: Select Door Category
+            </h2>
             <div className="grid grid-cols-2 gap-4">
               <button
                 type="button"
@@ -277,7 +301,9 @@ export default function AddDoorsPage() {
                 <div className="text-center">
                   <div className="text-4xl mb-2">🚪</div>
                   <div className="font-semibold text-lg">Interior Doors</div>
-                  <div className="text-sm mt-1 opacity-75">For indoor spaces</div>
+                  <div className="text-sm mt-1 opacity-75">
+                    For indoor spaces
+                  </div>
                 </div>
               </button>
 
@@ -293,7 +319,9 @@ export default function AddDoorsPage() {
                 <div className="text-center">
                   <div className="text-4xl mb-2">🏠</div>
                   <div className="font-semibold text-lg">Exterior Doors</div>
-                  <div className="text-sm mt-1 opacity-75">For outdoor entry</div>
+                  <div className="text-sm mt-1 opacity-75">
+                    For outdoor entry
+                  </div>
                 </div>
               </button>
             </div>
@@ -303,7 +331,9 @@ export default function AddDoorsPage() {
           {doorCategory && (
             <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-6">
               <h2 className="text-xl font-semibold text-white mb-4">
-                Step 2: Select {doorCategory === "interior" ? "Interior" : "Exterior"} Door Type
+                Step 2: Select{" "}
+                {doorCategory === "interior" ? "Interior" : "Exterior"} Door
+                Type
               </h2>
               <div className="space-y-2">
                 <select
@@ -326,7 +356,9 @@ export default function AddDoorsPage() {
           {/* Step 3: Door Details */}
           {selectedDoorType && (
             <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-white mb-4">Step 3: Door Details</h2>
+              <h2 className="text-xl font-semibold text-white mb-4">
+                Step 3: Door Details
+              </h2>
               <div className="space-y-4">
                 {/* Door Name */}
                 <div>
@@ -363,29 +395,25 @@ export default function AddDoorsPage() {
                 </div>
 
                 {/* Image Preview */}
-                {formData.imageUrl.length > 0 && (
+                {formData.imageUrl && (
                   <div>
                     <label className="block text-sm font-medium text-zinc-300 mb-2">
-                      Image Preview ({formData.imageUrl.length} image{formData.imageUrl.length > 1 ? 's' : ''})
+                      Image Preview
                     </label>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                      {formData.imageUrl.map((image, index) => (
-                        <div key={index} className="relative group">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={image}
-                            alt={`Preview ${index + 1}`}
-                            className="w-full h-32 object-cover rounded-lg border border-zinc-700"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => removeImage(index)}
-                            className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700"
-                          >
-                            ×
-                          </button>
-                        </div>
-                      ))}
+                    <div className="relative group w-48">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={resolveImageUrl(formData.imageUrl)}
+                        alt="Preview"
+                        className="w-full h-32 object-cover rounded-lg border border-zinc-700"
+                      />
+                      <button
+                        type="button"
+                        onClick={removeImage}
+                        className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700"
+                      >
+                        ×
+                      </button>
                     </div>
                   </div>
                 )}
@@ -403,9 +431,9 @@ export default function AddDoorsPage() {
                   setSelectedDoorType("");
                   setFormData({
                     name: "",
-                    imageUrl: [],
+                    imageUrl: "",
                   });
-                  setSelectedFiles([]);
+                  setSelectedFile(null);
                 }}
                 className="px-6 py-3 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors"
               >
@@ -436,18 +464,24 @@ export default function AddDoorsPage() {
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-zinc-400">Category:</span>
-                <span className="text-white font-medium capitalize">{doorCategory}</span>
+                <span className="text-white font-medium capitalize">
+                  {doorCategory}
+                </span>
               </div>
               {selectedDoorType && (
                 <div className="flex justify-between">
                   <span className="text-zinc-400">Door Type:</span>
-                  <span className="text-white font-medium">{selectedDoorType}</span>
+                  <span className="text-white font-medium">
+                    {selectedDoorType}
+                  </span>
                 </div>
               )}
               {formData.name && (
                 <div className="flex justify-between">
                   <span className="text-zinc-400">Name:</span>
-                  <span className="text-white font-medium">{formData.name}</span>
+                  <span className="text-white font-medium">
+                    {formData.name}
+                  </span>
                 </div>
               )}
             </div>
@@ -517,21 +551,16 @@ export default function AddDoorsPage() {
                   >
                     {/* Door Image */}
                     <div className="relative h-48 bg-zinc-900">
-                      {door.imageUrl && door.imageUrl.length > 0 ? (
+                      {door.imageUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
-                          src={door.imageUrl[0]}
+                          src={resolveImageUrl(door.imageUrl)}
                           alt={door.name}
                           className="w-full h-full object-cover"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-zinc-600">
                           <div className="text-6xl">🚪</div>
-                        </div>
-                      )}
-                      {door.imageUrl && door.imageUrl.length > 1 && (
-                        <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                          +{door.imageUrl.length - 1} more
                         </div>
                       )}
                     </div>
@@ -607,46 +636,52 @@ export default function AddDoorsPage() {
 
               {/* Page Numbers */}
               <div className="flex gap-2">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-                  // Show first page, last page, current page, and pages around current
-                  const showPage =
-                    page === 1 ||
-                    page === totalPages ||
-                    (page >= currentPage - 1 && page <= currentPage + 1);
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                  (page) => {
+                    // Show first page, last page, current page, and pages around current
+                    const showPage =
+                      page === 1 ||
+                      page === totalPages ||
+                      (page >= currentPage - 1 && page <= currentPage + 1);
 
-                  // Show ellipsis
-                  const showEllipsisBefore = page === currentPage - 2 && currentPage > 3;
-                  const showEllipsisAfter = page === currentPage + 2 && currentPage < totalPages - 2;
+                    // Show ellipsis
+                    const showEllipsisBefore =
+                      page === currentPage - 2 && currentPage > 3;
+                    const showEllipsisAfter =
+                      page === currentPage + 2 && currentPage < totalPages - 2;
 
-                  if (showEllipsisBefore || showEllipsisAfter) {
+                    if (showEllipsisBefore || showEllipsisAfter) {
+                      return (
+                        <span key={page} className="px-4 py-2 text-zinc-400">
+                          ...
+                        </span>
+                      );
+                    }
+
+                    if (!showPage) return null;
+
                     return (
-                      <span key={page} className="px-4 py-2 text-zinc-400">
-                        ...
-                      </span>
+                      <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                          currentPage === page
+                            ? "bg-blue-600 text-white"
+                            : "bg-zinc-800 text-white hover:bg-zinc-700"
+                        }`}
+                      >
+                        {page}
+                      </button>
                     );
-                  }
-
-                  if (!showPage) return null;
-
-                  return (
-                    <button
-                      key={page}
-                      onClick={() => setCurrentPage(page)}
-                      className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                        currentPage === page
-                          ? "bg-blue-600 text-white"
-                          : "bg-zinc-800 text-white hover:bg-zinc-700"
-                      }`}
-                    >
-                      {page}
-                    </button>
-                  );
-                })}
+                  },
+                )}
               </div>
 
               {/* Next Button */}
               <button
-                onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                }
                 disabled={currentPage === totalPages}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                   currentPage === totalPages
@@ -663,7 +698,8 @@ export default function AddDoorsPage() {
           {!loading && doors.length > 0 && (
             <div className="mt-6 text-center text-zinc-400 text-sm">
               Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
-              {Math.min(currentPage * itemsPerPage, totalDoors)} of {totalDoors} {viewTab} door
+              {Math.min(currentPage * itemsPerPage, totalDoors)} of {totalDoors}{" "}
+              {viewTab} door
               {totalDoors !== 1 ? "s" : ""}
             </div>
           )}
@@ -672,4 +708,3 @@ export default function AddDoorsPage() {
     </div>
   );
 }
-

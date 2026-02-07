@@ -5,28 +5,28 @@ import type { GalleryItem as GalleryItemType } from "@/types";
 const GallerySchema = new Schema<GalleryItemType>(
   {
     name: { type: String, required: true },
-    category: { 
-      type: String, 
-      required: true, 
-      enum: ["interior", "exterior"] // Product Type
-    },
-    subCategory: { 
-      type: String, 
+    category: {
+      type: String,
       required: true,
-      enum: ["Single", "Double", "Barn", "Dutch"] // Main Category
+      enum: ["interior", "exterior"], // Product Type
     },
-    hasGlass: { 
-      type: Boolean, 
+    subCategory: {
+      type: String,
       required: true,
-      default: false // With Glass (true) or Without Glass (false)
+      enum: ["Single", "Double", "Barn", "Dutch"], // Main Category
     },
-    imageUrl: { type: [String], required: true, default: [] }, // Array of image URLs (S3 URLs)
+    hasGlass: {
+      type: Boolean,
+      required: true,
+      default: false, // With Glass (true) or Without Glass (false)
+    },
+    imageUrl: { type: String, required: true }, // Single image URL (relative path)
   },
-  { 
+  {
     timestamps: true,
     strict: true,
-    strictQuery: true
-  }
+    strictQuery: true,
+  },
 );
 
 // Add indexes for better query performance

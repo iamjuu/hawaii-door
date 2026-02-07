@@ -32,7 +32,7 @@ interface Door {
   name: string;
   category: "interior" | "exterior";
   doorType: string;
-  imageUrl: string[];
+  imageUrl: string;
   description?: string;
   material?: string;
   dimensions?: string;
@@ -54,7 +54,6 @@ export default function DoorDetailPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -65,17 +64,17 @@ export default function DoorDetailPage() {
     dimensions: "",
     color: "",
     inStock: true,
-    imageUrl: [] as string[],
+    imageUrl: "",
   });
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [originalImageUrls, setOriginalImageUrls] = useState<string[]>([]);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [originalImageUrl, setOriginalImageUrl] = useState("");
 
   const doorTypes =
     formData.category === "interior"
       ? interiorDoorTypes
       : formData.category === "exterior"
-      ? exteriorDoorTypes
-      : [];
+        ? exteriorDoorTypes
+        : [];
 
   // Fetch door details
   useEffect(() => {
@@ -84,7 +83,7 @@ export default function DoorDetailPage() {
         setLoading(true);
         setError(null);
         const response = await fetch(`/api/admin/products/${doorId}`);
-        
+
         if (!response.ok) {
           throw new Error(`Failed to fetch door: ${response.status}`);
         }
@@ -100,25 +99,40 @@ export default function DoorDetailPage() {
         if (result.success) {
           const doorData = result.data;
           setDoor(doorData);
-          const imageUrls = doorData.imageUrl || [];
-          setOriginalImageUrls(imageUrls);
+          const imageUrl = doorData.imageUrl || "";
+          setOriginalImageUrl(imageUrl);
+
+          // Infer category if missing
+          let category = doorData.category;
+          if (!category && doorData.doorType) {
+            if (interiorDoorTypes.includes(doorData.doorType)) {
+              category = "interior";
+            } else if (exteriorDoorTypes.includes(doorData.doorType)) {
+              category = "exterior";
+            }
+          }
+
           setFormData({
             name: doorData.name || "",
-            category: doorData.category || "",
+            category: category || "",
             doorType: doorData.doorType || "",
             description: doorData.description || "",
             material: doorData.material || "",
             dimensions: doorData.dimensions || "",
             color: doorData.color || "",
             inStock: doorData.inStock !== undefined ? doorData.inStock : true,
-            imageUrl: imageUrls,
+            imageUrl: imageUrl,
           });
         } else {
           setError(result.message || "Failed to fetch door details");
         }
       } catch (error) {
         console.error("Error fetching door:", error);
-        setError(error instanceof Error ? error.message : "An error occurred while fetching door details");
+        setError(
+          error instanceof Error
+            ? error.message
+            : "An error occurred while fetching door details",
+        );
       } finally {
         setLoading(false);
       }
@@ -132,7 +146,7 @@ export default function DoorDetailPage() {
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value, type } = e.target;
     setFormData((prev) => ({
@@ -141,73 +155,39 @@ export default function DoorDetailPage() {
         type === "checkbox"
           ? (e.target as HTMLInputElement).checked
           : type === "number"
-          ? value
-          : value,
+            ? value
+            : value,
     }));
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-    const fileArray = Array.from(files);
-    
     try {
-      // Create preview URLs for immediate display (base64)
-      const previewPromises = fileArray.map((file) => {
-        return new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result as string);
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-      });
+      // Create preview URL for immediate display (base64)
+      const reader = new FileReader();
+      reader.onload = () => {
+        setFormData((prev) => ({
+          ...prev,
+          imageUrl: reader.result as string,
+        }));
+      };
+      reader.readAsDataURL(file);
 
-      const previewUrls = await Promise.all(previewPromises);
-      
-      // Store File objects for later upload
-      setSelectedFiles((prev) => [...prev, ...fileArray]);
-      
-      // Set preview URLs immediately (base64, not S3 URLs)
-      setFormData((prev) => ({
-        ...prev,
-        imageUrl: [...prev.imageUrl, ...previewUrls],
-      }));
+      // Store File object for later upload
+      setSelectedFile(file);
     } catch (error) {
       console.error("Error creating image preview:", error);
     }
   };
 
-  const removeImage = (index: number) => {
-    const imageUrl = formData.imageUrl[index];
-    const isBase64Preview = imageUrl && !imageUrl.startsWith("https://");
-    
+  const removeImage = () => {
     setFormData((prev) => ({
       ...prev,
-      imageUrl: prev.imageUrl.filter((_, i) => i !== index),
+      imageUrl: "",
     }));
-    
-    if (selectedImageIndex >= index && selectedImageIndex > 0) {
-      setSelectedImageIndex(selectedImageIndex - 1);
-    }
-    
-    // If it's a base64 preview (new file), remove from selectedFiles
-    // Count how many base64 previews come before this index
-    if (isBase64Preview) {
-      let base64Count = 0;
-      for (let i = 0; i < index; i++) {
-        if (formData.imageUrl[i] && !formData.imageUrl[i].startsWith("https://")) {
-          base64Count++;
-        }
-      }
-      setSelectedFiles((prev) => {
-        const newFiles = [...prev];
-        if (base64Count < newFiles.length) {
-          newFiles.splice(base64Count, 1);
-        }
-        return newFiles;
-      });
-    }
+    setSelectedFile(null);
   };
 
   const handleSave = async () => {
@@ -229,30 +209,31 @@ export default function DoorDetailPage() {
       return;
     }
 
-    if (formData.imageUrl.length === 0) {
-      setError("At least one image is required");
+    if (!formData.imageUrl) {
+      setError("Image is required");
       return;
     }
 
     try {
       setSaving(true);
-      
-      // Upload new images to S3 only when Save button is clicked
-      let finalImageUrls: string[] = [];
-      
-      // Separate existing S3 URLs from new base64 previews
-      const existingS3Urls = formData.imageUrl.filter((url) => url.startsWith("https://"));
-      const base64Previews = formData.imageUrl.filter((url) => !url.startsWith("https://"));
-      
-      // Upload new files to S3
-      if (selectedFiles.length > 0) {
-        const uploadFormData = new FormData();
-        selectedFiles.forEach((file) => {
-          uploadFormData.append("files", file);
-        });
 
-        const token = typeof window !== "undefined" ? document.cookie.split("; ").find(row => row.startsWith("adminToken="))?.split("=")[1] : null;
-        
+      // Upload new image to FTP/S3 only when Save button is clicked
+      let finalImageUrl = "";
+
+      // Check if it's a new file (base64) or existing URL
+      if (selectedFile) {
+        const uploadFormData = new FormData();
+        uploadFormData.append("file", selectedFile);
+        uploadFormData.append("folder", "products");
+
+        const token =
+          typeof window !== "undefined"
+            ? document.cookie
+                .split("; ")
+                .find((row) => row.startsWith("adminToken="))
+                ?.split("=")[1]
+            : null;
+
         const uploadResponse = await fetch("/api/upload/image", {
           method: "POST",
           headers: {
@@ -263,15 +244,14 @@ export default function DoorDetailPage() {
 
         const uploadData = await uploadResponse.json();
 
-        if (uploadData.success && uploadData.data && Array.isArray(uploadData.data)) {
-          const newS3Urls = uploadData.data.map((item: { url: string }) => item.url);
-          finalImageUrls = [...existingS3Urls, ...newS3Urls];
+        if (uploadData.success && uploadData.data && uploadData.data.url) {
+          finalImageUrl = uploadData.data.url;
         } else {
-          throw new Error(uploadData.message || "Failed to upload images");
+          throw new Error(uploadData.message || "Failed to upload image");
         }
       } else {
-        // No new files, use existing URLs
-        finalImageUrls = existingS3Urls;
+        // No new file, use existing URL
+        finalImageUrl = formData.imageUrl;
       }
 
       const updateData = {
@@ -283,7 +263,7 @@ export default function DoorDetailPage() {
         dimensions: formData.dimensions,
         color: formData.color,
         inStock: formData.inStock,
-        imageUrl: finalImageUrls,
+        imageUrl: finalImageUrl,
       };
 
       const response = await fetch(`/api/admin/products/${doorId}`, {
@@ -299,14 +279,14 @@ export default function DoorDetailPage() {
       if (result.success) {
         setSuccess("Door updated successfully!");
         setIsEditing(false);
-        setSelectedFiles([]);
+        setSelectedFile(null);
         // Refresh door data
         const refreshResponse = await fetch(`/api/admin/products/${doorId}`);
         const refreshResult = await refreshResponse.json();
         if (refreshResult.success) {
           setDoor(refreshResult.data);
-          const imageUrls = refreshResult.data.imageUrl || [];
-          setOriginalImageUrls(imageUrls);
+          const imageUrl = refreshResult.data.imageUrl || "";
+          setOriginalImageUrl(imageUrl);
           // Update formData with refreshed data
           setFormData({
             name: refreshResult.data.name || "",
@@ -316,8 +296,11 @@ export default function DoorDetailPage() {
             material: refreshResult.data.material || "",
             dimensions: refreshResult.data.dimensions || "",
             color: refreshResult.data.color || "",
-            inStock: refreshResult.data.inStock !== undefined ? refreshResult.data.inStock : true,
-            imageUrl: imageUrls,
+            inStock:
+              refreshResult.data.inStock !== undefined
+                ? refreshResult.data.inStock
+                : true,
+            imageUrl: imageUrl,
           });
         }
         setTimeout(() => setSuccess(null), 3000);
@@ -326,14 +309,22 @@ export default function DoorDetailPage() {
       }
     } catch (error) {
       console.error("Error updating door:", error);
-      setError(error instanceof Error ? error.message : "An error occurred while updating the door");
+      setError(
+        error instanceof Error
+          ? error.message
+          : "An error occurred while updating the door",
+      );
     } finally {
       setSaving(false);
     }
   };
 
   const handleDelete = async () => {
-    if (!confirm("Are you sure you want to delete this door? This action cannot be undone.")) {
+    if (
+      !confirm(
+        "Are you sure you want to delete this door? This action cannot be undone.",
+      )
+    ) {
       return;
     }
 
@@ -368,7 +359,9 @@ export default function DoorDetailPage() {
       <div className="p-6 sm:p-8 bg-zinc-900 min-h-screen">
         <div className="bg-zinc-950 border border-red-800 rounded-lg p-12 text-center">
           <div className="text-6xl mb-4">⚠️</div>
-          <h3 className="text-xl font-semibold text-white mb-2">Error loading door</h3>
+          <h3 className="text-xl font-semibold text-white mb-2">
+            Error loading door
+          </h3>
           <p className="text-red-400 mb-6">{error}</p>
           <Link
             href="/admin/dashboard/add-doors"
@@ -386,8 +379,12 @@ export default function DoorDetailPage() {
       <div className="p-6 sm:p-8 bg-zinc-900 min-h-screen">
         <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-12 text-center">
           <div className="text-6xl mb-4">🚪</div>
-          <h3 className="text-xl font-semibold text-white mb-2">Door not found</h3>
-          <p className="text-zinc-400 mb-6">The door you're looking for doesn't exist.</p>
+          <h3 className="text-xl font-semibold text-white mb-2">
+            Door not found
+          </h3>
+          <p className="text-zinc-400 mb-6">
+            The door you're looking for doesn't exist.
+          </p>
           <Link
             href="/admin/dashboard/add-doors"
             className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -398,6 +395,18 @@ export default function DoorDetailPage() {
       </div>
     );
   }
+
+  const resolveImageUrl = (url: any) => {
+    if (!url || typeof url !== "string") return "";
+    if (url.startsWith("http") || url.startsWith("data:")) return url;
+    if (url.startsWith("/")) {
+      const baseUrl =
+        process.env.NEXT_PUBLIC_URL ||
+        "https://navajowhite-ostrich-413154.hostingersite.com";
+      return `${baseUrl.replace(/\/$/, "")}${url}`;
+    }
+    return url;
+  };
 
   return (
     <div className="p-6 sm:p-8 bg-zinc-900 min-h-screen">
@@ -450,7 +459,7 @@ export default function DoorDetailPage() {
                 {error}
               </div>
             )}
-            
+
             {/* Success Message */}
             {success && (
               <div className="rounded-md bg-green-900/50 border border-green-500 px-4 py-3 text-sm text-green-200">
@@ -517,7 +526,6 @@ export default function DoorDetailPage() {
 
             {/* Stock */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
               <div>
                 <label className="block text-sm font-medium text-zinc-300 mb-2">
                   Stock Status
@@ -539,50 +547,7 @@ export default function DoorDetailPage() {
               </div>
             </div>
 
-            {/* Optional Fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2">
-                  Material
-                </label>
-                <input
-                  type="text"
-                  name="material"
-                  value={formData.material}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
-                  placeholder="e.g., Wood, Metal"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2">
-                  Dimensions
-                </label>
-                <input
-                  type="text"
-                  name="dimensions"
-                  value={formData.dimensions}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
-                  placeholder="e.g., 36x80 inches"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-zinc-300 mb-2">
-                Color
-              </label>
-              <input
-                type="text"
-                name="color"
-                value={formData.color}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
-                placeholder="e.g., White, Brown"
-              />
-            </div>
+            {/* Removed Material, Dimensions, Color as per request */}
 
             {/* Description */}
             <div>
@@ -616,25 +581,26 @@ export default function DoorDetailPage() {
               </p>
 
               {/* Image Preview */}
-              {formData.imageUrl.length > 0 && (
-                <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {formData.imageUrl.map((image, index) => (
-                    <div key={index} className="relative group">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={image}
-                        alt={`Preview ${index + 1}`}
-                        className="w-full h-32 object-cover rounded-lg border border-zinc-700"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => removeImage(index)}
-                        className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700"
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ))}
+              {formData.imageUrl && (
+                <div className="mt-4">
+                  <label className="block text-sm font-medium text-zinc-300 mb-2">
+                    Image Preview
+                  </label>
+                  <div className="relative group w-48">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={resolveImageUrl(formData.imageUrl)}
+                      alt="Preview"
+                      className="w-full h-32 object-cover rounded-lg border border-zinc-700"
+                    />
+                    <button
+                      type="button"
+                      onClick={removeImage}
+                      className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700"
+                    >
+                      ×
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -646,7 +612,7 @@ export default function DoorDetailPage() {
                   setError(null);
                   setSuccess(null);
                   setIsEditing(false);
-                  setSelectedFiles([]);
+                  setSelectedFile(null);
                   // Reset form data to original door data
                   if (door) {
                     setFormData({
@@ -658,9 +624,9 @@ export default function DoorDetailPage() {
                       dimensions: door.dimensions || "",
                       color: door.color || "",
                       inStock: door.inStock !== undefined ? door.inStock : true,
-                      imageUrl: door.imageUrl || [],
+                      imageUrl: door.imageUrl || "",
                     });
-                    setOriginalImageUrls(door.imageUrl || []);
+                    setOriginalImageUrl(door.imageUrl || "");
                   }
                 }}
                 className="px-6 py-3 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors font-medium"
@@ -689,41 +655,17 @@ export default function DoorDetailPage() {
             {/* Images Section */}
             <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-6">
               <h2 className="text-xl font-semibold text-white mb-4">Images</h2>
-              {door.imageUrl && door.imageUrl.length > 0 ? (
+              {door.imageUrl ? (
                 <div className="space-y-4">
                   {/* Main Image */}
                   <div className="relative bg-zinc-900 rounded-lg overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={door.imageUrl[selectedImageIndex]}
+                      src={resolveImageUrl(door.imageUrl)}
                       alt={door.name}
                       className="w-full h-96 object-contain"
                     />
                   </div>
-
-                  {/* Thumbnail Gallery */}
-                  {door.imageUrl.length > 1 && (
-                    <div className="grid grid-cols-4 gap-2">
-                      {door.imageUrl.map((image, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setSelectedImageIndex(index)}
-                          className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                            selectedImageIndex === index
-                              ? "border-blue-500"
-                              : "border-zinc-700 hover:border-zinc-600"
-                          }`}
-                        >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={image}
-                            alt={`${door.name} ${index + 1}`}
-                            className="w-full h-full object-cover"
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  )}
                 </div>
               ) : (
                 <div className="w-full h-96 bg-zinc-900 rounded-lg flex items-center justify-center">
@@ -739,7 +681,9 @@ export default function DoorDetailPage() {
               <div className="space-y-4">
                 <div>
                   <span className="text-sm text-zinc-400">Name</span>
-                  <p className="text-lg font-semibold text-white mt-1">{door.name}</p>
+                  <p className="text-lg font-semibold text-white mt-1">
+                    {door.name}
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -751,7 +695,9 @@ export default function DoorDetailPage() {
                   </div>
                   <div>
                     <span className="text-sm text-zinc-400">Door Type</span>
-                    <p className="text-white font-medium mt-1">{door.doorType}</p>
+                    <p className="text-white font-medium mt-1">
+                      {door.doorType}
+                    </p>
                   </div>
                 </div>
 
@@ -766,13 +712,17 @@ export default function DoorDetailPage() {
                   {door.material && (
                     <div>
                       <span className="text-sm text-zinc-400">Material</span>
-                      <p className="text-white font-medium mt-1">{door.material}</p>
+                      <p className="text-white font-medium mt-1">
+                        {door.material}
+                      </p>
                     </div>
                   )}
                   {door.dimensions && (
                     <div>
                       <span className="text-sm text-zinc-400">Dimensions</span>
-                      <p className="text-white font-medium mt-1">{door.dimensions}</p>
+                      <p className="text-white font-medium mt-1">
+                        {door.dimensions}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -817,4 +767,3 @@ export default function DoorDetailPage() {
     </div>
   );
 }
-
