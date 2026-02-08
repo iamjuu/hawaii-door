@@ -115,7 +115,7 @@ export default function EditGalleryItemPage({
     setSubmitting(true);
 
     try {
-      let s3ImageUrl = "";
+      let uploadedImageUrl = "";
 
       // 1. Upload new file if selected
       if (selectedFile) {
@@ -147,7 +147,7 @@ export default function EditGalleryItemPage({
           Array.isArray(uploadData.data) &&
           uploadData.data.length > 0
         ) {
-          s3ImageUrl = uploadData.data[0].url;
+          uploadedImageUrl = uploadData.data[0].url;
         } else {
           throw new Error(uploadData.message || "Failed to upload images");
         }
@@ -158,7 +158,7 @@ export default function EditGalleryItemPage({
           formData.imageUrl.startsWith("http") ||
           formData.imageUrl.startsWith("/")
         ) {
-          s3ImageUrl = formData.imageUrl;
+          uploadedImageUrl = formData.imageUrl;
         }
       }
 
@@ -167,7 +167,7 @@ export default function EditGalleryItemPage({
         category: formData.category,
         subCategory: formData.subCategory,
         hasGlass: formData.hasGlass,
-        imageUrl: s3ImageUrl,
+        imageUrl: uploadedImageUrl,
       };
 
       const response = await fetch(`/api/admin/doors/${itemId}`, {

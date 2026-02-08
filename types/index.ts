@@ -117,7 +117,7 @@ export interface GalleryItem extends WithTimestamps {
   category: "interior" | "exterior"; // Product Type
   subCategory: "Single" | "Double" | "Barn" | "Dutch"; // Main Category
   hasGlass: boolean; // With Glass (true) or Without Glass (false)
-  imageUrl: string; // Single image URL (S3 URL)
+  imageUrl: string; // Single image URL (relative path)
 }
 
 // Door model for gallery collection - simpler schema (deprecated, kept for backward compatibility)

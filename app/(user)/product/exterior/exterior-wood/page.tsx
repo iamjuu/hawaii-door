@@ -224,7 +224,6 @@ const ExteriorWoodPage = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isModalOpen, currentDoorGroup.length]);
 
-  // AWS hero (removed): "https://hawaai-doors-bucket.s3.us-west-2.amazonaws.com/uploads/1769351030278-hero_wood-interior.webp"
   const bgImage = "/assets/product/exterior hero 4.svg";
   const contant = "Exterior Wood Stile & Rail";
   const para =

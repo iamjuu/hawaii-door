@@ -186,7 +186,7 @@ export default function AddDoorsPage() {
 
     try {
       // Upload image to FTP only when Create button is clicked
-      let s3ImageUrl = "";
+      let uploadedImageUrl = "";
 
       if (selectedFile) {
         const uploadFormData = new FormData();
@@ -212,20 +212,20 @@ export default function AddDoorsPage() {
         const uploadData = await uploadResponse.json();
 
         if (uploadData.success && uploadData.data && uploadData.data.url) {
-          s3ImageUrl = uploadData.data.url;
+          uploadedImageUrl = uploadData.data.url;
         } else {
           throw new Error(uploadData.message || "Failed to upload image");
         }
       } else {
         // If no new file, use existing URL (if any)
-        s3ImageUrl = formData.imageUrl;
+        uploadedImageUrl = formData.imageUrl;
       }
 
       const doorData = {
         name: formData.name,
         category: doorCategory,
         doorType: selectedDoorType,
-        imageUrl: s3ImageUrl,
+        imageUrl: uploadedImageUrl,
       };
 
       const response = await fetch("/api/admin/products", {
