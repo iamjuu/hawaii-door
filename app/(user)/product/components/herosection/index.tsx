@@ -65,8 +65,8 @@ export default function HeroSection({
           <a
             href={
               process.env.NEXT_PUBLIC_PRODUCTION === "true"
-                ? "/files/public_html/uploads/brochure/Hawaii_Door_Brochure.pdf"
-                : "https://srv1473-files.hstgr.io/656ecabae3aaad0f/files/public_html/uploads/brochure/Hawaii_Door_Brochure.pdf"
+                ? `${process.env.NEXT_PUBLIC_URL}uploads/brochure/Hawaii_Door_Brochure.pdf`
+                : "https://navajowhite-ostrich-413154.hostingersite.com/uploads/brochure/Hawaii_Door_Brochure.pdf"
             }
             download
             target="_blank"
@@ -120,7 +120,7 @@ export default function HeroSection({
                   </div>
                 )}
 
-                <span className="text-sm md:text-[20px] font-roboto font-[400] whitespace-nowrap">
+                <span className="text-sm md:text-[20px] font-roboto font-[400] whitespace-nowrap group-hover/bar:text-[#FFFFFF] transition-colors duration-300">
                   {feature.text || "Feature"}
                 </span>
               </div>

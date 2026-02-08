@@ -24,14 +24,13 @@ const Measure = () => {
                   </h1>
 
                   <p className="font-roboto text-[#3B3B3B] text-[16px] md:text-[19.11px] font-[300] leading-[26px] md:leading-[31.86px] tracking-[-0.01em]">
-                    We're The Island Door Company, a women-owned, Hawaiʻi-based
+                    We are The Island Door Company a women-owned, Hawaiʻi-based
                     shop delivering precision-machined wood and fiberglass doors
                     across every island. Each door is pre-hung, labeled, and
-                    ready to install, cutting labor hours, preventing callbacks,
-                    and keeping your project on schedule. We partner with the
-                    industry's top vendors, Simpson Door, Alliance Door
-                    Products, and Plastpro, to bring proven quality to island
-                    conditions.
+                    ready to install, helping reduce labor hours, prevent
+                    callbacks, and keep your project on schedule. We partner with
+                    trusted vendors like Simpson Door, Alliance Door Products, and
+                    Plastpro to bring proven performance to island conditions.
                   </p>
                 </div>
 

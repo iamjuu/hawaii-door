@@ -30,8 +30,8 @@ const Prehung = () => {
                 <a
                   href={
                     process.env.NEXT_PUBLIC_PRODUCTION === "true"
-                      ? "/files/public_html/uploads/brochure/Hawaii_Door_Brochure.pdf"
-                      : "https://srv1473-files.hstgr.io/656ecabae3aaad0f/files/public_html/uploads/brochure/Hawaii_Door_Brochure.pdf"
+                      ? `${process.env.NEXT_PUBLIC_URL}uploads/brochure/Hawaii_Door_Brochure.pdf`
+                      : "https://navajowhite-ostrich-413154.hostingersite.com/uploads/brochure/Hawaii_Door_Brochure.pdf"
                   }
                   download
                   target="_blank"

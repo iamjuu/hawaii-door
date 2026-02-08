@@ -7,18 +7,25 @@ import User from "@/models/User";
 import Administrator from "@/models/Administrator";
 import type { IUser, IAdministrator, UserRole } from "@/types";
 
-const envSecret = process.env.JWT_SECRET;
-if (!envSecret) throw new Error("JWT_SECRET is not set");
-const JWT_SECRET: jwt.Secret = envSecret;
+const getJwtSecret = () => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("JWT_SECRET is not set");
+    }
+    return "dev-secret-do-not-use-in-production";
+  }
+  return secret;
+};
 
 export type JwtPayload = { userId: string; role: UserRole; isAdmin?: boolean };
 
 export function signToken(payload: JwtPayload, expiresIn: string = "7d") {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn } as jwt.SignOptions);
+  return jwt.sign(payload, getJwtSecret(), { expiresIn } as jwt.SignOptions);
 }
 
 export function verifyToken(token: string): JwtPayload {
-  return jwt.verify(token, JWT_SECRET) as JwtPayload;
+  return jwt.verify(token, getJwtSecret()) as JwtPayload;
 }
 
 export async function getAuthUserFromToken(token: string) {
@@ -27,14 +34,19 @@ export async function getAuthUserFromToken(token: string) {
     await connectDB();
 
     if (payload.isAdmin) {
-      const admin = await Administrator.findById(payload.userId).lean<IAdministrator>();
+      const admin = await Administrator.findById(
+        payload.userId,
+      ).lean<IAdministrator>();
       if (!admin) return null;
       return { _id: String(admin._id), role: "admin" as UserRole };
     }
 
     const user = await User.findById(payload.userId).lean<IUser>();
     if (!user) return null;
-    return { _id: String(user._id), role: user.role } as { _id: string; role: UserRole };
+    return { _id: String(user._id), role: user.role } as {
+      _id: string;
+      role: UserRole;
+    };
   } catch {
     return null;
   }
@@ -59,18 +71,18 @@ export async function getAuthUser(req: NextRequest) {
       if (user) return user;
     }
   }
-  
+
   // Fallback to cookies (check both user and admin tokens)
   try {
     const cookieStore = await cookies();
-    
+
     // Check admin token first (for admin routes)
     const adminToken = cookieStore.get("adminToken")?.value;
     if (adminToken) {
       const user = await getAuthUserFromToken(adminToken);
       if (user) return user;
     }
-    
+
     // Check user token (for user routes)
     const userToken = cookieStore.get("token")?.value;
     if (userToken) {
@@ -79,7 +91,7 @@ export async function getAuthUser(req: NextRequest) {
   } catch (error) {
     // cookies() might not be available in all contexts, ignore error
   }
-  
+
   return null;
 }
 
@@ -95,6 +107,3 @@ export async function requireAdmin(req: NextRequest) {
   if (user.role !== "admin") throw new Error("FORBIDDEN");
   return user;
 }
-
-
-

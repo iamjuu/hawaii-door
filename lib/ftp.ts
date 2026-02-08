@@ -1,17 +1,7 @@
 import { Client } from "basic-ftp";
 import stream from "stream";
 
-const FTP_HOST = process.env.FTP_HOST || "91.108.107.63";
-const FTP_USER = process.env.FTP_USER || "";
-const FTP_PASSWORD = process.env.FTP_PASSWORD || "";
-const FTP_PORT = parseInt(process.env.FTP_PORT || "21", 10);
-const FTP_ROOT_FOLDER =
-  process.env.FTP_ROOT_FOLDER !== undefined
-    ? process.env.FTP_ROOT_FOLDER
-    : "public_html";
-const PUBLIC_URL =
-  process.env.NEXT_PUBLIC_URL ||
-  "https://navajowhite-ostrich-413154.hostingersite.com/";
+// Constants moved inside functions to allow late env loading
 
 /**
  * Upload a file to FTP server inside public_html/uploads or uploads/ depending on root
@@ -25,8 +15,20 @@ export async function uploadToFtp(
   fileName: string,
   folder: string = "",
 ): Promise<string> {
+  const FTP_HOST = process.env.FTP_HOST || "91.108.107.63";
+  const FTP_USER = process.env.FTP_USER || "";
+  const FTP_PASSWORD = process.env.FTP_PASSWORD || "";
+  const FTP_PORT = parseInt(process.env.FTP_PORT || "21", 10);
+  const FTP_ROOT_FOLDER =
+    process.env.FTP_ROOT_FOLDER !== undefined
+      ? process.env.FTP_ROOT_FOLDER
+      : "public_html";
+
   const client = new Client();
   // client.ftp.verbose = true; // Enable for debugging
+  console.log("FTP Lib - Host:", FTP_HOST);
+  console.log("FTP Lib - User:", FTP_USER ? "Set" : "Not Set");
+  console.log("FTP Lib - Port:", FTP_PORT);
 
   try {
     await client.access({
@@ -77,6 +79,15 @@ export async function uploadToFtp(
  * @param fileUrl - Full URL to delete
  */
 export async function deleteFromFtp(fileUrl: string): Promise<void> {
+  const FTP_HOST = process.env.FTP_HOST || "91.108.107.63";
+  const FTP_USER = process.env.FTP_USER || "";
+  const FTP_PASSWORD = process.env.FTP_PASSWORD || "";
+  const FTP_PORT = parseInt(process.env.FTP_PORT || "21", 10);
+  const FTP_ROOT_FOLDER =
+    process.env.FTP_ROOT_FOLDER !== undefined
+      ? process.env.FTP_ROOT_FOLDER
+      : "public_html";
+
   if (!fileUrl) return;
 
   const client = new Client();

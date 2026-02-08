@@ -3,7 +3,12 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
-import { ProductFootericoncheck, ProductFootericonstar } from "@/public/assets";
+import {
+  TickGrayPng,
+  TickColorPng,
+  StartGray,
+  StartColor,
+} from "@/public/assets";
 import HeroSection from "../../components/herosection";
 import { FiFilter, FiX } from "react-icons/fi";
 
@@ -228,11 +233,13 @@ const ExteriorWoodPage = () => {
   const features = [
     {
       text: "Exterior doors as design features",
-      iconType: ProductFootericoncheck,
+      iconGray: TickGrayPng,
+      iconColor: TickColorPng,
     },
     {
       text: "Styles that align with your space",
-      iconType: ProductFootericonstar,
+      iconGray: StartGray,
+      iconColor: StartColor,
     },
   ];
 

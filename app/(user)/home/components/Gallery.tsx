@@ -15,7 +15,7 @@ const galleryItems = [
   {
     id: 1,
     title: "Wood Core",
-    description: "Island-crafted wood core doors built for strength and natural beauty. Ideal for interiors needing a classic, warm finish.",
+    description: " Island-crafted wood core doors built for strength and natural beauty. Perfect for interiors that need a classic, warm finish.",
     image: Woodcoreimag,
   },
   {
@@ -27,19 +27,20 @@ const galleryItems = [
   {
     id: 3,
     title: "Hollow Core",
-    description: "Lightweight and cost-effective hollow core doors ideal for interior spaces where budget and weight matter.",
+    description: " Lightweight, cost-effective hollow core doors ideal for interior spaces where budget and weight matter.",
+
     image: Hollowcoreimg,
   },
   {
     id: 4,
     title: "Particle Core",
-    description: "Solid feel with cost efficiency, particle core doors offer improved sound control and durability for bedrooms and offices.",
+    description: "With a solid feel and cost efficiency, particle core doors offer improved sound control and durability for bedrooms or offices.",
     image: Particlecoreimg,
   },
   {
     id: 5,
     title: "SCLC",
-    description: "Premium laminated solid-core doors built for strength, sound reduction, and long-term stability. Ideal for high-traffic homes and commercial spaces.",
+    description: " Premium laminated solid-core doors built for strength, sound reduction, and long-term stability ideal for high-traffic homes and commercial spaces.",
     image: Sclcimg,
   },
 

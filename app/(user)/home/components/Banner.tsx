@@ -84,7 +84,7 @@ export default function BannerSection() {
                       max-w-[95%] md:max-w-none
                     "
                   >
-                    Island-crafted, precision-machined, and made to thrive in
+                    Island-crafted, precision-machined, and  built to thrive in
                     <br className="hidden md:block" />
                     <span className="block md:inline">
                       Hawaii&apos;s climate for generations.
