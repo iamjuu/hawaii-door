@@ -397,7 +397,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
   const handingHingesSpecs = [
     {
       key: "doorHandling",
-      label: "Door Handling",
+      label: "Door Handing",
       value: formatValue("doorHandling", quoteData.doorHandling),
     },
     {

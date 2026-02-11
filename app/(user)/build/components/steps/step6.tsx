@@ -102,7 +102,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   return (
     <div className="mt-[50px] mb-[50px] max-w-[900px]">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">
-        Door Handling & Hinges
+        Door Handing & Hinges
       </h2>
 
       {/* Single Door Options (LH and RH) */}

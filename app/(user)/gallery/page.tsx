@@ -19,7 +19,7 @@ type GalleryItem = {
 type ApiGalleryItem = {
   _id?: string;
   id?: string;
-  imageUrl?: string;
+  imageUrl?: string | string[];
   category?: "interior" | "exterior";
   subCategory?: "Single" | "Double" | "Barn" | "Dutch";
   hasGlass?: boolean;
@@ -47,18 +47,15 @@ const GalleryPage = () => {
   const LIMIT = 100;
 
   /* ---------------- HELPERS ---------------- */
+  // Use NEXT_PUBLIC_URL + path for FTP paths (uploads/...). No base64.
   const getImageUrl = (imageUrl: string): string => {
     if (!imageUrl) return "";
-    if (imageUrl.startsWith("data:image")) return imageUrl;
-    if (imageUrl.startsWith("http")) return imageUrl;
-    // Ensure properly formed path if starts with /
-    if (imageUrl.startsWith("/")) {
-      const baseUrl =
-        process.env.NEXT_PUBLIC_URL ||
-        "https://navajowhite-ostrich-413154.hostingersite.com";
-      return `${baseUrl.replace(/\/$/, "")}${imageUrl}`;
-    }
-    return `data:image/jpeg;base64,${imageUrl}`;
+    const s = String(imageUrl).trim();
+    if (s.startsWith("data:image")) return s;
+    if (s.startsWith("http")) return s;
+    const base = (process.env.NEXT_PUBLIC_URL || "https://navajowhite-ostrich-413154.hostingersite.com").replace(/\/$/, "");
+    const path = s.startsWith("/") ? s : `/${s}`;
+    return `${base}${path}`;
   };
 
   /* ---------------- FETCH DATA ---------------- */
@@ -87,7 +84,8 @@ const GalleryPage = () => {
         if (result.success && result.data) {
           const transformedItems: GalleryItem[] = result.data
             .map((item: ApiGalleryItem) => {
-              const imagePath = item.imageUrl || "";
+              const raw = item.imageUrl;
+              const imagePath = typeof raw === "string" ? raw : (Array.isArray(raw) && raw[0] ? raw[0] : "");
               const image = getImageUrl(imagePath);
               const productCategory =
                 item.category === "interior"
@@ -103,10 +101,7 @@ const GalleryPage = () => {
                 glass: item.hasGlass ? "With Glass" : "Without Glass",
               };
             })
-            .filter(
-              (item: GalleryItem) =>
-                item.image && item.image !== "data:image/jpeg;base64,",
-            );
+            .filter((item: GalleryItem) => item.image && item.id);
 
           if (isNewFilter) {
             setGalleryItems(transformedItems);

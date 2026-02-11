@@ -13,10 +13,17 @@ import {
   TickGray,
 } from "@/public/assets";
 
-// Using public paths - NO SPACES in filenames for production compatibility
-const Door1 = "/assets/images/landing/door22.png";
-const Door3 = "/assets/images/landing/door33.png";
-const Door4 = "/assets/images/landing/door41.png";
+// Door category images from drive-download folder
+const DOOR_IMAGES = "/assets/drive-download-20260211T145614Z-1-001";
+
+const categories = [
+  { id: 1, title: "Bifold Doors", image: `${DOOR_IMAGES}/Bifold Doors.webp` },
+  { id: 2, title: "Craftsman Collection", image: `${DOOR_IMAGES}/Craftsman Collection.webp` },
+  { id: 3, title: "Entry Doors", image: `${DOOR_IMAGES}/Entry Doors.webp` },
+  { id: 4, title: "French Doors", image: `${DOOR_IMAGES}/French Doors.webp` },
+  { id: 5, title: "Louver Doors", image: `${DOOR_IMAGES}/Louver Doors.webp` },
+  { id: 6, title: "Lynden Doors", image: `${DOOR_IMAGES}/Lynden Doors.jpg` },
+];
 
 const DoorCategories = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
@@ -28,29 +35,6 @@ const DoorCategories = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const categories = [
-    {
-      id: 1,
-      title: "Wood Core Door",
-      image: Door1,
-    },
-    {
-      id: 2,
-      title: "Fibre Glass Door",
-      image: Door4,
-    },
-    {
-      id: 3,
-      title: "Hollow Core Doors",
-      image: Door3,
-    },
-    {
-      id: 4,
-      title: "Solid Wood Door",
-      image: Door4,
-    },
-  ];
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % categories.length);
@@ -131,7 +115,7 @@ const DoorCategories = () => {
                         src={category.image}
                         alt={category.title}
                         fill
-                        className="object-cover rounded-xl md:rounded-2xl"
+                        className="object-contain rounded-xl md:rounded-2xl"
                         sizes="(max-width: 640px) 160px, (max-width: 768px) 192px, (max-width: 1024px) 256px, 320px"
                         priority={isCurrent}
                         quality={85}

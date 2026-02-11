@@ -68,7 +68,7 @@ Interior Doors
                 </li>
               
                 <li>
-                  <a href="/product/interior/lynden-door" className="text-gray-300 hover:text-white transition-colors text-sm">
+                  <a href="/product/interior/Lynden-Door" className="text-gray-300 hover:text-white transition-colors text-sm">
 Lynden Doors
                   </a>
                 </li>

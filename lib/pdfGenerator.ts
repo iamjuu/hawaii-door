@@ -373,7 +373,7 @@ export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
 
       // Handing & Hinges Section
       const handingHingesSpecs = [
-        { key: "doorHandling", label: "Door Handling", value: formatValue("doorHandling", quoteData.doorHandling) },
+        { key: "doorHandling", label: "DoorHandling", value: formatValue("doorHandling", quoteData.doorHandling) },
         { key: "hingeRadius", label: "Hinge Radius", value: formatValue("hingeRadius", quoteData.hingeRadius) },
         { key: "hingeType", label: "Hinge Type", value: formatValue("hingeType", quoteData.hingeType) },
         { key: "hingeLocation1", label: "Hinge 1 Location", value: formatValue("hingeLocation1", quoteData.hingeLocation1) },

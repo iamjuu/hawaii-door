@@ -60,7 +60,7 @@ const Gallerysection = () => {
             <div className="mb-[60px]">
               <Headings
                 heading="Gallery"
-                subheading="Explore our full line of pre-hung wood and fiberglass doors, organized by material and style."
+                subheading="Explore our diverse collection of door styles, each crafted to complement your unique aesthetic."
               />
             </div>
 
