@@ -13,7 +13,7 @@ function decodeToken(token: string): { userId?: string; role?: string; isAdmin?:
     return null;
   }
 }
-
+//RERERERE
 // Customer/User routes (public and protected)
 const customerRoutes = [
   "/products",
