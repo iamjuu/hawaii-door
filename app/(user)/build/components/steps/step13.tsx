@@ -12,25 +12,94 @@ interface StepProps {
   setQuoteData: (data: any) => void;
 }
 
+interface DoorOption {
+  _id: string;
+  name: string;
+  doorType: string;
+  category: string;
+}
+
 const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
   const [selectedFinishOption, setSelectedFinishOption] = useState<string | null>(
     quoteData.doorFinishOption || null
   );
-
-  const [specialInstructions, setSpecialInstructions] = useState<string>(
-    quoteData.specialInstructions || ""
-  );
-
+  const [doorTypes, setDoorTypes] = useState<string[]>([]);
+  const [doors, setDoors] = useState<DoorOption[]>([]);
+  const [loadingTypes, setLoadingTypes] = useState(false);
+  const [loadingDoors, setLoadingDoors] = useState(false);
+  const [doorCategory, setDoorCategory] = useState<string>(quoteData.doorCategory || "");
+  const [selectedDoorId, setSelectedDoorId] = useState<string>(quoteData.selectedDoorId || "");
+  const [selectedDoorName, setSelectedDoorName] = useState<string>(quoteData.selectedDoorName || "");
   const [uploadedFiles, setUploadedFiles] = useState<File[]>(
     quoteData.uploadedFiles || []
   );
 
+  const productCategory = quoteData.productCategory || "";
+
+  // Fetch door types (first dropdown) when product category is set
+  useEffect(() => {
+    if (!productCategory) {
+      setDoorTypes([]);
+      return;
+    }
+    const fetchDoorTypes = async () => {
+      setLoadingTypes(true);
+      try {
+        const res = await fetch(`/api/products/door-types?category=${productCategory}`);
+        const data = await res.json();
+        if (data.success && Array.isArray(data.data)) setDoorTypes(data.data);
+        else setDoorTypes([]);
+      } catch {
+        setDoorTypes([]);
+      } finally {
+        setLoadingTypes(false);
+      }
+    };
+    fetchDoorTypes();
+  }, [productCategory]);
+
+  // Fetch doors (second dropdown) when door category (doorType) is selected
+  useEffect(() => {
+    if (!productCategory || !doorCategory) {
+      setDoors([]);
+      return;
+    }
+    const fetchDoors = async () => {
+      setLoadingDoors(true);
+      try {
+        const params = new URLSearchParams({
+          category: productCategory,
+          doorType: doorCategory,
+          limit: "100",
+          excludeImages: "true",
+        });
+        const res = await fetch(`/api/products?${params}`);
+        const data = await res.json();
+        if (data.success && Array.isArray(data.data)) setDoors(data.data);
+        else setDoors([]);
+      } catch {
+        setDoors([]);
+      } finally {
+        setLoadingDoors(false);
+      }
+    };
+    fetchDoors();
+  }, [productCategory, doorCategory]);
+
   // Sync local state with quoteData when it changes (e.g., when navigating back/forward)
   useEffect(() => {
     setSelectedFinishOption(quoteData.doorFinishOption || null);
-    setSpecialInstructions(quoteData.specialInstructions || "");
+    setDoorCategory(quoteData.doorCategory || "");
+    setSelectedDoorId(quoteData.selectedDoorId || "");
+    setSelectedDoorName(quoteData.selectedDoorName || "");
     setUploadedFiles(quoteData.uploadedFiles || []);
-  }, [quoteData.doorFinishOption, quoteData.specialInstructions, quoteData.uploadedFiles]);
+  }, [
+    quoteData.doorFinishOption,
+    quoteData.doorCategory,
+    quoteData.selectedDoorId,
+    quoteData.selectedDoorName,
+    quoteData.uploadedFiles,
+  ]);
 
   const handleFinishSelect = (option: string) => {
     setSelectedFinishOption(option);
@@ -40,13 +109,28 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
     });
   };
 
-  const handleSpecialInstructionsChange = (value: string) => {
-    setSpecialInstructions(value);
+  const handleDoorCategoryChange = (value: string) => {
+    setDoorCategory(value);
+    setSelectedDoorId("");
+    setSelectedDoorName("");
     setQuoteData({
       ...quoteData,
-      specialInstructions: value,
+      doorCategory: value,
+      selectedDoorId: "",
+      selectedDoorName: "",
     });
   };
+
+  const handleDoorSelect = (door: DoorOption) => {
+    setSelectedDoorId(door._id);
+    setSelectedDoorName(door.name);
+    setQuoteData({
+      ...quoteData,
+      selectedDoorId: door._id,
+      selectedDoorName: door.name,
+    });
+  };
+
 
   const handleFileUpload = (files: FileList | null) => {
     if (!files) return;
@@ -157,18 +241,68 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
       </div>
 
       <div className="w-full border-2 border-gray-100 rounded-xl p-6 mt-6">
-        <h3 className="text-[16px] font-roboto text-[#0A0A0A] mb-7">
-          Special Instructions
+        <h3 className="text-[16px] font-roboto text-[#0A0A0A] mb-4">
+          Product Category (Door Type)
         </h3>
+        {!productCategory ? (
+          <p className="text-sm text-gray-500 mb-4">
+            Complete step 0 (Choose door category: Interior or Exterior) to see categories.
+          </p>
+        ) : (
+          <select
+            value={doorCategory}
+            onChange={(e) => handleDoorCategoryChange(e.target.value)}
+            className="w-full max-w-md p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 text-black font-roboto"
+          >
+            <option value="">Select product category</option>
+            {loadingTypes ? (
+              <option disabled>Loading...</option>
+            ) : (
+              doorTypes.map((dt) => (
+                <option key={dt} value={dt}>
+                  {dt}
+                </option>
+              ))
+            )}
+          </select>
+        )}
 
-        <textarea
-          value={specialInstructions}
-          onChange={(e) => handleSpecialInstructionsChange(e.target.value)}
-          placeholder="Enter any special requirements, measurements, or instructions...."
-          className="w-full p-4 border border-gray-200 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-          rows={6}
-          style={{ fontSize: "14px", color: "#717182" }}
-        />
+        {productCategory && doorCategory && (
+          <>
+            <h3 className="text-[16px] font-roboto text-[#0A0A0A] mt-6 mb-4">
+              SKU <span className="text-gray-500 font-normal">(Optional)</span>
+            </h3>
+            <select
+              value={selectedDoorId}
+              onChange={(e) => {
+                const value = e.target.value;
+                const door = value ? doors.find((d) => d._id === value) : null;
+                if (door) handleDoorSelect(door);
+                else {
+                  setSelectedDoorId("");
+                  setSelectedDoorName("");
+                  setQuoteData({
+                    ...quoteData,
+                    selectedDoorId: "",
+                    selectedDoorName: "",
+                  });
+                }
+              }}
+              className="w-full max-w-md p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 text-black font-roboto"
+            >
+              <option value="">Select door</option>
+              {loadingDoors ? (
+                <option disabled>Loading...</option>
+              ) : (
+                doors.map((d) => (
+                  <option key={d._id} value={d._id}>
+                    {d.name}
+                  </option>
+                ))
+              )}
+            </select>
+          </>
+        )}
       </div>
 
       <div className="w-full border-2 border-gray-100 rounded-xl p-6 mt-6">

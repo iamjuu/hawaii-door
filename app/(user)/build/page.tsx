@@ -39,8 +39,11 @@ import shields from "../../../public/assets/builder/shields.png";
 import builderPaint from "../../../public/assets/builder/paint.png";
 import builderDocument from "../../../public/assets/builder/document.png";
 import builderTick from "../../../public/assets/builder/tick.png";
+import tickGray from "../../../public/assets/icons/tick-gray.png";
+import tickColor from "../../../public/assets/icons/tick-color.png";
 
 // Import all step components
+import Step0ChooseCategory from "./components/steps/Step0ChooseCategory";
 import Step1SelectCategory from "./components/steps/Step1SelectCategory";
 import Step2SingleOrDouble from "./components/steps/Step2SingleOrDouble";
 import Step3DoorSize from "./components/steps/Step3DoorSize";
@@ -74,6 +77,7 @@ const BuildDoor = () => {
     return () => clearTimeout(timer);
   }, []);
   const [quoteData, setQuoteData] = useState({
+    productCategory: "",
     doorType: "",
     category: "",
     doorConfig: "",
@@ -92,7 +96,7 @@ const BuildDoor = () => {
     hingeLocation3: "",
     backset: "",
     louver: "",
-    lockType: "",
+    lockType: [] as string[],
     lockBoreDiameter: "",
     lockBackset: "",
     lockCenterline: "",
@@ -100,6 +104,7 @@ const BuildDoor = () => {
     faceplateDimension: "",
     faceplateRadius: "",
     driveInDiameter: "",
+    needsJambPreHanging: null as string | null,
     jambType: "",
     jambSize: "",
     dbStrikeType: "",
@@ -111,6 +116,9 @@ const BuildDoor = () => {
     protectDoorOption: "",
     addOnOption: "",
     doorFinishOption: "",
+    doorCategory: "",
+    selectedDoorId: "",
+    selectedDoorName: "",
     specialInstructions: "",
     uploadedFiles: [],
     firstName: "",
@@ -123,14 +131,25 @@ const BuildDoor = () => {
   // Define all steps with their info banners
   const steps = [
     {
-      component: Step1SelectCategory,
+      component: Step0ChooseCategory,
       infoBanner: {
         icon: usaimg,
-        text: "Manufactured in the US, precision-machined in Hawaii",
+        text: "Manufactured in the US",
         width: { mobile: 24, desktop: 28 },
         height: { mobile: 24, desktop: 28 },
       },
       percentage: 0,
+    },
+    {
+      component: Step1SelectCategory,
+      infoBanner: {
+        icon: tickGray,
+        hoverIcon: tickColor,
+        text: "Precision-machined in Hawaii",
+        width: { mobile: 24, desktop: 28 },
+        height: { mobile: 24, desktop: 28 },
+      },
+      percentage: 6,
     },
     {
       component: Step2SingleOrDouble,
@@ -141,7 +160,7 @@ const BuildDoor = () => {
         width: { mobile: 24, desktop: 28 },
         height: { mobile: 24, desktop: 28 },
       },
-      percentage: 7,
+      percentage: 13,
     },
     {
       component: Step3DoorSize,
@@ -152,7 +171,7 @@ const BuildDoor = () => {
         width: { mobile: 24, desktop: 25 },
         height: { mobile: 24, desktop: 25 },
       },
-      percentage: 14,
+      percentage: 20,
     },
     {
       component: Step4,
@@ -163,7 +182,7 @@ const BuildDoor = () => {
         width: { mobile: 24, desktop: 26 },
         height: { mobile: 24, desktop: 26 },
       },
-      percentage: 21,
+      percentage: 26,
     },
     {
       component: Step5,
@@ -174,7 +193,7 @@ const BuildDoor = () => {
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
       },
-      percentage: 28,
+      percentage: 33,
     },
     {
       component: Step6,
@@ -185,7 +204,7 @@ const BuildDoor = () => {
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
       },
-      percentage: 35,
+      percentage: 40,
     },
     {
       component: Step7,
@@ -196,7 +215,7 @@ const BuildDoor = () => {
         width: { mobile: 24, desktop: 25 },
         height: { mobile: 24, desktop: 25 },
       },
-      percentage: 42,
+      percentage: 46,
     },
     {
       component: Step8,
@@ -207,7 +226,7 @@ const BuildDoor = () => {
         width: { mobile: 23, desktop: 25 },
         height: { mobile: 23, desktop: 25 },
       },
-      percentage: 49,
+      percentage: 53,
     },
     {
       component: Step9,
@@ -218,7 +237,7 @@ const BuildDoor = () => {
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
       },
-      percentage: 56,
+      percentage: 60,
     },
     {
       component: Step10,
@@ -229,7 +248,7 @@ const BuildDoor = () => {
         width: { mobile: 24, desktop: 27 },
         height: { mobile: 24, desktop: 27 },
       },
-      percentage: 63,
+      percentage: 66,
     },
     {
       component: Step11,
@@ -240,7 +259,7 @@ const BuildDoor = () => {
         width: { mobile: 24, desktop: 26 },
         height: { mobile: 24, desktop: 26 },
       },
-      percentage: 70,
+      percentage: 73,
     },
     {
       component: Step12,
@@ -251,7 +270,7 @@ const BuildDoor = () => {
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
       },
-      percentage: 77,
+      percentage: 80,
     },
     {
       component: Step13,
@@ -262,7 +281,7 @@ const BuildDoor = () => {
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
       },
-      percentage: 84,
+      percentage: 86,
     },
     {
       component: Step14,
@@ -273,7 +292,7 @@ const BuildDoor = () => {
         width: { mobile: 24, desktop: 24 },
         height: { mobile: 24, desktop: 24 },
       },
-      percentage: 91,
+      percentage: 93,
     },
     {
       component: Step15,
@@ -290,57 +309,56 @@ const BuildDoor = () => {
 
   const CurrentStepComponent = steps[currentStep].component;
 
-  const handleNext = async (doorType?: string, doorConfig?: string) => {
-    // If doorType is provided (and it's actually a string, not an event), update the quoteData first
+  const handleNext = async (doorType?: string, doorConfig?: string, productCategory?: string) => {
+    if (productCategory !== undefined && typeof productCategory === "string") {
+      setQuoteData((prev) => ({ ...prev, productCategory }));
+    }
     if (doorType !== undefined && typeof doorType === "string") {
       setQuoteData((prev) => ({ ...prev, doorType }));
     }
-
-    // If doorConfig is provided (and it's actually a string, not an event), update the quoteData first
     if (doorConfig !== undefined && typeof doorConfig === "string") {
       setQuoteData((prev) => ({ ...prev, doorConfig, category: doorConfig }));
     }
 
-    // Prevent moving to next step if on step 1 and no door is selected
+    const currentProductCategory = productCategory ?? quoteData.productCategory;
+    if (currentStep === 0 && !currentProductCategory) {
+      return;
+    }
+
     const currentDoorType =
       doorType !== undefined && typeof doorType === "string"
         ? doorType
         : quoteData.doorType;
-    if (currentStep === 0 && !currentDoorType) {
+    if (currentStep === 1 && !currentDoorType) {
       return;
     }
 
-    // Prevent moving to next step if on step 2 and no door config is selected
     const currentDoorConfig =
       doorConfig !== undefined && typeof doorConfig === "string"
         ? doorConfig
         : quoteData.doorConfig;
-    if (currentStep === 1 && !currentDoorConfig) {
+    if (currentStep === 2 && !currentDoorConfig) {
       return;
     }
 
-    // Prevent moving to next step if on step 3 (index 2) and width or height is not selected
-    if (currentStep === 2 && (!quoteData.width || !quoteData.height)) {
+    if (currentStep === 3 && (!quoteData.width || !quoteData.height)) {
       return;
     }
 
-    // Prevent moving to next step if on step 4 (index 3) and wallBuilt is not selected
-    if (currentStep === 3 && !quoteData.wallBuilt) {
+    if (currentStep === 4 && !quoteData.wallBuilt) {
       return;
     }
 
-    // Prevent moving to next step if on step 5 (index 4) and neither preset option nor custom diameter is selected
     if (
-      currentStep === 4 &&
+      currentStep === 5 &&
       !quoteData.wallThickness &&
       !quoteData.customDiameter
     ) {
       return;
     }
 
-    // Prevent moving to next step if on step 6 (index 5) and doorHandling, hingeRadius, or hingeType is not selected
     if (
-      currentStep === 5 &&
+      currentStep === 6 &&
       (!quoteData.doorHandling ||
         !quoteData.hingeRadius ||
         !quoteData.hingeType)
@@ -348,15 +366,13 @@ const BuildDoor = () => {
       return;
     }
 
-    // Prevent moving to next step if on step 7 (index 6) and louver is not selected
-    if (currentStep === 6 && !quoteData.louver) {
+    if (currentStep === 7 && !quoteData.louver) {
       return;
     }
 
-    // Prevent moving to next step if on step 8 (index 7) and required fields are not selected
     if (
-      currentStep === 7 &&
-      (!quoteData.lockType ||
+      currentStep === 8 &&
+      (!Array.isArray(quoteData.lockType) || quoteData.lockType.length === 0 ||
         !quoteData.lockBoreDiameter ||
         !quoteData.lockBackset ||
         !quoteData.lockCenterline ||
@@ -368,42 +384,41 @@ const BuildDoor = () => {
       return;
     }
 
-    // Prevent moving to next step if on step 9 (index 8) and required fields are not selected (Undercut Measurement is optional)
+    if (currentStep === 9) {
+      if (quoteData.needsJambPreHanging === null) return;
+      if (
+        quoteData.needsJambPreHanging === "yes" &&
+        (!quoteData.jambType ||
+          !quoteData.jambSize ||
+          !quoteData.dbStrikeType ||
+          !quoteData.lockStrikeType ||
+          !quoteData.weatherstripping ||
+          !quoteData.thresholdType)
+      )
+        return;
+    }
+
+    if (currentStep === 10 && !quoteData.hangDoorOption) {
+      return;
+    }
+
+    if (currentStep === 11 && !quoteData.protectDoorOption) {
+      return;
+    }
+
+    if (currentStep === 12 && !quoteData.addOnOption) {
+      return;
+    }
+
     if (
-      currentStep === 8 &&
-      (!quoteData.jambType ||
-        !quoteData.jambSize ||
-        !quoteData.dbStrikeType ||
-        !quoteData.lockStrikeType ||
-        !quoteData.weatherstripping ||
-        !quoteData.thresholdType)
+      currentStep === 13 &&
+      (!quoteData.doorFinishOption || !quoteData.doorCategory)
     ) {
       return;
     }
 
-    // Prevent moving to next step if on step 10 (index 9) and hangDoorOption is not selected
-    if (currentStep === 9 && !quoteData.hangDoorOption) {
-      return;
-    }
-
-    // Prevent moving to next step if on step 11 (index 10) and protectDoorOption is not selected
-    if (currentStep === 10 && !quoteData.protectDoorOption) {
-      return;
-    }
-
-    // Prevent moving to next step if on step 12 (index 11) and addOnOption is not selected
-    if (currentStep === 11 && !quoteData.addOnOption) {
-      return;
-    }
-
-    // Prevent moving to next step if on step 13 (index 12) and doorFinishOption is not selected (specialInstructions is optional)
-    if (currentStep === 12 && !quoteData.doorFinishOption) {
-      return;
-    }
-
-    // Prevent moving to next step if on step 14 (index 13) and any required field is not filled
     if (
-      currentStep === 13 &&
+      currentStep === 14 &&
       (!quoteData.firstName ||
         !quoteData.companyName ||
         !quoteData.phone ||
@@ -413,8 +428,7 @@ const BuildDoor = () => {
       return;
     }
 
-    // Handle submit on step 15 (index 14)
-    if (currentStep === 14) {
+    if (currentStep === 15) {
       setIsSubmitting(true);
 
       // Convert uploaded files to base64 if they are File objects
@@ -508,8 +522,7 @@ const BuildDoor = () => {
     }
 
     if (currentStep < steps.length - 1) {
-      // When leaving Step 3 (index 2), ensure a default thickness is saved
-      if (currentStep === 2) {
+      if (currentStep === 3) {
         setQuoteData((prev) => ({
           ...prev,
           thickness: prev.thickness || '1 3/8"',
@@ -534,6 +547,7 @@ const BuildDoor = () => {
   const handleRestart = () => {
     setCurrentStep(0);
     setQuoteData({
+      productCategory: "",
       doorType: "",
       category: "",
       doorConfig: "",
@@ -552,7 +566,7 @@ const BuildDoor = () => {
       hingeLocation3: "",
       backset: "",
       louver: "",
-      lockType: "",
+      lockType: [] as string[],
       lockBoreDiameter: "",
       lockBackset: "",
       lockCenterline: "",
@@ -560,6 +574,7 @@ const BuildDoor = () => {
       faceplateDimension: "",
       faceplateRadius: "",
       driveInDiameter: "",
+      needsJambPreHanging: null,
       jambType: "",
       jambSize: "",
       dbStrikeType: "",
@@ -571,6 +586,9 @@ const BuildDoor = () => {
       protectDoorOption: "",
       addOnOption: "",
       doorFinishOption: "",
+      doorCategory: "",
+      selectedDoorId: "",
+      selectedDoorName: "",
       specialInstructions: "",
       uploadedFiles: [],
       firstName: "",
@@ -610,21 +628,22 @@ const BuildDoor = () => {
                     currentStep={currentStep}
                     isSubmitting={isSubmitting}
                     isNextDisabled={
-                      (currentStep === 0 && !quoteData.doorType) ||
-                      (currentStep === 1 && !quoteData.doorConfig) ||
-                      (currentStep === 2 &&
+                      (currentStep === 0 && !quoteData.productCategory) ||
+                      (currentStep === 1 && !quoteData.doorType) ||
+                      (currentStep === 2 && !quoteData.doorConfig) ||
+                      (currentStep === 3 &&
                         (!quoteData.width || !quoteData.height)) ||
-                      (currentStep === 3 && !quoteData.wallBuilt) ||
-                      (currentStep === 4 &&
+                      (currentStep === 4 && !quoteData.wallBuilt) ||
+                      (currentStep === 5 &&
                         !quoteData.wallThickness &&
                         !quoteData.customDiameter) ||
-                      (currentStep === 5 &&
+                      (currentStep === 6 &&
                         (!quoteData.doorHandling ||
                           !quoteData.hingeRadius ||
                           !quoteData.hingeType)) ||
-                      (currentStep === 6 && !quoteData.louver) ||
-                      (currentStep === 7 &&
-                        (!quoteData.lockType ||
+                      (currentStep === 7 && !quoteData.louver) ||
+                      (currentStep === 8 &&
+                        (!Array.isArray(quoteData.lockType) || quoteData.lockType.length === 0 ||
                           !quoteData.lockBoreDiameter ||
                           !quoteData.lockBackset ||
                           !quoteData.lockCenterline ||
@@ -632,18 +651,22 @@ const BuildDoor = () => {
                           !quoteData.faceplateRadius ||
                           !quoteData.driveInDiameter ||
                           !quoteData.latchBoreDiameter)) ||
-                      (currentStep === 8 &&
-                        (!quoteData.jambType ||
-                          !quoteData.jambSize ||
-                          !quoteData.dbStrikeType ||
-                          !quoteData.lockStrikeType ||
-                          !quoteData.weatherstripping ||
-                          !quoteData.thresholdType)) ||
-                      (currentStep === 9 && !quoteData.hangDoorOption) ||
-                      (currentStep === 10 && !quoteData.protectDoorOption) ||
-                      (currentStep === 11 && !quoteData.addOnOption) ||
-                      (currentStep === 12 && !quoteData.doorFinishOption) ||
+                      (currentStep === 9 &&
+                        (quoteData.needsJambPreHanging === null ||
+                          (quoteData.needsJambPreHanging === "yes" &&
+                            (!quoteData.jambType ||
+                              !quoteData.jambSize ||
+                              !quoteData.dbStrikeType ||
+                              !quoteData.lockStrikeType ||
+                              !quoteData.weatherstripping ||
+                              !quoteData.thresholdType)))) ||
+                      (currentStep === 10 && !quoteData.hangDoorOption) ||
+                      (currentStep === 11 && !quoteData.protectDoorOption) ||
+                      (currentStep === 12 && !quoteData.addOnOption) ||
                       (currentStep === 13 &&
+                        (!quoteData.doorFinishOption ||
+                          !quoteData.doorCategory)) ||
+                      (currentStep === 14 &&
                         (!quoteData.firstName ||
                           !quoteData.companyName ||
                           !quoteData.phone ||
@@ -657,75 +680,78 @@ const BuildDoor = () => {
                     setQuoteData={setQuoteData}
                     onNext={
                       currentStep === 0
-                        ? (doorType?: string) => handleNext(doorType)
+                        ? (productCategory?: string) =>
+                            handleNext(undefined, undefined, productCategory)
                         : currentStep === 1
-                          ? (doorConfig?: string) =>
-                              handleNext(undefined, doorConfig)
-                          : currentStep === 3
+                          ? (doorType?: string) => handleNext(doorType)
+                          : currentStep === 2
+                            ? (doorConfig?: string) =>
+                                handleNext(undefined, doorConfig)
+                            : currentStep === 4
                             ? () =>
                                 setCurrentStep((prev) =>
                                   prev < steps.length - 1 ? prev + 1 : prev,
                                 )
-                            : currentStep === 4
+                            : currentStep === 5
                               ? () =>
                                   setCurrentStep((prev) =>
                                     prev < steps.length - 1 ? prev + 1 : prev,
                                   )
-                              : currentStep === 5
+                              : currentStep === 6
                                 ? () =>
                                     setCurrentStep((prev) =>
                                       prev < steps.length - 1 ? prev + 1 : prev,
                                     )
-                                : currentStep === 6
+                                : currentStep === 7
                                   ? () =>
                                       setCurrentStep((prev) =>
                                         prev < steps.length - 1
                                           ? prev + 1
                                           : prev,
                                       )
-                                  : currentStep === 7
+                                  : currentStep === 8
                                     ? () =>
                                         setCurrentStep((prev) =>
                                           prev < steps.length - 1
                                             ? prev + 1
                                             : prev,
                                         )
-                                    : currentStep === 8
+                                    : currentStep === 9
                                       ? () =>
                                           setCurrentStep((prev) =>
                                             prev < steps.length - 1
                                               ? prev + 1
                                               : prev,
                                           )
-                                      : currentStep === 9
+                                      : currentStep === 10
                                         ? () =>
                                             setCurrentStep((prev) =>
                                               prev < steps.length - 1
                                                 ? prev + 1
                                                 : prev,
                                             )
-                                        : currentStep === 10
+                                        : currentStep === 11
                                           ? () =>
                                               setCurrentStep((prev) =>
                                                 prev < steps.length - 1
                                                   ? prev + 1
                                                   : prev,
                                               )
-                                          : currentStep === 11
+                                          : currentStep === 12
                                             ? () =>
                                                 setCurrentStep((prev) =>
                                                   prev < steps.length - 1
                                                     ? prev + 1
                                                     : prev,
                                                 )
-                                            : currentStep === 12
+                                            : currentStep === 13
                                               ? () =>
                                                   setCurrentStep((prev) =>
                                                     prev < steps.length - 1
                                                       ? prev + 1
                                                       : prev,
                                                   )
-                                              : currentStep === 13
+                                              : currentStep === 14
                                                 ? () =>
                                                     setCurrentStep((prev) =>
                                                       prev < steps.length - 1
@@ -739,7 +765,7 @@ const BuildDoor = () => {
               </div>
 
               {/* Quote Summary Sidebar - Hidden on Step 15 */}
-              {currentStep !== 14 && (
+              {currentStep !== 15 && (
                 <QuoteSummary
                   quoteData={quoteData}
                   currentStep={currentStep}

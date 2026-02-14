@@ -1,6 +1,7 @@
 import { jsPDF } from "jspdf";
 import fs from "fs";
 import path from "path";
+import sharp from "sharp";
 
 // Map doorType to image path
 const getDoorImagePath = (doorType: string): string | null => {
@@ -18,7 +19,13 @@ const getDoorImagePath = (doorType: string): string | null => {
 // Format values for display (same logic as step15.tsx)
 const formatValue = (key: string, value: unknown): string => {
   if (!value || value === "") return "-";
-  if (Array.isArray(value)) return value.length > 0 ? `${value.length} file(s)` : "-";
+  if (Array.isArray(value)) {
+    if (key === "lockType") {
+      const lockLabels: { [v: string]: string } = { deadbolt: "Deadbolt", door_knob: "Door Knob" };
+      return value.map((v: string) => lockLabels[v]).filter(Boolean).join(", ") || "-";
+    }
+    return value.length > 0 ? `${value.length} file(s)` : "-";
+  }
   
   const stringValue = String(value);
   
@@ -27,25 +34,30 @@ const formatValue = (key: string, value: unknown): string => {
       "interior_double_rabbet": "Interior Double Rabbet",
       "exterior_single_rabbet": "Exterior Single Rabbet",
       "exterior_single_rabbet_kerfed": "Exterior Single Rabbet Kerfed",
+      "none": "None",
     },
     dbStrikeType: {
       "standard": "Standard",
       "radius_corner": "Radius Corner",
       "box_strike": "Box Strike",
+      "none": "None",
     },
     lockStrikeType: {
       "standard": "Standard",
       "radius_corner": "Radius Corner",
       "t_strike": "T-Strike",
+      "none": "None",
     },
     weatherstripping: {
       "white": "White",
       "brown": "Brown",
+      "none": "None",
     },
     thresholdType: {
       "adjustable_in_swing": "Adjustable In-swing",
       "out_swing": "Out-Swing",
       "flat_saddle": "Flat / Saddle",
+      "none": "None",
     },
     hangDoorOption: {
       "none": "None (pre-hung door)",
@@ -137,12 +149,16 @@ const getDisplayName = (key: string): string => {
 // Generate PDF from quote data using jsPDF
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     try {
       if (!quoteData) {
         reject(new Error("Quote data is required"));
         return;
       }
+
+      // Omit selectedDoorId so it never appears in the PDF
+      const { selectedDoorId: _omit, ...dataForPdf } = quoteData;
+      const pdfQuoteData = { ...dataForPdf };
 
       // Create PDF document
       const doc = new jsPDF({
@@ -214,8 +230,15 @@ export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
         { key: "louver", label: "Louver", value: formatValue("louver", quoteData.louver) },
       ].filter(spec => spec.value !== "-");
 
-      // Helper function to render a section box
-      const renderSection = (title: string, specs: Array<{ label: string; value: string }>, hasImage: boolean = false, imageBase64?: string, imageFormat?: string) => {
+      // Helper function to render a section box (imageLayout: object-contain style - fit image in box without stretch)
+      const renderSection = (
+        title: string,
+        specs: Array<{ label: string; value: string }>,
+        hasImage: boolean = false,
+        imageBase64?: string,
+        imageFormat?: string,
+        imageLayout?: { drawWidth: number; drawHeight: number; offsetX: number; offsetY: number }
+      ) => {
         // Increased required space check for larger text
         checkNewPage(80);
         
@@ -290,15 +313,18 @@ export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
           yPos += specRowHeight;
         });
         
-        // Add image on the right if provided
+        // Add image on the right if provided (object-contain: preserve aspect ratio, fit in box)
         if (hasImage && imageBase64 && imageFormat) {
           try {
-            // Slightly larger image for better visibility with larger text
-            doc.addImage(imageBase64, imageFormat, imageX, imageY, 40, 30);
+            const iw = imageLayout?.drawWidth ?? 40;
+            const ih = imageLayout?.drawHeight ?? 30;
+            const ox = imageLayout?.offsetX ?? 0;
+            const oy = imageLayout?.offsetY ?? 0;
+            doc.addImage(imageBase64, imageFormat, imageX + ox, imageY + oy, iw, ih);
           } catch (err) {
             console.log("Could not add image to PDF section:", err);
           }
-          yPos = Math.max(yPos, imageY + 35); // Increased for larger image
+          yPos = Math.max(yPos, imageY + 35);
         }
         
         // Section end with equal padding
@@ -311,54 +337,56 @@ export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
         yPos = sectionEndY + sectionMargin; // Section margin bottom
       };
 
-      // Try to get door image (uploaded or static)
+      // Door Specifications image: use same door-type image as Review & Submit (Select your core / step 1)
       let doorImageBase64: string | null = null;
       let doorImageFormat: string = 'PNG';
       let hasDoorImage = false;
-      
-      // First, try to use uploaded images
-      if (quoteData.uploadedFiles && Array.isArray(quoteData.uploadedFiles) && quoteData.uploadedFiles.length > 0) {
-        const imageFile = quoteData.uploadedFiles.find((file: any) => {
-          if (file && typeof file === 'object') {
-            const type = file.type || '';
-            const name = file.name || '';
-            return type.startsWith('image/') || /\.(jpg|jpeg|png|gif|webp)$/i.test(name);
-          }
-          return false;
-        });
 
-        if (imageFile && imageFile.base64) {
-          const fileType = imageFile.type || '';
-          const fileName = imageFile.name || '';
-          
-          if (fileType.includes('jpeg') || fileType.includes('jpg') || /\.(jpg|jpeg)$/i.test(fileName)) {
-            doorImageFormat = 'JPEG';
-          } else if (fileType.includes('png') || /\.png$/i.test(fileName)) {
+      const imagePath = getDoorImagePath(quoteData.doorType);
+      if (imagePath) {
+        try {
+          const imagePathWithoutSlash = imagePath.startsWith("/") ? imagePath.slice(1) : imagePath;
+          const fullImagePath = path.join(process.cwd(), "public", imagePathWithoutSlash);
+
+          if (fs.existsSync(fullImagePath)) {
+            const imageData = fs.readFileSync(fullImagePath);
+            doorImageBase64 = `data:image/png;base64,${imageData.toString('base64')}`;
             doorImageFormat = 'PNG';
+            hasDoorImage = true;
           }
-          
-          doorImageBase64 = `data:image/${doorImageFormat.toLowerCase()};base64,${imageFile.base64}`;
-          hasDoorImage = true;
+        } catch (err) {
+          console.log("Could not load static door image:", err);
         }
       }
 
-      // If no uploaded image, fall back to static door type image
-      if (!hasDoorImage) {
-        const imagePath = getDoorImagePath(quoteData.doorType);
-        if (imagePath) {
-          try {
-            const imagePathWithoutSlash = imagePath.startsWith("/") ? imagePath.slice(1) : imagePath;
-            const fullImagePath = path.join(process.cwd(), "public", imagePathWithoutSlash);
-            
-            if (fs.existsSync(fullImagePath)) {
-              const imageData = fs.readFileSync(fullImagePath);
-              doorImageBase64 = `data:image/png;base64,${imageData.toString('base64')}`;
-              doorImageFormat = 'PNG';
-              hasDoorImage = true;
-            }
-          } catch (err) {
-            console.log("Could not load static image:", err);
+      // object-contain: scale door image to fit 40x30 mm box without stretching
+      let doorImageLayout: { drawWidth: number; drawHeight: number; offsetX: number; offsetY: number } | undefined;
+      if (hasDoorImage && doorImageBase64) {
+        try {
+          const base64Data = doorImageBase64.replace(/^data:image\/\w+;base64,/, '');
+          const buf = Buffer.from(base64Data, 'base64');
+          const meta = await sharp(buf).metadata();
+          const w = meta.width ?? 100;
+          const h = meta.height ?? 100;
+          const boxW = 40;
+          const boxH = 30;
+          if (w / h >= boxW / boxH) {
+            doorImageLayout = {
+              drawWidth: boxW,
+              drawHeight: boxW * (h / w),
+              offsetX: 0,
+              offsetY: (boxH - boxW * (h / w)) / 2,
+            };
+          } else {
+            doorImageLayout = {
+              drawWidth: boxH * (w / h),
+              drawHeight: boxH,
+              offsetX: (boxW - boxH * (w / h)) / 2,
+              offsetY: 0,
+            };
           }
+        } catch {
+          // fallback: use full box if sharp fails
         }
       }
 
@@ -368,7 +396,8 @@ export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
         primarySpecs,
         hasDoorImage,
         doorImageBase64 || undefined,
-        hasDoorImage ? doorImageFormat : undefined
+        hasDoorImage ? doorImageFormat : undefined,
+        doorImageLayout
       );
 
       // Handing & Hinges Section
@@ -393,8 +422,8 @@ export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
         renderSection("Handing & Hinges", formattedHandingSpecs);
       }
 
-      // Lock Information Section
-      const lockInfoSpecs = Object.entries(quoteData)
+      // Lock Information Section (use pdfQuoteData so selectedDoorId is never included)
+      const lockInfoSpecs = Object.entries(pdfQuoteData)
         .filter(([key, value]) => {
           if (!value || value === "" || (Array.isArray(value) && value.length === 0)) return false;
           if (key === "uploadedFiles") return false;
@@ -406,7 +435,7 @@ export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
             "jambType", "jambSize", "dbStrikeType", "lockStrikeType", "undercutMeasurement", 
             "weatherstripping", "thresholdType",
             "hangDoorOption", "protectDoorOption", "addOnOption",
-            "doorFinishOption", "specialInstructions",
+            "doorFinishOption", "doorCategory", "selectedDoorId", "selectedDoorName", "specialInstructions",
             "firstName", "email", "companyName", "phone", "poNumber"
           ];
           if (excludedKeys.includes(key)) return false;
@@ -460,32 +489,13 @@ export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
         return "No files uploaded";
       };
 
-      const specialInstructionsValue = formatValue("specialInstructions", quoteData.specialInstructions);
-
-        // Check if special instructions can fit in a single line
-        let canFitInSingleLine = false;
-        if (specialInstructionsValue && specialInstructionsValue !== "-") {
-          // Calculate available width for value (no image in this section)
-          const specsLeftX = margin + sectionPadding;
-          const specsRightX = specsLeftX + 60; // Space for label (increased for 40px font)
-          const maxValueWidth = pageWidth - margin - sectionPadding - specsRightX;
-          
-          // Check if text fits in a single line
-          doc.setFontSize(40 * 0.264583); // Use same font size as renderSection (40px)
-          const splitText = doc.splitTextToSize(specialInstructionsValue, maxValueWidth);
-          canFitInSingleLine = splitText.length === 1;
-        }
-
-      // Door Finish Section (include special instructions if it fits in one line)
+      // Door Finish & Notes Section (Product Category, Door Name, SKU)
       const doorFinishSpecs = [
         { key: "doorFinishOption", label: "Door Finish", value: formatValue("doorFinishOption", quoteData.doorFinishOption) },
+        { key: "doorCategory", label: "Product Category", value: quoteData.doorCategory || "-" },
+        { key: "selectedDoorName", label: "Door Name (SKU)", value: quoteData.selectedDoorName || "-" },
         { key: "fileUploadStatus", label: "File Upload Status", value: getFileUploadStatus() },
-        // Include special instructions only if it fits in one line
-        ...(canFitInSingleLine && specialInstructionsValue && specialInstructionsValue !== "-" 
-          ? [{ key: "specialInstructions", label: "Special Instructions", value: specialInstructionsValue }]
-          : [])
       ].filter(spec => {
-        // Always show file upload status, but filter out empty doorFinishOption
         if (spec.key === "fileUploadStatus") return true;
         return spec.value !== "-";
       });
@@ -493,15 +503,6 @@ export async function generateQuotePDF(quoteData: any): Promise<Buffer> {
       if (doorFinishSpecs.length > 0) {
         const formattedDoorFinishSpecs = doorFinishSpecs.map(spec => ({ label: spec.label, value: spec.value }));
         renderSection("Door Finish & Notes", formattedDoorFinishSpecs);
-      }
-
-      // Special Instructions Section (separate box only if it can't fit in a single line)
-      if (specialInstructionsValue && specialInstructionsValue !== "-" && !canFitInSingleLine) {
-        const specialInstructionsSpecs = [
-          { key: "specialInstructions", label: "Special Instructions", value: specialInstructionsValue },
-        ];
-        const formattedSpecialInstructions = specialInstructionsSpecs.map(spec => ({ label: spec.label, value: spec.value }));
-        renderSection("Special Instructions", formattedSpecialInstructions);
       }
 
       // Your Details Section

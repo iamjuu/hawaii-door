@@ -14,7 +14,7 @@ interface StepNavigationProps {
 
 const StepNavigation = ({ onBack, onNext, showBack, percentage, isFirstStep = false, isNextDisabled = false, currentStep, isSubmitting = false }: StepNavigationProps) => {
   const isBackDisabled = isFirstStep;
-  const isStep15 = currentStep === 14;
+  const isStep15 = currentStep === 15;
 
   return (
     <div className={`relative flex flex-col md:flex-row items-center gap-3 md:gap-0 md:pt-[29px] md:pb-[25px] ${isStep15 ? 'max-w-[1100px] mx-auto' : ''}`}>

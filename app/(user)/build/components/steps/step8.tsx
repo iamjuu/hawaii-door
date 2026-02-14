@@ -14,13 +14,16 @@ interface StepProps {
 }
 
 const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
-  const [selectedLockType, setSelectedLockType] = useState<string | null>(
-    quoteData.lockType || null
-  );
+  const [selectedLockTypes, setSelectedLockTypes] = useState<string[]>(() => {
+    const v = quoteData.lockType;
+    if (Array.isArray(v)) return v.length ? v : [];
+    if (v === "deadbolt" || v === "door_knob") return [v];
+    return [];
+  });
   const [selectedBoreDiameter, setSelectedBoreDiameter] = useState<string | null>(() => {
     const value = quoteData.lockBoreDiameter;
     if (!value) return null;
-    if (value === "1" || value === "7/8" || value === "other") return value;
+    if (value === "2 1/8" || value === "other") return value;
     return "other"; // Custom value, treat as "other"
   });
   const [selectedBackset, setSelectedBackset] = useState<string | null>(() => {
@@ -66,7 +69,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   // Custom "Other" input values - initialized from quoteData if it's a custom value
   const [lockBoreDiameterOther, setLockBoreDiameterOther] = useState<string>(() => {
     const value = quoteData.lockBoreDiameter;
-    if (value && value !== "1" && value !== "7/8" && value !== "other") {
+    if (value && value !== "2 1/8" && value !== "other") {
       return value;
     }
     return "";
@@ -94,10 +97,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   });
 
   const handleLockTypeSelect = (type: string) => {
-    setSelectedLockType(type);
+    const next = selectedLockTypes.includes(type)
+      ? selectedLockTypes.filter((t) => t !== type)
+      : [...selectedLockTypes, type];
+    setSelectedLockTypes(next);
     setQuoteData({
       ...quoteData,
-      lockType: type,
+      lockType: next,
     });
   };
 
@@ -214,13 +220,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           <button
             type="button"
             onClick={() => handleLockTypeSelect("deadbolt")}
-            className={`relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${selectedLockType === "deadbolt"
+            className={`relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${selectedLockTypes.includes("deadbolt")
                 ? "border-[#FF6E4A] bg-white shadow-lg"
                 : "border-gray-200 bg-white"
               }`}
           >
             {/* Circle indicator top right */}
-            {selectedLockType === "deadbolt" && (
+            {selectedLockTypes.includes("deadbolt") && (
               <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-[#FF6E4A] flex items-center justify-center z-10">
                 <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
@@ -251,13 +257,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           <button
             type="button"
             onClick={() => handleLockTypeSelect("door_knob")}
-            className={`md:hidden relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${selectedLockType === "door_knob"
+            className={`md:hidden relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${selectedLockTypes.includes("door_knob")
                 ? "border-[#FF6E4A] bg-white shadow-lg"
                 : "border-gray-200 bg-white"
               }`}
           >
             {/* Circle indicator top right */}
-            {selectedLockType === "door_knob" && (
+            {selectedLockTypes.includes("door_knob") && (
               <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-[#FF6E4A] flex items-center justify-center z-10">
                 <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
@@ -291,34 +297,17 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto md:mt-3">
               Lock Bore Diameter
             </p>
-            <div className="flex flex-col md:grid md:grid-cols-3 gap-2 max-w-full md:max-w-[300px]">
+            <div className="flex flex-col md:grid md:grid-cols-2 gap-2 max-w-full md:max-w-[300px]">
               <button
                 type="button"
-                onClick={() => handleBoreDiameterSelect("1")}
-                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${selectedBoreDiameter === "1"
+                onClick={() => handleBoreDiameterSelect("2 1/8")}
+                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${selectedBoreDiameter === "2 1/8"
                     ? "border-orange-500 text-black"
                     : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
                   }`}
               >
-                <span className="text-left text-black font-roboto">1&quot;</span>
-                {selectedBoreDiameter === "1" && (
-                  <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
-                    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                )}
-              </button>
-              <button
-                type="button"
-                onClick={() => handleBoreDiameterSelect("7/8")}
-                className={`w-full relative border-2 rounded-lg px-5 md:px-3 py-2 text-sm font-medium bg-white transition-colors flex items-center justify-between ${selectedBoreDiameter === "7/8"
-                    ? "border-orange-500 text-black"
-                    : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
-                  }`}
-              >
-                <span className="text-left text-black font-roboto">⅞&quot;</span>
-                {selectedBoreDiameter === "7/8" && (
+                <span className="text-left text-black text-[15px] font-roboto font-normal">2 ⅛&quot;</span>
+                {selectedBoreDiameter === "2 1/8" && (
                   <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
                     <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
@@ -386,13 +375,13 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           <button
             type="button"
             onClick={() => handleLockTypeSelect("door_knob")}
-            className={`hidden md:block relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${selectedLockType === "door_knob"
+            className={`hidden md:block relative border-2 rounded-lg p-4 text-left transition-all hover:shadow-lg min-h-[110px] max-w-[400px] ${selectedLockTypes.includes("door_knob")
                 ? "border-[#FF6E4A] bg-white shadow-lg"
                 : "border-gray-200 bg-white"
               }`}
           >
             {/* Circle indicator top right */}
-            {selectedLockType === "door_knob" && (
+            {selectedLockTypes.includes("door_knob") && (
               <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-[#FF6E4A] flex items-center justify-center z-10">
                 <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />

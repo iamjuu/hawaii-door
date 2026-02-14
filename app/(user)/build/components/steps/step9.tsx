@@ -5,9 +5,11 @@ import { useState, useEffect } from "react";
 interface StepProps {
   quoteData: any;
   setQuoteData: (data: any) => void;
+  onNext?: () => void;
 }
 
-const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
+const Step9 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
+  const needsJamb = quoteData.needsJambPreHanging === "yes";
   const [selectedJambType, setSelectedJambType] = useState<string | null>(
     quoteData.jambType || null
   );
@@ -27,6 +29,26 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
   const [selectedThresholdType, setSelectedThresholdType] = useState<string | null>(
     quoteData.thresholdType || null
   );
+
+  const handleNeedsJambPreHangingSelect = (value: "yes" | "no") => {
+    setQuoteData((prev: any) => {
+      const next = {
+        ...prev,
+        needsJambPreHanging: value,
+      };
+      if (value === "no") {
+        next.jambType = "none";
+        next.jambSize = "";
+        next.dbStrikeType = "none";
+        next.lockStrikeType = "none";
+        next.undercutMeasurement = "";
+        next.weatherstripping = "none";
+        next.thresholdType = "none";
+      }
+      return next;
+    });
+    if (value === "no" && onNext) onNext();
+  };
 
   // Sync local state with quoteData when it changes (e.g., when navigating back/forward)
   useEffect(() => {
@@ -99,10 +121,58 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
     <div className="mt-[50px] mb-[50px] max-w-[950px]">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Select Jamb & Pre Hanging</h2>
 
+      {/* Yes / No: Do you need to select Jamb & Pre Hanging? */}
+      <div className="mb-8">
+        <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
+          Do you need to select Jamb & Pre Hanging?
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={() => handleNeedsJambPreHangingSelect("yes")}
+            className={`min-w-[120px] relative border-2 rounded-lg px-5 py-3 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+              quoteData.needsJambPreHanging === "yes"
+                ? "border-orange-500 text-black"
+                : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
+            }`}
+          >
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Yes</span>
+            {quoteData.needsJambPreHanging === "yes" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={() => handleNeedsJambPreHangingSelect("no")}
+            className={`min-w-[120px] relative border-2 rounded-lg px-5 py-3 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+              quoteData.needsJambPreHanging === "no"
+                ? "border-orange-500 text-black"
+                : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
+            }`}
+          >
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">No</span>
+            {quoteData.needsJambPreHanging === "no" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Jamb & Pre Hanging fields – only when Yes */}
+      {needsJamb && (
+        <>
       {/* Jamb Type */}
       <div className="mb-8">
         <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">Jamb Type</p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
           <button
             type="button"
             onClick={() => handleJambTypeSelect("interior_double_rabbet")}
@@ -157,6 +227,24 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               </div>
             )}
           </button>
+          <button
+            type="button"
+            onClick={() => handleJambTypeSelect("none")}
+            className={`w-full relative border-2 rounded-lg px-4 py-3 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+              selectedJambType === "none"
+                ? "border-orange-500 text-black"
+                : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
+            }`}
+          >
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">None</span>
+            {selectedJambType === "none" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
+          </button>
         </div>
       </div>
 
@@ -187,7 +275,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
       {/* DB Strike Type */}
       <div className="mb-8">
         <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">DB Strike Type</p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:max-w-[700px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:max-w-[700px]">
           <button
             type="button"
             onClick={() => handleDBStrikeTypeSelect("standard")}
@@ -242,13 +330,31 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               </div>
             )}
           </button>
+          <button
+            type="button"
+            onClick={() => handleDBStrikeTypeSelect("none")}
+            className={`w-full relative border-2 rounded-lg px-4 py-3 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+              selectedDBStrikeType === "none"
+                ? "border-orange-500 text-black"
+                : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
+            }`}
+          >
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">None</span>
+            {selectedDBStrikeType === "none" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
+          </button>
         </div>
       </div>
 
       {/* Lock Strike Type */}
       <div className="mb-8">
         <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">Lock Strike Type</p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:max-w-[700px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:max-w-[700px]">
           <button
             type="button"
             onClick={() => handleLockStrikeTypeSelect("standard")}
@@ -303,6 +409,24 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               </div>
             )}
           </button>
+          <button
+            type="button"
+            onClick={() => handleLockStrikeTypeSelect("none")}
+            className={`w-full relative border-2 rounded-lg px-4 py-3 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+              selectedLockStrikeType === "none"
+                ? "border-orange-500 text-black"
+                : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
+            }`}
+          >
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">None</span>
+            {selectedLockStrikeType === "none" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
+          </button>
         </div>
       </div>
 
@@ -323,7 +447,7 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
       {/* Weatherstripping */}
       <div className="mb-8">
         <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">Weatherstripping</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:max-w-[300px]">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:max-w-[400px]">
           <button
             type="button"
             onClick={() => handleWeatherstrippingSelect("white")}
@@ -360,13 +484,31 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               </div>
             )}
           </button>
+          <button
+            type="button"
+            onClick={() => handleWeatherstrippingSelect("none")}
+            className={`w-full relative border-2 rounded-lg px-4 py-3 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+              selectedWeatherstripping === "none"
+                ? "border-orange-500 text-black"
+                : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
+            }`}
+          >
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">None</span>
+            {selectedWeatherstripping === "none" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
+          </button>
         </div>
       </div>
 
       {/* Threshold Type */}
       <div className="mb-8">
         <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">Threshold Type</p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:max-w-[700px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 md:max-w-[700px]">
           <button
             type="button"
             onClick={() => handleThresholdTypeSelect("adjustable_in_swing")}
@@ -421,8 +563,28 @@ const Step9 = ({ quoteData, setQuoteData }: StepProps) => {
               </div>
             )}
           </button>
+          <button
+            type="button"
+            onClick={() => handleThresholdTypeSelect("none")}
+            className={`w-full relative border-2 rounded-lg px-4 py-3 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+              selectedThresholdType === "none"
+                ? "border-orange-500 text-black"
+                : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
+            }`}
+          >
+            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">None</span>
+            {selectedThresholdType === "none" && (
+              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
+                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
+          </button>
         </div>
       </div>
+        </>
+      )}
     </div>
   );
 };

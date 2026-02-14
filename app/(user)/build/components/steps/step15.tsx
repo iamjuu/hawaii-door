@@ -15,25 +15,30 @@ const valueFormatters: { [key: string]: { [value: string]: string } } = {
     interior_double_rabbet: "Interior Double Rabbet",
     exterior_single_rabbet: "Exterior Single Rabbet",
     exterior_single_rabbet_kerfed: "Exterior Single Rabbet Kerfed",
+    none: "None",
   },
   dbStrikeType: {
     standard: "Standard",
     radius_corner: "Radius Corner",
     box_strike: "Box Strike",
+    none: "None",
   },
   lockStrikeType: {
     standard: "Standard",
     radius_corner: "Radius Corner",
     t_strike: "T-Strike",
+    none: "None",
   },
   weatherstripping: {
     white: "White",
     brown: "Brown",
+    none: "None",
   },
   thresholdType: {
     adjustable_in_swing: "Adjustable In-swing",
     out_swing: "Out-Swing",
     flat_saddle: "Flat / Saddle",
+    none: "None",
   },
   hangDoorOption: {
     none: "None (pre-hung door)",
@@ -274,8 +279,14 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
   // Format values for display
   const formatValue = (key: string, value: any): string => {
     if (!value || value === "") return "-";
-    if (Array.isArray(value))
+    if (Array.isArray(value)) {
+      if (key === "lockType")
+        return value
+          .map((v: string) => valueFormatters.lockType?.[v])
+          .filter(Boolean)
+          .join(", ") || "-";
       return value.length > 0 ? `${value.length} file(s)` : "-";
+    }
 
     const stringValue = String(value);
 
@@ -327,6 +338,8 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
       protectDoorOption: "Protect Door",
       addOnOption: "Add On",
       doorFinishOption: "Door Finish",
+      doorCategory: "Product Category",
+      selectedDoorName: "Door Name (SKU)",
       specialInstructions: "Special Instructions",
       firstName: "Name",
       companyName: "Company / Job Name",
@@ -539,9 +552,14 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
       value: formatValue("doorFinishOption", quoteData.doorFinishOption),
     },
     {
-      key: "specialInstructions",
-      label: "Special Instructions",
-      value: formatValue("specialInstructions", quoteData.specialInstructions),
+      key: "doorCategory",
+      label: "Product Category",
+      value: quoteData.doorCategory || "-",
+    },
+    {
+      key: "selectedDoorName",
+      label: "Door Name (SKU)",
+      value: quoteData.selectedDoorName || "-",
     },
     {
       key: "fileUploadStatus",
@@ -549,7 +567,6 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
       value: getFileUploadStatus(),
     },
   ].filter((spec) => {
-    // Always show file upload status, but filter out empty doorFinishOption and specialInstructions
     if (spec.key === "fileUploadStatus") return true;
     return spec.value !== "-";
   });
@@ -596,6 +613,9 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
         "protectDoorOption",
         "addOnOption",
         "doorFinishOption",
+        "doorCategory",
+        "selectedDoorId",
+        "selectedDoorName",
         "specialInstructions",
         "firstName",
         "email",
@@ -645,6 +665,13 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
       if (spec.key === "wallThickness") {
         initialValues[spec.key] =
           quoteData.wallThickness || quoteData.customDiameter || "";
+      } else if (spec.key === "lockType") {
+        const v = quoteData.lockType;
+        initialValues[spec.key] = Array.isArray(v)
+          ? v
+          : v
+            ? [v]
+            : [];
       } else {
         initialValues[spec.key] = quoteData[spec.key] || "";
       }
@@ -692,14 +719,26 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
   };
 
   // Get raw value for input (not formatted)
-  const getRawValue = (key: string): string => {
+  const getRawValue = (key: string): string | string[] => {
     if (editingSection && editedValues.hasOwnProperty(key)) {
-      return editedValues[key] || "";
+      return editedValues[key] ?? (key === "lockType" ? [] : "");
     }
     if (key === "wallThickness") {
       return quoteData.wallThickness || quoteData.customDiameter || "";
     }
+    if (key === "lockType") {
+      const v = quoteData.lockType;
+      return Array.isArray(v) ? v : v ? [v] : [];
+    }
     return quoteData[key] || "";
+  };
+
+  const handleLockTypeChange = (type: string) => {
+    const current = (editedValues.lockType as string[]) || (Array.isArray(quoteData.lockType) ? quoteData.lockType : quoteData.lockType ? [quoteData.lockType] : []);
+    const next = current.includes(type)
+      ? current.filter((t) => t !== type)
+      : [...current, type];
+    setEditedValues((prev) => ({ ...prev, lockType: next }));
   };
 
   // Render spec row (either display or edit mode)
@@ -715,11 +754,47 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
       const rawValue = getRawValue(spec.key);
       const isCustomField = customFields.includes(spec.key);
 
-      // Determine effective selected value for the dropdown
-      let selectedValue = rawValue;
+      // Lock type: multi-select checkboxes
+      if (spec.key === "lockType") {
+        const lockTypes = (rawValue as string[]) || [];
+        return (
+          <div
+            key={spec.key}
+            className="flex justify-between items-center border-b border-gray-100 pb-3"
+          >
+            <span className="text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565]">
+              {spec.label}:
+            </span>
+            <div className="flex flex-col gap-2 items-end">
+              <label className="flex items-center gap-2 text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565] cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={lockTypes.includes("deadbolt")}
+                  onChange={() => handleLockTypeChange("deadbolt")}
+                  className="rounded border-gray-300 text-orange-500 focus:ring-orange-500"
+                />
+                Deadbolt
+              </label>
+              <label className="flex items-center gap-2 text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565] cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={lockTypes.includes("door_knob")}
+                  onChange={() => handleLockTypeChange("door_knob")}
+                  className="rounded border-gray-300 text-orange-500 focus:ring-orange-500"
+                />
+                Door Knob
+              </label>
+            </div>
+          </div>
+        );
+      }
+
+      // Determine effective selected value for the dropdown (rawValue is string here; lockType returned above)
+      const rawStr = rawValue as string;
+      let selectedValue: string = rawStr;
       if (
         formatter &&
-        !Object.keys(formatter).includes(rawValue) &&
+        !Object.keys(formatter).includes(rawStr) &&
         isCustomField
       ) {
         // If value is not in formatter options but field is custom, treat as "other"
@@ -750,8 +825,8 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
                     newValue === "Other (Special Order)"
                   ) {
                     // If switching to Other, keep current rawValue if it's already custom, or clear it
-                    if (!Object.keys(formatter).includes(rawValue)) {
-                      handleInputChange(spec.key, rawValue);
+                    if (!Object.keys(formatter).includes(rawStr)) {
+                      handleInputChange(spec.key, rawStr);
                     } else {
                       handleInputChange(spec.key, "");
                     }
@@ -777,7 +852,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
                 isCustomField && (
                   <input
                     type="text"
-                    value={rawValue === "Other (Special Order)" ? "" : rawValue}
+                    value={rawStr === "Other (Special Order)" ? "" : rawStr}
                     onChange={(e) =>
                       handleInputChange(spec.key, e.target.value)
                     }
@@ -789,7 +864,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
           ) : (
             <input
               type="text"
-              value={rawValue}
+              value={rawStr}
               onChange={(e) => handleInputChange(spec.key, e.target.value)}
               className="text-[13px] md:text-[14px] font-roboto font-[400] text-[#4A5565] ml-4 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:border-orange-500 w-[150px] md:w-[200px]"
             />

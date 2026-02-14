@@ -9,7 +9,13 @@ interface QuoteSummaryProps {
   // Format values for display (same logic as step15.tsx)
   const formatValue = (key: string, value: any): string => {
     if (!value || value === "") return "";
-    if (Array.isArray(value)) return value.length > 0 ? `${value.length} file(s)` : "";
+    if (Array.isArray(value)) {
+      if (key === "lockType") {
+        const lockLabels: { [v: string]: string } = { deadbolt: "Deadbolt", door_knob: "Door Knob" };
+        return value.map((v: string) => lockLabels[v]).filter(Boolean).join(", ") || "";
+      }
+      return value.length > 0 ? `${value.length} file(s)` : "";
+    }
     
     const stringValue = String(value);
     
@@ -19,25 +25,30 @@ interface QuoteSummaryProps {
         "interior_double_rabbet": "Interior Double Rabbet",
         "exterior_single_rabbet": "Exterior Single Rabbet",
         "exterior_single_rabbet_kerfed": "Exterior Single Rabbet Kerfed",
+        "none": "None",
       },
       dbStrikeType: {
         "standard": "Standard",
         "radius_corner": "Radius Corner",
         "box_strike": "Box Strike",
+        "none": "None",
       },
       lockStrikeType: {
         "standard": "Standard",
         "radius_corner": "Radius Corner",
         "t_strike": "T-Strike",
+        "none": "None",
       },
       weatherstripping: {
         "white": "White",
         "brown": "Brown",
+        "none": "None",
       },
       thresholdType: {
         "adjustable_in_swing": "Adjustable In-swing",
         "out_swing": "Out-Swing",
         "flat_saddle": "Flat / Saddle",
+        "none": "None",
       },
       hangDoorOption: {
         "none": "None (pre-hung door)",
@@ -116,6 +127,8 @@ interface QuoteSummaryProps {
       protectDoorOption: "Protect Door",
       addOnOption: "Add On",
       doorFinishOption: "Door Finish",
+      doorCategory: "Product Category",
+      selectedDoorName: "Door Name (SKU)",
       specialInstructions: "Special Instructions",
       firstName: "Name",
       companyName: "Company / Job Name",
@@ -133,8 +146,8 @@ interface QuoteSummaryProps {
       const processedKeys = new Set<string>();
       
       Object.entries(quoteData).forEach(([key, value]) => {
-        // Skip uploadedFiles and already processed keys
-        if (key === "uploadedFiles" || processedKeys.has(key)) return;
+        // Skip uploadedFiles, selectedDoorId (internal ID), and already processed keys
+        if (key === "uploadedFiles" || key === "selectedDoorId" || processedKeys.has(key)) return;
         if (!value || value === "" || (Array.isArray(value) && value.length === 0)) return;
         
         // Special handling for doorSize - combine width and height
