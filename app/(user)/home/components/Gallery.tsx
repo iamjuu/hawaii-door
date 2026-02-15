@@ -52,7 +52,7 @@ const CONTENT_WIDTH = "max-w-7xl";
 
 const Gallerysection = () => {
   return (
-    <div className="w-full py-10 sm:py-12 md:pt-[50px] md:py-[0px] font-inter ">
+    <div className="w-full py-5 sm:py-12 md:pt-[50px] md:py-[0px] font-inter ">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
         <div className="max-w-[1400px] 2xl:mx-auto gap-[46px] flex flex-col">
           {/* MAIN CONTENT */}
@@ -147,7 +147,7 @@ const Gallerysection = () => {
         </div>
       </div>
       <div className="w-full flex items-center justify-center bg-[#F6F5F1] h-[82px] md:h-[68px] ">
-        <div className={`${CONTENT_WIDTH}  relative  flex flex-col md:flex-row justify-center items-center gap-2 md:gap-12 lg:gap-16 py-3 md:py-[25px] group  mt-0 transition-all duration-300 text-xs sm:text-sm md:text-base`}>
+        <div className={`${CONTENT_WIDTH}  relative  flex flex-col md:flex-row justify-center items-center gap-2 md:gap-12 lg:gap-16 py-3 md:py-[25px] group  mt-6 md:mt-0 transition-all duration-300 text-xs sm:text-sm md:text-base`}>
 
           <p className="flex items-center gap-1 md:gap-4 items-center">
             <div className="relative w-8 h-8">

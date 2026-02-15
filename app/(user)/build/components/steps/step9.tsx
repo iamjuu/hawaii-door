@@ -119,49 +119,35 @@ const Step9 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
 
   return (
     <div className="mt-[50px] mb-[50px] max-w-[950px]">
-      <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Select Jamb & Pre Hanging</h2>
+      {/* <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Select Jamb & Pre Hanging</h2> */}
 
-      {/* Yes / No: Do you need to select Jamb & Pre Hanging? */}
-      <div className="mb-8">
-        <p className="text-[18px] md:text-[26px] font-[400] text-black mb-3 md:mb-7 font-roboto">
-          Do you need to select Jamb & Pre Hanging?
-        </p>
-        <div className="flex flex-wrap gap-3">
+      {/* Yes / No: Do you want a prehung door? (same design as "Has the wall been built yet?") */}
+      <div className="mb-8 max-w-[700px] mx-auto">
+        <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black text-center">
+          Do you want a prehung door?
+        </h2>
+        <div className="grid grid-cols-2 gap-3">
           <button
             type="button"
             onClick={() => handleNeedsJambPreHangingSelect("yes")}
-            className={`min-w-[120px] relative border-2 rounded-lg px-5 py-3 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+            className={`px-1 md:px-4 py-1 md:py-3 border font-medium transition-all text-center hover:shadow-lg hover:cursor-pointer ${
               quoteData.needsJambPreHanging === "yes"
-                ? "border-orange-500 text-black"
-                : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
+                ? "border-2 border-orange-500 text-orange-600"
+                : "border-gray-300"
             }`}
           >
-            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">Yes</span>
-            {quoteData.needsJambPreHanging === "yes" && (
-              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
-                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-            )}
+            <div className="text-[16px] md:text-[22px] font-roboto font-light text-[#1C1C1C]">Yes</div>
           </button>
           <button
             type="button"
             onClick={() => handleNeedsJambPreHangingSelect("no")}
-            className={`min-w-[120px] relative border-2 rounded-lg px-5 py-3 text-sm font-medium bg-white transition-colors flex items-center justify-between font-roboto ${
+            className={`px-1 md:px-4 py-1 md:py-3 border font-medium transition-all text-center hover:shadow-lg hover:cursor-pointer ${
               quoteData.needsJambPreHanging === "no"
-                ? "border-orange-500 text-black"
-                : "border-gray-200 text-gray-800 hover:border-orange-500 hover:text-orange-600"
+                ? "border-2 border-orange-500 text-orange-600"
+                : "border-gray-300"
             }`}
           >
-            <span className="text-left text-black font-[400] font-roboto md:text-[17px]">No</span>
-            {quoteData.needsJambPreHanging === "no" && (
-              <div className="w-4 h-4 rounded-full bg-[#FF6E4A] flex items-center justify-center flex-shrink-0">
-                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-            )}
+            <div className="text-[16px] md:text-[22px] font-roboto font-light text-[#1C1C1C]">No</div>
           </button>
         </div>
       </div>
@@ -261,7 +247,7 @@ const Step9 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
               <path d="M8 5v14l11-7z" />
             </svg>
           </div>
-          <span className="text-xs text-gray-600 font-roboto">view video virtual</span>
+          <span className="text-xs text-gray-600 font-roboto">view video tutorial</span>
         </div>
         <input
           type="text"

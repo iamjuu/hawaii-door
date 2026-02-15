@@ -19,6 +19,9 @@ interface DoorOption {
   category: string;
 }
 
+const LYDEN_DOOR = "Lyden door";
+const FIBER_GLASS = "Fiber glass";
+
 const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
   const [selectedFinishOption, setSelectedFinishOption] = useState<string | null>(
     quoteData.doorFinishOption || null
@@ -35,6 +38,18 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
   );
 
   const productCategory = quoteData.productCategory || "";
+
+  // Product Category options: API types + Lyden door (interior) / Fiber glass (exterior)
+  const displayDoorTypes = [...doorTypes];
+  if (productCategory === "interior" && !displayDoorTypes.includes(LYDEN_DOOR)) {
+    displayDoorTypes.push(LYDEN_DOOR);
+  }
+  if (productCategory === "exterior" && !displayDoorTypes.includes(FIBER_GLASS)) {
+    displayDoorTypes.push(FIBER_GLASS);
+  }
+
+  const isSkuOptionalInput =
+    doorCategory === LYDEN_DOOR || doorCategory === FIBER_GLASS;
 
   // Fetch door types (first dropdown) when product category is set
   useEffect(() => {
@@ -58,9 +73,14 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
     fetchDoorTypes();
   }, [productCategory]);
 
-  // Fetch doors (second dropdown) when door category (doorType) is selected
+  // Fetch doors (second dropdown) when door category is selected (skip for Lyden door / Fiber glass)
   useEffect(() => {
-    if (!productCategory || !doorCategory) {
+    if (
+      !productCategory ||
+      !doorCategory ||
+      doorCategory === LYDEN_DOOR ||
+      doorCategory === FIBER_GLASS
+    ) {
       setDoors([]);
       return;
     }
@@ -242,7 +262,7 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
 
       <div className="w-full border-2 border-gray-100 rounded-xl p-6 mt-6">
         <h3 className="text-[16px] font-roboto text-[#0A0A0A] mb-4">
-          Product Category (Door Type)
+          Product Category (Choose Your Door Type)
         </h3>
         {!productCategory ? (
           <p className="text-sm text-gray-500 mb-4">
@@ -258,7 +278,7 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
             {loadingTypes ? (
               <option disabled>Loading...</option>
             ) : (
-              doorTypes.map((dt) => (
+              displayDoorTypes.map((dt) => (
                 <option key={dt} value={dt}>
                   {dt}
                 </option>
@@ -272,35 +292,53 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
             <h3 className="text-[16px] font-roboto text-[#0A0A0A] mt-6 mb-4">
               SKU <span className="text-gray-500 font-normal">(Optional)</span>
             </h3>
-            <select
-              value={selectedDoorId}
-              onChange={(e) => {
-                const value = e.target.value;
-                const door = value ? doors.find((d) => d._id === value) : null;
-                if (door) handleDoorSelect(door);
-                else {
-                  setSelectedDoorId("");
-                  setSelectedDoorName("");
+            {isSkuOptionalInput ? (
+              <input
+                type="text"
+                value={selectedDoorName}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSelectedDoorName(value);
                   setQuoteData({
                     ...quoteData,
                     selectedDoorId: "",
-                    selectedDoorName: "",
+                    selectedDoorName: value,
                   });
-                }
-              }}
-              className="w-full max-w-md p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 text-black font-roboto"
-            >
-              <option value="">Select door</option>
-              {loadingDoors ? (
-                <option disabled>Loading...</option>
-              ) : (
-                doors.map((d) => (
-                  <option key={d._id} value={d._id}>
-                    {d.name}
-                  </option>
-                ))
-              )}
-            </select>
+                }}
+                placeholder="Enter SKU (optional)"
+                className="w-full max-w-md p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 text-black font-roboto"
+              />
+            ) : (
+              <select
+                value={selectedDoorId}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const door = value ? doors.find((d) => d._id === value) : null;
+                  if (door) handleDoorSelect(door);
+                  else {
+                    setSelectedDoorId("");
+                    setSelectedDoorName("");
+                    setQuoteData({
+                      ...quoteData,
+                      selectedDoorId: "",
+                      selectedDoorName: "",
+                    });
+                  }
+                }}
+                className="w-full max-w-md p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 text-black font-roboto"
+              >
+                <option value="">Select door</option>
+                {loadingDoors ? (
+                  <option disabled>Loading...</option>
+                ) : (
+                  doors.map((d) => (
+                    <option key={d._id} value={d._id}>
+                      {d.name}
+                    </option>
+                  ))
+                )}
+              </select>
+            )}
           </>
         )}
       </div>
