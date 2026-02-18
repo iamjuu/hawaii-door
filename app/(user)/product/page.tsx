@@ -94,10 +94,10 @@ const page = () => {
         />
 
         {/* Door Cards Section */}
-        <section className="w-full  md:pt-[80px]  ">
+        <section className="w-full  md:py-[80px]  ">
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
             <div className="max-w-[1400px] 2xl:mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 justify-items-center xl:justify-items-start">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 py-[25px] gap-5 justify-items-center xl:justify-items-start">
                 {doorCards.map((door, index) => (
                   <React.Fragment key={index}>
                     <Link className="w-full max-w-[407px]" href={door.link}>

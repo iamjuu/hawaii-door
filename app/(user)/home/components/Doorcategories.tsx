@@ -71,10 +71,10 @@ const DoorCategories = () => {
   };
 
   return (
-    <div className="w-full py-5 sm:py-12 md:py-[0px] md:pt-[50px] font-inter ">
+    <div className="w-full py-0   sm:py-12 md:py-[0px] md:pt-[50px] font-inter ">
       {/* MAIN CONTENT – constrained */}
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
-        <div className="max-w-[1400px] 2xl:mx-auto gap-6 sm:gap-8 md:gap-[46px] flex flex-col">
+        <div className="max-w-[1400px] 2xl:mx-auto gap-[25px] sm:gap-8 md:gap-[46px] flex flex-col">
           {/* Header */}
           <Heading
             heading="Door Categories"
@@ -193,7 +193,7 @@ const DoorCategories = () => {
       </div>
 
       {/* FULL WIDTH FOOTER STRIP – Responsive */}
-      <div className="relative w-full flex flex-col md:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-8 lg:gap-16 py-4 sm:py-5 md:py-0 min-h-[60px] md:h-[68px] bg-[#F6F5F1] group  mt-6 sm:mt-10 md:mt-[50px] lg:mt-[50px] mb-0  transition-all duration-300 ">
+      <div className="relative w-full flex flex-col md:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-8 lg:gap-16 py-0 sm:py-5 md:py-0 min-h-[60px] md:h-[68px] bg-[#F6F5F1] group  mt-6 sm:mt-10 md:mt-[50px] lg:mt-[50px] mb-0  transition-all duration-300 ">
         <div className="py-3 sm:py-4 md:py-[25px] flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 items-center">
           <div className="flex items-center gap-3 sm:gap-3.5 md:gap-4 text-xs sm:text-sm md:text-base">
             <div className="relative w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">

@@ -33,7 +33,7 @@ interface StepProps {
     const [showOtherInput, setShowOtherInput] = useState(isCustomDoor);
   
     return (
-      <div className="mt-[50px] md:mb-[70px] mb-[50px]  md:pr-20">
+      <div className="mt-[25px] md:mt-[50px] md:mb-[70px] mb-[50px]  md:pr-20">
         <h2 className="text-[20px] md:text-[32px] font-[500] font-roboto mb-8 text-black">Select Your Core</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

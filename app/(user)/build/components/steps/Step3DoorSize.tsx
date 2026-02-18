@@ -96,7 +96,7 @@ const Step3DoorSize = ({ quoteData, setQuoteData }: StepProps) => {
   const isQuantityEmpty = !quoteData.quantity || quoteData.quantity < 1;
 
   return (
-    <div className="mt-[50px] mb-[50px]">
+    <div className="mt-[25px] mb-[50px]">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-8 text-black">Door Size & Specification</h2>
 
       <div className="flex flex-col lg:flex-row gap-8">

@@ -66,7 +66,7 @@ const InteriorPage = () => {
         <section className="w-full py-10 sm:py-12 md:pt-[50px] md:py-[0px] font-inter ">
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px] ">
             <div className="max-w-[1400px] 2xl:mx-auto">
-              <div className="flex flex-col gap-16 md:gap-24">
+              <div className="flex flex-col gap-[25px] md:gap-24">
                 {/* ================= First Block ================= */}
                 <div className="flex flex-col gap-8 md:gap-12">
                   <section>
@@ -130,7 +130,7 @@ const InteriorPage = () => {
                 </div>
 
                 {/* ================= Second Block ================= */}
-                <div className="flex flex-col gap-8 md:gap-12">
+                <div className="flex flex-col gap-8 md:gap-12 md:pb-[25px]" >
                   <section>
                     <div className="space-y-6">
                       <Heading heading="Wood Stile & Rail Doors" />

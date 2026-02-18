@@ -209,7 +209,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   };
 
   return (
-    <div className="mt-[50px] mb-[50px] max-w-[1050px] text-black">
+    <div className="mt-[25px] mb-[50px] max-w-[1050px] text-black">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Lock Information</h2>
 
       {/* Main Flex Container - Left: Deadbolt, Lock Bore Diameter, Lock Centerline | Right: Door Knob, Backset, LatchBore Diameter */}

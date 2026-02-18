@@ -52,7 +52,7 @@ export default function HeroSection({
 
       {/* HERO CONTENT */}
       <div className="gap-3 md:gap-6 max-w-[650px] z-10 relative flex flex-col items-start justify-center px-6 md:px-16 h-full">
-        <h1 className="text-white text-nowrap text-3xl md:text-[58px] font-[600] drop-shadow-lg">
+        <h1 className="text-white  text-wrap md:text-nowrap text-3xl md:text-[58px] font-[600] drop-shadow-lg">
           {contant}
         </h1>
 

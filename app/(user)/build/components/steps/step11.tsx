@@ -39,7 +39,7 @@ const Step11 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   };
 
   return (
-    <div className="mt-[50px] mb-[50px] max-w-[900px]">
+    <div className="mt-[25px] mb-[50px] max-w-[900px]">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Protect Door</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

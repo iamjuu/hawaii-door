@@ -15,7 +15,7 @@ const Measure = () => {
           <div className="max-w-[1400px] 2xl:mx-auto flex flex-col">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start">
               {/* Left Content */}
-              <div className="order-2 lg:order-1 flex flex-col justify-between gap-10 md:gap-[59px] ">
+              <div className="order-2 lg:order-1 flex flex-col justify-between gap-[25px] md:gap-[59px] ">
                 <div className="flex flex-col gap-6 max-w-[95%] md:max-w-none">
                   <h1 className="text-[23px] md:text-[46px] font-[600] text-black font-roboto leading-[32px] md:leading-[56px] tracking-normal">
                     Measure Twice.
@@ -36,7 +36,7 @@ const Measure = () => {
 
                 {/* CTA */}
                 <Link href="/product">
-                  <button className="w-max group relative inline-flex items-center gap-3 overflow-hidden rounded-3xl bg-[#B6D78A] px-5 py-2 font-roboto text-xl mt-5 md:mt-6 mb-[20px]">
+                  <button className="w-max group relative inline-flex items-center gap-3 overflow-hidden rounded-3xl bg-[#B6D78A] px-5 py-2 font-roboto text-xl ">
                     {/* Hover overlay */}
                     <span
                       className="
@@ -95,7 +95,7 @@ const Measure = () => {
       </div>
 
       {/* Bottom Info Bar */}
-      <div className="relative px-5 md:px-0 w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group  mt-6 md:mt-9 h-[68px] ">
+      <div className="relative px-5 md:px-0 w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-[25px] md:py-0 bg-[#F6F5F1] group  mt-6 md:mt-9 h-[68px] ">
         <div className="flex items-center gap-2">
           <Image
             src={Vector7}

@@ -37,7 +37,7 @@ const Step12 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   };
 
   return (
-    <div className="mt-[50px] mb-[50px] max-w-[900px]">
+    <div className="mt-[25px] mb-[50px] max-w-[900px]">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Add On&apos;s</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[600px]">

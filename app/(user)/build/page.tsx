@@ -613,11 +613,11 @@ const BuildDoor = () => {
       />
 
       <div className="min-h-screen bg-white text-black">
-        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-6 xl:px-12 2xl:px-[60px] py-8">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-6 xl:px-12 2xl:px-[60px] md:py-8">
           <div className="max-w-[1400px] 2xl:mx-auto">
-            <div className="flex flex-col lg:flex-row gap-0">
+            <div className="flex flex-col lg:flex-row gap-0 overflow-x-hidden">
               {/* Main Content Area */}
-              <div className="flex-1">
+              <div className="flex-1 min-w-0 w-full">
                 <StepContainer>
                   <StepNavigation
                     onBack={handleBack}

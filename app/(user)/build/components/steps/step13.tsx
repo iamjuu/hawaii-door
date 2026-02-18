@@ -200,7 +200,7 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
   ];
 
   return (
-    <div className="mt-[50px] mb-[50px] font-roboto">
+    <div className="mt-[25px] mb-[50px] font-roboto">
       <h2 className="text-[32px] font-[500] font-roboto text-black mb-8">
         Door Finish & Notes
       </h2>

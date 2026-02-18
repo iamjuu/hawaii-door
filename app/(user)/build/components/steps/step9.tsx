@@ -118,7 +118,7 @@ const Step9 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   };
 
   return (
-    <div className="mt-[50px] mb-[50px] max-w-[950px]">
+    <div className="mt-[25px] mb-[50px] max-w-[950px]">
       {/* <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Select Jamb & Pre Hanging</h2> */}
 
       {/* Yes / No: Do you want a prehung door? (same design as "Has the wall been built yet?") */}

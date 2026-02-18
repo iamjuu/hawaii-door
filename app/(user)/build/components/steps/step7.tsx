@@ -68,7 +68,7 @@ const Step7 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   };
 
   return (
-    <div className="mt-[50px] mb-[50px]">
+    <div className="mt-[25px] mb-[50px]">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Does this door need a Louver?</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-[900px]">

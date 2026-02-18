@@ -24,7 +24,7 @@ const Step4 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   };
 
   return (
-    <div className="mt-[50px] mb-[50px] max-w-[700px] mx-auto">
+    <div className="mt-[25px] mb-[50px] max-w-[700px] mx-auto">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black text-center">Has the wall been built yet?</h2>
 
       <div>

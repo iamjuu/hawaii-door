@@ -50,7 +50,7 @@ const Step14 = ({ quoteData, setQuoteData }: StepProps) => {
   };
 
   return (
-    <div className="mt-[50px] mb-[50px] font-roboto max-w-[950px]">
+    <div className="mt-[25px] mb-[50px] font-roboto max-w-[950px]">
       <h2 className="text-[32px] font-medium text-black mb-8">Your Details</h2>
 
       <div className="w-full border-2 border-gray-100 rounded-xl p-6">

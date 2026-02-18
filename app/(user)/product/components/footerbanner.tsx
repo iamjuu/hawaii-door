@@ -4,7 +4,7 @@ import { MdOutlineArrowOutward } from 'react-icons/md';
 import Link from "next/link"
 const FooterBanner = () => {
   return (
-    <div className="w-full py-10 sm:py-12 md:py-[80px]">
+    <div className="w-full pb-[25px] md:pb-[80px]">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
         <div className="max-w-[1400px] 2xl:mx-auto">
           <div className="relative w-full min-h-[400px] md:min-h-[420px] bg-[#84684C] rounded-lg overflow-hidden">

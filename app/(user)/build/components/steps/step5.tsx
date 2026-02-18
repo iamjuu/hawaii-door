@@ -47,7 +47,7 @@ const Step5 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   };
 
   return (
-    <div className="mt-[50px] mb-[50px]">
+    <div className="mt-[25px] mb-[50px]">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">What is the Wall Thickness</h2>
 
       <div className="max-w-[900px] w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

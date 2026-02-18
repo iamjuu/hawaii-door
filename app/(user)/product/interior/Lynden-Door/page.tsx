@@ -543,7 +543,7 @@ const LyndenDoorPage = () => {
               </div>
 
               {/* New 2025 Designs Grid */}
-              <div className="mt-16 bg-[#444237BA]">
+              <div className="mt-[25px] md:mt-16 bg-[#444237BA]">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
                   {[
                     { image: white1, name: "Ballard" },
@@ -574,7 +574,7 @@ const LyndenDoorPage = () => {
               </div>
 
               {/* FineLine Door Collection Image Section */}
-              <div id="fineline" className="mt-16 space-y-6 scroll-mt-[150px]">
+              <div id="fineline" className="mt-[25px] md:mt-16 space-y-6 scroll-mt-[150px]">
                 <h2 className="text-[28px] font-[500] text-black">
                   FineLine Door Collection
                 </h2>
@@ -743,7 +743,7 @@ const LyndenDoorPage = () => {
                 </div>
               </div>
 
-              <div className="mt-16 bg-[#444237BA]">
+              <div className="mt-[25px] md:mt-16 bg-[#444237BA]">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2">
                   {[
                     { image: white1, name: "Ballard" },
@@ -914,7 +914,7 @@ const LyndenDoorPage = () => {
                 </div>
               </div>
 
-              <div className="mt-16 bg-[#444237BA]">
+              <div className="mt-[25px] md:mt-16 bg-[#444237BA]">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2">
                   {[
                     { image: white11, name: "Ballard" },
@@ -951,7 +951,7 @@ const LyndenDoorPage = () => {
               </div>
 
               {/* StileLine Door Collection Image Section */}
-              <div id="stileline" className="mt-16 space-y-6 scroll-mt-24">
+              <div id="stileline" className="mt-[25px] md:mt-16 space-y-6 scroll-mt-24">
                 <h2 className="text-[28px] font-[500] text-black">
                   StileLine Door Collection
                 </h2>
@@ -1127,7 +1127,7 @@ const LyndenDoorPage = () => {
               {/* ReDiscovery Door Collection Image Section */}
               <div
                 id="rediscovery"
-                className="mt-16 space-y-6 scroll-mt-[150px]"
+                className="mt-[25px] md:mt-16 space-y-6 scroll-mt-[150px]"
               >
                 <h2 className="text-[28px] font-[500] text-black">
                   ReDiscovery Door Collection
@@ -1303,7 +1303,7 @@ const LyndenDoorPage = () => {
                   ))}
                 </div>
                 {/* Molded Door Collection Image Section */}
-                <div id="molded" className="mt-16 space-y-6 scroll-mt-[150px]">
+                <div id="molded" className="mt-[25px] md:mt-16 space-y-6 scroll-mt-[150px]">
                   <h2 className="text-[28px] font-[500] text-black">
                     Molded Door Collection
                   </h2>
@@ -1544,7 +1544,7 @@ const LyndenDoorPage = () => {
                 </div>
 
                 {/* Wood Veneer Door Collection Image Section */}
-                <div id="wood-veneer" className="mt-16 space-y-6 scroll-mt-24">
+                <div id="wood-veneer" className="mt-[25px] md:mt-16 space-y-6 scroll-mt-24">
                   <h2 className="text-[28px] font-[500] text-black">
                     Wood Veneer Door Collection
                   </h2>
@@ -1743,7 +1743,7 @@ const LyndenDoorPage = () => {
                 </div>
 
                 {/* Prefinished Door Collection Image Section */}
-                <div id="prefinished" className="mt-16 space-y-6 scroll-mt-24">
+                <div id="prefinished" className="mt-[25px] md:mt-16 space-y-6 scroll-mt-24">
                   <h2 className="text-[28px] font-[500] text-black">
                     Prefinished Door Collection
                   </h2>
@@ -1994,7 +1994,7 @@ const LyndenDoorPage = () => {
                 {/* Lynden Ventilated Doors Image Section */}
                 <div
                   id="lynden-ventilated-door"
-                  className="mt-16 space-y-6 scroll-mt-24"
+                  className="mt-[25px] md:mt-16 space-y-6 scroll-mt-24"
                 >
                   <h2 className="text-[36px] font-[500] text-black">
                     Lynden Ventilated Doors

@@ -22,11 +22,12 @@ export default function PillCTAButton({
       onClick={onClick}
       className={`
         group relative inline-flex items-center justify-center
-        gap-2 sm:gap-3 rounded-full overflow-hidden
-        w-full sm:w-[320px] md:w-[420px]
-        h-[50px]
-        text-[18px] md:text-[22px]
-        font-normal leading-none whitespace-nowrap
+        gap-1.5 sm:gap-3 rounded-full overflow-hidden
+        w-full max-w-[min(100%,420px)] sm:w-[320px] md:w-[420px]
+        min-h-[50px] h-auto py-3 px-4 sm:px-5
+        text-sm sm:text-base md:text-lg lg:text-[20px] xl:text-[22px]
+        font-normal leading-tight sm:leading-none
+        whitespace-normal sm:whitespace-nowrap text-center
         active:scale-[0.98]
         ${className}
       `}
@@ -56,7 +57,7 @@ export default function PillCTAButton({
       {/* Content */}
       <span
         className={`
-          relative z-10 flex items-center gap-2
+          relative z-10 flex items-center justify-center gap-1.5 sm:gap-2
           text-white
           transition-colors duration-300 ease-in-out
           ${
@@ -66,7 +67,7 @@ export default function PillCTAButton({
           }
         `}
       >
-        <span>{label}</span>
+        <span className="min-w-0 break-words text-center">{label}</span>
 
         {icon && (
           <span
