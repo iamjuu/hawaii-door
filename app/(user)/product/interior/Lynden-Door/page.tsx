@@ -565,7 +565,7 @@ const LyndenDoorPage = () => {
                       {/* Label */}
                       <div className="px-4 py-3">
                         <p className="text-white text-sm font-medium text-center">
-                          New 2025 {item.name}
+                           {item.name}
                         </p>
                       </div>
                     </div>
@@ -750,12 +750,12 @@ const LyndenDoorPage = () => {
                     { image: white2, name: "Fairview" },
                     { image: white3, name: "Granville" },
                     { image: white4, name: "Ravenna" },
-                    { image: white5, name: "Ballard" },
-                    { image: white6, name: "Fairview" },
-                    { image: white7, name: "Granville" },
-                    { image: white8, name: "Ravenna" },
-                    { image: white9, name: "Ballard" },
-                    { image: white10, name: "Ballard" },
+                    { image: white5, name: "Alki" },
+                    { image: white6, name: "Denman" },
+                    { image: white7, name: "Laurelhurst" },
+                    { image: white8, name: "Parkrose" },
+                    { image: white9, name: "Montlake" },
+                    { image: white10, name: "Robson" },
                   ].map((item, index) => (
                     <div key={index} className=" rounded-lg overflow-hidden">
                       {/* Image Container */}
@@ -771,7 +771,7 @@ const LyndenDoorPage = () => {
                       {/* Label */}
                       <div className="px-4 py-3">
                         <p className="text-white text-sm font-medium text-center">
-                          New 2025 {item.name}
+                           {item.name}
                         </p>
                       </div>
                     </div>
@@ -942,7 +942,7 @@ const LyndenDoorPage = () => {
                       {/* Label */}
                       <div className="px-4 py-3">
                         <p className="text-white text-sm font-medium text-center">
-                          New 2025 {item.name}
+                           {item.name}
                         </p>
                       </div>
                     </div>
@@ -1094,8 +1094,8 @@ const LyndenDoorPage = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
                 {[
-                  { image: wood1, name: "StileLine", sub: "African-Mahogany" },
-                  { image: wood2, name: "StileLine", sub: "Maple" },
+                  { image: wood1, name: "StileLine-African-Mahogany", sub: "African-Mahogany" },
+                  { image: wood2, name: "StileLine-Maple", sub: "Maple" },
                   {
                     image: wood3,
                     name: "StileLine",
@@ -1117,7 +1117,7 @@ const LyndenDoorPage = () => {
                     {/* Label */}
                     <div className="px-4 py-3">
                       <p className="text-black text-sm font-medium text-center">
-                        New 2025 {item.name}
+                         {item.name}
                       </p>
                     </div>
                   </div>
@@ -1272,13 +1272,13 @@ const LyndenDoorPage = () => {
                   {[
                     {
                       image: wood5,
-                      name: "StileLine",
+                      name: "Rediscovery-SpecialOrder001",
                       sub: "African-Mahogany",
                     },
-                    { image: wood6, name: "StileLine", sub: "Maple" },
+                    { image: wood6, name: "Rediscovery-SpecialOrder002", sub: "Maple" },
                     {
                       image: wood7,
-                      name: "StileLine",
+                      name: "Rediscovery-SpecialOrder003",
                       sub: "Rift Cut White Oak",
                     },
                   ].map((item, index) => (
@@ -1296,7 +1296,7 @@ const LyndenDoorPage = () => {
                       {/* Label */}
                       <div className="px-4 py-3">
                         <p className="text-black text-sm font-medium text-center">
-                          New 2025 {item.name}
+                          {item.name}
                         </p>
                       </div>
                     </div>
@@ -1533,10 +1533,10 @@ const LyndenDoorPage = () => {
                         {/* Label */}
                         <div className="px-4 flex items-center flex-col">
                           <p className="text-black text-sm font-medium text-center">
-                            New 2025 {item.name}
+                            MDC- {item.name}
                           </p>
-                          <p>{item.sub}</p>
-                          <p>{item.type}</p>
+                          {/* <p>{item.sub}</p>
+                          <p>{item.type}</p> */}
                         </div>
                       </div>
                     ))}
@@ -1693,33 +1693,19 @@ const LyndenDoorPage = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
                   {[
-                    {
-                      image: wood1,
-                      name: "StileLine",
-                      sub: "African-Mahogany",
-                    },
-                    { image: wood2, name: "StileLine", sub: "Maple" },
-                    {
-                      image: wood3,
-                      name: "StileLine",
-                      sub: "Rift Cut White Oak",
-                    },
-                    { image: wood4, name: "StileLine", sub: "Walnut" },
-                    { image: playwood1, name: "Wood Veneer", sub: "" },
-                    { image: playwood2, name: "Wood Veneer", sub: "" },
-                    { image: playwood3, name: "Wood Veneer", sub: "" },
-                    { image: playwood4, name: "Wood Veneer", sub: "" },
-                    { image: playwood5, name: "Wood Veneer", sub: "" },
-                    { image: playwood6, name: "Wood Veneer", sub: "" },
-                    { image: playwood7, name: "Wood Veneer", sub: "" },
-                    { image: playwood8, name: "Wood Veneer", sub: "" },
-                    { image: playwood9, name: "Wood Veneer", sub: "" },
-                    { image: playwood10, name: "Wood Veneer", sub: "" },
-                    { image: playwood11, name: "Wood Veneer", sub: "" },
-                    { image: playwood12, name: "Wood Veneer", sub: "" },
-                    { image: playwood13, name: "Wood Veneer", sub: "" },
-                    { image: playwood14, name: "Wood Veneer", sub: "" },
-                    { image: playwood15, name: "Wood Veneer", sub: "" },
+               
+               { image: playwood1, name: "Natural Birch 01", sub: "" },
+               { image: playwood2, name: "Fir", sub: "" },
+               { image: playwood3, name: "White Oak 01", sub: "" },
+               { image: playwood4, name: "White Oak 02", sub: "" },
+               { image: playwood5, name: "Red Oak", sub: "" },
+               { image: playwood6, name: "Cherry", sub: "" },
+               { image: playwood7, name: "Sapele", sub: "" },
+               { image: playwood8, name: "African Mahogany", sub: "" },
+               { image: playwood9, name: "Walnut", sub: "" },
+               { image: playwood10, name: "White Maple", sub: "" },
+               { image: playwood11, name: "Uniform Light Birch", sub: "" },
+               { image: playwood12, name: "Natural Birch 02", sub: "" },
                   ].map((item, index) => (
                     <div key={index} className=" rounded-lg overflow-hidden">
                       {/* Image Container */}
@@ -1735,7 +1721,7 @@ const LyndenDoorPage = () => {
                       {/* Label */}
                       <div className="px-4 py-3">
                         <p className="text-black text-sm font-medium text-center">
-                          New 2025 {item.name}
+                      WV-{item.name}
                         </p>
                       </div>
                     </div>
@@ -1905,68 +1891,72 @@ const LyndenDoorPage = () => {
                   {[
                     {
                       image: PrefinishedRiftCut,
-                      name: "Prefinished",
+                      name: "Rift Cut Coffee Textured",
+
                       sub: "Rift Cut",
                     },
                     {
                       image: PrefinishedRiftCut1,
-                      name: "Prefinished",
+                      name: "Rift Cut Slate Textured",
+
                       sub: "Rift Cut (1)",
                     },
                     {
                       image: PrefinishedRiftCut2,
-                      name: "Prefinished",
+                      name: "Rift Cut Medium Walnut Textured",
                       sub: "Rift Cut (2)",
                     },
                     {
                       image: PrefinishedRiftCutTeak,
-                      name: "Prefinished",
+                      name: "Rift Cut Teak Textured",
                       sub: "Rift Cut Teak",
                     },
                     {
                       image: PrefinishedEmbossed,
-                      name: "Prefinished",
+                      name: "Rift Cut Coffee Embossed",
                       sub: "Embossed",
                     },
                     {
                       image: PrefinishedEmbossed1,
-                      name: "Prefinished",
+                      name: "Rift Cut Slate Embossed",
                       sub: "Embossed (1)",
                     },
                     {
                       image: PrefinishedEmbossed2,
-                      name: "Prefinished",
+                      name: "Rift Cut Medium Walnut Embossed",
                       sub: "Embossed (2)",
                     },
                     {
                       image: PrefinishedSmooth,
-                      name: "Prefinished",
+                      name: "Newport Cherry Smooth",
+
                       sub: "Smooth",
                     },
                     {
                       image: PrefinishedSmooth1,
-                      name: "Prefinished",
+                      name: "Western Hemlock Smooth",
                       sub: "Smooth (1)",
                     },
                     {
                       image: PrefinishedSmooth2,
-                      name: "Prefinished",
+                      name: "Coastal Hemlock Smooth",
                       sub: "Smooth (2)",
                     },
                     {
                       image: PrefinishedSmooth3,
-                      name: "Prefinished",
+                      name: "Alpine Oak Smooth",
                       sub: "Smooth (3)",
                     },
                     {
                       image: PrefinishedSmooth4,
-                      name: "Prefinished",
+                      name: "Albany Maple Smooth",
                       sub: "Smooth (4)",
                     },
-                    { image: PrimedSmooth, name: "Primed", sub: "Smooth" },
+                    { image: PrimedSmooth, name: "Crystal White Embossed", sub: "Smooth" },
                     {
                       image: PrimedTexturedHardboardSlab,
-                      name: "Primed",
+                      name: "Primed Embossed",
+
                       sub: "Textured Hardboard Slab",
                     },
                   ].map((item, index) => (
@@ -1984,7 +1974,7 @@ const LyndenDoorPage = () => {
                       {/* Label */}
                       <div className="px-4 py-3">
                         <p className="text-black text-sm font-medium text-center">
-                          New 2025 {item.name}
+                           {item.name}
                         </p>
                       </div>
                     </div>
