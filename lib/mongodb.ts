@@ -1,4 +1,9 @@
+import path from "path";
+import dotenv from "dotenv";
+dotenv.config({ path: path.join(process.env.HOME || "/home/u907461807", ".env.runtime") });
+
 import mongoose from "mongoose";
+
 
 // Connection validated inside connectDB
 
