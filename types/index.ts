@@ -54,9 +54,7 @@ export interface Product extends WithTimestamps {
   description?: string;
   category: DoorCategory;
   doorType: InteriorDoorType | ExteriorDoorType;
-  material?: string;
-  dimensions?: string;
-  color?: string;
+  skuCode?: string;
   inStock?: boolean;
   imageUrl: string; // Single image URL (relative path)
 }

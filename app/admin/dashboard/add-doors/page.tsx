@@ -32,6 +32,7 @@ interface Door {
   name: string;
   category: "interior" | "exterior";
   doorType: string;
+  skuCode?: string;
   imageUrl: string;
   createdAt: string;
   updatedAt: string;
@@ -45,6 +46,7 @@ export default function AddDoorsPage() {
   const [selectedDoorType, setSelectedDoorType] = useState("");
   const [formData, setFormData] = useState({
     name: "",
+    skuCode: "",
     imageUrl: "",
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -59,6 +61,8 @@ export default function AddDoorsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalDoors, setTotalDoors] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const itemsPerPage = 12;
 
   const doorTypes =
@@ -68,16 +72,28 @@ export default function AddDoorsPage() {
         ? exteriorDoorTypes
         : [];
 
-  // Reset to page 1 when changing tabs
+  // Reset to page 1 when changing tabs or search
   useEffect(() => {
     setCurrentPage(1);
-  }, [viewTab]);
+  }, [viewTab, searchQuery]);
+
+  // Debounce search input (300ms)
+  useEffect(() => {
+    const timer = setTimeout(() => setSearchQuery(searchInput.trim()), 300);
+    return () => clearTimeout(timer);
+  }, [searchInput]);
 
   const fetchDoors = useCallback(async () => {
     setLoading(true);
     try {
+      const params = new URLSearchParams({
+        category: viewTab,
+        page: currentPage.toString(),
+        limit: itemsPerPage.toString(),
+      });
+      if (searchQuery) params.set("search", searchQuery);
       const response = await fetch(
-        `/api/admin/products?category=${viewTab}&page=${currentPage}&limit=${itemsPerPage}`,
+        `/api/admin/products?${params.toString()}`,
       );
       const result = await response.json();
       if (result.success) {
@@ -90,7 +106,7 @@ export default function AddDoorsPage() {
     } finally {
       setLoading(false);
     }
-  }, [viewTab, currentPage, itemsPerPage]);
+  }, [viewTab, currentPage, itemsPerPage, searchQuery]);
 
   // Fetch doors based on selected tab
   useEffect(() => {
@@ -223,6 +239,7 @@ export default function AddDoorsPage() {
 
       const doorData = {
         name: formData.name,
+        skuCode: formData.skuCode || undefined,
         category: doorCategory,
         doorType: selectedDoorType,
         imageUrl: uploadedImageUrl,
@@ -244,6 +261,7 @@ export default function AddDoorsPage() {
         setSelectedDoorType("");
         setFormData({
           name: "",
+          skuCode: "",
           imageUrl: "",
         });
         setSelectedFile(null);
@@ -376,6 +394,21 @@ export default function AddDoorsPage() {
                   />
                 </div>
 
+                {/* SKU Code */}
+                <div>
+                  <label className="block text-sm font-medium text-zinc-300 mb-2">
+                    SKU Code
+                  </label>
+                  <input
+                    type="text"
+                    name="skuCode"
+                    value={formData.skuCode}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+                    placeholder="Enter SKU code (e.g. DOOR-001)"
+                  />
+                </div>
+
                 {/* Image Upload */}
                 <div>
                   <label className="block text-sm font-medium text-zinc-300 mb-2">
@@ -431,6 +464,7 @@ export default function AddDoorsPage() {
                   setSelectedDoorType("");
                   setFormData({
                     name: "",
+                    skuCode: "",
                     imageUrl: "",
                   });
                   setSelectedFile(null);
@@ -484,6 +518,12 @@ export default function AddDoorsPage() {
                   </span>
                 </div>
               )}
+              <div className="flex justify-between">
+                <span className="text-zinc-400">Door Code:</span>
+                <span className="text-white font-medium">
+                  {formData.skuCode || "—"}
+                </span>
+              </div>
             </div>
           </div>
         )}
@@ -491,6 +531,17 @@ export default function AddDoorsPage() {
         {/* Products Listing Section */}
         <div className="mt-12 border-t border-zinc-800 pt-12">
           <h2 className="text-2xl font-bold text-white mb-6">Added Doors</h2>
+
+          {/* Search */}
+          <div className="mb-4">
+            <input
+              type="text"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              placeholder="Search by door name or SKU..."
+              className="w-full max-w-md px-4 py-2.5 bg-zinc-900 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500"
+            />
+          </div>
 
           {/* Tabs */}
           <div className="flex gap-4 mb-6 border-b border-zinc-800">
@@ -531,11 +582,24 @@ export default function AddDoorsPage() {
             <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-12 text-center">
               <div className="text-6xl mb-4">📦</div>
               <h3 className="text-xl font-semibold text-white mb-2">
-                No {viewTab} doors added yet
+                {searchQuery
+                  ? `No doors match "${searchQuery}"`
+                  : `No ${viewTab} doors added yet`}
               </h3>
               <p className="text-zinc-400">
-                Add your first {viewTab} door using the form above
+                {searchQuery
+                  ? "Try a different search term or clear the search"
+                  : `Add your first ${viewTab} door using the form above`}
               </p>
+              {searchQuery ? (
+                <button
+                  type="button"
+                  onClick={() => setSearchInput("")}
+                  className="mt-4 px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors text-sm"
+                >
+                  Clear search
+                </button>
+              ) : null}
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -556,7 +620,7 @@ export default function AddDoorsPage() {
                         <img
                           src={resolveImageUrl(door.imageUrl)}
                           alt={door.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-contain"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-zinc-600">
@@ -571,6 +635,12 @@ export default function AddDoorsPage() {
                         {door.name}
                       </h3>
                       <div className="space-y-1 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-zinc-400">Door Code:</span>
+                          <span className="text-zinc-300 text-right truncate ml-2">
+                            {door.skuCode || "—"}
+                          </span>
+                        </div>
                         <div className="flex justify-between">
                           <span className="text-zinc-400">Type:</span>
                           <span className="text-zinc-300 text-right truncate ml-2">

@@ -34,10 +34,7 @@ interface Door {
   doorType: string;
   imageUrl: string;
   description?: string;
-  material?: string;
-  dimensions?: string;
-  color?: string;
-  inStock?: boolean;
+  skuCode?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -60,10 +57,7 @@ export default function DoorDetailPage() {
     category: "" as "interior" | "exterior" | "",
     doorType: "",
     description: "",
-    material: "",
-    dimensions: "",
-    color: "",
-    inStock: true,
+    skuCode: "",
     imageUrl: "",
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -117,10 +111,7 @@ export default function DoorDetailPage() {
             category: category || "",
             doorType: doorData.doorType || "",
             description: doorData.description || "",
-            material: doorData.material || "",
-            dimensions: doorData.dimensions || "",
-            color: doorData.color || "",
-            inStock: doorData.inStock !== undefined ? doorData.inStock : true,
+            skuCode: doorData.skuCode || "",
             imageUrl: imageUrl,
           });
         } else {
@@ -259,10 +250,7 @@ export default function DoorDetailPage() {
         category: formData.category,
         doorType: formData.doorType,
         description: formData.description,
-        material: formData.material,
-        dimensions: formData.dimensions,
-        color: formData.color,
-        inStock: formData.inStock,
+        skuCode: formData.skuCode?.trim() ?? "",
         imageUrl: finalImageUrl,
       };
 
@@ -293,13 +281,7 @@ export default function DoorDetailPage() {
             category: refreshResult.data.category || "",
             doorType: refreshResult.data.doorType || "",
             description: refreshResult.data.description || "",
-            material: refreshResult.data.material || "",
-            dimensions: refreshResult.data.dimensions || "",
-            color: refreshResult.data.color || "",
-            inStock:
-              refreshResult.data.inStock !== undefined
-                ? refreshResult.data.inStock
-                : true,
+            skuCode: refreshResult.data.skuCode || "",
             imageUrl: imageUrl,
           });
         }
@@ -524,43 +506,18 @@ export default function DoorDetailPage() {
               </div>
             </div>
 
-            {/* Stock */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2">
-                  Stock Status
-                </label>
-                <div className="flex items-center h-[48px]">
-                  <label className="flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      name="inStock"
-                      checked={formData.inStock}
-                      onChange={handleInputChange}
-                      className="w-5 h-5 text-blue-600 bg-zinc-900 border-zinc-700 rounded focus:ring-blue-500"
-                    />
-                    <span className="ml-2 text-white">
-                      {formData.inStock ? "In Stock" : "Out of Stock"}
-                    </span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            {/* Removed Material, Dimensions, Color as per request */}
-
-            {/* Description */}
+            {/* SKU Code */}
             <div>
               <label className="block text-sm font-medium text-zinc-300 mb-2">
-                Description
+                SKU Code
               </label>
-              <textarea
-                name="description"
-                value={formData.description}
+              <input
+                type="text"
+                name="skuCode"
+                value={formData.skuCode}
                 onChange={handleInputChange}
-                rows={4}
-                className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors resize-none"
-                placeholder="Enter door description"
+                className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+                placeholder="Enter SKU code (e.g. DOOR-001)"
               />
             </div>
 
@@ -591,7 +548,7 @@ export default function DoorDetailPage() {
                     <img
                       src={resolveImageUrl(formData.imageUrl)}
                       alt="Preview"
-                      className="w-full h-32 object-cover rounded-lg border border-zinc-700"
+                      className="w-full h-32 object-contain rounded-lg border border-zinc-700"
                     />
                     <button
                       type="button"
@@ -620,10 +577,7 @@ export default function DoorDetailPage() {
                       category: door.category || "",
                       doorType: door.doorType || "",
                       description: door.description || "",
-                      material: door.material || "",
-                      dimensions: door.dimensions || "",
-                      color: door.color || "",
-                      inStock: door.inStock !== undefined ? door.inStock : true,
+                      skuCode: door.skuCode || "",
                       imageUrl: door.imageUrl || "",
                     });
                     setOriginalImageUrl(door.imageUrl || "");
@@ -701,47 +655,10 @@ export default function DoorDetailPage() {
                   </div>
                 </div>
 
-                {door.description && (
-                  <div>
-                    <span className="text-sm text-zinc-400">Description</span>
-                    <p className="text-white mt-1">{door.description}</p>
-                  </div>
-                )}
-
-                <div className="grid grid-cols-2 gap-4">
-                  {door.material && (
-                    <div>
-                      <span className="text-sm text-zinc-400">Material</span>
-                      <p className="text-white font-medium mt-1">
-                        {door.material}
-                      </p>
-                    </div>
-                  )}
-                  {door.dimensions && (
-                    <div>
-                      <span className="text-sm text-zinc-400">Dimensions</span>
-                      <p className="text-white font-medium mt-1">
-                        {door.dimensions}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                {door.color && (
-                  <div>
-                    <span className="text-sm text-zinc-400">Color</span>
-                    <p className="text-white font-medium mt-1">{door.color}</p>
-                  </div>
-                )}
-
                 <div>
-                  <span className="text-sm text-zinc-400">Stock Status</span>
-                  <p
-                    className={`font-medium mt-1 ${
-                      door.inStock ? "text-green-400" : "text-red-400"
-                    }`}
-                  >
-                    {door.inStock ? "In Stock" : "Out of Stock"}
+                  <span className="text-sm text-zinc-400">Door Code</span>
+                  <p className="text-white font-medium mt-1">
+                    {door.skuCode || "—"}
                   </p>
                 </div>
 

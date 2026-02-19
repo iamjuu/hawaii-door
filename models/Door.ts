@@ -38,9 +38,7 @@ const DoorSchema = new Schema<ProductType>(
       required: true,
       enum: [...interiorDoorTypes, ...exteriorDoorTypes],
     },
-    material: { type: String, required: false },
-    dimensions: { type: String, required: false },
-    color: { type: String, required: false },
+    skuCode: { type: String, required: false },
     inStock: { type: Boolean, required: false, default: true },
     imageUrl: { type: String, required: true }, // Single image URL (relative path)
   },

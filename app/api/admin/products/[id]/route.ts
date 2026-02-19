@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import mongoose from "mongoose";
 import connectDB from "@/lib/mongodb";
 import Door from "@/models/Door";
 import { requireAdmin } from "@/lib/auth";
@@ -70,10 +71,7 @@ export async function PATCH(req: NextRequest, context: RouteContext) {
       category,
       doorType,
       description,
-      material,
-      dimensions,
-      color,
-      inStock,
+      skuCode,
       imageUrl,
     } = body;
 
@@ -196,26 +194,33 @@ export async function PATCH(req: NextRequest, context: RouteContext) {
     if (doorType !== undefined) updateData.doorType = doorType;
     if (description !== undefined)
       updateData.description = description ? String(description).trim() : "";
-    if (material !== undefined)
-      updateData.material = material ? String(material).trim() : "";
-    if (dimensions !== undefined)
-      updateData.dimensions = dimensions ? String(dimensions).trim() : "";
-    if (color !== undefined)
-      updateData.color = color ? String(color).trim() : "";
-    if (inStock !== undefined) updateData.inStock = Boolean(inStock);
+    // Always include skuCode when present in body (even empty string)
+    if (Object.prototype.hasOwnProperty.call(body, "skuCode")) {
+      updateData.skuCode = body.skuCode ? String(body.skuCode).trim() : "";
+    }
     if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
 
-    const updated = await Door.findByIdAndUpdate(id, updateData, {
-      new: true,
-    });
+    // Skip update if nothing to change
+    if (Object.keys(updateData).length === 0) {
+      const current = await Door.findById(id).lean();
+      return NextResponse.json({ success: true, data: current });
+    }
 
-    if (!updated) {
+    // Use native MongoDB update to ensure skuCode persists (bypasses Mongoose strict/validation)
+    const objectId = new mongoose.Types.ObjectId(id);
+    const updateResult = await Door.collection.updateOne(
+      { _id: objectId },
+      { $set: updateData },
+    );
+
+    if (updateResult.matchedCount === 0) {
       return NextResponse.json(
         { success: false, message: "Door not found" },
         { status: 404 },
       );
     }
 
+    const updated = await Door.findById(id).lean();
     return NextResponse.json({ success: true, data: updated });
   } catch (e: unknown) {
     const error = e as { message?: string };

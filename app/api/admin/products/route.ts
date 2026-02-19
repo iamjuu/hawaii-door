@@ -41,36 +41,57 @@ export async function GET(req: NextRequest) {
     const category = searchParams.get("category"); // "interior" or "exterior"
     const doorType = searchParams.get("doorType");
     const inStock = searchParams.get("inStock");
+    const search = searchParams.get("search")?.trim(); // Search by name or skuCode
 
-    // Build query
-    const query: Record<string, unknown> = {};
+    // Build query - use $and when we have search + other filters
+    const andConditions: Record<string, unknown>[] = [];
+
+    // Search filter - match name or skuCode (case-insensitive)
+    if (search) {
+      andConditions.push({
+        $or: [
+          { name: { $regex: search, $options: "i" } },
+          { skuCode: { $regex: search, $options: "i" } },
+        ],
+      });
+    }
+
+    // Category filter
     if (category) {
       if (category === "interior") {
-        query.$or = [
-          { category: "interior" },
-          {
-            category: { $exists: false },
-            doorType: { $in: interiorDoorTypes },
-          },
-          { category: "", doorType: { $in: interiorDoorTypes } },
-        ];
+        andConditions.push({
+          $or: [
+            { category: "interior" },
+            {
+              category: { $exists: false },
+              doorType: { $in: interiorDoorTypes },
+            },
+            { category: "", doorType: { $in: interiorDoorTypes } },
+          ],
+        });
       } else if (category === "exterior") {
-        query.$or = [
-          { category: "exterior" },
-          {
-            category: { $exists: false },
-            doorType: { $in: exteriorDoorTypes },
-          },
-          { category: "", doorType: { $in: exteriorDoorTypes } },
-        ];
+        andConditions.push({
+          $or: [
+            { category: "exterior" },
+            {
+              category: { $exists: false },
+              doorType: { $in: exteriorDoorTypes },
+            },
+            { category: "", doorType: { $in: exteriorDoorTypes } },
+          ],
+        });
       } else {
-        query.category = category;
+        andConditions.push({ category });
       }
     }
-    if (doorType) query.doorType = doorType;
+
+    if (doorType) andConditions.push({ doorType });
     if (inStock !== null && inStock !== undefined) {
-      query.inStock = inStock === "true";
+      andConditions.push({ inStock: inStock === "true" });
     }
+
+    const query =
+      andConditions.length > 0 ? { $and: andConditions } : {};
 
     const [products, total] = await Promise.all([
       Door.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
@@ -113,10 +134,7 @@ export async function POST(req: NextRequest) {
       category,
       doorType,
       description,
-      material,
-      dimensions,
-      color,
-      inStock,
+      skuCode,
       imageUrl,
     } = body;
 
@@ -175,10 +193,7 @@ export async function POST(req: NextRequest) {
 
     // Add optional fields
     if (description) doorData.description = String(description).trim();
-    if (material) doorData.material = String(material).trim();
-    if (dimensions) doorData.dimensions = String(dimensions).trim();
-    if (color) doorData.color = String(color).trim();
-    if (inStock !== undefined) doorData.inStock = Boolean(inStock);
+    if (skuCode) doorData.skuCode = String(skuCode).trim();
 
     const door = await Door.create(doorData);
 
