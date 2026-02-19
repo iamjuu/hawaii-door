@@ -29,6 +29,7 @@ interface Door {
   imageUrl?: string;
   description?: string;
   inStock?: boolean;
+  skuCode?: string;
 }
 
 // Normalize doorType for matching (DB may have different casing/spacing)
@@ -137,6 +138,7 @@ const InteriorWoodPage = () => {
         while (hasMore) {
           const response = await fetch(
             `/api/products?category=interior&limit=100&page=${page}`,
+            { cache: "no-store" },
           );
           const data = await response.json();
 
@@ -551,23 +553,23 @@ const InteriorWoodPage = () => {
                               onClick={() => handleDoorClick(door, doorType)}
                             >
                               {door.imageUrl && (
-                                <div className="w-full h-48 rounded-lg  border-gray-200 group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex items-center justify-center ">
+                                <div className="w-full h-48 rounded-lg border-gray-200 group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex flex-col items-center justify-center">
                                   <DoorImage
                                     rawSrc={door.imageUrl}
                                     alt={door.name}
                                     className="w-full h-full object-contain transition-transform group-hover:scale-105"
                                   />
-                                  {/* {console.log(door, "helllooo")}
-                                  <p>{door.name}</p> */}
                                 </div>
                               )}
-                              <div className="mt-2">
-                                {/* <p className="text-sm font-roboto font-[500] text-black truncate text-center ">{door.name}</p> */}
-                                {door.description && (
-                                  <p className="text-xs font-roboto font-[400] text-[#3B3B3B] line-clamp-2 mt-1 text-center">
-                                    {/* {door.description} */}
+                              <div className="mt-2 px-1 min-h-[2.5rem] flex flex-col justify-center gap-0.5">
+                                {(door.skuCode ?? (door as { sku_code?: string }).sku_code) && (
+                                  <p className="text-sm font-roboto font-[700] text-black text-center">
+                                    {door.skuCode ?? (door as { sku_code?: string }).sku_code}
                                   </p>
                                 )}
+                                <p className="text-xs font-roboto font-[400] text-[#3B3B3B] text-center line-clamp-2 break-words">
+                                  {door.name}
+                                </p>
                               </div>
                             </div>
                           ))}
@@ -670,7 +672,7 @@ const InteriorWoodPage = () => {
                     alt={currentDoorGroup[currentDoorIndex].name}
                     className="w-auto h-auto max-w-[75%] max-h-[55vh] md:max-w-[70%] md:max-h-[65vh] lg:max-w-[65%] lg:max-h-[70vh] object-contain"
                   />
-                  x{/* Door Info */}
+                  {/* Door Info */}
                   <div className="mt-4 md:mt-6 text-center text-white">
                     <p className="text-base md:text-lg lg:text-xl font-roboto font-[600]">
                       {currentDoorGroup[currentDoorIndex]?.name}

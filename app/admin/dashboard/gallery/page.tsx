@@ -96,17 +96,27 @@ export default function GalleryManagementPage() {
     fetchGalleryItems();
   }, [fetchGalleryItems, refreshTrigger]);
 
-  // Helper to resolve image URL
+  // Helper to resolve image URL - use NEXT_PUBLIC_URL so images load when stored as localhost or relative paths
   const resolveImageUrl = (url: string | undefined | null) => {
-    if (!url || typeof url !== "string") return "/placeholder-image.jpg"; // Fallback
-    if (url.startsWith("http") || url.startsWith("data:")) return url;
-    if (url.startsWith("/")) {
-      const baseUrl =
-        process.env.NEXT_PUBLIC_URL ||
-        "https://navajowhite-ostrich-413154.hostingersite.com";
-      return `${baseUrl.replace(/\/$/, "")}${url}`;
+    if (!url || typeof url !== "string") return "/placeholder-image.jpg";
+    if (url.startsWith("data:")) return url;
+    const baseUrl =
+      process.env.NEXT_PUBLIC_URL ||
+      "https://navajowhite-ostrich-413154.hostingersite.com";
+    const cleanBase = baseUrl.replace(/\/$/, "");
+    // Rewrite localhost URLs to production base (images are on production server)
+    if (url.includes("localhost")) {
+      try {
+        const parsed = new URL(url);
+        return `${cleanBase}${parsed.pathname}`;
+      } catch {
+        return url;
+      }
     }
-    return url;
+    if (url.startsWith("http")) return url;
+    if (url.startsWith("/")) return `${cleanBase}${url}`;
+    const path = url.startsWith("/") ? url : `/${url}`;
+    return `${cleanBase}${path}`;
   };
 
   const handleDeleteItem = async (itemId: string) => {
