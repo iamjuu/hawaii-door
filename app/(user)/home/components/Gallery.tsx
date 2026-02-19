@@ -57,7 +57,7 @@ const Gallerysection = () => {
         <div className="max-w-[1400px] 2xl:mx-auto gap-[46px] flex flex-col">
           {/* MAIN CONTENT */}
           <div className="">
-            <div className="mb-[60px]">
+            <div className="mb-[25px] md:mb-[60px]">
               <Headings
                 heading="Gallery"
                 subheading="Explore our diverse collection of door styles, each crafted to complement your unique aesthetic."
@@ -146,17 +146,17 @@ const Gallerysection = () => {
 
         </div>
       </div>
-      <div className="w-full flex items-center justify-center bg-[#F6F5F1] h-[82px] md:h-[68px] ">
-        <div className={`${CONTENT_WIDTH}  relative  flex flex-col md:flex-row justify-center items-center gap-2 md:gap-12 lg:gap-16 py-3 md:py-[25px] group  mt-6 md:mt-0 transition-all duration-300 text-xs sm:text-sm md:text-base`}>
+      <div className="w-full flex items-start md:items-center justify-center bg-[#F6F5F1] h-[82px] md:h-[68px] ">
+        <div className={`${CONTENT_WIDTH}  relative  flex flex-col md:flex-row justify-center  items-start md:items-center gap-2 md:gap-12 lg:gap-16 py-3 md:py-[25px] group   md:mt-0 transition-all duration-300 text-xs sm:text-sm md:text-base`}>
 
-          <p className="flex items-center gap-1 md:gap-4 items-center">
+          <p className="flex md:items-center gap-1  md:gap-4 items-start ">
             <div className="relative w-8 h-8">
               <Image src={ProductFootericonDoor} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Door" width={100} height={100} />
               <Image src={ProductFootericonDoorGreen} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Door" width={100} height={100} />
             </div>
             Machined to Perfection
           </p>
-          <p className="flex items-center gap-1 md:gap-4 items-center ">
+          <p className="flex md:items-center gap-1  md:gap-4 items-start ">
             <div className="relative w-8 h-8">
               <Image src={Starcenter} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Settings" width={100} height={100} />
               <Image src={StarcenterG} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Settings" width={100} height={100} />
