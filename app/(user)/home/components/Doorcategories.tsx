@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,12 +28,26 @@ const categories = [
 const DoorCategories = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [windowWidth, setWindowWidth] = useState(1024);
+  const [isFooterInView, setIsFooterInView] = useState(false);
+  const footerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Show green icons when footer strip is scrolled into view (desktop + mobile)
+  useEffect(() => {
+    const el = footerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsFooterInView(entry.isIntersecting),
+      { threshold: 0.2, rootMargin: "0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   const nextSlide = () => {
@@ -70,6 +84,24 @@ const DoorCategories = () => {
     return visible;
   };
 
+  // Mobile: touch swipe to change slides
+  const touchStartX = useRef<number | null>(null);
+  const SWIPE_THRESHOLD = 50;
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const endX = e.changedTouches[0].clientX;
+    const deltaX = touchStartX.current - endX;
+    touchStartX.current = null;
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD) return;
+    if (deltaX > 0) nextSlide();
+    else prevSlide();
+  };
+
   return (
     <div className="w-full py-0   sm:py-12 md:py-[0px] md:pt-[50px] font-inter ">
       {/* MAIN CONTENT – constrained */}
@@ -96,8 +128,12 @@ const DoorCategories = () => {
               <ChevronLeft className="w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
             </button>
 
-            {/* Cards Container */}
-            <div className="relative w-full max-w-5xl h-[320px] sm:h-[350px] md:h-[450px] lg:h-[500px] flex items-center justify-center overflow-hidden">
+            {/* Cards Container – touch swipe on mobile */}
+            <div
+              className="relative w-full max-w-5xl h-[320px] sm:h-[350px] md:h-[450px] lg:h-[500px] flex items-center justify-center overflow-hidden touch-pan-y"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
               {getVisibleCards().map((category) => {
                 const isCurrent = category.position === 0;
 
@@ -195,21 +231,24 @@ const DoorCategories = () => {
         </div>
       </div>
 
-      {/* FULL WIDTH FOOTER STRIP – Responsive */}
-      <div className="relative w-full flex flex-col md:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-8 lg:gap-16 py-0 sm:py-5 md:py-0 min-h-[60px] md:h-[68px] bg-[#F6F5F1] group  mt-6 sm:mt-10 md:mt-[50px] lg:mt-[50px] mb-0  transition-all duration-300 ">
+      {/* FULL WIDTH FOOTER STRIP – Responsive. Green icons on hover (desktop) or when scrolled into view (mobile + desktop) */}
+      <div
+        ref={footerRef}
+        className="relative w-full flex  flex-col md:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-8 lg:gap-16 py-0 sm:py-5 md:py-0 min-h-[60px] md:h-[68px] bg-[#F6F5F1] group  mt-6 sm:mt-10 md:mt-[50px] lg:mt-[50px] mb-0  transition-all duration-300 "
+      >
         <div className="py-3 sm:py-4 md:py-[25px] flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 items-start md:items-center">
           <div className="flex items-center gap-3 sm:gap-3.5 md:gap-4 text-xs sm:text-sm md:text-base">
             <div className="relative w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">
               <Image
                 src={ProductFootericonDoor}
-                className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300"
+                className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] transition-opacity duration-300 ${isFooterInView ? "opacity-0" : "opacity-100"} group-hover:opacity-0`}
                 alt="Door"
                 width={100}
                 height={100}
               />
               <Image
                 src={ProductFootericonDoorGreen}
-                className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 transition-opacity duration-300 ${isFooterInView ? "opacity-100" : "opacity-0"} group-hover:opacity-100`}
                 alt="Door"
                 width={100}
                 height={100}
@@ -223,14 +262,14 @@ const DoorCategories = () => {
             <div className="relative w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">
               <Image
                 src={ProductFootericonSettings}
-                className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300"
+                className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] transition-opacity duration-300 ${isFooterInView ? "opacity-0" : "opacity-100"} group-hover:opacity-0`}
                 alt="Settings"
                 width={100}
                 height={100}
               />
               <Image
                 src={ProductFootericonSettingsGreen}
-                className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 transition-opacity duration-300 ${isFooterInView ? "opacity-100" : "opacity-0"} group-hover:opacity-100`}
                 alt="Settings"
                 width={100}
                 height={100}
@@ -243,14 +282,14 @@ const DoorCategories = () => {
             <div className="relative w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">
               <Image
                 src={TickGray}
-                className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300"
+                className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] transition-opacity duration-300 ${isFooterInView ? "opacity-0" : "opacity-100"} group-hover:opacity-0`}
                 alt="Truck"
                 width={100}
                 height={100}
               />
               <Image
                 src={TickGreen}
-                className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 transition-opacity duration-300 ${isFooterInView ? "opacity-100" : "opacity-0"} group-hover:opacity-100`}
                 alt="Truck"
                 width={100}
                 height={100}

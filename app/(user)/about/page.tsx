@@ -32,14 +32,14 @@ const page = () => {
       <Navbar />
 
       {/* Main Content */}
-      <main className="min-h-screen bg-[#fdfffc]">
+      <main className=" bg-[#fdfffc] flex flex-col ">
         {/* Hero Section */}
-        <section className="w-full py-16 md:py-4 md:mt-[120px]">
-          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
+        <section className="w-full pt-[25px] md:py-4 md:mt-[120px]">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mt-[25px] 2xl:px-[60px]">
             <div className="max-w-[1400px] 2xl:mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-center">
               {/* Left Content */}
               <div className="flex w-full  gap-5 flex-col">
-                <h1 className="text-[23px] md:text-[46px] font-medium  leading-[56px] text-black font-roboto">
+                <h1 className="text-[23px] md:text-[46px] font-medium  md:leading-[56px] leading-[32px] text-black font-roboto">
                   Built for Hawaii.
                   <br />
                   Crafted with Integrity.
@@ -80,7 +80,7 @@ const page = () => {
         </section>
 
         <section className="w-full  bg-[#f5f5f5] mt-[50px]   ">
-          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px] pt-10 sm:pt-12 md:pt-[50px]">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]  sm:pt-12 md:pt-[50px]">
             <div className="max-w-[1400px] 2xl:mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-[130px]">
               {/* Centered Card with Border - Our Vision */}
               <div className="bg-white border-[40px] border-[#D4A574] border-b-0 p-8 md:p-12 lg:p-16 transition-all duration-300 hover:border-[#C8955F] group/card">

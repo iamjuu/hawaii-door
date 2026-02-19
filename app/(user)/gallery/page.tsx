@@ -196,7 +196,7 @@ const GalleryPage = () => {
 
       <main className="min-h-screen bg-[#fdfffc] pt-[70px] md:pt-[80px]">
         {/* HERO */}
-        <section className="w-full py-10 sm:py-12 md:py-16">
+        <section className="w-full py-[25px] sm:py-12 md:py-16">
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
             <div className="max-w-[1400px] 2xl:mx-auto">
               <h1 className="text-[23px] md:text-[46px] font-[600] text-black font-roboto leading-[32px] md:leading-[56px] tracking-normal mb-4">

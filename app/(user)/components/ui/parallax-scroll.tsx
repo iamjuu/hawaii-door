@@ -48,7 +48,7 @@ export const ParallaxScroll = ({
         <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start w-full gap-4 md:gap-6 py-0 px-0 pb-20"
         >
-          <div className="grid gap-4 md:gap-6">
+          <div className="grid gap-[25px] md:gap-6">
             {firstPart.map((el, idx) => (
               <motion.div
                 style={{ y: translateFirst }} // Apply the translateY motion value here
