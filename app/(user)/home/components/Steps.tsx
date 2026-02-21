@@ -1,4 +1,6 @@
 "use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Buildit from "../../../../public/assets/images/landing/build.png";
 import Review from "../../../../public/assets/images/landing/review.png";
@@ -14,6 +16,8 @@ import {
   ProductFootericonTruck,
   ProductFootericonTruckGreen,
 } from "@/public/assets";
+
+const MOBILE_BREAKPOINT = 768;
 
 const stepBox =
   "flex flex-col items-center text-center px-2 pt-3 pb-4 md:pt-10 md:pb-10 w-full max-w-[260px] min-w-0 overflow-hidden mx-auto max-[640px]:pt-2 max-[640px]:pb-3";
@@ -87,6 +91,43 @@ const stepsData: (StepItem | ArrowItem)[] = [
 ];
 
 const StepsDoor = () => {
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [inViewSteps, setInViewSteps] = useState<Set<number>>(new Set());
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Mobile: detect when step cards scroll into view and apply same effect as hover
+  useEffect(() => {
+    const checkMobile = () =>
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    const refs = stepRefs.current.filter(Boolean) as HTMLDivElement[];
+    if (refs.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setInViewSteps((prev) => {
+          const next = new Set(prev);
+          entries.forEach((entry) => {
+            const stepIndex = refs.indexOf(entry.target as HTMLDivElement);
+            if (stepIndex === -1) return;
+            if (entry.isIntersecting) next.add(stepIndex);
+            else next.delete(stepIndex);
+          });
+          return next;
+        });
+      },
+      { threshold: 0.3, rootMargin: "0px 0px -10% 0px" }
+    );
+    refs.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [isMobile]);
+
   return (
     <section className="w-full mt-4 md:mt-[0px] sm:py-12 md:py-[0px] md:pt-[50px] font-inter max-[640px]:mt-3 max-[640px]:pb-4">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
@@ -104,28 +145,45 @@ const StepsDoor = () => {
             <div className="group w-full grid mt-3 md:mt-[25px] grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-7 md:gap-3 lg:gap-[25px] items-start font-roboto min-w-0 overflow-hidden">
               {stepsData.map((item, index) =>
                 item.type === "step" ? (
-                  <div
-                    key={index}
-                    className="relative flex flex-col justify-center items-center w-full min-w-0"
-                  >
-                    <div className={stepBox}>
-                      <Image
-                        src={item.image}
-                        alt={item.alt}
-                        width={item.imageWidth}
-                        height={item.imageHeight}
-                        className={item.imageClassName}
-                      />
-                      <div className={stepContentBox}>
-                        <h4 className="text-xl font-medium text-black w-full break-words">
-                          {item.title}
-                        </h4>
-                        <p className="mt-1 md:mt-2 text-[#3B3B3B] text-sm md:text-base w-full break-words">
-                          {item.content}
-                        </p>
+                  (() => {
+                    const stepIndex = stepsData
+                      .slice(0, index)
+                      .filter((x) => x.type === "step").length;
+                    const inView = inViewSteps.has(stepIndex);
+                    const mobileActiveClass =
+                      isMobile && inView
+                        ? "!grayscale-0 scale-105 -translate-y-1"
+                        : isMobile
+                          ? "grayscale"
+                          : "";
+                    return (
+                      <div
+                        key={index}
+                        ref={(el) => {
+                          stepRefs.current[stepIndex] = el;
+                        }}
+                        className="relative flex flex-col justify-center items-center w-full min-w-0"
+                      >
+                        <div className={stepBox}>
+                          <Image
+                            src={item.image}
+                            alt={item.alt}
+                            width={item.imageWidth}
+                            height={item.imageHeight}
+                            className={`${item.imageClassName} ${mobileActiveClass}`.trim()}
+                          />
+                          <div className={stepContentBox}>
+                            <h4 className="text-xl font-medium text-black w-full break-words">
+                              {item.title}
+                            </h4>
+                            <p className="mt-1 md:mt-2 text-[#3B3B3B] text-sm md:text-base w-full break-words">
+                              {item.content}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
+                    );
+                  })()
                 ) : (
                   <div
                     key={index}

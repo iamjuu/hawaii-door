@@ -31,7 +31,7 @@ export default function Navbar() {
               alt="Logo"
               width={40}     // max width for larger screens
               height={40}    // max height for larger screens
-              className="w-[30px] h-[40px] md:w-[40px] md:h-[50px]"
+              className="w-[20px] h-[30px] md:w-[40px] md:h-[50px]"
               priority
             />
           </Link>
