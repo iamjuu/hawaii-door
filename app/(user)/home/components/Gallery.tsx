@@ -52,7 +52,7 @@ const CONTENT_WIDTH = "max-w-7xl";
 
 const Gallerysection = () => {
   return (
-    <div className="w-full py-5 sm:py-12 md:pt-[50px] md:py-[0px] font-inter ">
+    <div className="w-full py-[25px] sm:py-12 md:pt-[50px] md:py-[0px] font-inter ">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
         <div className="max-w-[1400px] 2xl:mx-auto gap-[46px] flex flex-col">
           {/* MAIN CONTENT */}
@@ -65,7 +65,7 @@ const Gallerysection = () => {
             </div>
 
             {/* Gallery Grid */}
-            <div className=" pb-12 bg-white">
+            <div className=" pb-[25px] bg-white md:pb-12">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 {/* First Row */}

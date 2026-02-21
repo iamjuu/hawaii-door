@@ -16,7 +16,7 @@ import {
 } from "@/public/assets";
 
 const stepBox =
-  "flex flex-col items-center text-center px-2 pt-[25px] pb-6 md:pt-10 md:pb-10 w-full max-w-[260px] min-w-0 overflow-hidden mx-auto";
+  "flex flex-col items-center text-center px-2 pt-3 pb-4 md:pt-10 md:pb-10 w-full max-w-[260px] min-w-0 overflow-hidden mx-auto max-[640px]:pt-2 max-[640px]:pb-3";
 const stepContentBox =
   "w-full max-w-[220px] min-w-0 flex flex-col items-center text-center overflow-hidden";
 
@@ -88,7 +88,7 @@ const stepsData: (StepItem | ArrowItem)[] = [
 
 const StepsDoor = () => {
   return (
-    <section className="w-full mt-[25px] md:mt-[0px] sm:py-12 md:py-[0px]   md:pt-[50px] font-inter ">
+    <section className="w-full mt-4 md:mt-[0px] sm:py-12 md:py-[0px] md:pt-[50px] font-inter max-[640px]:mt-3 max-[640px]:pb-4">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
         <div className="max-w-[1400px] 2xl:mx-auto flex flex-col">
           {/* Heading */}
@@ -101,7 +101,7 @@ const StepsDoor = () => {
 
           {/* Steps */}
           <div className="flex flex-col gap-0 md:gap-[20px]">
-            <div className="group w-full grid mt-[25px] grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-7 md:gap-3 lg:gap-[25px] items-start font-roboto min-w-0 overflow-hidden">
+            <div className="group w-full grid mt-3 md:mt-[25px] grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-7 md:gap-3 lg:gap-[25px] items-start font-roboto min-w-0 overflow-hidden">
               {stepsData.map((item, index) =>
                 item.type === "step" ? (
                   <div
@@ -120,7 +120,7 @@ const StepsDoor = () => {
                         <h4 className="text-xl font-medium text-black w-full break-words">
                           {item.title}
                         </h4>
-                        <p className="mt-2 text-[#3B3B3B] text-sm md:text-base w-full break-words">
+                        <p className="mt-1 md:mt-2 text-[#3B3B3B] text-sm md:text-base w-full break-words">
                           {item.content}
                         </p>
                       </div>
@@ -131,7 +131,7 @@ const StepsDoor = () => {
                     key={index}
                     className="flex flex-col justify-center items-center min-w-0"
                   >
-                    <div className="flex md:hidden justify-center my-4">
+                    <div className="flex md:hidden justify-center my-1.5">
                       <Image
                         src={Downarrow}
                         alt="Down Arrow"
@@ -154,7 +154,7 @@ const StepsDoor = () => {
             </div>
 
             {/* CTA */}
-            <div className="w-full flex  mb-[0px] justify-center items-center mt-4 md:mt-0 ">
+            <div className="w-full flex mb-0 justify-center items-center mt-3 mb-3 md:mb-0 md:mt-0 max-[640px]:mt-2">
               <Link href="/build" className="">
                 <PillCTAButton
                   label="Start Building Your Door Now"
@@ -170,7 +170,7 @@ const StepsDoor = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="  relative w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group  mt-[25px] md:mt-[55px] transition-all duration-300">
+      <div className="relative w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group mt-4 md:mt-[55px] max-[640px]:mt-3 transition-all duration-300">
         <div className="flex items-center gap-3 md:gap-4">
           <div className="relative w-6 h-6 md:w-8 md:h-8">
             <Image
