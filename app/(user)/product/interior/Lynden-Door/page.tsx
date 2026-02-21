@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
 import {
@@ -100,15 +100,46 @@ import {
   TickColorPng,
 } from "@/public/assets";
 import HeroSection from "../../components/herosection";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { MdOutlineArrowForward } from "react-icons/md";
 import FooterBanner from "../../components/footerbanner";
 import { FiX } from "react-icons/fi";
 import { HiMenu } from "react-icons/hi";
 
+type ModalItem = { image: StaticImageData | string; label: string };
+
 const LyndenDoorPage = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [activeSection, setActiveSection] = useState("overview");
+
+  // Modal state for door preview
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImages, setModalImages] = useState<ModalItem[]>([]);
+  const [modalIndex, setModalIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+
+  const openModal = (items: ModalItem[], index: number) => {
+    setModalImages(items);
+    setModalIndex(index);
+    setIsModalOpen(true);
+  };
+  const handleModalClose = () => setIsModalOpen(false);
+  const handleModalPrev = () =>
+    setModalIndex((prev) => (prev > 0 ? prev - 1 : modalImages.length - 1));
+  const handleModalNext = () =>
+    setModalIndex((prev) => (prev < modalImages.length - 1 ? prev + 1 : 0));
+  const handleModalTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleModalTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) handleModalNext();
+      else handleModalPrev();
+    }
+    touchStartX.current = null;
+  };
 
   // Custom slow scroll to top
   const slowScrollToTop = (duration = 2000) => {
@@ -208,6 +239,21 @@ const LyndenDoorPage = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft")
+        setModalIndex((prev) => (prev > 0 ? prev - 1 : modalImages.length - 1));
+      if (e.key === "ArrowRight")
+        setModalIndex((prev) =>
+          prev < modalImages.length - 1 ? prev + 1 : 0,
+        );
+      if (e.key === "Escape") setIsModalOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isModalOpen, modalImages.length]);
 
   // AWS hero (commented out): "https://hawaai-doors-bucket.s3.us-west-2.amazonaws.com/uploads/1769351029217-hero_interior-door-hero.webp"
   const bgImage = "/assets/product/lyndenproduct.svg";
@@ -550,10 +596,19 @@ const LyndenDoorPage = () => {
                     { image: white2, name: "Fairview" },
                     { image: white3, name: "Granville" },
                     { image: white4, name: "Ravenna" },
-                  ].map((item, index) => (
-                    <div key={index} className=" rounded-lg overflow-hidden">
+                  ].map((item, index, arr) => (
+                    <div
+                      key={index}
+                      className="rounded-lg overflow-hidden cursor-pointer"
+                      onClick={() =>
+                        openModal(
+                          arr.map((i) => ({ image: i.image, label: i.name })),
+                          index,
+                        )
+                      }
+                    >
                       {/* Image Container */}
-                      <div className="relative w-full h-[400px] ">
+                      <div className="relative w-full h-[400px]">
                         <Image
                           src={item.image}
                           alt={`New 2025 ${item.name}`}
@@ -756,10 +811,19 @@ const LyndenDoorPage = () => {
                     { image: white8, name: "Parkrose" },
                     { image: white9, name: "Montlake" },
                     { image: white10, name: "Robson" },
-                  ].map((item, index) => (
-                    <div key={index} className=" rounded-lg overflow-hidden">
+                  ].map((item, index, arr) => (
+                    <div
+                      key={index}
+                      className="rounded-lg overflow-hidden cursor-pointer"
+                      onClick={() =>
+                        openModal(
+                          arr.map((i) => ({ image: i.image, label: i.name })),
+                          index,
+                        )
+                      }
+                    >
                       {/* Image Container */}
-                      <div className="relative w-full h-[400px] ">
+                      <div className="relative w-full h-[400px]">
                         <Image
                           src={item.image}
                           alt={`New 2025 ${item.name}`}
@@ -927,10 +991,19 @@ const LyndenDoorPage = () => {
                     { image: white18, name: "Ravenna" },
                     { image: white19, name: "Ballard" },
                     { image: white20, name: "Ballard" },
-                  ].map((item, index) => (
-                    <div key={index} className=" rounded-lg overflow-hidden">
+                  ].map((item, index, arr) => (
+                    <div
+                      key={index}
+                      className="rounded-lg overflow-hidden cursor-pointer"
+                      onClick={() =>
+                        openModal(
+                          arr.map((i) => ({ image: i.image, label: i.name })),
+                          index,
+                        )
+                      }
+                    >
                       {/* Image Container */}
-                      <div className="relative w-full h-[400px] ">
+                      <div className="relative w-full h-[400px]">
                         <Image
                           src={item.image}
                           alt={`New 2025 ${item.name}`}
@@ -1092,7 +1165,7 @@ const LyndenDoorPage = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                 {[
                   { image: wood1, name: "StileLine-African-Mahogany", sub: "African-Mahogany" },
                   { image: wood2, name: "StileLine-Maple", sub: "Maple" },
@@ -1102,10 +1175,19 @@ const LyndenDoorPage = () => {
                     sub: "Rift Cut White Oak",
                   },
                   { image: wood4, name: "StileLine", sub: "Walnut" },
-                ].map((item, index) => (
-                  <div key={index} className=" rounded-lg overflow-hidden">
+                ].map((item, index, arr) => (
+                  <div
+                    key={index}
+                    className="rounded-lg overflow-hidden cursor-pointer"
+                    onClick={() =>
+                      openModal(
+                        arr.map((i) => ({ image: i.image, label: i.name })),
+                        index,
+                      )
+                    }
+                  >
                     {/* Image Container */}
-                    <div className="relative w-full h-[400px] ">
+                    <div className="relative w-full h-[400px]">
                       <Image
                         src={item.image}
                         alt={`New 2025 ${item.name}`}
@@ -1268,7 +1350,7 @@ const LyndenDoorPage = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                   {[
                     {
                       image: wood5,
@@ -1281,10 +1363,19 @@ const LyndenDoorPage = () => {
                       name: "Rediscovery-SpecialOrder003",
                       sub: "Rift Cut White Oak",
                     },
-                  ].map((item, index) => (
-                    <div key={index} className=" rounded-lg overflow-hidden">
+                  ].map((item, index, arr) => (
+                    <div
+                      key={index}
+                      className="rounded-lg overflow-hidden cursor-pointer"
+                      onClick={() =>
+                        openModal(
+                          arr.map((i) => ({ image: i.image, label: i.name })),
+                          index,
+                        )
+                      }
+                    >
                       {/* Image Container */}
-                      <div className="relative w-full h-[400px] ">
+                      <div className="relative w-full h-[400px]">
                         <Image
                           src={item.image}
                           alt={`New 2025 ${item.name}`}
@@ -1518,10 +1609,22 @@ const LyndenDoorPage = () => {
                         sub: "Raised Panel",
                         type: "Textured",
                       },
-                    ].map((item, index) => (
-                      <div key={index} className=" rounded-lg overflow-hidden">
+                    ].map((item, index, arr) => (
+                      <div
+                        key={index}
+                        className="rounded-lg overflow-hidden cursor-pointer"
+                        onClick={() =>
+                          openModal(
+                            arr.map((i) => ({
+                              image: i.image,
+                              label: `MDC- ${i.name}`,
+                            })),
+                            index,
+                          )
+                        }
+                      >
                         {/* Image Container */}
-                        <div className="relative w-full h-[400px] ">
+                        <div className="relative w-full h-[400px]">
                           <Image
                             src={item.image}
                             alt={`New 2025 ${item.name}`}
@@ -1535,8 +1638,6 @@ const LyndenDoorPage = () => {
                           <p className="text-black text-sm font-medium text-center">
                             MDC- {item.name}
                           </p>
-                          {/* <p>{item.sub}</p>
-                          <p>{item.type}</p> */}
                         </div>
                       </div>
                     ))}
@@ -1691,7 +1792,7 @@ const LyndenDoorPage = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                   {[
                
                { image: playwood1, name: "Natural Birch 01", sub: "" },
@@ -1706,10 +1807,22 @@ const LyndenDoorPage = () => {
                { image: playwood10, name: "White Maple", sub: "" },
                { image: playwood11, name: "Uniform Light Birch", sub: "" },
                { image: playwood12, name: "Natural Birch 02", sub: "" },
-                  ].map((item, index) => (
-                    <div key={index} className=" rounded-lg overflow-hidden">
+                  ].map((item, index, arr) => (
+                    <div
+                      key={index}
+                      className="rounded-lg overflow-hidden cursor-pointer"
+                      onClick={() =>
+                        openModal(
+                          arr.map((i) => ({
+                            image: i.image,
+                            label: `WV-${i.name}`,
+                          })),
+                          index,
+                        )
+                      }
+                    >
                       {/* Image Container */}
-                      <div className="relative w-full h-[400px] ">
+                      <div className="relative w-full h-[400px]">
                         <Image
                           src={item.image}
                           alt={`New 2025 ${item.name}`}
@@ -1887,7 +2000,7 @@ const LyndenDoorPage = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 ">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5">
                   {[
                     {
                       image: PrefinishedRiftCut,
@@ -1959,10 +2072,19 @@ const LyndenDoorPage = () => {
 
                       sub: "Textured Hardboard Slab",
                     },
-                  ].map((item, index) => (
-                    <div key={index} className=" rounded-lg overflow-hidden">
+                  ].map((item, index, arr) => (
+                    <div
+                      key={index}
+                      className="rounded-lg overflow-hidden cursor-pointer"
+                      onClick={() =>
+                        openModal(
+                          arr.map((i) => ({ image: i.image, label: i.name })),
+                          index,
+                        )
+                      }
+                    >
                       {/* Image Container */}
-                      <div className="relative w-full h-[400px] ">
+                      <div className="relative w-full h-[400px]">
                         <Image
                           src={item.image}
                           alt={`New 2025 ${item.name}`}
@@ -2226,6 +2348,108 @@ const LyndenDoorPage = () => {
         </div>
       </section>
       <FooterBanner />
+
+      {/* Door Preview Modal */}
+      {isModalOpen && modalImages.length > 0 && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
+          onClick={handleModalClose}
+        >
+          <div
+            className="relative w-full h-full flex items-center justify-center p-4 md:p-8"
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={handleModalTouchStart}
+            onTouchEnd={handleModalTouchEnd}
+          >
+            {/* Close Button */}
+            <button
+              onClick={handleModalClose}
+              className="fixed top-4 right-4 z-20 text-white hover:text-[#FF6E4A] transition-colors bg-black/60 rounded-full p-3 hover:bg-black/80"
+              aria-label="Close"
+            >
+              <svg
+                className="w-5 h-5 md:w-6 md:h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            {/* Previous Button */}
+            {modalImages.length > 1 && (
+              <button
+                onClick={handleModalPrev}
+                className="absolute left-2 md:left-8 z-20 text-white hover:text-[#FF6E4A] transition-all bg-black/60 rounded-full p-2 md:p-3 hover:bg-black/80 hover:scale-110"
+                aria-label="Previous"
+              >
+                <svg
+                  className="w-5 h-5 md:w-6 md:h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+            )}
+
+            {/* Next Button */}
+            {modalImages.length > 1 && (
+              <button
+                onClick={handleModalNext}
+                className="absolute right-2 md:right-8 z-20 text-white hover:text-[#FF6E4A] transition-all bg-black/60 rounded-full p-2 md:p-3 hover:bg-black/80 hover:scale-110"
+                aria-label="Next"
+              >
+                <svg
+                  className="w-5 h-5 md:w-6 md:h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            )}
+
+            {/* Image Container */}
+            <div className="flex flex-col items-center justify-center w-full h-full max-w-7xl">
+              <Image
+                key={modalIndex}
+                src={modalImages[modalIndex].image}
+                alt={modalImages[modalIndex].label}
+                width={800}
+                height={1200}
+                className="w-auto h-[62vh] md:h-[72vh] lg:h-[78vh] max-w-[88vw] md:max-w-[72vw] lg:max-w-[60vw] object-contain"
+              />
+              <div className="mt-4 md:mt-6 text-center text-white">
+                <p className="text-base md:text-lg lg:text-xl font-[600]">
+                  {modalImages[modalIndex].label}
+                </p>
+                <p className="text-xs md:text-sm text-gray-300 mt-1 md:mt-2">
+                  {modalIndex + 1} / {modalImages.length}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </>

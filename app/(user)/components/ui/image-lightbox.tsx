@@ -1,6 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "motion/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IoClose } from "react-icons/io5";
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 
@@ -25,6 +25,7 @@ export const ImageLightbox = ({
 }: ImageLightboxProps) => {
   const [currentIndex, setCurrentIndex] = useState(selectedIndex);
   const [direction, setDirection] = useState(0);
+  const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
     setCurrentIndex(selectedIndex);
@@ -172,6 +173,16 @@ export const ImageLightbox = ({
         <div
           className="relative w-full h-full flex items-center justify-center p-20"
           onClick={(e) => e.stopPropagation()}
+          onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+          onTouchEnd={(e) => {
+            if (touchStartX.current === null) return;
+            const diff = touchStartX.current - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+              if (diff > 0) handleNext();
+              else handlePrev();
+            }
+            touchStartX.current = null;
+          }}
         >
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.div

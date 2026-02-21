@@ -50,6 +50,8 @@ const Gallerysection = () => {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [inViewCards, setInViewCards] = useState<Set<number>>(new Set());
   const [isMobile, setIsMobile] = useState(false);
+  const [isBarInView, setIsBarInView] = useState(false);
+  const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -57,6 +59,19 @@ const Gallerysection = () => {
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
+
+  useEffect(() => {
+    setIsBarInView(false);
+    if (!isMobile) return;
+    const handleScroll = () => {
+      if (!barRef.current) return;
+      const rect = barRef.current.getBoundingClientRect();
+      const vh = window.innerHeight;
+      setIsBarInView(rect.bottom > vh * 0.15 && rect.top < vh * 0.85);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMobile]);
 
   useEffect(() => {
     if (!isMobile) return;
@@ -110,10 +125,10 @@ const Gallerysection = () => {
           <div
             className={`absolute bottom-0 left-0 right-0 h-1/2 bg-black/70 transition-transform duration-500 ease-out md:group-hover:translate-y-0 ${a ? "translate-y-0" : "translate-y-full"}`}
           />
-          {/* Card title - fades out when overlay appears */}
+          {/* Card title - fades out after overlay starts sliding up */}
           <div className="absolute inset-0 flex items-center justify-center">
             <h3
-              className={`text-white text-3xl font-medium transition-opacity duration-300 md:group-hover:opacity-0 ${a ? "opacity-0" : "opacity-100"}`}
+              className={`text-white text-3xl font-medium transition-opacity duration-300 md:group-hover:opacity-0 md:group-hover:delay-[200ms] ${a ? "opacity-0 delay-[200ms]" : "opacity-100 delay-0"}`}
             >
               {item.title}
             </h3>
@@ -162,19 +177,19 @@ const Gallerysection = () => {
       </div>
 
       {/* Full-width strip */}
-      <div className="w-full flex items-start md:items-center justify-center bg-[#F6F5F1] h-[82px] md:h-[68px]">
+      <div ref={barRef} className="w-full flex items-start md:items-center justify-center bg-[#F6F5F1] h-[82px] md:h-[68px]">
         <div className={`${CONTENT_WIDTH} relative flex flex-col md:flex-row justify-center items-start md:items-center gap-2 md:gap-12 lg:gap-16 py-3 md:py-[25px] group md:mt-0 transition-all duration-300 text-xs sm:text-sm md:text-base`}>
           <p className="flex md:items-center gap-1 md:gap-4 items-start">
             <div className="relative w-8 h-8">
-              <Image src={ProductFootericonDoor} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Door" width={100} height={100} />
-              <Image src={ProductFootericonDoorGreen} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Door" width={100} height={100} />
+              <Image src={ProductFootericonDoor} className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] transition-opacity duration-500 ${isMobile ? (isBarInView ? "opacity-0" : "opacity-100") : "group-hover:opacity-0"}`} alt="Door" width={100} height={100} />
+              <Image src={ProductFootericonDoorGreen} className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 transition-opacity duration-500 ${isMobile ? (isBarInView ? "opacity-100" : "opacity-0") : "opacity-0 group-hover:opacity-100"}`} alt="Door" width={100} height={100} />
             </div>
             Machined to Perfection
           </p>
           <p className="flex md:items-center gap-1 md:gap-4 items-start">
             <div className="relative w-8 h-8">
-              <Image src={Starcenter} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300" alt="Settings" width={100} height={100} />
-              <Image src={StarcenterG} className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" alt="Settings" width={100} height={100} />
+              <Image src={Starcenter} className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] transition-opacity duration-500 ${isMobile ? (isBarInView ? "opacity-0" : "opacity-100") : "group-hover:opacity-0"}`} alt="Settings" width={100} height={100} />
+              <Image src={StarcenterG} className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 transition-opacity duration-500 ${isMobile ? (isBarInView ? "opacity-100" : "opacity-0") : "opacity-0 group-hover:opacity-100"}`} alt="Settings" width={100} height={100} />
             </div>
             True Hawaii Spec
           </p>

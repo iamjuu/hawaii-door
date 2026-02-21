@@ -1,4 +1,6 @@
 "use client";
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import Image from "next/image";
 import Measureimg from "../../../../public/assets/images/landing/measure.png";
@@ -7,6 +9,33 @@ import Link from "next/link";
 import Heading from "./header";
 
 const Measure = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [isBarInView, setIsBarInView] = useState(false);
+  const [btnTouched, setBtnTouched] = useState(false);
+  const barRef = useRef<HTMLDivElement>(null);
+  const btnTouchPending = useRef(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  useEffect(() => {
+    setIsBarInView(false);
+    if (!isMobile) return;
+    const handleScroll = () => {
+      if (!barRef.current) return;
+      const rect = barRef.current.getBoundingClientRect();
+      const vh = window.innerHeight;
+      setIsBarInView(rect.bottom > vh * 0.15 && rect.top < vh * 0.85);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMobile]);
+
   return (
     <>
       {/* Main Section */}
@@ -36,10 +65,27 @@ const Measure = () => {
 
                 {/* CTA */}
                 <Link href="/product">
-                  <button className="w-max group relative inline-flex items-center gap-3 overflow-hidden rounded-3xl bg-[#B6D78A] px-5 py-2 font-roboto text-xl ">
+                  <button
+                    className="w-max group relative inline-flex items-center gap-3 overflow-hidden rounded-3xl bg-[#B6D78A] px-5 py-2 font-roboto text-xl"
+                    onTouchStart={() => {
+                      setBtnTouched(true);
+                      btnTouchPending.current = true;
+                    }}
+                    onClick={(e) => {
+                      if (btnTouchPending.current) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        btnTouchPending.current = false;
+                        setTimeout(() => {
+                          setBtnTouched(false);
+                          router.push("/product");
+                        }, 500);
+                      }
+                    }}
+                  >
                     {/* Hover overlay */}
                     <span
-                      className="
+                      className={`
           absolute inset-0
           bg-black
           rounded-full
@@ -54,23 +100,25 @@ const Measure = () => {
           ease-[cubic-bezier(0.65,0,0.35,1)]
           group-hover:scale-102
           group-hover:translate-y-[-10%]
-        "
+          ${btnTouched ? "!scale-[1.02] !translate-y-[-10%]" : ""}
+        `}
                     />
 
                     {/* Content */}
-                    <span className="relative z-10 flex items-center gap-3 text-[15px] md:text-lg whitespace-nowrap text-[#000000] group-hover:text-white transition-colors duration-500 group-hover:duration-200 group-hover:delay-[500ms] cursor-pointer">
+                    <span className={`relative z-10 flex items-center gap-3 text-[15px] md:text-lg whitespace-nowrap text-[#000000] group-hover:text-white transition-colors duration-500 group-hover:duration-200 group-hover:delay-[500ms] cursor-pointer ${btnTouched ? "!text-white" : ""}`}>
                       Explore Now
                       <span
-                        className="
+                        className={`
                         inline-flex items-center justify-center w-7 h-7
                         transition-all duration-800 ease-in-out
                         group-hover:duration-200
                         group-hover:delay-[500ms]
                         rotate-0 translate-x-1.5
                         group-hover:rotate-45 group-hover:translate-x-0
-                      "
+                        ${btnTouched ? "!rotate-45 !translate-x-0" : ""}
+                      `}
                       >
-                        <MdOutlineArrowOutward className="text-[#000000] group-hover:text-white text-2xl transition-colors duration-500 group-hover:duration-200 group-hover:delay-[500ms]" />
+                        <MdOutlineArrowOutward className={`text-[#000000] group-hover:text-white text-2xl transition-colors duration-500 group-hover:duration-200 group-hover:delay-[500ms] ${btnTouched ? "!text-white" : ""}`} />
                       </span>
                     </span>
                   </button>
@@ -95,18 +143,16 @@ const Measure = () => {
       </div>
 
       {/* Bottom Info Bar */}
-      <div className="relative px-5 md:px-0 w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-[25px] md:py-0 bg-[#F6F5F1] group  mt-6 md:mt-9 h-[68px] ">
+      <div ref={barRef} className="relative px-5 md:px-0 w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-[25px] md:py-0 bg-[#F6F5F1] group  mt-6 md:mt-9 h-[68px] ">
         <div className="flex items-center gap-2">
           <Image
             src={Vector7}
             alt="Crafted for Hawaii"
-            className="
-              w-5 h-5
-              sm:w-6 sm:h-6
-              md:w-8 md:h-8
-              md:grayscale md:group-hover:grayscale-0
-              transition-all duration-500
-            "
+            className={`w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 transition-all duration-500 ${
+              isMobile
+                ? isBarInView ? "grayscale-0" : "grayscale"
+                : "md:grayscale md:group-hover:grayscale-0"
+            }`}
           />
           <span className="text-[#585858] font-roboto text-sm md:text-lg pr-2 text-center md:text-left">
             Crafted for Hawaii’s Heat, Humidity, and Salt Air.

@@ -94,6 +94,8 @@ const StepsDoor = () => {
   const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [inViewSteps, setInViewSteps] = useState<Set<number>>(new Set());
   const [isMobile, setIsMobile] = useState(false);
+  const [isBarInView, setIsBarInView] = useState(false);
+  const barRef = useRef<HTMLDivElement>(null);
 
   // Mobile: detect when step cards scroll into view and apply same effect as hover
   useEffect(() => {
@@ -105,29 +107,35 @@ const StepsDoor = () => {
   }, []);
 
   useEffect(() => {
+    // Reset to all-gray when switching to mobile
+    setInViewSteps(new Set());
+    setIsBarInView(false);
     if (!isMobile) return;
-    const refs = stepRefs.current.filter(Boolean) as HTMLDivElement[];
-    if (refs.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        setInViewSteps((prev) => {
-          const next = new Set(prev);
-          entries.forEach((entry) => {
-            const stepIndex = refs.indexOf(entry.target as HTMLDivElement);
-            if (stepIndex === -1) return;
-            if (entry.isIntersecting) next.add(stepIndex);
-            else next.delete(stepIndex);
-          });
-          return next;
-        });
-      },
-      // threshold 0 = fires as soon as ANY part enters/leaves viewport
-      // rootMargin shrinks the detection zone so element must be clearly visible
-      { threshold: 0, rootMargin: "0px 0px -15% 0px" }
-    );
-    refs.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    const handleScroll = () => {
+      const vh = window.innerHeight;
+
+      // Steps activation
+      const next = new Set<number>();
+      stepRefs.current.forEach((el, idx) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const centerY = rect.top + rect.height / 2;
+        if (centerY > vh * 0.15 && centerY < vh * 0.85) {
+          next.add(idx);
+        }
+      });
+      setInViewSteps(next);
+
+      // Bottom bar activation
+      if (barRef.current) {
+        const rect = barRef.current.getBoundingClientRect();
+        setIsBarInView(rect.bottom > vh * 0.15 && rect.top < vh * 0.85);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [isMobile]);
 
   return (
@@ -220,6 +228,7 @@ const StepsDoor = () => {
                   icon={
                     <MdOutlineArrowOutward className="text-white text-xl md:text-2xl" />
                   }
+                  href="/build"
                   className="!cursor-pointer"
                 />
               </Link>
@@ -229,7 +238,10 @@ const StepsDoor = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="relative w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group mt-4 md:mt-[55px] max-[640px]:mt-3 transition-all duration-300">
+      <div
+        ref={barRef}
+        className="relative w-full min-h-[60px] md:h-[68px] flex flex-col md:flex-row justify-center items-center gap-4 md:gap-16 py-3 md:py-0 bg-[#F6F5F1] group mt-4 md:mt-[55px] max-[640px]:mt-3 transition-all duration-300"
+      >
         <div className="flex items-center gap-3 md:gap-4">
           <div className="relative w-6 h-6 md:w-8 md:h-8">
             <Image
@@ -237,14 +249,14 @@ const StepsDoor = () => {
               alt="Delivered"
               width={32}
               height={32}
-              className="w-6 h-6 md:w-8 md:h-8 group-hover:opacity-0 transition-opacity duration-300"
+              className={`w-6 h-6 md:w-8 md:h-8 transition-opacity duration-500 ${isMobile ? (isBarInView ? "opacity-0" : "opacity-100") : "group-hover:opacity-0"}`}
             />
             <Image
               src={ProductFootericonTruckGreen}
               alt="Delivered"
               width={32}
               height={32}
-              className="w-6 h-6 md:w-8 md:h-8 absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              className={`w-6 h-6 md:w-8 md:h-8 absolute top-0 left-0 transition-opacity duration-500 ${isMobile ? (isBarInView ? "opacity-100" : "opacity-0") : "opacity-0 group-hover:opacity-100"}`}
             />
           </div>
           <span className="text-[#585858] font-roboto text-sm md:text-lg">

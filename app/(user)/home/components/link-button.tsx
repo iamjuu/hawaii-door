@@ -1,6 +1,7 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 type PillCTAButtonProps = {
   label: string;
@@ -8,6 +9,7 @@ type PillCTAButtonProps = {
   onClick?: () => void;
   className?: string;
   hoverVariant?: "black" | "white";
+  href?: string;
 };
 
 export default function PillCTAButton({
@@ -16,19 +18,42 @@ export default function PillCTAButton({
   onClick,
   className = "",
   hoverVariant = "black",
+  href,
 }: PillCTAButtonProps) {
   const [touched, setTouched] = useState(false);
+  const touchNavPending = useRef(false);
+  const router = useRouter();
 
-  // Mobile/tablet only: trigger the same overlay animation as desktop hover on tap
   const handleTouchStart = () => {
     setTouched(true);
-    setTimeout(() => setTouched(false), 700);
+    if (href) {
+      // Mark that this tap will need to intercept the click for delayed navigation
+      touchNavPending.current = true;
+    } else {
+      setTimeout(() => setTouched(false), 700);
+    }
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (touchNavPending.current && href) {
+      // Touch tap: block the <Link> from navigating immediately,
+      // let the animation play (~500ms), then navigate
+      e.preventDefault();
+      e.stopPropagation();
+      touchNavPending.current = false;
+      setTimeout(() => {
+        setTouched(false);
+        router.push(href);
+      }, 500);
+      return;
+    }
+    onClick?.();
   };
 
   return (
     <button
-      onClick={onClick}
       onTouchStart={handleTouchStart}
+      onClick={handleClick}
       className={`
         group relative inline-flex items-center justify-center
         gap-1.5 sm:gap-3 rounded-full overflow-hidden

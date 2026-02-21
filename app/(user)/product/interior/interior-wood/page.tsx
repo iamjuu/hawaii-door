@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
 import {
@@ -126,6 +126,7 @@ const InteriorWoodPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentDoorIndex, setCurrentDoorIndex] = useState(0);
   const [currentDoorGroup, setCurrentDoorGroup] = useState<Door[]>([]);
+  const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
     const fetchDoors = async () => {
@@ -594,6 +595,16 @@ const InteriorWoodPage = () => {
           <div
             className="relative w-full h-full flex items-center justify-center p-4 md:p-8"
             onClick={(e) => e.stopPropagation()}
+            onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+            onTouchEnd={(e) => {
+              if (touchStartX.current === null) return;
+              const diff = touchStartX.current - e.changedTouches[0].clientX;
+              if (Math.abs(diff) > 50) {
+                if (diff > 0) handleNext();
+                else handlePrev();
+              }
+              touchStartX.current = null;
+            }}
           >
             {/* Close Button */}
             <button
@@ -670,7 +681,7 @@ const InteriorWoodPage = () => {
                     key={currentDoorIndex}
                     rawSrc={currentDoorGroup[currentDoorIndex].imageUrl}
                     alt={currentDoorGroup[currentDoorIndex].name}
-                    className="w-auto h-auto max-w-[75%] max-h-[55vh] md:max-w-[70%] md:max-h-[65vh] lg:max-w-[65%] lg:max-h-[70vh] object-contain"
+                    className="w-auto h-auto max-w-[90vw] max-h-[55vh] md:max-w-[75vw] md:max-h-[65vh] lg:max-w-[65vw] lg:max-h-[70vh] object-contain"
                   />
                   {/* Door Info */}
                   <div className="mt-4 md:mt-6 text-center text-white">

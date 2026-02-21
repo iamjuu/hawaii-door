@@ -100,19 +100,10 @@ const Testimonial = () => {
             {/* Right fade */}
             <div className="pointer-events-none absolute inset-y-0 right-0 w-[8%] bg-gradient-to-l from-white via-white/70 to-transparent z-10" />
 
-            {/* Pause indicator — visible on mobile when paused */}
-            {isMobile && isPaused && (
-              <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
-                <span className="bg-black/40 text-white text-xs font-roboto px-3 py-1 rounded-full">
-                  Tap to resume
-                </span>
-              </div>
-            )}
-
             {/* Carousel Container */}
             <div
               className="flex w-max animate-scroll will-change-transform"
-              style={{ animationPlayState: isMobile && isPaused ? "paused" : undefined }}
+              style={{ animationPlayState: isMobile ? (isPaused ? "paused" : "running") : undefined }}
             >
               {loopTestimonials.map((testimonial, index) => (
                 <div
@@ -161,8 +152,10 @@ const Testimonial = () => {
       .animate-scroll {
         animation: scroll 40s linear infinite;
       }
-      .testimonial-group:hover .animate-scroll {
-        animation-play-state: paused;
+      @media (hover: hover) {
+        .testimonial-group:hover .animate-scroll {
+          animation-play-state: paused;
+        }
       }
     `}</style>
     </div>

@@ -5,6 +5,20 @@ import { useState, useEffect, type ReactNode } from "react";
 /**
   const scrollTimeoutRef = useState<ReturnType<typeof setTimeout> | null>(null)[0];
   const scrollTimeoutRef = useState<ReturnType<typeof setTimeout> | null>(null)[0];
+  const scrollTimeoutRef = useState<ReturnType<typeof setTimeout> | null>(null)[0];
+  const scrollTimeoutRef = useState<ReturnType<typeof setTimeout> | null>(null)[0];
+  const clearScrollState = useCallback(() => {
+    if (scrollTimeoutRef) clearTimeout(scrollTimeoutRef);
+  const clearScrollState = useCallback(() => {
+    if (scrollTimeoutRef) clearTimeout(scrollTimeoutRef);
+    const t = setTimeout(() => setIsScrolling(false), 150);
+    return () => clearTimeout(t);
+  }, []);
+
+    const t = setTimeout(() => setIsScrolling(false), 150);
+    return () => clearTimeout(t);
+  }, []);
+
  * On mobile: while the user is touch-scrolling, we set pointer-events: none on
   const clearScrollState = useCallback(() => {
     if (scrollTimeoutRef) clearTimeout(scrollTimeoutRef);

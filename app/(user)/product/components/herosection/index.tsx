@@ -42,7 +42,7 @@ export default function HeroSection({
     <section className="relative mt-5 md:mt-20 w-full h-[750px] font-roboto overflow-hidden">
       {/* Background: div + CSS so /assets/... and any URL loads reliably */}
       <div
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 z-0 bg-cover bg-no-repeat bg-[position:42%_50%] md:bg-center"
         style={{ backgroundImage: `url('${bgUrlEncoded}')` }}
         aria-hidden
       />

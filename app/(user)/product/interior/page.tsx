@@ -63,14 +63,14 @@ const InteriorPage = () => {
           features={features}
         />
 
-        <section className="w-full py-10 sm:py-12 md:pt-[50px] md:py-[0px] font-inter ">
+        <section className="w-full  sm:py-12 md:pt-[50px] md:py-[0px] font-inter ">
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px] ">
             <div className="max-w-[1400px] 2xl:mx-auto">
               <div className="flex flex-col gap-[25px] md:gap-24">
                 {/* ================= First Block ================= */}
-                <div className="flex flex-col gap-8 md:gap-12">
-                  <section>
-                    <div className="space-y-6">
+                <div className="flex flex-col sm:gap-8 md:gap-12 gap-[30px]">
+                  <section className="">
+                    <div className="space-y-6 ">
                       <Heading heading="Molded & Flush Doors" />
 
                       <div className="flex items-center gap-3">
@@ -88,7 +88,7 @@ const InteriorPage = () => {
                         as a Key Design Element
                       </h3>
 
-                      <div className="space-y-4 leading-relaxed max-w-[1100px]">
+                      <div className="sm:space-y-4 space-y-0 leading-relaxed max-w-[1100px] ">
                         <p className="text-[#666666]  text-[16px] leading-[26px]  font-light">
                           Reimagine the impact of interior doors with Lynden
                           Door. Driven by innovation and refined design
@@ -116,7 +116,7 @@ const InteriorPage = () => {
 
                   {/* 🔥 Image with Right Fade (NO layout change) */}
                   <section>
-                    <div className="relative">
+                    <div className="relative  ">
                       <Image
                         src={Interiorhero}
                         alt="Interior Hero"
@@ -124,7 +124,7 @@ const InteriorPage = () => {
                         height={100}
                         className="w-full rounded-lg"
                       />
-                      <div className="absolute inset-0 " />
+                      <div className="absolute inset-0  " />
                     </div>
                   </section>
                 </div>

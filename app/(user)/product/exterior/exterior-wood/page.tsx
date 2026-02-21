@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "@/components/user/Navbar";
 import Footer from "@/components/user/Footer";
 import {
@@ -21,6 +21,8 @@ interface Door {
   imageUrl?: string;
   description?: string;
   inStock?: boolean;
+  skuCode?: string;
+  sku_code?: string;
 }
 
 // Normalize image URL: use base64 webp as data URL, otherwise use direct URL
@@ -128,6 +130,7 @@ const ExteriorWoodPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentDoorIndex, setCurrentDoorIndex] = useState(0);
   const [currentDoorGroup, setCurrentDoorGroup] = useState<Door[]>([]);
+  const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
     const fetchDoors = async () => {
@@ -141,6 +144,7 @@ const ExteriorWoodPage = () => {
         while (hasMore) {
           const response = await fetch(
             `/api/products?category=exterior&limit=${limit}&page=${page}`,
+            { cache: "no-store" },
           );
           const data = await response.json();
 
@@ -284,10 +288,10 @@ const ExteriorWoodPage = () => {
         </div>
       </main>
 
-      {/* MOBILE FILTER BUTTON - STICKY */}
+      {/* MOBILE/TABLET FILTER BUTTON - STICKY */}
       <button
         onClick={() => setOpenFilter(true)}
-        className="md:hidden fixed top-[80px] left-6 z-30 flex items-center gap-2 border bg-[#b7d7a8] border-gray-300 rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#a8c798] transition-colors shadow-lg"
+        className="lg:hidden fixed top-[80px] left-6 z-30 flex items-center gap-2 border bg-[#b7d7a8] border-gray-300 rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#a8c798] transition-colors shadow-lg"
       >
         <FiFilter className="text-lg" />
         Filter
@@ -297,7 +301,7 @@ const ExteriorWoodPage = () => {
       {openFilter && (
         <div
           onClick={() => setOpenFilter(false)}
-          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
         />
       )}
 
@@ -317,8 +321,8 @@ const ExteriorWoodPage = () => {
               `}
               >
                 <div className="bg-white rounded-lg p-6 pl-2 lg:pl-0 h-full lg:h-auto lg:overflow-y-auto">
-                  {/* MOBILE HEADER */}
-                  <div className="flex items-center justify-between mb-6 md:hidden">
+                  {/* MOBILE/TABLET HEADER */}
+                  <div className="flex items-center justify-between mb-6 lg:hidden">
                     <h2 className="text-lg font-roboto font-[600] text-black">
                       Exterior Wood Doors
                     </h2>
@@ -363,7 +367,7 @@ const ExteriorWoodPage = () => {
               </aside>
 
               {/* RIGHT CONTENT */}
-              <div className="flex-1 space-y-8">
+              <div className="flex-1 w-full space-y-8">
                 {loading && (
                   <div className="flex justify-center items-center py-12">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF6E4A]"></div>
@@ -377,16 +381,36 @@ const ExteriorWoodPage = () => {
 
                 {!loading && !error && (
                   <>
-                    {/* Group doors by doorType */}
-                    {[
-                      "Contemporary Collection",
-                      "Craftsman Collection",
-                      "Exterior French Doors",
-                      "Waterbarrier",
-                      "Entry Doors",
-                      "Half Lite Doors",
-                      "Exterior Panel Doors",
-                    ].map((doorType) => {
+                    {/* Group doors by doorType — show ALL fetched doors,
+                        ordered by the preferred list first, then any extras */}
+                    {(() => {
+                      const preferredOrder = [
+                        "Contemporary Collection",
+                        "Craftsman Collection",
+                        "Exterior French Doors",
+                        "Waterbarrier",
+                        "Entry Doors",
+                        "Half Lite Doors",
+                        "Exterior Panel Doors",
+                      ];
+                      // Collect any doorType from DB not in the preferred list
+                      const extraTypes = Array.from(
+                        new Set(
+                          doors
+                            .map((d) => d.doorType)
+                            .filter(
+                              (t) =>
+                                t &&
+                                !preferredOrder.some(
+                                  (p) =>
+                                    normalizeDoorType(p) ===
+                                    normalizeDoorType(t),
+                                ),
+                            ),
+                        ),
+                      );
+                      return [...preferredOrder, ...extraTypes];
+                    })().map((doorType) => {
                       const doorsInType = doors.filter(
                         (door) =>
                           normalizeDoorType(door.doorType) ===
@@ -407,34 +431,36 @@ const ExteriorWoodPage = () => {
                           <h2 className="text-[20px] md:text-[28px] font-roboto font-[500] text-[#FF6E4A] mb-6 leading-tight">
                             {doorType}
                           </h2>
-                          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-3">
+                          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-3">
                             {doorsInType.map((door) => (
                               <div
                                 key={door._id}
                                 className="relative group cursor-pointer"
                                 onClick={() => handleDoorClick(door, doorType)}
                               >
-                                {door.imageUrl && (
-                                  <div className="w-full h-48 rounded-lg group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex items-center justify-center ">
+                                <div className="w-full h-48 rounded-lg  group-hover:border-[#FF6E4A] transition-colors overflow-hidden flex items-center justify-center ">
+                                  {door.imageUrl ? (
                                     <DoorImage
                                       rawSrc={door.imageUrl}
                                       alt={door.name}
                                       className="w-full h-full object-contain transition-transform group-hover:scale-105"
                                       onError={(e) => {
-                                        (
-                                          e.target as HTMLImageElement
-                                        ).style.display = "none";
+                                        (e.target as HTMLImageElement).style.display = "none";
                                       }}
                                     />
-                                  </div>
-                                )}
-                                <div className="mt-2">
-                                  {/* <p className="text-sm font-roboto font-[500] text-black truncate text-center">{door.name}</p> */}
-                                  {door.description && (
-                                    <p className="text-xs font-roboto font-[400] text-[#3B3B3B] line-clamp-2 mt-1 text-center">
-                                      {/* {door.description} */}
+                                  ) : (
+                                    <span className="text-gray-300 text-xs text-center px-2">No image</span>
+                                  )}
+                                </div>
+                                <div className="mt-2 px-1 min-h-[2.5rem] flex flex-col justify-center gap-0.5">
+                                  {(door.skuCode ?? door.sku_code) && (
+                                    <p className="text-sm font-roboto font-[700] text-black text-center">
+                                      {door.skuCode ?? door.sku_code}
                                     </p>
                                   )}
+                                  <p className="text-xs font-roboto font-[400] text-[#3B3B3B] text-center line-clamp-2 break-words">
+                                    {door.name}
+                                  </p>
                                 </div>
                               </div>
                             ))}
@@ -460,6 +486,16 @@ const ExteriorWoodPage = () => {
           <div
             className="relative w-full h-full flex items-center justify-center p-4 md:p-8"
             onClick={(e) => e.stopPropagation()}
+            onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+            onTouchEnd={(e) => {
+              if (touchStartX.current === null) return;
+              const diff = touchStartX.current - e.changedTouches[0].clientX;
+              if (Math.abs(diff) > 50) {
+                if (diff > 0) handleNext();
+                else handlePrev();
+              }
+              touchStartX.current = null;
+            }}
           >
             {/* Close Button */}
             <button
@@ -536,7 +572,7 @@ const ExteriorWoodPage = () => {
                     key={currentDoorIndex}
                     rawSrc={currentDoorGroup[currentDoorIndex]?.imageUrl}
                     alt={currentDoorGroup[currentDoorIndex].name}
-                    className="w-auto h-auto max-w-[75%] max-h-[55vh] md:max-w-[70%] md:max-h-[65vh] lg:max-w-[65%] lg:max-h-[70vh] object-contain"
+                    className="w-auto h-auto max-w-[90vw] max-h-[55vh] md:max-w-[75vw] md:max-h-[65vh] lg:max-w-[65vw] lg:max-h-[70vh] object-contain"
                   />
 
                   {/* Door Info */}

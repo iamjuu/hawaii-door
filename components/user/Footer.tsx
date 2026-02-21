@@ -1,6 +1,28 @@
+"use client";
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const Footer = () => {
+  const [touchedLink, setTouchedLink] = useState<string | null>(null);
+  const touchPendingLink = useRef<string | null>(null);
+  const router = useRouter();
+
+  const handleLinkTouch = (key: string) => {
+    setTouchedLink(key);
+    touchPendingLink.current = key;
+  };
+
+  const handleLinkClick = (e: React.MouseEvent, key: string, href: string) => {
+    if (touchPendingLink.current === key) {
+      e.preventDefault();
+      touchPendingLink.current = null;
+      setTimeout(() => {
+        setTouchedLink(null);
+        router.push(href);
+      }, 400);
+    }
+  };
   return (
     <footer className="bg-black text-white py-12 px-6 md:px-12 lg:px-20">
       {/* Container */}
@@ -35,22 +57,22 @@ const Footer = () => {
               <h3 className="text-lg font-semibold mb-4">Explore Doors</h3>
               <ul className="space-y-3">
                 <li>
-                  <a href="/build" className="text-gray-300 hover:text-white transition-colors text-sm">
+                  <a href="/build" onTouchStart={() => handleLinkTouch("build")} onClick={(e) => handleLinkClick(e, "build", "/build")} className={`transition-colors text-sm ${touchedLink === "build" ? "text-white" : "text-gray-300 hover:text-white"}`}>
                     Find a Door
                   </a>
                 </li>
                 <li>
-                  <a href="/career" className="text-gray-300 hover:text-white transition-colors text-sm">
+                  <a href="/career" onTouchStart={() => handleLinkTouch("career")} onClick={(e) => handleLinkClick(e, "career", "/career")} className={`transition-colors text-sm ${touchedLink === "career" ? "text-white" : "text-gray-300 hover:text-white"}`}>
                     Career
                   </a>
                 </li>
                 <li>
-                  <a href="/gallery" className="text-gray-300 hover:text-white transition-colors text-sm">
+                  <a href="/gallery" onTouchStart={() => handleLinkTouch("gallery")} onClick={(e) => handleLinkClick(e, "gallery", "/gallery")} className={`transition-colors text-sm ${touchedLink === "gallery" ? "text-white" : "text-gray-300 hover:text-white"}`}>
                     Gallery
                   </a>
                 </li>
                 <li>
-                  <a href="/contact#faq" className="text-gray-300 hover:text-white transition-colors text-sm">
+                  <a href="/contact#faq" onTouchStart={() => handleLinkTouch("faq")} onClick={(e) => handleLinkClick(e, "faq", "/contact#faq")} className={`transition-colors text-sm ${touchedLink === "faq" ? "text-white" : "text-gray-300 hover:text-white"}`}>
                     FAQ
                   </a>
                 </li>
@@ -62,31 +84,28 @@ const Footer = () => {
               <h3 className="text-lg font-semibold mb-4">Products</h3>
               <ul className="space-y-3">
                 <li>
-                  <a href="/product/interior" className="text-gray-300 hover:text-white transition-colors text-sm">
-Interior Doors
-                  </a>
-                </li>
-              
-                <li>
-                  <a href="/product/interior/Lynden-Door" className="text-gray-300 hover:text-white transition-colors text-sm">
-Lynden Doors
+                  <a href="/product/interior" onTouchStart={() => handleLinkTouch("interior")} onClick={(e) => handleLinkClick(e, "interior", "/product/interior")} className={`transition-colors text-sm ${touchedLink === "interior" ? "text-white" : "text-gray-300 hover:text-white"}`}>
+                    Interior Doors
                   </a>
                 </li>
                 <li>
-                  <a href="/product/interior/interior-wood" className="text-gray-300 hover:text-white transition-colors text-sm">
-Interior wood 
+                  <a href="/product/interior/Lynden-Door" onTouchStart={() => handleLinkTouch("lynden")} onClick={(e) => handleLinkClick(e, "lynden", "/product/interior/Lynden-Door")} className={`transition-colors text-sm ${touchedLink === "lynden" ? "text-white" : "text-gray-300 hover:text-white"}`}>
+                    Lynden Doors
                   </a>
                 </li>
-
                 <li>
-                  <a href="/product/exterior" className="text-gray-300 hover:text-white transition-colors text-sm">
-Exterior Doors
+                  <a href="/product/interior/interior-wood" onTouchStart={() => handleLinkTouch("interior-wood")} onClick={(e) => handleLinkClick(e, "interior-wood", "/product/interior/interior-wood")} className={`transition-colors text-sm ${touchedLink === "interior-wood" ? "text-white" : "text-gray-300 hover:text-white"}`}>
+                    Interior Wood
                   </a>
                 </li>
-
                 <li>
-                  <a href="/product/exterior/exterior-wood" className="text-gray-300 hover:text-white transition-colors text-sm">
-Exterior wood
+                  <a href="/product/exterior" onTouchStart={() => handleLinkTouch("exterior")} onClick={(e) => handleLinkClick(e, "exterior", "/product/exterior")} className={`transition-colors text-sm ${touchedLink === "exterior" ? "text-white" : "text-gray-300 hover:text-white"}`}>
+                    Exterior Doors
+                  </a>
+                </li>
+                <li>
+                  <a href="/product/exterior/exterior-wood" onTouchStart={() => handleLinkTouch("exterior-wood")} onClick={(e) => handleLinkClick(e, "exterior-wood", "/product/exterior/exterior-wood")} className={`transition-colors text-sm ${touchedLink === "exterior-wood" ? "text-white" : "text-gray-300 hover:text-white"}`}>
+                    Exterior Wood
                   </a>
                 </li>
                

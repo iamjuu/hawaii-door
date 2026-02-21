@@ -135,13 +135,13 @@ export default function Contact() {
       <PageLoader isLoading={isLoading} />
       {/* Contact Section */}
       <Navbar />
-      <section className="bg-[#fdfffc] w-full py-10 sm:py-12 md:py-[50px] font-roboto mt-[70px] md:mt-[80px]">
+      <section className="bg-[#fdfffc] w-full  sm:py-12 md:py-[50px] font-roboto mt-[75px] md:mt-[80px]">
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
           <div className="max-w-[1400px] 2xl:mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
               {/* Left Side - Content */}
               <div className="space-y-6">
-                <div className=" flex flex-col gap-[40px]">
+                <div className=" flex flex-col sm:gap-[40px] gap-[25px] ">
                   {/* <h1 className="text-[46px] font-[500] font-roboto font-bold text-black mb-6">
                   Let's Get Your Door Right
                 </h1>
@@ -269,7 +269,7 @@ We review every message personally, no bots, no scripts, just people who know do
                           />
                         </svg>
                       </div>
-                      <div>
+                      <div className="">
                         <p className="text-xs text-gray-500 font-medium mb-1">
                           Email
                         </p>
@@ -311,7 +311,7 @@ We review every message personally, no bots, no scripts, just people who know do
               </div>
 
               {/* Right Side - Form */}
-              <div className="bg-white p-6 lg:py-14 lg:px-8 rounded-xl shadow-lg h-min lg:mt-[24px]">
+              <div className="bg-white p-6 pt-0 sm:p-6 lg:py-14 lg:px-8 rounded-xl shadow-lg h-min lg:mt-[24px]">
                 <h2 className=" font-Roboto text-[16px] md:text-[18px] font-[400] mb-6 md:mb-[55px] text-[#4A5565]">
                   Fill out the form below and we'll get back to you within 24
                   hours.

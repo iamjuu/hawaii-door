@@ -24,14 +24,14 @@ export default function Navbar() {
       <div className="px-6   md:px-15 flex h-full items-center justify-between ">
 
         {/* Logo */}
-        <div className="flex items-center">
+        <div className="flex items-center pt-1">
           <Link href="/" aria-label="Go to home">
             <Image
               src={logo}
               alt="Logo"
               width={40}     // max width for larger screens
               height={40}    // max height for larger screens
-              className="w-[20px] h-[30px] md:w-[40px] md:h-[50px]"
+              className="w-[30px] h-[40px] md:w-[40px] md:h-[50px]"
               priority
             />
           </Link>

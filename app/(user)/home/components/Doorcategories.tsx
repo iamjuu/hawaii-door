@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,6 +29,11 @@ const categories = [
 const DoorCategories = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [windowWidth, setWindowWidth] = useState(1024);
+  const [isBarInView, setIsBarInView] = useState(false);
+  const [viewDetailsTouched, setViewDetailsTouched] = useState(false);
+  const barRef = useRef<HTMLDivElement>(null);
+  const viewDetailsTouchPending = useRef(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -35,6 +41,19 @@ const DoorCategories = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    setIsBarInView(false);
+    if (windowWidth >= 768) return;
+    const handleScroll = () => {
+      if (!barRef.current) return;
+      const rect = barRef.current.getBoundingClientRect();
+      const vh = window.innerHeight;
+      setIsBarInView(rect.bottom > vh * 0.15 && rect.top < vh * 0.85);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [windowWidth]);
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % categories.length);
@@ -154,10 +173,27 @@ const DoorCategories = () => {
                           </h3>
                           {isCurrent && (
                             <Link href={"/product"}>
-                              <button className="group relative inline-flex items-center overflow-hidden rounded-full bg-[#B6D78A] px-3 py-1 sm:py-1.5  text-xs sm:text-sm text-[#000000] whitespace-nowrap">
+                              <button
+                                className="group relative inline-flex items-center overflow-hidden rounded-full bg-[#B6D78A] px-3 py-1 sm:py-1.5  text-xs sm:text-sm text-[#000000] whitespace-nowrap"
+                                onTouchStart={() => {
+                                  setViewDetailsTouched(true);
+                                  viewDetailsTouchPending.current = true;
+                                }}
+                                onClick={(e) => {
+                                  if (viewDetailsTouchPending.current) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    viewDetailsTouchPending.current = false;
+                                    setTimeout(() => {
+                                      setViewDetailsTouched(false);
+                                      router.push("/product");
+                                    }, 500);
+                                  }
+                                }}
+                              >
                                 {/* Hover overlay */}
                                 <span
-                                  className="
+                                  className={`
           absolute inset-0
           bg-white
           rounded-full
@@ -172,10 +208,11 @@ const DoorCategories = () => {
           ease-[cubic-bezier(0.65,0,0.35,1)]
           group-hover:scale-102
           group-hover:translate-y-[-10%]
-        "
+          ${viewDetailsTouched ? "!scale-[1.02] !translate-y-[-10%]" : ""}
+        `}
                                 />
                                 {/* Content */}
-                                <span className="relative z-10 group-hover:text-black transition-colors duration-500 group-hover:duration-200 group-hover:delay-[500ms] cursor-pointer">
+                                <span className={`relative z-10 group-hover:text-black transition-colors duration-500 group-hover:duration-200 group-hover:delay-[500ms] cursor-pointer ${viewDetailsTouched ? "!text-black" : ""}`}>
                                   View Details
                                 </span>
                               </button>
@@ -218,20 +255,23 @@ const DoorCategories = () => {
       </div>
 
       {/* FULL WIDTH FOOTER STRIP – Responsive */}
-      <div className="relative w-full flex  flex-col md:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-8 lg:gap-16 py-0 sm:py-5 md:py-0 min-h-[60px] md:h-[68px] bg-[#F6F5F1] group  mt-[25px] sm:mt-10 md:mt-[50px] lg:mt-[50px] mb-0  transition-all duration-300 ">
+      <div
+        ref={barRef}
+        className="relative w-full flex  flex-col md:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-8 lg:gap-16 py-0 sm:py-5 md:py-0 min-h-[60px] md:h-[68px] bg-[#F6F5F1] group  mt-[25px] sm:mt-10 md:mt-[50px] lg:mt-[50px] mb-0  transition-all duration-300 "
+      >
         <div className="py-3 sm:py-4 md:py-[25px] flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16 items-start md:items-center">
           <div className="flex items-center gap-3 sm:gap-3.5 md:gap-4 text-xs sm:text-sm md:text-base">
             <div className="relative w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">
               <Image
                 src={ProductFootericonDoor}
-                className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300"
+                className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] transition-opacity duration-500 ${windowWidth < 768 ? (isBarInView ? "opacity-0" : "opacity-100") : "group-hover:opacity-0"}`}
                 alt="Door"
                 width={100}
                 height={100}
               />
               <Image
                 src={ProductFootericonDoorGreen}
-                className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 transition-opacity duration-500 ${windowWidth < 768 ? (isBarInView ? "opacity-100" : "opacity-0") : "opacity-0 group-hover:opacity-100"}`}
                 alt="Door"
                 width={100}
                 height={100}
@@ -245,14 +285,14 @@ const DoorCategories = () => {
             <div className="relative w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">
               <Image
                 src={ProductFootericonSettings}
-                className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300"
+                className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] transition-opacity duration-500 ${windowWidth < 768 ? (isBarInView ? "opacity-0" : "opacity-100") : "group-hover:opacity-0"}`}
                 alt="Settings"
                 width={100}
                 height={100}
               />
               <Image
                 src={ProductFootericonSettingsGreen}
-                className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 transition-opacity duration-500 ${windowWidth < 768 ? (isBarInView ? "opacity-100" : "opacity-0") : "opacity-0 group-hover:opacity-100"}`}
                 alt="Settings"
                 width={100}
                 height={100}
@@ -265,14 +305,14 @@ const DoorCategories = () => {
             <div className="relative w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8">
               <Image
                 src={TickGray}
-                className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] group-hover:opacity-0 transition-opacity duration-300"
+                className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] transition-opacity duration-500 ${windowWidth < 768 ? (isBarInView ? "opacity-0" : "opacity-100") : "group-hover:opacity-0"}`}
                 alt="Truck"
                 width={100}
                 height={100}
               />
               <Image
                 src={TickGreen}
-                className="w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className={`w-6 h-6 sm:w-7 sm:h-7 md:size-[32px] absolute top-0 left-0 transition-opacity duration-500 ${windowWidth < 768 ? (isBarInView ? "opacity-100" : "opacity-0") : "opacity-0 group-hover:opacity-100"}`}
                 alt="Truck"
                 width={100}
                 height={100}

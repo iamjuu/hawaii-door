@@ -1,16 +1,22 @@
+"use client";
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { ProductFooter, FooterSetting, FooterTool } from '@/public/assets';
 import Image from 'next/image';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import Link from "next/link"
 const FooterBanner = () => {
+  const [btnTouched, setBtnTouched] = useState(false);
+  const btnTouchPending = useRef(false);
+  const router = useRouter();
   return (
-    <div className="w-full pb-[25px] md:pb-[80px]">
+    <div className="w-full pb-[25px] md:pb-[50px] mt-[25px] md:mt-[50px]">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
         <div className="max-w-[1400px] 2xl:mx-auto">
           <div className="relative w-full min-h-[400px] md:min-h-[420px] bg-[#84684C] rounded-lg overflow-hidden">
 
             {/* ================= LEFT CONTENT ================= */}
-            <div className="relative z-10 flex flex-col justify-center h-full px-8 md:px-12 lg:px-16 pt-12 md:py-16">
+            <div className="relative z-10 flex flex-col justify-center h-full px-8 md:px-12 lg:px-16 pt-12 md:py-16 ">
               <div className="max-w-xl">
                 <h2 className="font-roboto font-semibold md:font-[500] text-[23px] md:text-[46px] text-white leading-tight mb-6">
                   Create Your Custom<br />
@@ -23,10 +29,27 @@ const FooterBanner = () => {
 
                 {/* Button */}
                 <Link href={'/build'}>
-                  <button className="group relative inline-flex items-center gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] text-[15px] md:text-lg font-roboto px-5 py-2  text-white">
+                  <button
+                    className="group relative inline-flex items-center gap-3 overflow-hidden rounded-3xl bg-[#FF6E4A] text-[15px] md:text-lg font-roboto px-5 py-2 text-white"
+                    onTouchStart={() => {
+                      setBtnTouched(true);
+                      btnTouchPending.current = true;
+                    }}
+                    onClick={(e) => {
+                      if (btnTouchPending.current) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        btnTouchPending.current = false;
+                        setTimeout(() => {
+                          setBtnTouched(false);
+                          router.push("/build");
+                        }, 500);
+                      }
+                    }}
+                  >
                     {/* Hover overlay */}
                     <span
-                      className="
+                      className={`
           absolute inset-0
           bg-black
           rounded-full
@@ -41,13 +64,14 @@ const FooterBanner = () => {
           ease-[cubic-bezier(0.65,0,0.35,1)]
           group-hover:scale-102
           group-hover:translate-y-[-10%]
-        "
+          ${btnTouched ? "!scale-[1.02] !translate-y-[-10%]" : ""}
+        `}
                     />
 
                     {/* Button content */}
                     <span className="relative z-10 flex items-center gap-3 font-roboto cursor-pointer">
                       Start Building Your Perfect Custom Door Now
-                      <MdOutlineArrowOutward className="text-white text-2xl transition-all duration-900 rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0" />
+                      <MdOutlineArrowOutward className={`text-white text-2xl transition-all duration-900 rotate-0 translate-x-1.5 group-hover:rotate-45 group-hover:translate-x-0 ${btnTouched ? "!rotate-45 !translate-x-0" : ""}`} />
                     </span>
                   </button>
                 </Link>
