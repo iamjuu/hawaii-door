@@ -22,7 +22,7 @@ export default function PillCTAButton({
   // Mobile/tablet only: trigger the same overlay animation as desktop hover on tap
   const handleTouchStart = () => {
     setTouched(true);
-    setTimeout(() => setTouched(false), 400);
+    setTimeout(() => setTouched(false), 700);
   };
 
   return (
@@ -37,7 +37,7 @@ export default function PillCTAButton({
         text-sm sm:text-base md:text-lg lg:text-[20px] xl:text-[22px]
         font-normal leading-tight sm:leading-none
         whitespace-normal sm:whitespace-nowrap text-center
-        active:scale-[0.96] transition-transform duration-150
+        active:scale-[0.97]
         ${className}
       `}
       style={{ fontFamily: "'Roboto', sans-serif" }}

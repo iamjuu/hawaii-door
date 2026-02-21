@@ -1,10 +1,25 @@
 "use client";
 
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Comaimg from "../../../../public/assets/images/landing/coma.png"
 import Heading from "./header"
 
 const Testimonial = () => {
+  const [isPaused, setIsPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const handleTap = () => {
+    if (isMobile) setIsPaused((p) => !p);
+  };
+
   const testimonials = [
     {
       quote: "We've used Hawaii Doors for multiple builds, and every door fit perfectly the first time. Their machining precision saves us hours on installs and eliminates callbacks. You can tell their team takes pride in their work.",
@@ -74,14 +89,31 @@ const Testimonial = () => {
             />
           </div>
 
-          <div className="relative overflow-hidden testimonial-group">
+          {/* On mobile/tablet: tap anywhere to pause/resume */}
+          <div
+            className="relative overflow-hidden testimonial-group"
+            onClick={handleTap}
+            style={{ cursor: isMobile ? (isPaused ? "pointer" : "pointer") : "default" }}
+          >
             {/* Left fade */}
             <div className="pointer-events-none absolute inset-y-0 left-0 w-[8%] bg-gradient-to-r from-white via-white/70 to-transparent z-10" />
             {/* Right fade */}
             <div className="pointer-events-none absolute inset-y-0 right-0 w-[8%] bg-gradient-to-l from-white via-white/70 to-transparent z-10" />
 
+            {/* Pause indicator — visible on mobile when paused */}
+            {isMobile && isPaused && (
+              <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+                <span className="bg-black/40 text-white text-xs font-roboto px-3 py-1 rounded-full">
+                  Tap to resume
+                </span>
+              </div>
+            )}
+
             {/* Carousel Container */}
-            <div className="flex w-max animate-scroll will-change-transform group-hover:pause">
+            <div
+              className="flex w-max animate-scroll will-change-transform"
+              style={{ animationPlayState: isMobile && isPaused ? "paused" : undefined }}
+            >
               {loopTestimonials.map((testimonial, index) => (
                 <div
                   key={index}

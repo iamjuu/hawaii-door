@@ -180,7 +180,7 @@ const GalleryPage = () => {
       {/* MOBILE FILTER BUTTON - STICKY */}
       <button
         onClick={() => setOpenFilter(true)}
-        className="md:hidden fixed top-[80px] left-6 z-30 flex items-center gap-2 border bg-[#b7d7a8] border-gray-300 rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#a8c798] transition-colors shadow-lg"
+        className="md:hidden fixed top-[50px] left-6 z-30 flex items-center gap-2 border bg-[#b7d7a8] border-gray-300 rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#a8c798] transition-colors shadow-lg"
       >
         <FiFilter className="text-lg" />
         Filter
