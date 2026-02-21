@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 type PillCTAButtonProps = {
   label: string;
@@ -17,9 +17,18 @@ export default function PillCTAButton({
   className = "",
   hoverVariant = "black",
 }: PillCTAButtonProps) {
+  const [touched, setTouched] = useState(false);
+
+  // Mobile/tablet only: trigger the same overlay animation as desktop hover on tap
+  const handleTouchStart = () => {
+    setTouched(true);
+    setTimeout(() => setTouched(false), 400);
+  };
+
   return (
     <button
       onClick={onClick}
+      onTouchStart={handleTouchStart}
       className={`
         group relative inline-flex items-center justify-center
         gap-1.5 sm:gap-3 rounded-full overflow-hidden
@@ -28,7 +37,7 @@ export default function PillCTAButton({
         text-sm sm:text-base md:text-lg lg:text-[20px] xl:text-[22px]
         font-normal leading-tight sm:leading-none
         whitespace-normal sm:whitespace-nowrap text-center
-        active:scale-[0.98]
+        active:scale-[0.96] transition-transform duration-150
         ${className}
       `}
       style={{ fontFamily: "'Roboto', sans-serif" }}
@@ -36,7 +45,7 @@ export default function PillCTAButton({
       {/* Base Orange */}
       <span className="absolute inset-0 bg-[#FF6E4A] rounded-[inherit]" />
 
-      {/* Hover Overlay */}
+      {/* Hover / Touch Overlay — same animation, triggered by hover on desktop, touch state on mobile */}
       <span
         className={`
           absolute inset-0
@@ -50,6 +59,7 @@ export default function PillCTAButton({
           ease-[cubic-bezier(0.65,0,0.35,1)]
           group-hover:scale-102
           group-hover:translate-y-[-10%]
+          ${touched ? "!scale-[1.02] !translate-y-[-10%]" : ""}
           ${hoverVariant === "white" ? "bg-white" : "bg-black"}
         `}
       />
@@ -62,7 +72,7 @@ export default function PillCTAButton({
           transition-colors duration-300 ease-in-out
           ${
             hoverVariant === "white"
-              ? "group-hover:text-black group-hover:delay-[500ms]"
+              ? `group-hover:text-black group-hover:delay-[500ms] ${touched ? "!text-black transition-colors duration-[300ms] delay-[100ms]" : ""}`
               : ""
           }
         `}
@@ -75,9 +85,10 @@ export default function PillCTAButton({
               transition-all duration-500 ease-in-out
               rotate-0 translate-x-1.5
               group-hover:rotate-45 group-hover:translate-x-0
+              ${touched ? "!rotate-45 !translate-x-0" : ""}
               ${
                 hoverVariant === "white"
-                  ? "group-hover:delay-[500ms]"
+                  ? `group-hover:delay-[500ms] ${touched ? "delay-[100ms]" : ""}`
                   : ""
               }
             `}

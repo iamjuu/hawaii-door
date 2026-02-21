@@ -48,7 +48,7 @@ const stepsData: (StepItem | ArrowItem)[] = [
     content:
       "Build your perfect door with our easy, interactive builder.",
     imageClassName:
-      "w-[140px] md:w-[170px] h-auto md:grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1",
+      "w-[140px] md:w-[170px] h-auto grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1",
     imageWidth: 170,
     imageHeight: 170,
   },
@@ -60,7 +60,7 @@ const stepsData: (StepItem | ArrowItem)[] = [
     title: "Review",
     content: "Add your details and review your quote.",
     imageClassName:
-      "w-[80px] md:w-[100px] h-auto  md:grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2",
+      "w-[80px] md:w-[100px] h-auto grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2",
     imageWidth: 100,
     imageHeight: 100,
   },
@@ -72,7 +72,7 @@ const stepsData: (StepItem | ArrowItem)[] = [
     title: "Submit",
     content: "Confirm your specs and submit your quote.",
     imageClassName:
-      "w-[160px] md:w-[210px] h-auto  md:grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2",
+      "w-[160px] md:w-[210px] h-auto grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2",
     imageWidth: 210,
     imageHeight: 210,
   },
@@ -84,7 +84,7 @@ const stepsData: (StepItem | ArrowItem)[] = [
     title: "Get Your Door",
     content: "We price it, prep it, and get it ready.",
     imageClassName:
-      "w-[90px] md:w-[120px] h-auto  object-contain md:grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2",
+      "w-[90px] md:w-[120px] h-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2",
     imageWidth: 120,
     imageHeight: 120,
   },
@@ -150,12 +150,11 @@ const StepsDoor = () => {
                       .slice(0, index)
                       .filter((x) => x.type === "step").length;
                     const inView = inViewSteps.has(stepIndex);
+                    // On mobile: CSS already sets grayscale; only add the active (colored + scale) state when in view
                     const mobileActiveClass =
                       isMobile && inView
                         ? "!grayscale-0 scale-105 -translate-y-1"
-                        : isMobile
-                          ? "grayscale"
-                          : "";
+                        : "";
                     return (
                       <div
                         key={index}
