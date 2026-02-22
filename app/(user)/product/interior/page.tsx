@@ -70,7 +70,7 @@ const InteriorPage = () => {
                 {/* ================= First Block ================= */}
                 <div className="flex flex-col sm:gap-8 md:gap-12 gap-[30px]">
                   <section className="">
-                    <div className="space-y-6 ">
+                    <div className=" sm:space-y-6 space-y-0 mt-[20px] sm:mt-[0px]">
                       <Heading heading="Molded & Flush Doors" />
 
                       <div className="flex items-center gap-3">
@@ -83,7 +83,7 @@ const InteriorPage = () => {
                         />
                       </div>
 
-                      <h3 className="text-base md:text-lg font-[500] text-black">
+                      <h3 className="text-base md:text-lg font-[500] text-black mt-[20px] sm:mt-[0px]">
                         Let Lynden Door Guide You in Discovering Interior Doors
                         as a Key Design Element
                       </h3>
@@ -132,7 +132,7 @@ const InteriorPage = () => {
                 {/* ================= Second Block ================= */}
                 <div className="flex flex-col gap-8 md:gap-12 md:pb-[25px]" >
                   <section>
-                    <div className="space-y-6">
+                    <div className="  sm:space-y-6 space-y-0">
                       <Heading heading="Wood Stile & Rail Doors" />
 
                       <div className="space-y-4 leading-relaxed">

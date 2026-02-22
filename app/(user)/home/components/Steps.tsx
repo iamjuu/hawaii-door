@@ -152,7 +152,7 @@ const StepsDoor = () => {
 
           {/* Steps */}
           <div className="flex flex-col gap-0 md:gap-[20px]">
-            <div className="group w-full grid mt-3 md:mt-[25px] grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-7 md:gap-3 lg:gap-[25px] items-start font-roboto min-w-0 overflow-hidden">
+            <div className="group w-full grid mt-3 md:mt-[25px] grid-cols-1 sm:grid-cols-2 md:grid-cols-7 md:gap-3 lg:gap-[25px] items-start font-roboto min-w-0 overflow-hidden">
               {stepsData.map((item, index) =>
                 item.type === "step" ? (
                   (() => {
@@ -174,13 +174,15 @@ const StepsDoor = () => {
                         className="relative flex flex-col justify-center items-center w-full min-w-0"
                       >
                         <div className={stepBox}>
-                          <Image
-                            src={item.image}
-                            alt={item.alt}
-                            width={item.imageWidth}
-                            height={item.imageHeight}
-                            className={`${item.imageClassName} ${mobileActiveClass}`.trim()}
-                          />
+                          <div className="w-full flex items-center justify-center md:h-[160px]">
+                            <Image
+                              src={item.image}
+                              alt={item.alt}
+                              width={item.imageWidth}
+                              height={item.imageHeight}
+                              className={`${item.imageClassName} ${mobileActiveClass}`.trim()}
+                            />
+                          </div>
                           <div className={stepContentBox}>
                             <h4 className="text-xl font-medium text-black w-full break-words">
                               {item.title}
@@ -206,7 +208,7 @@ const StepsDoor = () => {
                         height={20}
                       />
                     </div>
-                    <div className="hidden md:flex justify-center items-center self-stretch min-h-[200px]">
+                    <div className="hidden md:flex justify-center items-center md:h-[160px] md:mt-10">
                       <Image
                         src={Greenarrow}
                         alt="Arrow"

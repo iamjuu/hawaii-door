@@ -297,7 +297,7 @@ const LyndenDoorPage = () => {
       {/* MOBILE MENU BUTTON - STICKY */}
       <button
         onClick={() => setOpenMenu(true)}
-        className="md:hidden fixed top-[80px] left-6 z-30 flex items-center gap-2 border bg-[#b7d7a8] border-gray-300 rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#a8c798] transition-colors shadow-lg"
+        className="lg:hidden fixed top-[80px] left-6 z-30 flex items-center gap-2 border bg-[#b7d7a8] border-gray-300 rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#a8c798] transition-colors shadow-lg"
       >
         <HiMenu className="text-lg" />
         Menu
@@ -307,7 +307,7 @@ const LyndenDoorPage = () => {
       {openMenu && (
         <div
           onClick={() => setOpenMenu(false)}
-          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
         />
       )}
 
@@ -318,17 +318,17 @@ const LyndenDoorPage = () => {
             {/* LEFT SIDEBAR */}
             <aside
               className={`
-                fixed md:static top-0 left-0 h-full md:h-auto
+                fixed lg:static top-0 left-0 h-full lg:h-auto
                 w-[280px] bg-white flex-shrink-0
-                z-50 md:z-auto
+                z-50 lg:z-auto
                 transform transition-transform duration-300 ease-in-out
                 ${openMenu ? "translate-x-0" : "-translate-x-full"}
-                md:translate-x-0
+                lg:translate-x-0
               `}
             >
               <div className="bg-white border border-gray-200 rounded-lg p-6 h-full lg:sticky lg:top-[100px] lg:max-h-[calc(100vh-120px)] overflow-y-auto">
                 {/* MOBILE HEADER */}
-                <div className="flex bg-[#b7d7a8] justify-between items-center mb-6 md:hidden">
+                <div className="flex bg-[#b7d7a8] justify-between items-center mb-6 lg:hidden">
                   <h2 className="text-lg font-semibold text-black">
                     Lynden Door
                   </h2>
@@ -338,7 +338,7 @@ const LyndenDoorPage = () => {
                 </div>
 
                 {/* DESKTOP HEADER - Simple Title */}
-                <div className="hidden md:block mb-6 ">
+                <div className="hidden lg:block mb-6  ">
                   <h2 className="text-lg font-semibold">Lynden Door</h2>
                 </div>
 
@@ -382,7 +382,7 @@ const LyndenDoorPage = () => {
               {/* Overview Section */}
               <div id="overview" className="scroll-mt-[150px]">
                 {/* Logo */}
-                <div className="flex items-center gap-3 mb-6">
+                <div className="flex items-center gap-3 mb-6 mt-[20px] sm:mt-[0px]">
                   <Image
                     src={Interiordoorlogo}
                     alt="Lynden Door"
@@ -590,7 +590,7 @@ const LyndenDoorPage = () => {
 
               {/* New 2025 Designs Grid */}
               <div className="mt-16 bg-[#444237BA]">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
                   {[
                     { image: white1, name: "Ballard" },
                     { image: white2, name: "Fairview" },
@@ -799,7 +799,7 @@ const LyndenDoorPage = () => {
               </div>
 
               <div className="mt-16 bg-[#444237BA]">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2">
+                <div className="grid grid-cols-2 lg:grid-cols-5 gap-2">
                   {[
                     { image: white1, name: "Ballard" },
                     { image: white2, name: "Fairview" },
@@ -979,7 +979,7 @@ const LyndenDoorPage = () => {
               </div>
 
               <div className="mt-16 bg-[#444237BA]">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2">
+                <div className="grid grid-cols-2 lg:grid-cols-5 gap-2">
                   {[
                     { image: white11, name: "Ballard" },
                     { image: white12, name: "Fairview" },
@@ -1165,7 +1165,7 @@ const LyndenDoorPage = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+              <div className="grid grid-cols-2 lg:grid-cols-4">
                 {[
                   { image: wood1, name: "StileLine-African-Mahogany", sub: "African-Mahogany" },
                   { image: wood2, name: "StileLine-Maple", sub: "Maple" },
@@ -1350,7 +1350,7 @@ const LyndenDoorPage = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                <div className="grid grid-cols-2 lg:grid-cols-4">
                   {[
                     {
                       image: wood5,
@@ -1535,7 +1535,7 @@ const LyndenDoorPage = () => {
                 </div>
 
                 <div className="mt-16 ">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2">
+                  <div className="grid grid-cols-2 lg:grid-cols-5 gap-2">
                     {[
                       {
                         image: modern1,
@@ -1792,7 +1792,7 @@ const LyndenDoorPage = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                <div className="grid grid-cols-2 lg:grid-cols-4">
                   {[
                
                { image: playwood1, name: "Natural Birch 01", sub: "" },
@@ -2000,7 +2000,7 @@ const LyndenDoorPage = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5">
+                <div className="grid grid-cols-2 lg:grid-cols-5">
                   {[
                     {
                       image: PrefinishedRiftCut,

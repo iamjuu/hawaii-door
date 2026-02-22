@@ -302,7 +302,8 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
   // Get display name from field key
   const getDisplayName = (key: string): string => {
     const nameMap: { [key: string]: string } = {
-      doorType: "Category",
+      productCategory: "Category",
+      doorType: "Core",
       doorConfig: "Type",
       width: "Width",
       height: "Height",
@@ -350,11 +351,16 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
     return nameMap[key] || key;
   };
 
-  // Primary specifications (Category, Type, Width, Height, Thickness, Quantity)
+  // Primary specifications (Category, Core, Type, Width, Height, Thickness, Quantity)
   const primarySpecs = [
     {
-      key: "doorType",
+      key: "productCategory",
       label: "Category",
+      value: formatValue("productCategory", quoteData.productCategory),
+    },
+    {
+      key: "doorType",
+      label: "Core",
       value: formatValue("doorType", quoteData.doorType),
     },
     {
@@ -584,6 +590,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
       if (key === "uploadedFiles") return false;
       // Exclude primary specs, other details, handing & hinges, jamb, pre-hanging specs, and your details specs
       const excludedKeys = [
+        "productCategory",
         "doorType",
         "doorConfig",
         "category",

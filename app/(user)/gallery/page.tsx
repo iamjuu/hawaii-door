@@ -180,7 +180,7 @@ const GalleryPage = () => {
       {/* MOBILE FILTER BUTTON - STICKY */}
       <button
         onClick={() => setOpenFilter(true)}
-        className="md:hidden fixed top-[50px] left-6 z-30 flex items-center gap-2 border bg-[#b7d7a8] border-gray-300 rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#a8c798] transition-colors shadow-lg"
+        className="lg:hidden fixed top-[90px] left-6 z-30 flex items-center gap-2 border bg-[#b7d7a8] border-gray-300 rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#a8c798] transition-colors shadow-lg"
       >
         <FiFilter className="text-lg" />
         Filter
@@ -190,7 +190,7 @@ const GalleryPage = () => {
       {openFilter && (
         <div
           onClick={() => setOpenFilter(false)}
-          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
         />
       )}
 
@@ -221,17 +221,17 @@ const GalleryPage = () => {
                 {/* FILTER SIDEBAR */}
                 <aside
                   className={`
-                  fixed md:static top-0 left-0 h-full md:h-fit
+                  fixed lg:static top-0 left-0 h-full lg:h-fit
                   w-[280px] bg-white border border-gray-200 rounded-lg p-6
-                  z-50 md:z-auto
+                  z-50 lg:z-auto
                   transform transition-transform duration-300
                   ${openFilter ? "translate-x-0" : "-translate-x-full"}
-                  md:translate-x-0
+                  lg:translate-x-0
                   lg:sticky lg:top-[100px] lg:self-start lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto
                 `}
                 >
                   {/* MOBILE HEADER */}
-                  <div className="flex bg-[#b7d7a8] justify-between items-center mb-6 md:hidden">
+                  <div className="flex bg-[#b7d7a8] justify-between items-center mb-6 lg:hidden">
                     <h2 className="text-lg font-semibold text-black">
                       Filters
                     </h2>
@@ -241,7 +241,7 @@ const GalleryPage = () => {
                   </div>
 
                   {/* DESKTOP HEADER */}
-                  <div className="hidden md:block">
+                  <div className="hidden lg:block">
                     <div className="flex items-center gap-2">
                       <FiFilter className="text-lg" />
                       <h2 className="text-lg font-semibold">Filters</h2>

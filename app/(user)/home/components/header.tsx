@@ -18,7 +18,7 @@ const Heading: React.FC<HeadingProps> = ({ heading, subheading, className = "" }
     font-roboto
   `}
 >
-      <h1 className="text-[23px] md:text-[46px] font-[500] text-black font-roboto leading-[32px] md:leading-[62px] tracking-normal">
+      <h1 className="text-[23px] md:text-[46px] font-[500] text-black font-roboto leading-[32px] md:leading-[62px] tracking-normal mb-[20px] sm:mb-[0px]" >
         {heading}
       </h1>
 

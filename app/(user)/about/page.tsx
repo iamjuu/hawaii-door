@@ -91,7 +91,7 @@ const page = () => {
                   Crafted with Integrity.
                 </h1>
 
-                <p className="text-sm md:text-[18px] text-left font-[300] text-[#3B3B3B] font-montserrat w-full tracking-[-1%] italic">
+                <p className="text-sm md:text-[18px] text-left font-[300] text-[#3B3B3B] font-montserrat w-full tracking-[-1%] italic mt-[20px] sm:mt-[0px]">
                   My father started this company with one rule: get it right the
                   first time. Forty years later, we still measure twice, machine
                   once, and deliver doors that fit. We're not a franchise. We're
@@ -244,7 +244,7 @@ const page = () => {
         <section className="w-full sm:mt-[50px] mt-[25px]">
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
             <div className="max-w-[1400px] 2xl:mx-auto">
-              <div className="text-left sm:space-y-6  ">
+              <div className="text-left sm:space-y-6  g ">
                 <h2 className="text-[23px] md:text-[46px] font-[600] text-black font-roboto leading-[56px] tracking-[0%]">
                   Meet Our Team
                 </h2>

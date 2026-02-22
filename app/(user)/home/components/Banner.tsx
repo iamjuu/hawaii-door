@@ -58,7 +58,7 @@ export default function BannerSection() {
                 {/* Heading - left-aligned on all screens */}
                 <h1
                   className="
-                    text-3xl md:text-[78px]
+                    text-3xl md:text-[48px] lg:text-[78px]
                     leading-tight
                     font-[400]
                     break-words

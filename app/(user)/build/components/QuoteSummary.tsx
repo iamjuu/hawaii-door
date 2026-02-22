@@ -91,7 +91,8 @@ interface QuoteSummaryProps {
   // Get display name from field key
   const getDisplayName = (key: string): string => {
     const nameMap: { [key: string]: string } = {
-      doorType: "Category",
+      productCategory: "Category",
+      doorType: "Core",
       doorConfig: "Type",
       width: "Width",
       height: "Height",
@@ -146,8 +147,8 @@ interface QuoteSummaryProps {
       const processedKeys = new Set<string>();
       
       Object.entries(quoteData).forEach(([key, value]) => {
-        // Skip uploadedFiles, selectedDoorId (internal ID), and already processed keys
-        if (key === "uploadedFiles" || key === "selectedDoorId" || processedKeys.has(key)) return;
+        // Skip uploadedFiles, selectedDoorId (internal ID), category (duplicate of doorConfig), and already processed keys
+        if (key === "uploadedFiles" || key === "selectedDoorId" || key === "category" || processedKeys.has(key)) return;
         if (!value || value === "" || (Array.isArray(value) && value.length === 0)) return;
         
         // Special handling for doorSize - combine width and height

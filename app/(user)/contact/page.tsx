@@ -163,6 +163,7 @@ We review every message personally, no bots, no scripts, just people who know do
                       icon={
                         <MdOutlineArrowOutward className="text-white text-xl" />
                       }
+                      href="/build"
                       className="!w-fit !h-auto !px-6 !py-3 !text-base md:!text-lg !cursor-pointer"
                     />
                   </Link>
@@ -412,7 +413,7 @@ We review every message personally, no bots, no scripts, just people who know do
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
           <div className="max-w-[1400px] 2xl:mx-auto">
             <div className="max-w-4xl">
-              <h2 className="text-[23px] md:text-[46px] font-[500] text-black font-roboto leading-[32px] md:leading-[62px] tracking-normal mb-4">
+              <h2 className="text-[23px] md:text-[46px] font-[500] text-black font-roboto leading-[32px] md:leading-[62px] tracking-normal mb-6">
                 Frequently Asked Questions
               </h2>
               <p className="text-sm md:text-base font-[400] text-[#3B3B3B] font-roboto mb-8">
@@ -429,7 +430,7 @@ We review every message personally, no bots, no scripts, just people who know do
                       onClick={() => toggleFAQ(index)}
                       className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
                     >
-                      <span className="text-[22px] font-[300] text-gray-900 pr-4">
+                      <span className="text-[15px] md:text-[22px] font-[300] text-gray-900 pr-4">
                         {faq.question}
                       </span>
                       <svg

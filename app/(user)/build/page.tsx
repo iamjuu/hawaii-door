@@ -76,6 +76,10 @@ const BuildDoor = () => {
     }, 500);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentStep]);
   const [quoteData, setQuoteData] = useState({
     productCategory: "",
     doorType: "",

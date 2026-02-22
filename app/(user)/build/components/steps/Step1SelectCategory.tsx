@@ -128,17 +128,11 @@ interface StepProps {
               onBlur={() => {
                 if (customDoorType.trim()) {
                   setQuoteData({ ...quoteData, doorType: customDoorType.trim() });
-                  if (onNext) {
-                    setTimeout(() => {
-                      onNext(customDoorType.trim());
-                    }, 300);
-                  }
                 }
               }}
               maxLength={20}
               placeholder="Please specify your door"
               className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 text-[14px] md:text-[16px] font-roboto"
-              autoFocus
             />
             <p className="text-xs text-gray-500 mt-2">
               {customDoorType.length}/20 characters
