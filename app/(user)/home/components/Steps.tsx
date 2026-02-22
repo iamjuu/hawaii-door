@@ -17,7 +17,7 @@ import {
   ProductFootericonTruckGreen,
 } from "@/public/assets";
 
-const MOBILE_BREAKPOINT = 768;
+const MOBILE_BREAKPOINT = 1025;
 
 const stepBox =
   "flex flex-col items-center text-center px-2 pt-3 pb-4 md:pt-10 md:pb-10 w-full max-w-[260px] min-w-0 overflow-hidden mx-auto max-[640px]:pt-2 max-[640px]:pb-3";

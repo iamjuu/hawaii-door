@@ -608,7 +608,7 @@ const LyndenDoorPage = () => {
                       }
                     >
                       {/* Image Container */}
-                      <div className="relative w-full h-[400px]">
+                      <div className="relative w-full h-[400px] lg:h-auto lg:aspect-[1/2]">
                         <Image
                           src={item.image}
                           alt={`New 2025 ${item.name}`}
@@ -823,7 +823,7 @@ const LyndenDoorPage = () => {
                       }
                     >
                       {/* Image Container */}
-                      <div className="relative w-full h-[400px]">
+                      <div className="relative w-full h-[400px] lg:h-auto lg:aspect-[1/2]">
                         <Image
                           src={item.image}
                           alt={`New 2025 ${item.name}`}
@@ -979,7 +979,7 @@ const LyndenDoorPage = () => {
               </div>
 
               <div className="mt-16 bg-[#444237BA]">
-                <div className="grid grid-cols-2 lg:grid-cols-5 gap-2">
+                <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 lg:gap-1 min-[1364px]:gap-2">
                   {[
                     { image: white11, name: "Ballard" },
                     { image: white12, name: "Fairview" },
@@ -1002,8 +1002,8 @@ const LyndenDoorPage = () => {
                         )
                       }
                     >
-                      {/* Image Container */}
-                      <div className="relative w-full h-[400px]">
+                      {/* Image Container: aspect-ratio scales with column width so doors always look proportional */}
+                      <div className="relative w-full h-[400px] lg:h-auto lg:aspect-[1/2]">
                         <Image
                           src={item.image}
                           alt={`New 2025 ${item.name}`}
@@ -1013,7 +1013,7 @@ const LyndenDoorPage = () => {
                       </div>
 
                       {/* Label */}
-                      <div className="px-4 py-3">
+                      <div className="px-4 py-1.5">
                         <p className="text-white text-sm font-medium text-center">
                            {item.name}
                         </p>
@@ -1187,7 +1187,7 @@ const LyndenDoorPage = () => {
                     }
                   >
                     {/* Image Container */}
-                    <div className="relative w-full h-[400px]">
+                    <div className="relative w-full h-[400px] lg:h-auto lg:aspect-[1/2]">
                       <Image
                         src={item.image}
                         alt={`New 2025 ${item.name}`}
@@ -1375,7 +1375,7 @@ const LyndenDoorPage = () => {
                       }
                     >
                       {/* Image Container */}
-                      <div className="relative w-full h-[400px]">
+                      <div className="relative w-full h-[400px] lg:h-auto lg:aspect-[1/2]">
                         <Image
                           src={item.image}
                           alt={`New 2025 ${item.name}`}
@@ -1624,7 +1624,7 @@ const LyndenDoorPage = () => {
                         }
                       >
                         {/* Image Container */}
-                        <div className="relative w-full h-[400px]">
+                        <div className="relative w-full h-[400px] lg:h-auto lg:aspect-[1/2]">
                           <Image
                             src={item.image}
                             alt={`New 2025 ${item.name}`}
@@ -1822,7 +1822,7 @@ const LyndenDoorPage = () => {
                       }
                     >
                       {/* Image Container */}
-                      <div className="relative w-full h-[400px]">
+                      <div className="relative w-full h-[400px] lg:h-auto lg:aspect-[1/2]">
                         <Image
                           src={item.image}
                           alt={`New 2025 ${item.name}`}
@@ -2084,7 +2084,7 @@ const LyndenDoorPage = () => {
                       }
                     >
                       {/* Image Container */}
-                      <div className="relative w-full h-[400px]">
+                      <div className="relative w-full h-[400px] lg:h-auto lg:aspect-[1/2]">
                         <Image
                           src={item.image}
                           alt={`New 2025 ${item.name}`}

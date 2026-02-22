@@ -535,11 +535,13 @@ const BuildDoor = () => {
 
       setCurrentStep(currentStep + 1);
     }
+    // Prevent going back from step 1
+    // Prevent going back from step 1
   };
 
   const handleBack = () => {
-    // Prevent going back from step 1
     if (currentStep === 0) {
+      router.back();
       return;
     }
 
@@ -628,7 +630,7 @@ const BuildDoor = () => {
                     onNext={() => handleNext()}
                     showBack={true}
                     percentage={steps[currentStep].percentage}
-                    isFirstStep={currentStep === 0}
+                    isFirstStep={false}
                     currentStep={currentStep}
                     isSubmitting={isSubmitting}
                     isNextDisabled={

@@ -129,7 +129,7 @@ interface QuoteSummaryProps {
       addOnOption: "Add On",
       doorFinishOption: "Door Finish",
       doorCategory: "Product Category",
-      selectedDoorName: "Door Name (SKU)",
+      selectedDoorName: "Door Code (SKU)",
       specialInstructions: "Special Instructions",
       firstName: "Name",
       companyName: "Company / Job Name",

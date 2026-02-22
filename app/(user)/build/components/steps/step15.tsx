@@ -340,7 +340,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
       addOnOption: "Add On",
       doorFinishOption: "Door Finish",
       doorCategory: "Product Category",
-      selectedDoorName: "Door Name (SKU)",
+      selectedDoorName: "Door Code (SKU)",
       specialInstructions: "Special Instructions",
       firstName: "Name",
       companyName: "Company / Job Name",
@@ -564,7 +564,7 @@ const Step15 = ({ quoteData, setQuoteData }: StepProps) => {
     },
     {
       key: "selectedDoorName",
-      label: "Door Name (SKU)",
+      label: "Door Code (SKU)",
       value: quoteData.selectedDoorName || "-",
     },
     {

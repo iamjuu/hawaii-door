@@ -15,6 +15,7 @@ interface StepProps {
 interface DoorOption {
   _id: string;
   name: string;
+  skuCode?: string;
   doorType: string;
   category: string;
 }
@@ -142,12 +143,13 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
   };
 
   const handleDoorSelect = (door: DoorOption) => {
+    const displayValue = door.skuCode || door.name;
     setSelectedDoorId(door._id);
-    setSelectedDoorName(door.name);
+    setSelectedDoorName(displayValue);
     setQuoteData({
       ...quoteData,
       selectedDoorId: door._id,
-      selectedDoorName: door.name,
+      selectedDoorName: displayValue,
     });
   };
 
@@ -333,7 +335,7 @@ const Step13 = ({ quoteData, setQuoteData }: StepProps) => {
                 ) : (
                   doors.map((d) => (
                     <option key={d._id} value={d._id}>
-                      {d.name}
+                      {d.skuCode || d.name}
                     </option>
                   ))
                 )}
