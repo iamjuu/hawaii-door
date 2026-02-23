@@ -65,7 +65,7 @@ export default function HeroSection({
           <a
             href={
               process.env.NEXT_PUBLIC_PRODUCTION === "true"
-                ? `${process.env.NEXT_PUBLIC_URL}uploads/brochure/Hawaii_Door_Brochure.pdf`
+                ? `${process.env.NEXT_PUBLIC_URL}/uploads/brochure/Hawaii_Door_Brochure.pdf`
                 : "https://navajowhite-ostrich-413154.hostingersite.com/uploads/brochure/Hawaii_Door_Brochure.pdf"
             }
             download
