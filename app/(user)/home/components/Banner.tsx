@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import bannerimg from "../../../../public/assets/door/hq.png";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import Link from "next/link";
@@ -7,13 +8,24 @@ import Navbar from "@/components/user/Navbar";
 import PillCTAButton from "../../home/components/link-button";
 
 export default function BannerSection() {
+  const [needsIosPadding, setNeedsIosPadding] = useState(false);
+
+  useEffect(() => {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+    setNeedsIosPadding(isIOS && isMobile);
+    const onResize = () => setNeedsIosPadding(isIOS && window.innerWidth < 640);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
   return (
     <>
       <Navbar />
 
       <div
         className="
-          relative w-full mt-[30px]
+          relative w-full
+          mt-[30px]
           aspect-[3840/1996]
 
           /* ✅ FIX 1: give mobile enough height */
@@ -44,14 +56,14 @@ export default function BannerSection() {
 
         {/* Content: mobile = vertical + left + vertically centered; desktop = original (row, left, vertically centered) */}
         <div
-          className="
+          className={`
             relative z-10 h-full flex
             flex-col sm:flex-row
             items-start sm:items-center
             justify-center sm:justify-start
-            pt-0 sm:pt-0
+            ${needsIosPadding ? "pt-[120px]" : "pt-0"} sm:pt-0
             px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]
-          "
+          `}
         >
           <div className="w-full max-w-[1400px] 2xl:mx-auto">
             <div className="text-white max-w-[95%] sm:max-w-[90%] text-left flex flex-col items-start">

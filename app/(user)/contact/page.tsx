@@ -172,20 +172,26 @@ We review every message personally, no bots, no scripts, just people who know do
                 {/* Map and Visit Us */}
                 <div className=" flex flex-col md:flex-row gap-10   mt-8">
                   {/* Google Map - Smaller and more compact */}
-                  <div className="relative w-full max-w-md h-[389px] rounded-lg overflow-hidden shadow-md">
+                  <a
+                    href="https://maps.app.goo.gl/8gK9YLhyMPM1o5s96"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative w-full max-w-md h-[389px] rounded-lg overflow-hidden shadow-md block"
+                  >
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3717.6!2d-157.9489!3d21.3099!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjHCsDE4JzM1LjYiTiAxNTfCsDU2JzU2LjAiVw!5e0!3m2!1sen!2sus!4v1234567890"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5937.6!2d-157.90396458112258!3d21.372206622728957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjHCsDIyJzIwLjAiTiAxNTfCsDU0JzE0LjMiVw!5e0!3m2!1sen!2sus!4v1700000000"
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
                       allowFullScreen={true}
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
+                      title="Hawaii Doors Location"
                     ></iframe>
-                  </div>
+                  </a>
 
                   {/* Contact Info - More compact layout */}
-                  <div className="flex flex-col justify-around max-w-md">
+                  <div className="flex flex-col justify-around max-w-md gap-2 max-[776px]:gap-6">
                     <div>
                       <p className="mb-3 md:mb-0 text-black">Visit US</p>
                     </div>
