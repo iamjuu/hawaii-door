@@ -674,9 +674,24 @@ export async function sendContactFormEmail(contactData: {
   `;
 
   try {
-    const result = await sendEmail(adminEmail, subject, html);
-    console.log(`✅ Contact form email sent successfully to admin for ${contactData.firstName} ${contactData.lastName}`);
-    return result;
+    const transporter = getTransporter();
+    const fromEmail = process.env.EMAIL_USER;
+
+    if (!fromEmail) {
+      throw new Error("EMAIL_USER not configured");
+    }
+
+    const info = await transporter.sendMail({
+      from: `"Hawaii Door" <${fromEmail}>`,
+      to: adminEmail,
+      cc: "Leah@hawaiidoors.com",
+      subject,
+      html,
+      text: html.replace(/<[^>]*>/g, ""),
+    });
+
+    console.log(`✅ Contact form email sent successfully to admin and Leah@hawaiidoors.com for ${contactData.firstName} ${contactData.lastName}`);
+    return { success: true, messageId: info.messageId };
   } catch (error) {
     console.error(`❌ Failed to send contact form email for ${contactData.firstName} ${contactData.lastName}:`, error);
     throw error;

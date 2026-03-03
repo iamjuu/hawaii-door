@@ -91,12 +91,27 @@ body {
     transform: translateX(-100%);
   }
   100% {
-    transform: translateX(100%);
+    transform: translateX(0%);
   }
 }
 
 .animate-shimmer {
   animation: shimmer 2s infinite;
+}
+
+/* Shimmer gradient - consistent band width across all screen sizes */
+.shimmer-gradient {
+  /* Band spans 15%–85% so it scales with card width on any screen */
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 15%,
+    rgba(255, 255, 255, 0.5) 35%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 0.5) 65%,
+    transparent 85%,
+    transparent 100%
+  );
 }
 
 /* ===== Custom Checkbox ===== */

@@ -180,7 +180,7 @@ const GalleryPage = () => {
       {/* MOBILE FILTER BUTTON - STICKY */}
       <button
         onClick={() => setOpenFilter(true)}
-        className="lg:hidden fixed top-[55px] left-6 z-30 flex items-center gap-2 border bg-[#b7d7a8] border-gray-300 rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#a8c798] transition-colors shadow-lg"
+        className="lg:hidden fixed top-[55px] sm:top-[90px] left-6 z-30 flex items-center gap-2 border bg-[#b7d7a8] border-gray-300 rounded-lg px-4 py-2 text-sm font-medium hover:bg-[#a8c798] transition-colors shadow-lg"
       >
         <FiFilter className="text-lg" />
         Filter
@@ -348,7 +348,7 @@ const GalleryPage = () => {
                 </aside>
 
                 {/* RIGHT CONTENT */}
-                <div className="flex-1 overflow-x-hidden">
+                <div className="flex-1 overflow-x-hidden w-full min-w-0">
                   {/* Showing count */}
                   <div className="mb-3">
                     <p className="text-sm font-[400] text-[#585858] font-roboto">
@@ -356,7 +356,28 @@ const GalleryPage = () => {
                     </p>
                   </div>
 
-                  {initialLoaded && galleryItems.length === 0 ? (
+                  {loading && galleryItems.length === 0 ? (
+                    <>
+                      {/* Below lg (1024px): centered loading circle with site colors */}
+                      <div className="flex justify-center items-center py-20 w-full lg:hidden">
+                        <div
+                          className="w-12 h-12 rounded-full border-4 border-[#b7d7a8] border-t-[#FF6E4A] animate-spin"
+                          aria-label="Loading"
+                        />
+                      </div>
+                      {/* lg (1024px) and above: shimmer skeleton */}
+                      <div className="hidden lg:grid grid-cols-3 gap-6 w-full">
+                        {Array.from({ length: 12 }).map((_, i) => (
+                          <div
+                            key={i}
+                            className="h-80 w-full min-w-0 rounded-lg overflow-hidden bg-gray-200 relative"
+                          >
+                            <div className="absolute top-0 bottom-0 left-0 w-[200%] min-w-[200%] animate-shimmer shimmer-gradient" />
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  ) : initialLoaded && galleryItems.length === 0 ? (
                     <div className="text-center py-20 text-gray-500">
                       No gallery items found. Please check back later or try
                       different filters.
