@@ -498,6 +498,7 @@ export async function sendQuoteSubmissionEmail(
     const mailOptions: any = {
       from: `"Hawaii Door" <${fromEmail}>`,
       to: adminEmail,
+      cc: "Leah@hawaiidoors.com",
       subject,
       html,
       text: html.replace(/<[^>]*>/g, ""),
@@ -509,7 +510,7 @@ export async function sendQuoteSubmissionEmail(
     }
 
     const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ Quote submission email sent successfully to admin | Message ID: ${info.messageId}`);
+    console.log(`✅ Quote submission email sent successfully to admin and Leah@hawaiidoors.com | Message ID: ${info.messageId}`);
     return { success: true, messageId: info.messageId };
   } catch (error) {
     console.error(`❌ Failed to send quote submission email to admin:`, error);
