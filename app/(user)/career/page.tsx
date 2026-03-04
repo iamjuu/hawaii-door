@@ -23,12 +23,12 @@ export default function CareerPage() {
       <PageLoader isLoading={isLoading} />
       <Navbar />
       {/* First Section - Hero with Gradient */}
-      <section className="relative w-full h-auto lg:h-[470px] bg-[#efede9] ">
-        <div className="container mx-auto px-6 lg:px-12 h-full ">
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 items-center h-full md:py-4 lg:py-0">
-            {/* Left Content */}
-            <div className="flex-1 space-y-4 lg:space-y-6 mt-16 ">
-              <h1 className="text-[28px] sm:text-[32px] md:text-[38px] lg:text-[45px] font-roboto font-[600] text-gray-900 ">
+      <section className="relative w-full min-h-[400px] md:min-h-[450px] lg:h-[470px] bg-[#efede9] overflow-visible">
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px] min-h-[400px] md:min-h-0 md:h-full">
+          <div className="max-w-[1400px] 2xl:mx-auto flex flex-col md:flex-row gap-3 sm:gap-6 lg:gap-12 items-center h-full py-4 sm:py-8 md:py-4 lg:py-0">
+            {/* Left Content - order-2 on mobile so image shows first */}
+            <div className="flex-1 min-w-0 space-y-3 sm:space-y-4 lg:space-y-6 mt-0 sm:mt-8 md:mt-16 order-2 md:order-1">
+              <h1 className="text-[28px] sm:text-[32px] md:text-[38px] lg:text-[45px] font-roboto font-[600] text-gray-900">
                 Join The Island Door Company
               </h1>
 
@@ -50,16 +50,16 @@ export default function CareerPage() {
               </p>
             </div>
 
-            {/* Right Image */}
-            <div className="flex-1 w-full h-64 sm:h-80 lg:h-full lg:max-h-[420px] relative ">
-              <div className="relative w-full h-full mt-8">
+            {/* Right Image - order-1 on mobile so it appears at top */}
+            <div className="flex-1 w-full min-w-0 flex-none md:flex-1 h-[256px] sm:h-[320px] md:h-[320px] lg:h-full lg:max-h-[420px] relative order-1 md:order-2">
+              <div className="relative w-full h-full">
                 <Image
                   src={Careerimg}
                   alt="Happy team members collaborating"
                   fill
-                  className="object-contain "
+                  className="object-contain"
                   priority
-                  sizes="(max-width: 768px) "
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
                 />
               </div>
             </div>
@@ -79,12 +79,14 @@ export default function CareerPage() {
               Email your resume and cover letter to
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 rounded-lg  transition-shadow md:w-min">
+            <a
+              href="mailto:info@hawaiidoors.com"
+              className="inline-flex flex-row items-center justify-center gap-2 sm:gap-4 rounded-lg transition-shadow hover:opacity-90"
+            >
               {/* Email Icon */}
-
-              <div className=" p-2 rounded-full bg-[#F5F5F4]">
+              <div className="p-2 rounded-full bg-[#F5F5F4] shrink-0">
                 <svg
-                  className="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0"
+                  className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -99,16 +101,13 @@ export default function CareerPage() {
               </div>
 
               {/* Email Address */}
-              <a
-                href="mailto:info@hawaiidoors.com"
-                className="font-[400] text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] text-[#0069A8] transition-colors break-all sm:break-normal text-center sm:text-left"
-              >
+              <span className="font-[400] text-[14px] sm:text-[20px] md:text-[24px] lg:text-[32px] text-[#0069A8] whitespace-nowrap">
                 info@hawaiidoors.com
-              </a>
+              </span>
 
               {/* Arrow Icon */}
               <svg
-                className="w-5 h-5 sm:w-6 sm:h-6 text-[#0069A8] flex-shrink-0 "
+                className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#0069A8] shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -120,7 +119,7 @@ export default function CareerPage() {
                   d="M13 7l5 5m0 0l-5 5m5-5H6"
                 />
               </svg>
-            </div>
+            </a>
           </div>
         </div>
       </section>
