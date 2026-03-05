@@ -121,9 +121,11 @@ export default function CareerPage() {
               </svg>
             </a>
           </div>
+          <span></span>
         </div>
       </section>
       <Footer />
+      
     </div>
   );
 }
