@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
+// Unique build ID per deploy - prevents stale chunk cache (bump version in package.json for each deploy)
+const buildId = `hawaii-door-${Date.now()}`;
+
 const nextConfig: NextConfig = {
-  output: "standalone",   // ✅ ENABLE THIS
+  output: "standalone",
+  generateBuildId: async () => buildId,
 
   images: {
     remotePatterns: [],
