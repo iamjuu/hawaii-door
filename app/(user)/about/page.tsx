@@ -113,13 +113,13 @@ const page = () => {
 
               {/* Right Image */}
               <div ref={img2Ref} className={`relative w-full h-[300px] md:h-[523px] rounded-[15px] overflow-hidden transition-all duration-500 grayscale ${isMobile ? (isImg2InView ? "grayscale-0" : "") : "hover:grayscale-0"}`}>
-                <Image
-                  src={About2}
-                  alt="Craftsman working"
-                  fill
-                  className="object-cover"
-                  priority
-                />
+                  <Image
+                    src={About2}
+                    alt="Craftsman working"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
               </div>
             </div>
           </div>
@@ -261,7 +261,7 @@ const page = () => {
         <section className="w-full py-10 sm:py-12 md:py-[50px]">
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[60px]">
             <div className="max-w-[1400px] 2xl:mx-auto">
-              <div ref={img1Ref} className={`relative h-[300px] md:h-[400px] rounded-[15px] overflow-hidden transition-all duration-500 grayscale ${isMobile ? (isImg1InView ? "grayscale-0" : "") : "hover:grayscale-0"}`}>
+              <div ref={img1Ref} className={`relative h-[300px] md:h-[550px] rounded-[15px] overflow-hidden transition-all duration-500 grayscale ${isMobile ? (isImg1InView ? "grayscale-0" : "") : "hover:grayscale-0"}`}>
                 <Image
                   src={About1}
                   alt="Hawaii Western Doors Team"

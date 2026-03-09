@@ -1,6 +1,6 @@
 // About Page Images
-export { default as About1 } from "./images/about/maintheme.png";
-export { default as About2 } from "./images/about/abouthawai.svg";
+export { default as About1 } from "./images/about/group.webp"; // Meet Our Team
+export { default as About2 } from "./images/about/momson.webp"; // Hero image at top
 
 export { default as iconAbout1 } from "./images/about/delivery.svg";
 export { default as iconAbout2 } from "./images/about/measure.svg";
