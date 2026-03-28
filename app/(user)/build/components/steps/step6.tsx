@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import lhra from "../../../../../public/assets/images/dummy/Lhra.png";
 import lha from "../../../../../public/assets/images/dummy/Lha.png";
 import rha from "../../../../../public/assets/images/dummy/rha.png";
@@ -39,6 +39,15 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
     quoteData.hingeLocation3 || "",
   );
   const [backset, setBackset] = useState<string>(quoteData.backset || "");
+  const [measurementsVideoOpen, setMeasurementsVideoOpen] = useState(false);
+  const measurementsVideoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!measurementsVideoOpen && measurementsVideoRef.current) {
+      measurementsVideoRef.current.pause();
+      measurementsVideoRef.current.currentTime = 0;
+    }
+  }, [measurementsVideoOpen]);
 
   const handleHandlingSelect = (handling: string) => {
     setSelectedHandling(handling);
@@ -100,6 +109,7 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   const isSingleDoor = quoteData.doorConfig === "Single Door";
 
   return (
+    <>
     <div className="mt-[25px]  w-full mb-[50px] max-w-[900px]">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">
         Door Handing & Hinges
@@ -694,8 +704,59 @@ const Step6 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
             />
           </div>
         </div>
+
+        <button
+          type="button"
+          onClick={() => setMeasurementsVideoOpen(true)}
+          className="mt-6 flex items-center gap-2 w-fit text-left cursor-pointer hover:opacity-80 transition-opacity"
+        >
+          <div className="w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center shrink-0">
+            <svg
+              className="w-3 h-3 text-white ml-0.5"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+          <span className="text-xs text-gray-600 font-roboto">
+            Need help with measurements? View video tutorial
+          </span>
+        </button>
       </div>
     </div>
+
+    {measurementsVideoOpen && (
+      <div
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4"
+        onClick={() => setMeasurementsVideoOpen(false)}
+        role="presentation"
+      >
+        <div
+          className="relative w-fit max-w-full max-h-[90vh] rounded-lg overflow-hidden shadow-xl mx-auto"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            type="button"
+            onClick={() => setMeasurementsVideoOpen(false)}
+            className="absolute top-2 right-2 z-10 rounded-full bg-white/90 p-2 shadow hover:bg-white"
+            aria-label="Close video"
+          >
+            <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <video
+            ref={measurementsVideoRef}
+            className="block max-h-[85vh] w-auto h-auto max-w-full"
+            controls
+            playsInline
+            src="https://hawaiidoors.com/uploads/video/hawaii.mp4"
+          />
+        </div>
+      </div>
+    )}
+    </>
   );
 };
 

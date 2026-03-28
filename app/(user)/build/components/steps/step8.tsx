@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import lock1 from "../../../../../public/assets/images/dummy/lock1.png";
 import lock2 from "../../../../../public/assets/images/dummy/lock2.png";
@@ -50,6 +50,15 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   const [lockCenterline, setLockCenterline] = useState<string>(
     quoteData.lockCenterline || ""
   );
+  const [lockCenterlineVideoOpen, setLockCenterlineVideoOpen] = useState(false);
+  const lockCenterlineVideoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!lockCenterlineVideoOpen && lockCenterlineVideoRef.current) {
+      lockCenterlineVideoRef.current.pause();
+      lockCenterlineVideoRef.current.currentTime = 0;
+    }
+  }, [lockCenterlineVideoOpen]);
   const [selectedFaceplateDimension, setSelectedFaceplateDimension] = useState<string | null>(() => {
     const value = quoteData.faceplateDimension;
     if (!value) return null;
@@ -209,6 +218,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
   };
 
   return (
+    <>
     <div className="mt-[25px] mb-[50px] max-w-[1050px] text-black">
       <h2 className="text-[20px] md:text-[32px] font-roboto font-[500] mb-5 md:mb-8 text-black">Lock Information</h2>
 
@@ -347,8 +357,12 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
           {/* Lock Centerline Section */}
           <div className="flex flex-col">
             <p className="text-[18px] md:text-[26px] font-[400] text-black font-roboto md:mt-3">Lock Centerline</p>
-            <div className="flex items-center gap-2 mb-3 md:mb-5">
-              <div className="w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center">
+            <button
+              type="button"
+              onClick={() => setLockCenterlineVideoOpen(true)}
+              className="flex items-center gap-2 mb-3 md:mb-5 w-fit text-left cursor-pointer hover:opacity-80 transition-opacity"
+            >
+              <div className="w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center shrink-0">
                 <svg
                   className="w-3 h-3 text-white ml-0.5"
                   fill="currentColor"
@@ -358,7 +372,7 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
                 </svg>
               </div>
               <span className="text-xs text-gray-600">view video tutorial</span>
-            </div>
+            </button>
             <input
               type="text"
               value={lockCenterline}
@@ -717,6 +731,38 @@ const Step8 = ({ quoteData, setQuoteData, onNext }: StepProps) => {
         </div>
       </div>
     </div>
+
+    {lockCenterlineVideoOpen && (
+      <div
+        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4"
+        onClick={() => setLockCenterlineVideoOpen(false)}
+        role="presentation"
+      >
+        <div
+          className="relative w-fit max-w-full max-h-[90vh] rounded-lg overflow-hidden shadow-xl mx-auto"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            type="button"
+            onClick={() => setLockCenterlineVideoOpen(false)}
+            className="absolute top-2 right-2 z-10 rounded-full bg-white/90 p-2 shadow hover:bg-white"
+            aria-label="Close video"
+          >
+            <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <video
+            ref={lockCenterlineVideoRef}
+            className="block max-h-[85vh] w-auto h-auto max-w-full"
+            controls
+            playsInline
+            src="https://hawaiidoors.com/uploads/video/hawaii.mp4"
+          />
+        </div>
+      </div>
+    )}
+    </>
   );
 };
 
